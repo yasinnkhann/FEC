@@ -5,15 +5,15 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-const DIST_DIR = path.join(__dirname, '/client/dist');
-const HTML_FILE = path.join(DIST_DIR, 'index.html');
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/../client/dist'));
 
-app.use(express.static(DIST_DIR));
 
 app.get('/api', (req, res) => {
   res.send('hey');
 });
 
-app.listen(port, function () {
- console.log('Listening on port: ' + port);
+app.listen(port, () => {
+  console.log('Listening on port: ' + port);
 });
