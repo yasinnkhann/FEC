@@ -1,5 +1,5 @@
 {
-  "name": "FEC",
+  "name": "front-end-capstone",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/SleekSlinks/FEC.git",
@@ -10,10 +10,12 @@
     "test": "echo \"Error: no test specified\""
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "express": "^4.17.2",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hot-loader": "^4.13.0",
     "react-modal": "^3.14.4"
   },
   "devDependencies": {
@@ -21,6 +23,7 @@
     "@babel/plugin-transform-runtime": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.3",
     "eslint": "^8.5.0",
     "jest": "^27.4.5",

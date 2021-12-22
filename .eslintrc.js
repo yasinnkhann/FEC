@@ -43,5 +43,6 @@ module.exports = {
     /* Minuta */
     'comma-style': [2, 'last'],
     'quotes': [1, 'single']
-  }
+  },
+  // parser: 'babel-eslint',
 };
