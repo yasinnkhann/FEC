@@ -1,5 +1,5 @@
 import React, { useEffect }  from 'react';
-import { TOKEN } from './config.js'
+import { TOKEN } from '../../config.js'
 import axios from 'axios'
 
 
