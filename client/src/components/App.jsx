@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import ProductDetail from './productDetail/ProductDetail.jsx';
+import Overview from './overview/Overview.jsx';
 import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
 import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
@@ -13,7 +13,7 @@ export default function App() {
       try {
         const res = await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
           headers: {
-            'Authorization': TOKEN
+            'Authorization': `${TOKEN}`
           }
         });
         console.log(res.data);
@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <div>
-      <ProductDetail />
+      <Overview />
       <QuestionsAnswers />
       <RatingsReviews />
       <RelatedItems />
