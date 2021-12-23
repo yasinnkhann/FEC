@@ -1,19 +1,19 @@
 import React from 'react';
 
-export default function Question() {
+export default function Question({ questionObj }) {
   return (
     <div className='question'>
-      <h4 className='questionBody'>Q: {questionObj.question_body}</h4>
-      <span className='questionHelpful'>
+      <h4 className='question__body'>Q: {questionObj.question_body}</h4>
+      <span className='question__helpful'>
         Helpful?
         <a href='#!'>
           <u>Yes</u>
         </a>
-        <span className='questionHelpfulCount'>
+        <span className='question__helpfulCount'>
           ({questionObj.question_helpfulness})
         </span>{' '}
         |
-        <a className='addAnswer' href='#!'>
+        <a className='question__addAnswer' href='#!'>
           <u>Add Answer</u>
         </a>
       </span>
