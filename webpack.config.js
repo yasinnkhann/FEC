@@ -6,7 +6,7 @@ module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
   output: {
     filename: 'bundle.js',
-    path: DIST_DIR
+    path: DIST_DIR,
   },
   devtool: 'eval-source-map',
   module: {
@@ -17,20 +17,18 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react'
-            ],
+            presets: ['@babel/preset-env', '@babel/preset-react'],
             plugins: [
-              ['@babel/plugin-transform-runtime',
+              [
+                '@babel/plugin-transform-runtime',
                 {
-                  'regenerator': true
-                }
-              ]
-            ]
-          }
-        }
-      }
-    ]
-  }
+                  regenerator: true,
+                },
+              ],
+            ],
+          },
+        },
+      },
+    ],
+  },
 };
