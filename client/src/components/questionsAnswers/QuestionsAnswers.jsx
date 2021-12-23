@@ -30,7 +30,7 @@ export default function QuestionsAnswers() {
 
   return (
     <div>
-      Hello from questions and answers!
+      Hello from questions and answers!!!
       {/* {console.log('FROM QA: ', products)} */}
     </div>
   );
