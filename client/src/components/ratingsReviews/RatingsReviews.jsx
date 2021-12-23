@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-// import { TOKEN } from '../config.js';
+import { TOKEN } from '../../config.js';
 
 export default function RatingsReviews() {
   //TODO: Will focus on this part
@@ -19,11 +19,10 @@ export default function RatingsReviews() {
   // };
   //   getApi();
   // }, []);
+
   return (
     <div>
-      <h1>Hello from ratings and reviews!</h1>
-      <h1>This is Hatha's part Testing git flow!</h1>
-
+      <p>Hello from ratings and reviews!!TESTING!!</p>
     </div>
   );
 }
