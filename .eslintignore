@@ -4,3 +4,4 @@
 **/vendor
 **/*.min.js
 **/client/dist/bundle.js
+**/client/src/components/questionsAnswers/dummyQuestions.js

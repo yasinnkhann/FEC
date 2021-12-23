@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { TOKEN } from '../../config.js';
+import AppContext from '../../AppContext.js';
 
 export default function RatingsReviews() {
+  const { products, setProducts } = useContext(AppContext);
+
   //TODO: Will focus on this part
   // useEffect(() => {
   // const getApi = async () => {
@@ -23,6 +26,7 @@ export default function RatingsReviews() {
   return (
     <div>
       <p>Hello from ratings and reviews!!TESTING!!</p>
+      {console.log('from Rating and Reviews', products)}
     </div>
   );
 }
