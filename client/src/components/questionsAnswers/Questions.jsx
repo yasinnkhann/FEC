@@ -12,7 +12,7 @@ export default function Questions() {
   ));
 
   return (
-    <div>
+    <div className='questionsContainer'>
       {mappedQs}
     </div>
   );

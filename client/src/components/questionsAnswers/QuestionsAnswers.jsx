@@ -38,11 +38,12 @@ export default function QuestionsAnswers() {
   }, []);
 
   return (
-    <div className='qa'>
+    <div className='qaWidget'>
       <QuestionsContext.Provider value={{ questionsData, setQuestionsData }}>
-        <Questions />
-        {console.log('QUESTIONS DATA: ', questionsData)}
         {/* {console.log('FROM QA: ', products)} */}
+        {console.log('QUESTIONS DATA: ', questionsData)}
+        <h3>QUESTIONS & ANSWERS</h3>
+        <Questions />
       </QuestionsContext.Provider>
     </div>
   );
