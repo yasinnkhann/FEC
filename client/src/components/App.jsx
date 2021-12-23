@@ -6,12 +6,12 @@ import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import { TOKEN } from '../config.js'
 
-export default function App() {
+const App = () => {
 
   useEffect(() => {
     const getApi = async () => {
       try {
-        const res = await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
+        const res = await axios.get('http://localhost:3000/api', {
           headers: {
             'Authorization': `${TOKEN}`
           }
@@ -34,3 +34,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
