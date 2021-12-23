@@ -8,21 +8,23 @@ import { TOKEN } from '../config.js';
 import AppContext from '../AppContext.js';
 
 export default function App() {
-
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const getApi = async () => {
       try {
-        const res = await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
-          params: {
-            // page: 1,
-            count: 2000
-          },
-          headers: {
-            'Authorization': `${TOKEN}`
+        const res = await axios.get(
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
+          {
+            params: {
+              // page: 1,
+              count: 2000,
+            },
+            headers: {
+              Authorization: `${TOKEN}`,
+            },
           }
-        });
+        );
         console.log(res.data);
         setProducts(res.data);
       } catch (err) {

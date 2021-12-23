@@ -3,9 +3,7 @@ import axios from 'axios';
 import { TOKEN } from '../../config.js';
 import AppContext from '../../AppContext.js';
 
-
 export default function QuestionsAnswers() {
-
   const { products, setProducts } = useContext(AppContext);
 
   // useEffect(() => {
@@ -32,9 +30,8 @@ export default function QuestionsAnswers() {
 
   return (
     <div>
-      Hello from questions and answers!
+      Hello from questions and answers!!!
       {/* {console.log('FROM QA: ', products)} */}
     </div>
   );
 }
-
