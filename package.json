@@ -26,6 +26,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.3",
     "eslint": "^8.5.0",
+    "eslint-plugin-react": "^7.28.0",
     "jest": "^27.4.5",
     "nodemon": "^2.0.15",
     "webpack": "^5.65.0",

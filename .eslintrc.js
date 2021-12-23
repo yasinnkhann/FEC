@@ -6,7 +6,7 @@
 
 module.exports = {
   env: {
-    'es6': true
+    'es7': true
   },
   parserOptions: {
     sourceType: 'module',
@@ -43,6 +43,5 @@ module.exports = {
     /* Minuta */
     'comma-style': [2, 'last'],
     'quotes': [1, 'single']
-  },
-  // parser: 'babel-eslint',
+  }
 };
