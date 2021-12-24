@@ -1,19 +1,20 @@
-import React, { useEffect }  from 'react';
-import { TOKEN } from '../../config.js'
-import axios from 'axios'
-
+import React, { useEffect } from 'react';
+import { TOKEN } from '../../config.js';
+import axios from 'axios';
 
 export default function Overview() {
-
   useEffect(() => {
-    const getApi = async() => {
+    const getApi = async () => {
       try {
-        const res = await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
-          headers: {
-            'Authorization': `${TOKEN}`
+        const res = await axios.get(
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
+          {
+            headers: {
+              Authorization: `${TOKEN}`,
+            },
           }
-        });
-        console.log(res.data);
+        );
+        // console.log(res.data);
       } catch (err) {
         console.error(err);
       }
@@ -21,7 +22,5 @@ export default function Overview() {
 
     getApi();
   }, []);
-  return (
-    <div>Hello from Overview!</div>
-  );
+  return <div>Hello from Overview!</div>;
 }
