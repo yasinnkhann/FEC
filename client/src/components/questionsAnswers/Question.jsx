@@ -1,81 +1,104 @@
 import React from 'react';
+import styled from 'styled-components';
 
 export default function Question({ questionObj }) {
   return (
-    <div className='questionContainer'>
-      <div className='questionContainer__question'>
-        <div className='questionContainer__question__leftSection'>
-          <h4>Q: {questionObj.question_body}</h4>
-        </div>
-        <div className='questionContainer__question__rightSection'>
-          <span>Helpful?</span>
-          {' '}
+    <Container>
+      <QuestionPortion>
+        <QuestionLeftSection>
+          <QuestionBody>Q: {questionObj.question_body}</QuestionBody>
+        </QuestionLeftSection>
+        <QuestionRightSection>
+          <span>Helpful?</span>{' '}
           <a href='#!'>
             <u>Yes</u>
-          </a>
-          {' '}
-          <span className='questionContainer__question__rightSection__helpfulCount'>
+          </a>{' '}
+          <QuestionHelpfulCount>
             ({questionObj.question_helpfulness})
-          </span>
-          {' '}
-          |
-          {' '}
+          </QuestionHelpfulCount>{' '}
           <a href='#!'>
             <u>Add Answer</u>
           </a>
-        </div>
-      </div>
+        </QuestionRightSection>
+      </QuestionPortion>
       <br />
-      <div className='questionContainer__answerContainer'>
-        <div className='questionContainer__answerContainer__answer'>
+      <AnswerPortion>
+        <AnswerContainer>
           <strong>A:</strong>
-          <p className='questionContainer__answerContainer__answer__body'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deleniti voluptas id itaque alias vel, dicta corrupti voluptatum quos iste nulla doloribus laudantium illo quae fuga molestiae consectetur dolor repellendus!
-          </p>
-        </div>
-        <div className='questionContainer__answerContainer__details'>
+          <AnswerBody>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
+            deleniti voluptas id itaque alias vel, dicta corrupti voluptatum
+            quos iste nulla doloribus laudantium illo quae fuga molestiae
+            consectetur dolor repellendus!
+          </AnswerBody>
+        </AnswerContainer>
+        <AnswerDetails>
           <span>
-            by: Yasin, | Helpful? 
-            {' '}
-            <a href="#!">
+            by: Yasin, | Helpful?{' '}
+            <a href='#!'>
               <u>Yes</u>
-            </a>
-            {' '}
-            (2) | 
-            {' '}
-            <a href="#!"><u>Report</u></a>
-          </span> 
-        </div>
-        <div className='questionContainer__answerContainer__photoContainer'>
-          <p className='questionContainer__answerContainer__photoContainer__body'>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores alias, dignissimos sed itaque unde inventore in distinctio exercitationem blanditiis molestiae vel illum eius minus repudiandae rem sequi pariatur nobis! Voluptas.
-          </p>
-          <br/>
-          <div className='questionContainer__answerContainer__photoContainer__photos'>
-            <img 
-              className='questionContainer__answerContainer__photoContainer__photos__photo'
-            />
-          </div>
-          <div className='questionContainer__answerContainer__photoContainer__details'>
-
-          </div>
-          <span>
-            by: <strong>Seller</strong>, | Helpful? 
-            {' '}
-            <a href="#!">
-              <u>Yes</u>
-            </a> 
-            {' '}
-            (7) | 
-            {' '}
-            <a href="#!">
+            </a>{' '}
+            (2) |{' '}
+            <a href='#!'>
               <u>Report</u>
             </a>
           </span>
-        </div>
-        <hr style={{height: .5, borderColor: 'red'}}/> 
-      </div>
-    </div>
+        </AnswerDetails>
+        <PhotoContainer>
+          <PhotoBody>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
+            alias, dignissimos sed itaque unde inventore in distinctio
+            exercitationem blanditiis molestiae vel illum eius minus repudiandae
+            rem sequi pariatur nobis! Voluptas.
+          </PhotoBody>
+          <br />
+          <Photos>
+            <img />
+            <img />
+          </Photos>
+          <PhotoDetails>
+            <span>
+              by: <strong>Seller</strong>, | Helpful?{' '}
+              <a href='#!'>
+                <u>Yes</u>
+              </a>{' '}
+              (7) |{' '}
+              <a href='#!'>
+                <u>Report</u>
+              </a>
+            </span>
+          </PhotoDetails>
+        </PhotoContainer>
+        <hr style={{ height: 0.5, borderColor: 'red' }} />
+      </AnswerPortion>
+    </Container>
   );
 }
 
+const Container = styled.div``;
+
+const QuestionPortion = styled.div``;
+
+const QuestionLeftSection = styled.div``;
+
+const QuestionRightSection = styled.div``;
+
+const QuestionBody = styled.h4``;
+
+const QuestionHelpfulCount = styled.span``;
+
+const AnswerPortion = styled.div``;
+
+const AnswerContainer = styled.div``;
+
+const AnswerBody = styled.p``;
+
+const AnswerDetails = styled.div``;
+
+const PhotoContainer = styled.div``;
+
+const PhotoBody = styled.p``;
+
+const Photos = styled.div``;
+
+const PhotoDetails = styled.div``;
