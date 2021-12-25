@@ -11,9 +11,5 @@ export default function Questions() {
     <Question key={question.question_id} questionObj={question} />
   ));
 
-  return (
-    <div className='questionsContainer'>
-      {mappedQs}
-    </div>
-  );
+  return <div className='questionsContainer'>{mappedQs}</div>;
 }

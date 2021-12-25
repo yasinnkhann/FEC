@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import _ from 'lodash';
+import Answer from './Answer.jsx';
 
 export default function Question({ questionObj }) {
+  const handleMappedAnswers = answersObj => {
+    return Object.keys(answersObj).map(key => {
+      return (
+        <AnswerContainer key={key}>
+          <strong>A:</strong>
+          <AnswerBody>{answersObj[key].body}</AnswerBody>
+        </AnswerContainer>
+      );
+    });
+  };
+
   return (
     <Container>
       <QuestionPortion>
@@ -10,36 +23,32 @@ export default function Question({ questionObj }) {
         </QuestionLeftSection>
         <QuestionRightSection>
           <span>Helpful?</span>{' '}
-          <a href='#!'>
+          <a href='#'>
             <u>Yes</u>
           </a>{' '}
           <QuestionHelpfulCount>
             ({questionObj.question_helpfulness})
           </QuestionHelpfulCount>{' '}
-          <a href='#!'>
+          <a href='#'>
             <u>Add Answer</u>
           </a>
         </QuestionRightSection>
       </QuestionPortion>
       <br />
       <AnswerPortion>
-        <AnswerContainer>
+        {handleMappedAnswers(questionObj.answers)}
+        {/* <AnswerContainer>
           <strong>A:</strong>
-          <AnswerBody>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
-            deleniti voluptas id itaque alias vel, dicta corrupti voluptatum
-            quos iste nulla doloribus laudantium illo quae fuga molestiae
-            consectetur dolor repellendus!
-          </AnswerBody>
-        </AnswerContainer>
-        <AnswerDetails>
+          <AnswerBody>{handleMappedAnswers(questionObj.answers)}</AnswerBody>
+        </AnswerContainer> */}
+        {/* <AnswerDetails>
           <span>
             by: Yasin, | Helpful?{' '}
-            <a href='#!'>
+            <a href='#'>
               <u>Yes</u>
             </a>{' '}
             (2) |{' '}
-            <a href='#!'>
+            <a href='#'>
               <u>Report</u>
             </a>
           </span>
@@ -59,16 +68,16 @@ export default function Question({ questionObj }) {
           <PhotoDetails>
             <span>
               by: <strong>Seller</strong>, | Helpful?{' '}
-              <a href='#!'>
+              <a href='#'>
                 <u>Yes</u>
               </a>{' '}
               (7) |{' '}
-              <a href='#!'>
+              <a href='#'>
                 <u>Report</u>
               </a>
             </span>
           </PhotoDetails>
-        </PhotoContainer>
+        </PhotoContainer> */}
         <hr style={{ height: 0.5, borderColor: 'red' }} />
       </AnswerPortion>
     </Container>
