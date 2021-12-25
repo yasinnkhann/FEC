@@ -7,10 +7,52 @@ export default function Question({ questionObj }) {
   const handleMappedAnswers = answersObj => {
     return Object.keys(answersObj).map(key => {
       return (
-        <AnswerContainer key={key}>
-          <strong>A:</strong>
-          <AnswerBody>{answersObj[key].body}</AnswerBody>
-        </AnswerContainer>
+        <AnswerPortion key={key}>
+          <AnswerContainer>
+            <strong>A:</strong>
+            <AnswerBody>{answersObj[key].body}</AnswerBody>
+          </AnswerContainer>
+          <AnswerDetails>
+            <span>
+              by: {answersObj[key].answerer_name}, | Helpful?{' '}
+              <a href='#'>
+                <u>Yes</u>
+              </a>{' '}
+              ({answersObj[key].helpfulness}) |{' '}
+              <a href='#'>
+                <u>Report</u>
+              </a>
+            </span>
+          </AnswerDetails>
+          {answersObj[key].photos.length > 0 && (
+            <PhotoContainer>
+              {/* <PhotoBody>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
+              alias, dignissimos sed itaque unde inventore in distinctio
+              exercitationem blanditiis molestiae vel illum eius minus
+              repudiandae rem sequi pariatur nobis! Voluptas.
+            </PhotoBody> */}
+              {/* <br /> */}
+              <Photos>
+                {answersObj[key].photos.map((photoSrc, idx) => (
+                  <img key={idx} src={photoSrc} width='200' height='200' />
+                ))}
+              </Photos>
+              {/* <PhotoDetails>
+              <span>
+                by: <strong>Seller</strong>, | Helpful?{' '}
+                <a href='#'>
+                  <u>Yes</u>
+                </a>{' '}
+                (7) |{' '}
+                <a href='#'>
+                  <u>Report</u>
+                </a>
+              </span>
+            </PhotoDetails> */}
+            </PhotoContainer>
+          )}
+        </AnswerPortion>
       );
     });
   };
@@ -35,51 +77,8 @@ export default function Question({ questionObj }) {
         </QuestionRightSection>
       </QuestionPortion>
       <br />
-      <AnswerPortion>
-        {handleMappedAnswers(questionObj.answers)}
-        {/* <AnswerContainer>
-          <strong>A:</strong>
-          <AnswerBody>{handleMappedAnswers(questionObj.answers)}</AnswerBody>
-        </AnswerContainer> */}
-        {/* <AnswerDetails>
-          <span>
-            by: Yasin, | Helpful?{' '}
-            <a href='#'>
-              <u>Yes</u>
-            </a>{' '}
-            (2) |{' '}
-            <a href='#'>
-              <u>Report</u>
-            </a>
-          </span>
-        </AnswerDetails>
-        <PhotoContainer>
-          <PhotoBody>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
-            alias, dignissimos sed itaque unde inventore in distinctio
-            exercitationem blanditiis molestiae vel illum eius minus repudiandae
-            rem sequi pariatur nobis! Voluptas.
-          </PhotoBody>
-          <br />
-          <Photos>
-            <img />
-            <img />
-          </Photos>
-          <PhotoDetails>
-            <span>
-              by: <strong>Seller</strong>, | Helpful?{' '}
-              <a href='#'>
-                <u>Yes</u>
-              </a>{' '}
-              (7) |{' '}
-              <a href='#'>
-                <u>Report</u>
-              </a>
-            </span>
-          </PhotoDetails>
-        </PhotoContainer> */}
-        <hr style={{ height: 0.5, borderColor: 'red' }} />
-      </AnswerPortion>
+      {handleMappedAnswers(questionObj.answers)}
+      <hr style={{ height: 0.5, borderColor: 'red' }} />
     </Container>
   );
 }
