@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import _ from 'lodash';
-import Answer from './Answer.jsx';
+import Moment from 'react-moment';
 
 export default function Question({ questionObj }) {
   const handleMappedAnswers = answersObj => {
@@ -14,7 +13,9 @@ export default function Question({ questionObj }) {
           </AnswerContainer>
           <AnswerDetails>
             <span>
-              by: {answersObj[key].answerer_name}, | Helpful?{' '}
+              by: {answersObj[key].answerer_name},{' '}
+              <Moment format='MM/DD/YYYY'>{answersObj[key].date}</Moment> |
+              Helpful?{' '}
               <a href='#'>
                 <u>Yes</u>
               </a>{' '}
@@ -35,7 +36,13 @@ export default function Question({ questionObj }) {
               {/* <br /> */}
               <Photos>
                 {answersObj[key].photos.map((photoSrc, idx) => (
-                  <img key={idx} src={photoSrc} width='200' height='200' />
+                  <img
+                    key={idx}
+                    src={photoSrc}
+                    width='200'
+                    height='200'
+                    loading='lazy'
+                  />
                 ))}
               </Photos>
               {/* <PhotoDetails>
