@@ -5,22 +5,30 @@ import QuestionsContext from './QuestionsContext.js';
 
 export default function Question({ questionObj }) {
   // CONTEXT
-  const { products, questionsData, setQuestionsData } =
-    useContext(QuestionsContext);
+  const { questionsData, setQuestionsData } = useContext(QuestionsContext);
+
   // STATE
-  const [hasHelpfulCountIncremented, setHasHelpfulCountIncremented] =
-    useState(false);
-  const [isAnswerReported, setIsAnswerReported] = useState(false);
+  const [answerHelpfulTracker, setAnswerHelpfulTracker] = useState({});
+  const [
+    hasQuestionHelpfulCountIncremented,
+    setHasQuestionHelpfulCountIncremented,
+  ] = useState(false);
+
   // METHODS
-  const increaseAnswerHelpfulCount = answerObj => {
-    const keyId = answerObj.id;
+  const increaseQuestionHelpfulCount = (e, questionObj) => {
+    e.preventDefault();
+    console.log(questionObj);
     const questionsDataCopy = [...questionsData.results];
-    let incrementedCount = answerObj.helpfulness + 1;
+    let incrementedCount = questionObj.question_helpfulness + 1;
     for (let i = 0; i < questionsDataCopy.length; i++) {
       let question = questionsDataCopy[i];
       for (let key in question) {
-        if (question[key] === questionObj.question_id) {
-          question.answers[keyId].helpfulness = incrementedCount;
+        if (
+          question[key] === questionObj.question_id &&
+          !hasQuestionHelpfulCountIncremented
+        ) {
+          question.question_helpfulness = incrementedCount;
+          setHasQuestionHelpfulCountIncremented(true);
         }
       }
     }
@@ -29,6 +37,32 @@ export default function Question({ questionObj }) {
       results: questionsDataCopy,
     });
   };
+
+  const increaseAnswerHelpfulCount = (e, answerObj) => {
+    e.preventDefault();
+    const keyId = answerObj.id;
+    const trackerCopy = Object.assign({}, answerHelpfulTracker);
+    const questionsDataCopy = [...questionsData.results];
+    let incrementedCount = answerObj.helpfulness + 1;
+    for (let i = 0; i < questionsDataCopy.length; i++) {
+      let question = questionsDataCopy[i];
+      for (let key in question) {
+        if (
+          question[key] === questionObj.question_id &&
+          !trackerCopy.hasOwnProperty([keyId])
+        ) {
+          question.answers[keyId].helpfulness = incrementedCount;
+          trackerCopy[keyId] = true;
+        }
+      }
+    }
+    setQuestionsData({
+      product_id: questionsData.product_id,
+      results: questionsDataCopy,
+    });
+    setAnswerHelpfulTracker(trackerCopy);
+  };
+
   const handleMappedAnswers = answersObj => {
     return Object.keys(answersObj).map(key => {
       return (
@@ -47,13 +81,15 @@ export default function Question({ questionObj }) {
               )}
               , <Moment format='MMMM Do YYYY'>{answersObj[key].date}</Moment> |
               Helpful?{' '}
-              <a href='#'>
-                <u onClick={() => increaseAnswerHelpfulCount(answersObj[key])}>
+              <a href=''>
+                <u
+                  onClick={e => increaseAnswerHelpfulCount(e, answersObj[key])}
+                >
                   Yes
                 </u>
               </a>{' '}
               ({answersObj[key].helpfulness}) |{' '}
-              <a href='#'>
+              <a href=''>
                 <u>Report</u>
               </a>
             </span>
@@ -81,11 +117,11 @@ export default function Question({ questionObj }) {
               {/* <PhotoDetails>
               <span>
                 by: <strong>Seller</strong>, | Helpful?{' '}
-                <a href='#'>
+                <a href=''>
                   <u>Yes</u>
                 </a>{' '}
                 (7) |{' '}
-                <a href='#'>
+                <a href=''>
                   <u>Report</u>
                 </a>
               </span>
@@ -105,13 +141,16 @@ export default function Question({ questionObj }) {
         </QuestionLeftSection>
         <QuestionRightSection>
           <span>Helpful?</span>{' '}
-          <a href='#'>
+          <a
+            href=''
+            onClick={e => increaseQuestionHelpfulCount(e, questionObj)}
+          >
             <u>Yes</u>
           </a>{' '}
           <QuestionHelpfulCount>
             ({questionObj.question_helpfulness})
           </QuestionHelpfulCount>{' '}
-          <a href='#'>
+          <a href=''>
             <u>Add Answer</u>
           </a>
         </QuestionRightSection>

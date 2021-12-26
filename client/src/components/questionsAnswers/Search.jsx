@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
 export default function Search() {
+  // STATE
+  const [searchQuery, setSearchQuery] = useState('');
+  // METHODS
+
   return (
-    <Form>
+    <Container>
       <SearchBar
         type='text'
         placeholder='Have a question? Search for answers…'
+        name='searchQuery'
+        value={searchQuery}
+        onChange={e => setSearchQuery(e.target.value)}
       />
       <MagnifyIcon />
-    </Form>
+    </Container>
   );
 }
 
-const Form = styled.form`
+const Container = styled.div`
   position: relative;
   display: flex;
   min-width: 100px;
