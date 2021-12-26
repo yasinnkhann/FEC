@@ -18,14 +18,20 @@ export default function Questions() {
       <Question key={question.question_id} questionObj={question} />
     ));
 
-  const renderRemainingQs = () => {
+  const handleRemainingQs = () => {
     setShouldRenderRemainingQuestions(true);
   };
 
   return (
     <Container>
-      {initialQs}
-      <button onClick={renderRemainingQs}>More Answered Questions</button>
+      {initialQs?.length > 0 ? (
+        initialQs
+      ) : (
+        <button>Submit a new question</button>
+      )}
+      {initialQs?.length > 0 && (
+        <button onClick={handleRemainingQs}>More Answered Questions</button>
+      )}
       {shouldRenderRemainingQs &&
         questionsData?.results
           ?.slice(4, questionsData?.results.length)

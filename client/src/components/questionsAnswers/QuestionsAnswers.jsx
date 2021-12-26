@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import { TOKEN } from '../../config.js';
 import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
@@ -44,10 +45,12 @@ export default function QuestionsAnswers() {
       <QuestionsContext.Provider value={{ questionsData, setQuestionsData }}>
         {/* {console.log('PRODUCTS FROM QA: ', products)} */}
         {console.log('QUESTIONS DATA: ', questionsData)}
-        <h3>QUESTIONS &#38; ANSWERS</h3>
+        <QATitle>QUESTIONS &#38; ANSWERS</QATitle>
         <SearchBar />
         <Questions />
       </QuestionsContext.Provider>
     </div>
   );
 }
+
+const QATitle = styled.h3``;

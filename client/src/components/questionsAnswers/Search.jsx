@@ -16,7 +16,7 @@ export default function Search() {
         value={searchQuery}
         onChange={e => setSearchQuery(e.target.value)}
       />
-      <MagnifyIcon />
+      <MagnifyGlassIcon />
     </Container>
   );
 }
@@ -37,7 +37,7 @@ const SearchBar = styled.input`
   background-color: #f5f5f5;
 `;
 
-const MagnifyIcon = styled(SearchIcon)`
+const MagnifyGlassIcon = styled(SearchIcon)`
   && {
     color: black;
   }
