@@ -87,44 +87,70 @@ export default function Question({ questionObj }) {
     setAnswerReportedTracker(trackerCopy);
   };
 
-  const handleMappedAnswers = answersObj => {
-    return Object.keys(answersObj)
-      .map(key => {
-        return (
+  return (
+    <Container>
+      <QuestionPortion>
+        <QuestionLeftSection>
+          <QuestionBody>Q: {questionObj.question_body}</QuestionBody>
+        </QuestionLeftSection>
+        <QuestionRightSection>
+          <span>Helpful?</span>{' '}
+          <a
+            href=''
+            onClick={e => increaseQuestionHelpfulCount(e, questionObj)}
+          >
+            <u>Yes</u>
+          </a>{' '}
+          <QuestionHelpfulCount>
+            ({questionObj.question_helpfulness})
+          </QuestionHelpfulCount>{' '}
+          <a href=''>
+            <u>Add Answer</u>
+          </a>
+        </QuestionRightSection>
+      </QuestionPortion>
+      <br />
+      {Object.keys(questionObj.answers)
+        .map(key => (
           <AnswerPortion key={key}>
             <AnswerContainer>
               <strong>A:</strong>
-              <AnswerBody>{answersObj[key].body}</AnswerBody>
+              <AnswerBody>{questionObj.answers[key].body}</AnswerBody>
             </AnswerContainer>
             <AnswerDetails>
               <span>
                 by:{' '}
-                {answersObj[key].answerer_name === 'Seller' ? (
-                  <strong>{answersObj[key].answerer_name}</strong>
+                {questionObj.answers[key].answerer_name === 'Seller' ? (
+                  <strong>{questionObj.answers[key].answerer_name}</strong>
                 ) : (
-                  answersObj[key].answerer_name
+                  questionObj.answers[key].answerer_name
                 )}
-                , <Moment format='MMMM Do YYYY'>{answersObj[key].date}</Moment>{' '}
+                ,{' '}
+                <Moment format='MMMM Do YYYY'>
+                  {questionObj.answers[key].date}
+                </Moment>{' '}
                 | Helpful?{' '}
                 <a href=''>
                   <u
                     onClick={e =>
-                      increaseAnswerHelpfulCount(e, answersObj[key])
+                      increaseAnswerHelpfulCount(e, questionObj.answers[key])
                     }
                   >
                     Yes
                   </u>
                 </a>{' '}
-                ({answersObj[key].helpfulness}) |{' '}
+                ({questionObj.answers[key].helpfulness}) |{' '}
                 <a
                   href=''
-                  onClick={e => handleAnswerReported(e, answersObj[key])}
+                  onClick={e =>
+                    handleAnswerReported(e, questionObj.answers[key])
+                  }
                 >
                   <u>{answerReportedTracker[key] ? 'Reported' : 'Report'}</u>
                 </a>
               </span>
             </AnswerDetails>
-            {answersObj[key].photos.length > 0 && (
+            {questionObj.answers[key].photos.length > 0 && (
               <PhotoContainer>
                 {/* <PhotoBody>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
@@ -134,7 +160,7 @@ export default function Question({ questionObj }) {
             </PhotoBody> */}
                 {/* <br /> */}
                 <Photos>
-                  {answersObj[key].photos.map((photoSrc, idx) => (
+                  {questionObj.answers[key].photos.map((photoSrc, idx) => (
                     <img
                       key={idx}
                       src={photoSrc}
@@ -159,37 +185,12 @@ export default function Question({ questionObj }) {
               </PhotoContainer>
             )}
           </AnswerPortion>
-        );
-      })
-      .sort(
-        (a, b) => answersObj[b.key].helpfulness - answersObj[a.key].helpfulness
-      );
-  };
-
-  return (
-    <Container>
-      <QuestionPortion>
-        <QuestionLeftSection>
-          <QuestionBody>Q: {questionObj.question_body}</QuestionBody>
-        </QuestionLeftSection>
-        <QuestionRightSection>
-          <span>Helpful?</span>{' '}
-          <a
-            href=''
-            onClick={e => increaseQuestionHelpfulCount(e, questionObj)}
-          >
-            <u>Yes</u>
-          </a>{' '}
-          <QuestionHelpfulCount>
-            ({questionObj.question_helpfulness})
-          </QuestionHelpfulCount>{' '}
-          <a href=''>
-            <u>Add Answer</u>
-          </a>
-        </QuestionRightSection>
-      </QuestionPortion>
-      <br />
-      {handleMappedAnswers(questionObj.answers)}
+        ))
+        .sort(
+          (a, b) =>
+            questionObj.answers[b.key].helpfulness -
+            questionObj.answers[a.key].helpfulness
+        )}
       <hr style={{ height: 0.5, borderColor: 'red' }} />
     </Container>
   );
