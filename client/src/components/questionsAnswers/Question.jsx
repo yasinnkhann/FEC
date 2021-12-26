@@ -13,6 +13,7 @@ export default function Question({ questionObj }) {
     hasQuestionHelpfulCountIncremented,
     setHasQuestionHelpfulCountIncremented,
   ] = useState(false);
+  const [answerReportedTracker, setAnswerReportedTracker] = useState({});
 
   // METHODS
   const increaseQuestionHelpfulCount = (e, questionObj) => {
@@ -52,7 +53,7 @@ export default function Question({ questionObj }) {
           !trackerCopy.hasOwnProperty([keyId])
         ) {
           question.answers[keyId].helpfulness = incrementedCount;
-          trackerCopy[keyId] = true;
+          trackerCopy[keyId] = 'Incremented';
         }
       }
     }
@@ -61,6 +62,29 @@ export default function Question({ questionObj }) {
       results: questionsDataCopy,
     });
     setAnswerHelpfulTracker(trackerCopy);
+  };
+
+  const handleAnswerReported = (e, answerObj) => {
+    e.preventDefault();
+    const keyId = answerObj.id;
+    const trackerCopy = Object.assign({}, answerReportedTracker);
+    const questionsDataCopy = [...questionsData.results];
+    for (let i = 0; i < questionsDataCopy.length; i++) {
+      let question = questionsDataCopy[i];
+      for (let key in question) {
+        if (
+          question[key] === questionObj.question_id &&
+          !trackerCopy.hasOwnProperty([keyId])
+        ) {
+          trackerCopy[keyId] = 'Reported';
+        }
+      }
+    }
+    setQuestionsData({
+      product_id: questionsData.product_id,
+      results: questionsDataCopy,
+    });
+    setAnswerReportedTracker(trackerCopy);
   };
 
   const handleMappedAnswers = answersObj => {
@@ -89,8 +113,11 @@ export default function Question({ questionObj }) {
                 </u>
               </a>{' '}
               ({answersObj[key].helpfulness}) |{' '}
-              <a href=''>
-                <u>Report</u>
+              <a
+                href=''
+                onClick={e => handleAnswerReported(e, answersObj[key])}
+              >
+                <u>{answerReportedTracker[key] ? 'Reported' : 'Report'}</u>
               </a>
             </span>
           </AnswerDetails>
