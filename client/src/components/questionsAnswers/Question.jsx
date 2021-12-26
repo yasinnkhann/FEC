@@ -88,60 +88,63 @@ export default function Question({ questionObj }) {
   };
 
   const handleMappedAnswers = answersObj => {
-    return Object.keys(answersObj).map(key => {
-      return (
-        <AnswerPortion key={key}>
-          <AnswerContainer>
-            <strong>A:</strong>
-            <AnswerBody>{answersObj[key].body}</AnswerBody>
-          </AnswerContainer>
-          <AnswerDetails>
-            <span>
-              By:{' '}
-              {answersObj[key].answerer_name === 'Seller' ? (
-                <strong>{answersObj[key].answerer_name}</strong>
-              ) : (
-                answersObj[key].answerer_name
-              )}
-              , <Moment format='MMMM Do YYYY'>{answersObj[key].date}</Moment> |
-              Helpful?{' '}
-              <a href=''>
-                <u
-                  onClick={e => increaseAnswerHelpfulCount(e, answersObj[key])}
+    return Object.keys(answersObj)
+      .map(key => {
+        return (
+          <AnswerPortion key={key}>
+            <AnswerContainer>
+              <strong>A:</strong>
+              <AnswerBody>{answersObj[key].body}</AnswerBody>
+            </AnswerContainer>
+            <AnswerDetails>
+              <span>
+                by:{' '}
+                {answersObj[key].answerer_name === 'Seller' ? (
+                  <strong>{answersObj[key].answerer_name}</strong>
+                ) : (
+                  answersObj[key].answerer_name
+                )}
+                , <Moment format='MMMM Do YYYY'>{answersObj[key].date}</Moment>{' '}
+                | Helpful?{' '}
+                <a href=''>
+                  <u
+                    onClick={e =>
+                      increaseAnswerHelpfulCount(e, answersObj[key])
+                    }
+                  >
+                    Yes
+                  </u>
+                </a>{' '}
+                ({answersObj[key].helpfulness}) |{' '}
+                <a
+                  href=''
+                  onClick={e => handleAnswerReported(e, answersObj[key])}
                 >
-                  Yes
-                </u>
-              </a>{' '}
-              ({answersObj[key].helpfulness}) |{' '}
-              <a
-                href=''
-                onClick={e => handleAnswerReported(e, answersObj[key])}
-              >
-                <u>{answerReportedTracker[key] ? 'Reported' : 'Report'}</u>
-              </a>
-            </span>
-          </AnswerDetails>
-          {answersObj[key].photos.length > 0 && (
-            <PhotoContainer>
-              {/* <PhotoBody>
+                  <u>{answerReportedTracker[key] ? 'Reported' : 'Report'}</u>
+                </a>
+              </span>
+            </AnswerDetails>
+            {answersObj[key].photos.length > 0 && (
+              <PhotoContainer>
+                {/* <PhotoBody>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
               alias, dignissimos sed itaque unde inventore in distinctio
               exercitationem blanditiis molestiae vel illum eius minus
               repudiandae rem sequi pariatur nobis! Voluptas.
             </PhotoBody> */}
-              {/* <br /> */}
-              <Photos>
-                {answersObj[key].photos.map((photoSrc, idx) => (
-                  <img
-                    key={idx}
-                    src={photoSrc}
-                    width='200'
-                    height='200'
-                    loading='lazy'
-                  />
-                ))}
-              </Photos>
-              {/* <PhotoDetails>
+                {/* <br /> */}
+                <Photos>
+                  {answersObj[key].photos.map((photoSrc, idx) => (
+                    <img
+                      key={idx}
+                      src={photoSrc}
+                      width='200'
+                      height='200'
+                      loading='lazy'
+                    />
+                  ))}
+                </Photos>
+                {/* <PhotoDetails>
               <span>
                 by: <strong>Seller</strong>, | Helpful?{' '}
                 <a href=''>
@@ -153,11 +156,14 @@ export default function Question({ questionObj }) {
                 </a>
               </span>
             </PhotoDetails> */}
-            </PhotoContainer>
-          )}
-        </AnswerPortion>
+              </PhotoContainer>
+            )}
+          </AnswerPortion>
+        );
+      })
+      .sort(
+        (a, b) => answersObj[b.key].helpfulness - answersObj[a.key].helpfulness
       );
-    });
   };
 
   return (
