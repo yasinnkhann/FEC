@@ -27,10 +27,12 @@ export default function Questions() {
       {initialQs?.length > 0 ? (
         initialQs
       ) : (
-        <button>Submit a new question</button>
+        <SubmitNewQBtn>Submit a new question</SubmitNewQBtn>
       )}
-      {initialQs?.length > 0 && (
-        <button onClick={handleRemainingQs}>More Answered Questions</button>
+      {initialQs?.length > 4 && (
+        <MoreAnsweredQsBtn onClick={handleRemainingQs}>
+          More Answered Questions
+        </MoreAnsweredQsBtn>
       )}
       {shouldRenderRemainingQs &&
         questionsData?.results
@@ -43,3 +45,7 @@ export default function Questions() {
 }
 
 const Container = styled.div``;
+
+const SubmitNewQBtn = styled.button``;
+
+const MoreAnsweredQsBtn = styled.button``;
