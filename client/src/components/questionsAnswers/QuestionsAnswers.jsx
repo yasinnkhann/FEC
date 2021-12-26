@@ -4,6 +4,7 @@ import { TOKEN } from '../../config.js';
 import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';
+import SearchBar from './Search.jsx';
 
 export default function QuestionsAnswers() {
   // STATE
@@ -41,9 +42,10 @@ export default function QuestionsAnswers() {
   return (
     <div className='qaWidget'>
       <QuestionsContext.Provider value={{ questionsData, setQuestionsData }}>
-        {/* {console.log('FROM QA: ', products)} */}
+        {/* {console.log('PRODUCTS FROM QA: ', products)} */}
         {console.log('QUESTIONS DATA: ', questionsData)}
-        <h3>QUESTIONS & ANSWERS</h3>
+        <h3>QUESTIONS &#38; ANSWERS</h3>
+        <SearchBar />
         <Questions />
       </QuestionsContext.Provider>
     </div>

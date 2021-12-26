@@ -1,8 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Moment from 'react-moment';
+import QuestionsContext from './QuestionsContext.js';
 
 export default function Question({ questionObj }) {
+  // CONTEXT
+  const { products, questionsData, setQuestionsData } =
+    useContext(QuestionsContext);
+  // STATE
+  const [hasHelpfulCountIncremented, setHasHelpfulCountIncremented] =
+    useState(false);
+  const [isAnswerReported, setIsAnswerReported] = useState(false);
+  // METHODS
+  const increaseAnswerHelpfulCount = answerObj => {
+    const keyId = answerObj.id;
+    const questionsDataCopy = [...questionsData.results];
+    let incrementedCount = answerObj.helpfulness + 1;
+    for (let i = 0; i < questionsDataCopy.length; i++) {
+      let question = questionsDataCopy[i];
+      for (let key in question) {
+        if (question[key] === questionObj.question_id) {
+          question.answers[keyId].helpfulness = incrementedCount;
+        }
+      }
+    }
+    setQuestionsData({
+      product_id: questionsData.product_id,
+      results: questionsDataCopy,
+    });
+  };
   const handleMappedAnswers = answersObj => {
     return Object.keys(answersObj).map(key => {
       return (
@@ -13,11 +39,18 @@ export default function Question({ questionObj }) {
           </AnswerContainer>
           <AnswerDetails>
             <span>
-              by: {answersObj[key].answerer_name},{' '}
-              <Moment format='MM/DD/YYYY'>{answersObj[key].date}</Moment> |
+              By:{' '}
+              {answersObj[key].answerer_name === 'Seller' ? (
+                <strong>{answersObj[key].answerer_name}</strong>
+              ) : (
+                answersObj[key].answerer_name
+              )}
+              , <Moment format='MMMM Do YYYY'>{answersObj[key].date}</Moment> |
               Helpful?{' '}
               <a href='#'>
-                <u>Yes</u>
+                <u onClick={() => increaseAnswerHelpfulCount(answersObj[key])}>
+                  Yes
+                </u>
               </a>{' '}
               ({answersObj[key].helpfulness}) |{' '}
               <a href='#'>
