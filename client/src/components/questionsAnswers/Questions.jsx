@@ -2,22 +2,23 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import QuestionsContext from './QuestionsContext.js';
 import Question from './Question.jsx';
-import { dummyQs } from './dummyQuestions.js';
 
-export default function Questions() {
+export default function Questions({ questionsData }) {
   // CONTEXT
-  const { questionsData, setQuestionsData } = useContext(QuestionsContext);
+  // const { questionsData } = useContext(QuestionsContext);
 
   // STATE
   const [shouldRenderRemainingQs, setShouldRenderRemainingQuestions] =
     useState(false);
 
-  const initialQs = questionsData?.results
+  // VARIABLES
+  const initialQs = questionsData
     ?.slice(0, 4)
     .map(question => (
       <Question key={question.question_id} questionObj={question} />
     ));
 
+  // METHODS
   const handleRemainingQs = () => {
     setShouldRenderRemainingQuestions(true);
   };
@@ -35,7 +36,7 @@ export default function Questions() {
         </MoreAnsweredQsBtn>
       )}
       {shouldRenderRemainingQs &&
-        questionsData?.results
+        questionsData
           ?.slice(4, questionsData?.results.length)
           .map(question => (
             <Question key={question.question_id} questionObj={question} />

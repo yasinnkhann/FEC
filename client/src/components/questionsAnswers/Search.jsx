@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
-export default function Search() {
+export default function Search(props) {
   // STATE
   const [searchQuery, setSearchQuery] = useState('');
+
   // METHODS
+  const handleChangeProxy = e => {
+    setSearchQuery(e.target.value);
+    props.handleChange(searchQuery);
+  };
 
   return (
     <Container>
@@ -14,7 +19,7 @@ export default function Search() {
         placeholder='Have a question? Search for answers…'
         name='searchQuery'
         value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
+        onChange={handleChangeProxy}
       />
       <MagnifyGlassIcon />
     </Container>

@@ -5,14 +5,29 @@ import { TOKEN } from '../../config.js';
 import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';
-import SearchBar from './Search.jsx';
+import Search from './Search.jsx';
 
 export default function QuestionsAnswers() {
   // STATE
   const [questionsData, setQuestionsData] = useState([]);
+  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
 
   // CONTEXT
   const { products, setProducts } = useContext(AppContext);
+
+  // METHODS
+  const handleSearchQuery = query => {
+    if (query.length < 2) {
+      setFilteredQuestions(questionsData.results);
+    } else {
+      const questionsCopy = [...questionsData.results];
+      const refinedQuestions = questionsCopy.filter(question =>
+        question.question_body.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredQuestions(refinedQuestions);
+    }
+  };
 
   useEffect(() => {
     const getQs = async () => {
@@ -32,6 +47,7 @@ export default function QuestionsAnswers() {
           }
         );
         setQuestionsData(res.data);
+        setLoadingStatus(true);
       } catch (err) {
         console.error(err);
       }
@@ -46,8 +62,12 @@ export default function QuestionsAnswers() {
         {/* {console.log('PRODUCTS FROM QA: ', products)} */}
         {console.log('QUESTIONS DATA: ', questionsData)}
         <QATitle>QUESTIONS &#38; ANSWERS</QATitle>
-        <SearchBar />
-        <Questions />
+        {loadingStatus && (
+          <>
+            <Search handleChange={handleSearchQuery} />
+            <Questions questionsData={filteredQuestions} />
+          </>
+        )}
       </QuestionsContext.Provider>
     </div>
   );
