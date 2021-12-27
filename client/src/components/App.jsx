@@ -18,14 +18,14 @@ export default function App() {
           {
             params: {
               // page: 1,
-              count: 20,
+              count: 2000,
             },
             headers: {
               Authorization: `${TOKEN}`,
             },
           }
         );
-        // console.log(res.data);
+        console.log(res.data);
         setProducts(res.data);
       } catch (err) {
         console.error(err);

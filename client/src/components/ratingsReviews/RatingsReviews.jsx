@@ -43,7 +43,7 @@ export default function RatingsReviews() {
 
   return (
     <div>
-      <p>Hello from ratings and reviews!!TESTING!!</p>
+      <p>Hello from ratings and reviews!!TESTING!!1</p>
       {/* {console.log('from Product from APP:', products[0]?.id)} */}
       {/* {console.log('from RatingAndReviews:', ratingAndReviews)} */}
       <div>
