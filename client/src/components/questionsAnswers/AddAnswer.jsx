@@ -1,13 +1,18 @@
-import React, { Fragment, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
 import CloseIcon from '@material-ui/icons/Close';
+import axios from 'axios';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
   const { products } = useContext(AppContext);
   const { questionsData } = useContext(QuestionsContext);
+
+  // STATE
+  const [imageFilesList, setImageFilesList] = useState([]);
+  const [image, setImage] = useState('');
 
   // VARIABLES
   const specifiedProduct = products.filter(
@@ -25,15 +30,36 @@ export default function AddAnswer({ closeModal, question }) {
   }, []);
 
   // METHODS
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    alert('heyy');
+    const formData = new FormData();
+    formData.append('image', image);
+    try {
+      const res = await axios.post(
+        'http://localhost:3000/api/upload',
+        formData,
+        {}
+      );
+      console.log('RES: ', res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleFileUpload = e => {
+    console.log(e.target.files);
+    setImage(e.target.files[0]);
   };
 
   return (
     <Fragment>
       <Overlay>
-        <Content onSubmit={handleSubmit}>
+        <Content
+          // method='POST'
+          // action='/api/upload'
+          // enctype='multipart/form-data'
+          onSubmit={handleSubmit}
+        >
           <h2>Submit your Answer</h2>
           <h4>
             {specifiedProduct[0].name}: {question.question_body}
@@ -72,14 +98,16 @@ export default function AddAnswer({ closeModal, question }) {
           <span>- For authentication reasons, you will not be emailed.</span>
           <br />
           <br />
-          <label htmlFor='uploadInput'>Upload Photos: </label>
+          <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
           <br />
           <input
             type='file'
             id='uploadInput'
-            name='uploadInput'
-            multiple
+            name='image'
+            // multiple
             accept='image/*'
+            onChange={handleFileUpload}
+            // disabled={imageFilesList.length >= 5 ? true : false}
           ></input>
           <br />
           <br />
