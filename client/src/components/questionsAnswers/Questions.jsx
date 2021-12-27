@@ -1,57 +1,3 @@
-// import React, { useState, useContext } from 'react';
-// import styled from 'styled-components';
-// import QuestionsContext from './QuestionsContext.js';
-// import Question from './Question.jsx';
-
-// export default function Questions({ questionsData }) {
-//   // CONTEXT
-//   // const { questionsData } = useContext(QuestionsContext);
-
-//   // STATE
-//   const [shouldRenderRemainingQs, setShouldRenderRemainingQuestions] =
-//     useState(false);
-
-//   // VARIABLES
-//   const initialQs = questionsData
-//     ?.slice(0, 4)
-//     .map(question => (
-//       <Question key={question.question_id} questionObj={question} />
-//     ));
-
-//   const remainingQs = questionsData
-//     ?.slice(4, questionsData?.length)
-//     .map(question => (
-//       <Question key={question.question_id} questionObj={question} />
-//     ));
-
-//   // METHODS
-//   const handleRemainingQs = () => {
-//     setShouldRenderRemainingQuestions(true);
-//   };
-
-//   return (
-//     <Container>
-//       {initialQs?.length > 0 ? (
-//         initialQs
-//       ) : (
-//         <SubmitNewQBtn>Submit a new question</SubmitNewQBtn>
-//       )}
-//       {questionsData?.length > 4 && (
-//         <MoreAnsweredQsBtn onClick={handleRemainingQs}>
-//           More Answered Questions
-//         </MoreAnsweredQsBtn>
-//       )}
-//       {shouldRenderRemainingQs && remainingQs}
-//     </Container>
-//   );
-// }
-
-// const Container = styled.div``;
-
-// const SubmitNewQBtn = styled.button``;
-
-// const MoreAnsweredQsBtn = styled.button``;
-
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import QuestionsContext from './QuestionsContext.js';
@@ -62,8 +8,7 @@ export default function Questions({ questionsData, filteredData }) {
   const { useFilteredData, setUseFilteredData } = useContext(QuestionsContext);
 
   // STATE
-  const [shouldRenderRemainingQs, setShouldRenderRemainingQuestions] =
-    useState(false);
+  const [showRemainingQs, setShowRemainingQs] = useState(false);
 
   // VARIABLES
   let initialQs, remainingQs;
@@ -91,11 +36,6 @@ export default function Questions({ questionsData, filteredData }) {
       ));
   }
 
-  // METHODS
-  const handleRemainingQs = () => {
-    setShouldRenderRemainingQuestions(true);
-  };
-
   return (
     <Container>
       {initialQs?.length > 0 ? (
@@ -103,12 +43,12 @@ export default function Questions({ questionsData, filteredData }) {
       ) : (
         <SubmitNewQBtn>Submit a new question</SubmitNewQBtn>
       )}
-      {questionsData?.length > 4 && (
-        <MoreAnsweredQsBtn onClick={handleRemainingQs}>
+      {questionsData?.length > 4 && !showRemainingQs ? (
+        <MoreAnsweredQsBtn onClick={() => setShowRemainingQs(true)}>
           More Answered Questions
         </MoreAnsweredQsBtn>
-      )}
-      {shouldRenderRemainingQs && remainingQs}
+      ) : null}
+      {showRemainingQs && filteredData.length !== 0 ? remainingQs : null}
     </Container>
   );
 }

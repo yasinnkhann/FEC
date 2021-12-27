@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Moment from 'react-moment';
+import AddAnswer from './AddAnswer.jsx';
 import QuestionsContext from './QuestionsContext.js';
 
 export default function Question({ questionObj }) {
@@ -14,6 +15,7 @@ export default function Question({ questionObj }) {
     setHasQuestionHelpfulCountIncremented,
   ] = useState(false);
   const [answerReportedTracker, setAnswerReportedTracker] = useState({});
+  const [showAnswerModal, setShowAnswerModal] = useState(false);
 
   // METHODS
   const increaseQuestionHelpfulCount = (e, questionObj) => {
@@ -87,6 +89,11 @@ export default function Question({ questionObj }) {
     setAnswerReportedTracker(trackerCopy);
   };
 
+  const openAnswerModal = e => {
+    e.preventDefault();
+    setShowAnswerModal(true);
+  };
+
   return (
     <Container>
       <QuestionPortion>
@@ -104,7 +111,7 @@ export default function Question({ questionObj }) {
           <QuestionHelpfulCount>
             ({questionObj.question_helpfulness})
           </QuestionHelpfulCount>{' '}
-          <a href=''>
+          <a href='' onClick={openAnswerModal}>
             <u>Add Answer</u>
           </a>
         </QuestionRightSection>
@@ -192,6 +199,12 @@ export default function Question({ questionObj }) {
             questionObj.answers[a.key].helpfulness
         )}
       <hr style={{ height: 0.5, borderColor: 'red' }} />
+      {showAnswerModal && (
+        <AddAnswer
+          closeModal={() => setShowAnswerModal(false)}
+          question={questionObj}
+        />
+      )}
     </Container>
   );
 }

@@ -68,7 +68,7 @@ export default function QuestionsAnswers() {
           setUseFilteredData,
         }}
       >
-        {/* {console.log('PRODUCTS FROM QA: ', products)} */}
+        {console.log('PRODUCTS FROM QA: ', products)}
         {console.log('QUESTIONS DATA: ', questionsData)}
         <QATitle>QUESTIONS &#38; ANSWERS</QATitle>
         {loadingStatus && (
