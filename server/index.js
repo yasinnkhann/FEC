@@ -22,17 +22,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// const upload = multer({
-//   storage: storage,
-//   limits: { fileSize: 10000000000 },
-// }).array('image', 5);
-
 app.get('/api', (req, res) => {
   res.send('hey');
 });
 
-app.post('/api/upload', upload.single('image'), (req, res) => {
-  res.send('Image Uploaded');
+app.post('/api/upload', upload.array('images', 5), (req, res) => {
+  const reqFiles = [];
+  const url = req.protocol + '://' + req.get('host');
+  for (let i = 0; i < req.files.length; i++) {
+    reqFiles.push(
+      url + __dirname + '/../client/assets' + req.files[i].filename
+    );
+  }
+  res.send('UPLOADED');
 });
 
 app.listen(port, () => {

@@ -10,7 +10,7 @@ import Search from './Search.jsx';
 export default function QuestionsAnswers() {
   // STATE
   const [questionsData, setQuestionsData] = useState([]);
-  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [useFilteredData, setUseFilteredData] = useState(false);
 
@@ -38,8 +38,8 @@ export default function QuestionsAnswers() {
           'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
           {
             params: {
-              product_id: 40344,
-              // product_id: products[8]?.id,
+              // product_id: 40344,
+              product_id: products[8]?.id,
               // page: 1,
               // count: 1,
             },
@@ -49,7 +49,7 @@ export default function QuestionsAnswers() {
           }
         );
         setQuestionsData(res.data);
-        setLoadingStatus(true);
+        setIsLoaded(true);
       } catch (err) {
         console.error(err);
       }
@@ -71,7 +71,7 @@ export default function QuestionsAnswers() {
         {console.log('PRODUCTS FROM QA: ', products)}
         {console.log('QUESTIONS DATA: ', questionsData)}
         <QATitle>QUESTIONS &#38; ANSWERS</QATitle>
-        {loadingStatus && (
+        {isLoaded && (
           <>
             <Search handleChange={handleSearchQuery} />
             <Questions

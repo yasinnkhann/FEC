@@ -11,8 +11,8 @@ export default function AddAnswer({ closeModal, question }) {
   const { questionsData } = useContext(QuestionsContext);
 
   // STATE
-  const [imageFilesList, setImageFilesList] = useState([]);
-  const [image, setImage] = useState('');
+  const [numOfImages, setNumOfImages] = useState(0);
+  const [images, setImages] = useState('');
 
   // VARIABLES
   const specifiedProduct = products.filter(
@@ -30,41 +30,38 @@ export default function AddAnswer({ closeModal, question }) {
   }, []);
 
   // METHODS
+  const handleFileUpload = e => {
+    setNumOfImages(e.target.files.length);
+    setImages(e.target.files);
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('image', image);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    };
+    formData.append('images', images);
+
+    for (const key of Object.keys(images)) {
+      formData.append('images', images[key]);
+    }
+
     try {
       const res = await axios.post(
         'http://localhost:3000/api/upload',
-        formData,
-        config
+        formData
       );
       console.log('RES: ', res);
+      closeModal();
     } catch (err) {
       console.error(err);
+      alert('Cannot upload files more than 5 files');
+      setNumOfImages(0);
     }
-  };
-
-  const handleFileUpload = e => {
-    console.log(e.target.files);
-    setImage(e.target.files[0]);
   };
 
   return (
     <Fragment>
       <Overlay>
-        <Content
-          // method='POST'
-          // action='/api/upload'
-          // enctype='multipart/form-data'
-          onSubmit={handleSubmit}
-        >
+        <Content onSubmit={handleSubmit}>
           <h2>Submit your Answer</h2>
           <h4>
             {specifiedProduct[0].name}: {question.question_body}
@@ -105,15 +102,16 @@ export default function AddAnswer({ closeModal, question }) {
           <br />
           <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
           <br />
-          <input
-            type='file'
-            id='uploadInput'
-            name='image'
-            // multiple
-            accept='image/*'
-            onChange={handleFileUpload}
-            // disabled={imageFilesList.length >= 5 ? true : false}
-          ></input>
+          {numOfImages <= 4 && (
+            <input
+              type='file'
+              id='uploadInput'
+              name='images'
+              multiple
+              accept='image/*'
+              onChange={handleFileUpload}
+            />
+          )}
           <br />
           <br />
           <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
