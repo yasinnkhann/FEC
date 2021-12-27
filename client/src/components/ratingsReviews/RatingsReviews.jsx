@@ -1,14 +1,17 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { TOKEN } from '../../config.js';
+
 import AppContext from '../../AppContext.js';
-import Reviews from './Reviews.jsx';
+import { TOKEN } from '../../config.js';
 
-// var dataList = ['Kale', 'Cucumbers', 'Hot Pot', 'Ginger'];
-const ReviewList = (props) => {
+import ReviewList from './reviewList/ReviewList.jsx';
+import WriteReview from './writeReviews/WriteReview.jsx';
+import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
+import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
+import SortOptions from './sortOptions/SortOption.jsx';
 
-};
+
 
 export default function RatingsReviews() {
   const { products, setProducts } = useContext(AppContext);
@@ -31,7 +34,7 @@ export default function RatingsReviews() {
             }
           }
         );
-        // console.log('Rate and Review API Data:', res.data);
+        console.log('Rate and Review API Data:', res.data);
         setRatingAndReviews(res.data);
       } catch (err) {
         console.error(err);
@@ -43,7 +46,7 @@ export default function RatingsReviews() {
 
   return (
     <div>
-      <p>Hello from ratings and reviews!!TESTING!!1</p>
+      <p>Hello from ratings and reviews!</p>
       {/* {console.log('from Product from APP:', products[0]?.id)} */}
       {/* {console.log('from RatingAndReviews:', ratingAndReviews)} */}
       <div>

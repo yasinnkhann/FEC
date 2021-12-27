@@ -1,8 +1,5 @@
 import React from 'react';
-import {dummyDataReviews} from './dummyDataReviews.js';
 
-
-var dataList = ['Kale', 'Cucumbers', 'Hot Pot', 'Ginger'];
 
 const ReviewList = () => (<div>{props.item}</div>);
 
