@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
-import QuestionsContext from './QuestionsContext.js';
 import CloseIcon from '@material-ui/icons/Close';
-import axios from 'axios';
+import QuestionsContext from './QuestionsContext.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
@@ -13,12 +14,18 @@ export default function AddAnswer({ closeModal, question }) {
   // STATE
   const [numOfImages, setNumOfImages] = useState(0);
   const [images, setImages] = useState('');
+  const [formData, setFormData] = useState({
+    yourAnswer: '',
+    yourNickName: '',
+    yourEmail: '',
+  });
 
   // VARIABLES
   const specifiedProduct = products.filter(
     product => Number(product.id) === Number(questionsData.product_id)
   );
 
+  // METHODS
   useEffect(() => {
     const close = e => {
       if (e.keyCode === 27) {
@@ -29,7 +36,10 @@ export default function AddAnswer({ closeModal, question }) {
     return () => window.removeEventListener('keydown', close);
   }, []);
 
-  // METHODS
+  const handleChange = ({ target: { name, value } }) => {
+    setFormData({ ...formData, hasChanged: true, [name]: value });
+  };
+
   const handleFileUpload = e => {
     setNumOfImages(e.target.files.length);
     setImages(e.target.files);
@@ -66,22 +76,33 @@ export default function AddAnswer({ closeModal, question }) {
           <h4>
             {specifiedProduct[0].name}: {question.question_body}
           </h4>
-          <label htmlFor='yourAnswer'>Your Answer:</label>
+          <label htmlFor='yourAnswer'>
+            Your Answer<span style={{ color: 'red' }}>* </span>
+          </label>
           <textarea
             name='yourAnswer'
+            value={formData.yourAnswer}
+            onChange={handleChange}
             id='yourAnswer'
             cols='45'
             rows='10'
             maxLength='1000'
+            required
           ></textarea>
           <br />
           <br />
-          <label htmlFor='yourNickName'>Your Answer: </label>
+          <label htmlFor='yourNickName'>
+            What is your nickname<span style={{ color: 'red' }}>* </span>
+          </label>
           <input
+            name='yourNickName'
+            value={formData.yourNickName}
+            onChange={handleChange}
             type='text'
             id='yourNickName'
             maxLength='60'
             placeholder='Example: jack543!'
+            required
           />
           <br />
           <span>
@@ -89,12 +110,18 @@ export default function AddAnswer({ closeModal, question }) {
           </span>
           <br />
           <br />
-          <label htmlFor='yourEmail'>Your Email: </label>
+          <label htmlFor='yourEmail'>
+            Your Email<span style={{ color: 'red' }}>* </span>
+          </label>
           <input
+            name='yourEmail'
+            value={formData.yourEmail}
+            onChange={handleChange}
             type='text'
             id='yourEmail'
             maxLength='60'
             placeholder='Example: jack@email.com'
+            required
           />
           <br />
           <span>- For authentication reasons, you will not be emailed.</span>
@@ -103,14 +130,29 @@ export default function AddAnswer({ closeModal, question }) {
           <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
           <br />
           {numOfImages <= 4 && (
-            <input
-              type='file'
-              id='uploadInput'
-              name='images'
-              multiple
-              accept='image/*'
-              onChange={handleFileUpload}
-            />
+            <>
+              <input
+                type='file'
+                id='uploadInput'
+                name='images'
+                multiple
+                accept='image/*'
+                onChange={handleFileUpload}
+              />
+              {images &&
+                [...images].map(thumbnail => (
+                  <img
+                    key={uuidv4()}
+                    src={URL.createObjectURL(thumbnail)}
+                    alt='uploaded photo'
+                    style={{
+                      height: '75px',
+                      border: '1px solid #000',
+                      margin: '5px',
+                    }}
+                  />
+                ))}
+            </>
           )}
           <br />
           <br />
