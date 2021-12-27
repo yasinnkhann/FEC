@@ -88,6 +88,10 @@ export default function AddAnswer({ closeModal, question }) {
             rows='10'
             maxLength='1000'
             required
+            onInvalid={e =>
+              e.target.setCustomValidity('You must enter a valid answer')
+            }
+            onInput={e => e.target.setCustomValidity('')}
           ></textarea>
           <br />
           <br />
@@ -103,6 +107,10 @@ export default function AddAnswer({ closeModal, question }) {
             maxLength='60'
             placeholder='Example: jack543!'
             required
+            onInvalid={e =>
+              e.target.setCustomValidity('You must enter a valid nickname')
+            }
+            onInput={e => e.target.setCustomValidity('')}
           />
           <br />
           <span>
@@ -117,11 +125,15 @@ export default function AddAnswer({ closeModal, question }) {
             name='yourEmail'
             value={formData.yourEmail}
             onChange={handleChange}
-            type='text'
+            type='email'
             id='yourEmail'
             maxLength='60'
             placeholder='Example: jack@email.com'
             required
+            onInvalid={e =>
+              e.target.setCustomValidity('You must enter a valid email address')
+            }
+            onInput={e => e.target.setCustomValidity('')}
           />
           <br />
           <span>- For authentication reasons, you will not be emailed.</span>
