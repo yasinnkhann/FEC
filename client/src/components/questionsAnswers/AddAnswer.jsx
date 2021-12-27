@@ -34,11 +34,16 @@ export default function AddAnswer({ closeModal, question }) {
     e.preventDefault();
     const formData = new FormData();
     formData.append('image', image);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
     try {
       const res = await axios.post(
         'http://localhost:3000/api/upload',
         formData,
-        {}
+        config
       );
       console.log('RES: ', res);
     } catch (err) {

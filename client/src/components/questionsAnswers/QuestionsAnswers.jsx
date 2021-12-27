@@ -38,8 +38,8 @@ export default function QuestionsAnswers() {
           'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
           {
             params: {
-              // product_id: 40344,
-              product_id: products[8]?.id,
+              product_id: 40344,
+              // product_id: products[8]?.id,
               // page: 1,
               // count: 1,
             },
