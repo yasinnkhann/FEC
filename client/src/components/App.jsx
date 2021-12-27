@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import Overview from './overview/Overview.jsx';
 import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
@@ -36,13 +36,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className='app'>
+    <Fragment>
       <AppContext.Provider value={{ products, setProducts }}>
         <Overview />
         <QuestionsAnswers />
         <RatingsReviews />
         <RelatedItems />
       </AppContext.Provider>
-    </div>
+    </Fragment>
   );
 }
