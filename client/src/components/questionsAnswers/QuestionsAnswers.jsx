@@ -38,10 +38,10 @@ export default function QuestionsAnswers() {
           'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
           {
             params: {
-              // product_id: 40344,
-              product_id: products[8]?.id,
+              product_id: 40344,
+              // product_id: products[8]?.id,
               // page: 1,
-              // count: 1,
+              // count: 5,
             },
             headers: {
               Authorization: `${TOKEN}`,
@@ -78,7 +78,7 @@ export default function QuestionsAnswers() {
               questionsData={questionsData.results}
               filteredData={filteredQuestions}
             />
-            {/* <Questions questionsData={filteredQuestions} /> */}
+            <Questions questionsData={filteredQuestions} />
           </>
         )}
       </QuestionsContext.Provider>
