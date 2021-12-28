@@ -14,28 +14,49 @@ export default function Questions({ questionsData, filteredData }) {
 
   // VARIABLES
   let initialQs, remainingQs;
+
   if (!useFilteredData) {
     initialQs = questionsData
       ?.slice(0, 4)
       .map(question => (
         <Question key={question.question_id} questionObj={question} />
-      ));
+      ))
+      .sort(
+        (a, b) =>
+          b.props.questionObj.question_helpfulness -
+          a.props.questionObj.question_helpfulness
+      );
     remainingQs = questionsData
       ?.slice(4, questionsData?.length)
       .map(question => (
         <Question key={question.question_id} questionObj={question} />
-      ));
+      ))
+      .sort(
+        (a, b) =>
+          b.props.questionObj.question_helpfulness -
+          a.props.questionObj.question_helpfulness
+      );
   } else {
     initialQs = filteredData
       ?.slice(0, 4)
       .map(question => (
         <Question key={question.question_id} questionObj={question} />
-      ));
-    remainingQs = questionsData
-      ?.slice(4, questionsData?.length)
+      ))
+      .sort(
+        (a, b) =>
+          b.props.questionObj.question_helpfulness -
+          a.props.questionObj.question_helpfulness
+      );
+    remainingQs = filteredData
+      ?.slice(4, filteredData?.length)
       .map(question => (
         <Question key={question.question_id} questionObj={question} />
-      ));
+      ))
+      .sort(
+        (a, b) =>
+          b.props.questionObj.question_helpfulness -
+          a.props.questionObj.question_helpfulness
+      );
   }
 
   return (

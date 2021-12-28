@@ -6,6 +6,7 @@ import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import { TOKEN } from '../config.js';
 import AppContext from '../AppContext.js';
+import Loader from 'react-loader-spinner';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -19,7 +20,7 @@ export default function App() {
           {
             params: {
               // page: 1,
-              count: 10,
+              count: 2000,
             },
             headers: {
               Authorization: `${TOKEN}`,
@@ -42,14 +43,20 @@ export default function App() {
       {isLoaded ? (
         <>
           <AppContext.Provider value={{ products, setProducts }}>
-            <Overview />
+            {/* <Overview /> */}
             <QuestionsAnswers />
-            <RelatedItems />
-            <RatingsReviews />
+            {/* <RelatedItems /> */}
+            {/* <RatingsReviews /> */}
           </AppContext.Provider>
         </>
       ) : (
-        <h1>Loading...</h1>
+        <Loader
+          type='Oval'
+          color='green'
+          height={160}
+          width={160}
+          arialLabel='loading-indicator'
+        />
       )}
     </Fragment>
   );

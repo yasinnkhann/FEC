@@ -24,10 +24,10 @@ export default function QuestionsAnswers() {
       setFilteredQuestions(questionsData.results);
     } else {
       const questionsCopy = [...questionsData.results];
-      const refinedQuestions = questionsCopy.filter(question =>
+      const questionsFiltered = questionsCopy.filter(question =>
         question.question_body.toLowerCase().includes(query.toLowerCase())
       );
-      setFilteredQuestions(refinedQuestions);
+      setFilteredQuestions(questionsFiltered);
     }
   };
 
