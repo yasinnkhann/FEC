@@ -1,21 +1,17 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
-import { v4 as uuidv4 } from 'uuid';
 
-export default function AddAnswer({ closeModal, question }) {
+export default function AddQuestion({ closeModal, question }) {
   // CONTEXT
   const { products } = useContext(AppContext);
   const { questionsData } = useContext(QuestionsContext);
 
   // STATE
-  const [numOfImages, setNumOfImages] = useState(0);
-  const [images, setImages] = useState('');
   const [formData, setFormData] = useState({
-    yourAnswer: '',
+    yourQuestion: '',
     yourNickName: '',
     yourEmail: '',
   });
@@ -40,56 +36,32 @@ export default function AddAnswer({ closeModal, question }) {
     setFormData({ ...formData, hasChanged: true, [name]: value });
   };
 
-  const handleFileUpload = e => {
-    setNumOfImages(e.target.files.length);
-    setImages(e.target.files);
-  };
-
   const handleSubmit = async e => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('images', images);
 
-    for (const key of Object.keys(images)) {
-      formData.append('images', images[key]);
-    }
-
-    try {
-      const res = await axios.post(
-        'http://localhost:3000/api/qa/uploads',
-        formData
-      );
-      console.log('RES: ', res);
-      closeModal();
-    } catch (err) {
-      console.error(err);
-      alert('Cannot upload files more than 5 files');
-      setNumOfImages(0);
-    }
+    closeModal();
   };
 
   return (
     <Fragment>
       <Overlay>
         <Content onSubmit={handleSubmit}>
-          <h2>Submit your Answer</h2>
-          <h4>
-            {specifiedProduct[0].name}: {question.question_body}
-          </h4>
-          <label htmlFor='yourAnswer'>
-            Your Answer<span style={{ color: 'red' }}>* </span>
+          <h2>Ask Your Question</h2>
+          <h4>About the {specifiedProduct[0].name}</h4>
+          <label htmlFor='yourQuestion'>
+            Your Question<span style={{ color: 'red' }}>* </span>
           </label>
           <textarea
-            name='yourAnswer'
-            value={formData.yourAnswer}
+            name='yourQuestion'
+            value={formData.yourQuestion}
             onChange={handleChange}
-            id='yourAnswer'
+            id='yourQuestion'
             cols='45'
             rows='10'
             maxLength='1000'
             required
             onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid answer')
+              e.target.setCustomValidity('You must enter a valid question')
             }
             onInput={e => e.target.setCustomValidity('')}
           ></textarea>
@@ -105,7 +77,7 @@ export default function AddAnswer({ closeModal, question }) {
             type='text'
             id='yourNickName'
             maxLength='60'
-            placeholder='Example: jack543!'
+            placeholder='Example: jackson11!'
             required
             onInvalid={e =>
               e.target.setCustomValidity('You must enter a valid nickname')
@@ -137,35 +109,6 @@ export default function AddAnswer({ closeModal, question }) {
           />
           <br />
           <span>- For authentication reasons, you will not be emailed.</span>
-          <br />
-          <br />
-          <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
-          <br />
-          {numOfImages <= 4 && (
-            <>
-              <input
-                type='file'
-                id='uploadInput'
-                name='images'
-                multiple
-                accept='image/*'
-                onChange={handleFileUpload}
-              />
-              {images &&
-                [...images].map(thumbnail => (
-                  <img
-                    key={uuidv4()}
-                    src={URL.createObjectURL(thumbnail)}
-                    alt='uploaded photo'
-                    style={{
-                      height: '75px',
-                      border: '1px solid #000',
-                      margin: '5px',
-                    }}
-                  />
-                ))}
-            </>
-          )}
           <br />
           <br />
           <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
