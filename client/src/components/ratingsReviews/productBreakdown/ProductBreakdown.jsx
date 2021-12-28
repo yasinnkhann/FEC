@@ -49,7 +49,7 @@ class ProductBreakdown extends React.Component {
         {
           characteristics.Comfort
             && (
-              <div style={{
+              <div className='breakdown' id='route' style={{
                 gridColumn: '1',
                 gridRow: '1',
                 marginBottom: '10px',
