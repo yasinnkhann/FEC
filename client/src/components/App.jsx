@@ -9,6 +9,7 @@ import AppContext from '../AppContext.js';
 
 export default function App() {
   const [products, setProducts] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const getApi = async () => {
@@ -18,15 +19,16 @@ export default function App() {
           {
             params: {
               // page: 1,
-              count: 5,
+              count: 10,
             },
             headers: {
               Authorization: `${TOKEN}`,
             },
           }
         );
-        // console.log(res.data);
+        // console.log('PRODUCTS DATA:', res.data);
         setProducts(res.data);
+        setIsLoaded(true);
       } catch (err) {
         console.error(err);
       }
@@ -37,12 +39,18 @@ export default function App() {
 
   return (
     <Fragment>
-      <AppContext.Provider value={{ products, setProducts }}>
-        <Overview />
-        <QuestionsAnswers />
-        <RelatedItems />
-        <RatingsReviews />
-      </AppContext.Provider>
+      {isLoaded ? (
+        <>
+          <AppContext.Provider value={{ products, setProducts }}>
+            <Overview />
+            <QuestionsAnswers />
+            <RelatedItems />
+            <RatingsReviews />
+          </AppContext.Provider>
+        </>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </Fragment>
   );
 }
