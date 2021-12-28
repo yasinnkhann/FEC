@@ -9,14 +9,6 @@ const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
 
 
 export default function RelatedItems() {
-
-  // OLD METHOD -> destructure the products array and the setProducts method for use
-  // const {products, setProducts} = useContext(AppContext)
-
-  // NEW METHOD -> destructure the state you want to use (line 18) then from that state get your products array and the setProduct method (line 19)
-  // const {productsValue} = useContext(AppContext)
-  // const [products, setProducts] = productsValue
-
   // CONTEXT
   const {selectedProductValue} = useContext(AppContext)
   const [selectedProduct, setSelectedProduct] = selectedProductValue
@@ -28,17 +20,14 @@ export default function RelatedItems() {
     const getRelatedProducts = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp//products/:${setSelectedProduct.id}/related`,
+          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/:${selectedProduct.id}`,
           {
-            params: {
-              // page: 1,
-              count: 2000,
-            },
             headers: {
               Authorization: `${TOKEN}`,
             },
           }
         );
+        console.log('RELATED res.data::', res.data);
         setRelatedProducts(res.data);
       } catch (err) {
         console.error(err);
