@@ -13,6 +13,7 @@ import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
 
 import metaDummy from './metaDummy.jsx';
+import dummyDataReviews from './dummyDataReviews.jsx';
 
 const productStyle = {
   maxWidth: '100%',
@@ -28,7 +29,10 @@ export default function RatingsReviews() {
   const [ratingAndReviews, setRatingAndReviews] = useState([]);
   const [reviewList, setReviewList] = useState([]);
   const [noReviews, setNoReviews] = useState(true);
-  const [metaData, setMetaDatas] = useState(metaDummy);
+
+  // const [metaData, setMetaData] = useState(metaDummy);
+  // const [dummyData, setDummyData] = useState(dummyDataReviews);
+
 
 
   useEffect(() => {
@@ -63,12 +67,25 @@ export default function RatingsReviews() {
 
   return (
     <div>
-      <h3>Hello from the section of ratings and reviews!</h3>
+      <h3>Ratings & Reviews</h3>
       {/* {console.log('from Product from APP:', products[0]?.id)} */}
-      {console.log('from RatingAndReviews:', ratingAndReviews)}
-      <div style={productStyle}>
-        <ProductBreakdown metaData={metaData} />
+      {/* {console.log('from RatingAndReviews:', ratingAndReviews)} */}
+      {/* {console.log('from dummyData:', dummyDataReviews)} */}
+      <div>
+        <RatingBreakdown dummyData={dummyDataReviews}/>
       </div>
+      <div style={productStyle}>
+        <ProductBreakdown metaData={metaDummy} />
+      </div>
+      {/* <div style={productStyle}>
+        <WriteReview metaData={metaData} />
+      </div>
+      <div style={productStyle}>
+        <SortOptions metaData={metaData} />
+      </div>
+      <div style={productStyle}>
+        <ReviewList metaData={metaData} />
+      </div> */}
     </div>
   );
 }
