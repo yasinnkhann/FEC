@@ -10,7 +10,7 @@ import Search from './Search.jsx';
 export default function QuestionsAnswers() {
   // STATE
   const [questionsData, setQuestionsData] = useState([]);
-  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [useFilteredData, setUseFilteredData] = useState(false);
 
@@ -24,10 +24,10 @@ export default function QuestionsAnswers() {
       setFilteredQuestions(questionsData.results);
     } else {
       const questionsCopy = [...questionsData.results];
-      const refinedQuestions = questionsCopy.filter(question =>
+      const questionsFiltered = questionsCopy.filter(question =>
         question.question_body.toLowerCase().includes(query.toLowerCase())
       );
-      setFilteredQuestions(refinedQuestions);
+      setFilteredQuestions(questionsFiltered);
     }
   };
 
@@ -38,8 +38,8 @@ export default function QuestionsAnswers() {
           'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
           {
             params: {
-              product_id: 40344,
-              // product_id: products[8]?.id,
+              // product_id: 40344,
+              product_id: products[8]?.id,
               // page: 1,
               // count: 1,
             },
@@ -49,7 +49,7 @@ export default function QuestionsAnswers() {
           }
         );
         setQuestionsData(res.data);
-        setLoadingStatus(true);
+        setIsLoaded(true);
       } catch (err) {
         console.error(err);
       }
@@ -60,28 +60,29 @@ export default function QuestionsAnswers() {
 
   return (
     <div className='qaWidget'>
-      <QuestionsContext.Provider
-        value={{
-          questionsData,
-          setQuestionsData,
-          useFilteredData,
-          setUseFilteredData,
-        }}
-      >
-        {console.log('PRODUCTS FROM QA: ', products)}
-        {console.log('QUESTIONS DATA: ', questionsData)}
-        <QATitle>QUESTIONS &#38; ANSWERS</QATitle>
-        {loadingStatus && (
-          <>
+      <QATitle>QUESTIONS &#38; ANSWERS</QATitle>
+
+      {isLoaded && (
+        <>
+          <QuestionsContext.Provider
+            value={{
+              questionsData,
+              setQuestionsData,
+              useFilteredData,
+              setUseFilteredData,
+            }}
+          >
             <Search handleChange={handleSearchQuery} />
             <Questions
               questionsData={questionsData.results}
               filteredData={filteredQuestions}
             />
-            {/* <Questions questionsData={filteredQuestions} /> */}
-          </>
-        )}
-      </QuestionsContext.Provider>
+          </QuestionsContext.Provider>
+        </>
+      )}
+      {/* {console.log('PRODUCTS FROM QA: ', products)}
+      {console.log('QUESTIONS DATA: ', questionsData)} */}
+      {/* {console.log('TEST: ', products[8])} */}
     </div>
   );
 }
