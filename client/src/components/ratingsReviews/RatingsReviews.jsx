@@ -22,7 +22,6 @@ const productStyle = {
   gridRow: '2',
 };
 
-
 export default function RatingsReviews() {
   const { products, setProducts } = useContext(AppContext);
 
@@ -32,7 +31,6 @@ export default function RatingsReviews() {
 
   // const [metaData, setMetaData] = useState(metaDummy);
   // const [dummyData, setDummyData] = useState(dummyDataReviews);
-
 
 
   useEffect(() => {
@@ -46,12 +44,12 @@ export default function RatingsReviews() {
               // page: 1,
               count: 50,
               // sort: 'newest',
-              product_id: 40344
+              product_id: 40344,
               // TODO: ${productID} need to pass in dynamically for now just sure dummy data
             },
             headers: {
               Authorization: `${TOKEN}`,
-            }
+            },
           }
         );
         // console.log('Rate and Review API Data:', res.data);
@@ -64,10 +62,19 @@ export default function RatingsReviews() {
     getApi();
   }, []);
 
+  // handleReviewData((reviewData) => {
+  //   axios.post('/reviews', reviewData)
+  //     .then((results) => {
+  //     })
+  //     .catch((err) => {
+  //       console.log('err on review POST', err);
+  //     });
+  // }
+  // );
 
   return (
     <div>
-      <h3>Ratings & Reviews</h3>
+      <h3>RATINGS & REVIEWS</h3>
       {/* {console.log('from Product from APP:', products[0]?.id)} */}
       {/* {console.log('from RatingAndReviews:', ratingAndReviews)} */}
       {/* {console.log('from dummyData:', dummyDataReviews)} */}
@@ -77,10 +84,14 @@ export default function RatingsReviews() {
       <div style={productStyle}>
         <ProductBreakdown metaData={metaDummy} />
       </div>
+      {/* <div>
+        <WriteReview
+          metaData={metaDummy}
+          handleReviewData={handleReviewData()}
+          product_id={product_id}
+        />
+      </div> */}
       {/* <div style={productStyle}>
-        <WriteReview metaData={metaData} />
-      </div>
-      <div style={productStyle}>
         <SortOptions metaData={metaData} />
       </div>
       <div style={productStyle}>
@@ -106,8 +117,6 @@ export default function RatingsReviews() {
 // import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 // import SortOptions from './sortOptions/SortOption.jsx';
 
-
-
 // export default function RatingsReviews() {
 //   const { products, setProducts } = useContext(AppContext);
 //   const [ratingAndReviews, setRatingAndReviews] = useState([]);
@@ -117,9 +126,6 @@ export default function RatingsReviews() {
 //   const [inputValue, setInputValue] = useState('Hatha');
 //   const [showText, setShowText] = useState(true);
 //   const [count, setCount] = useState(0);
-
-
-
 
 //   useEffect(() => {
 //     const getApi = async () => {
@@ -265,7 +271,6 @@ export default function RatingsReviews() {
 //       writeReviewModal: true,
 //     });
 //   }
-
 
 //   render() {
 //     const {

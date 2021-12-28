@@ -46,6 +46,7 @@ import React from 'react';
 import styled from 'styled-components';
 import RatingsBreakdownList from './RatingsBreakdownList.jsx';
 import StarFilterEntry from './StarFilterEntry.jsx';
+import ImageList from './ImageList.jsx';
 
 
 
@@ -65,11 +66,15 @@ const RatingBreakdown = ({dummyData}) => {
           Rating: {item.rating}
         </div>
         <div>
+          Date: {item.date}
+        </div>
+        <div>
           <h3>Summary: {item.summary}</h3>
+          <ImageList imageData={item.photos}/>
         </div>
         <div onClick={() => onDetailClick(index)}>
           <i className="dropdown icon"></i>
-          {item.body}
+          Details: {item.body}
         </div>
       </React.Fragment>
     );
