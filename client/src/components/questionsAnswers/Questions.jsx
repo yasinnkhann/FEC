@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import QuestionsContext from './QuestionsContext.js';
 import Question from './Question.jsx';
+import AddQuestion from './AddQuestion.jsx';
 
 export default function Questions({ questionsData, filteredData }) {
   // CONTEXT
@@ -9,6 +10,7 @@ export default function Questions({ questionsData, filteredData }) {
 
   // STATE
   const [showRemainingQs, setShowRemainingQs] = useState(false);
+  const [showQuestionModal, setShowQuestionModal] = useState(false);
 
   // VARIABLES
   let initialQs, remainingQs;
@@ -41,7 +43,9 @@ export default function Questions({ questionsData, filteredData }) {
       {initialQs?.length > 0 ? (
         initialQs
       ) : (
-        <SubmitNewQBtn>Submit a new question</SubmitNewQBtn>
+        <SubmitNewQBtn onClick={() => setShowQuestionModal(true)}>
+          Submit a new question
+        </SubmitNewQBtn>
       )}
       {questionsData?.length > 4 && !showRemainingQs ? (
         <MoreAnsweredQsBtn onClick={() => setShowRemainingQs(true)}>
@@ -49,6 +53,9 @@ export default function Questions({ questionsData, filteredData }) {
         </MoreAnsweredQsBtn>
       ) : null}
       {showRemainingQs && filteredData.length !== 0 ? remainingQs : null}
+      {showQuestionModal && (
+        <AddQuestion closeModal={() => setShowQuestionModal(false)} />
+      )}
     </Container>
   );
 }
