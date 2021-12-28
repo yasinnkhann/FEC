@@ -59,6 +59,14 @@ export default function Questions({ questionsData, filteredData }) {
       );
   }
 
+  const showRemainingQsCondition =
+    (questionsData.length !== 0 && !useFilteredData) ||
+    (filteredData.length !== 0 && useFilteredData);
+
+  const showMoreAnsweredQsCondition =
+    (questionsData?.length > 4 && !useFilteredData) ||
+    (filteredData.length !== 0 && useFilteredData);
+
   return (
     <Container>
       {initialQs?.length > 0 ? (
@@ -68,15 +76,19 @@ export default function Questions({ questionsData, filteredData }) {
           Submit a new question
         </SubmitNewQBtn>
       )}
-      {questionsData?.length > 4 && !showRemainingQs ? (
+      {showMoreAnsweredQsCondition && !showRemainingQs ? (
         <MoreAnsweredQsBtn onClick={() => setShowRemainingQs(true)}>
           More Answered Questions
         </MoreAnsweredQsBtn>
       ) : null}
-      {showRemainingQs && filteredData.length !== 0 ? remainingQs : null}
+      {showRemainingQs && showRemainingQsCondition ? remainingQs : null}
       {showQuestionModal && (
         <AddQuestion closeModal={() => setShowQuestionModal(false)} />
       )}
+      {console.log('INITIAL QS: ', initialQs)}
+      {console.log('REMAINING QS: ', remainingQs)}
+      {console.log('FILTERED DATA: ', filteredData)}
+      {console.log('QUESTIONS DATA: ', questionsData)}
     </Container>
   );
 }
