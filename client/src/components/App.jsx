@@ -27,7 +27,7 @@ export default function App() {
             },
           }
         );
-        // console.log('PRODUCTS DATA:', res.data);
+        console.log('PRODUCTS DATA:', res.data);
         setProducts(res.data);
         setIsLoaded(true);
       } catch (err) {

@@ -94,8 +94,104 @@ export default function Question({ questionObj }) {
     setShowAnswerModal(true);
   };
 
+  // VARIABLES
+  const mappedAnswers = Object.keys(questionObj.answers).map(key => (
+    <AnswerPortion key={key}>
+      <AnswerContainer>
+        <strong>A:</strong>
+        <AnswerBody>{questionObj.answers[key].body}</AnswerBody>
+      </AnswerContainer>
+      <AnswerDetails>
+        <span>
+          by:{' '}
+          {questionObj.answers[key].answerer_name === 'Seller' ? (
+            <strong>{questionObj.answers[key].answerer_name}</strong>
+          ) : (
+            questionObj.answers[key].answerer_name
+          )}
+          ,{' '}
+          <Moment format='MMMM Do YYYY'>{questionObj.answers[key].date}</Moment>{' '}
+          | Helpful?{' '}
+          <a href=''>
+            <u
+              onClick={e =>
+                increaseAnswerHelpfulCount(e, questionObj.answers[key])
+              }
+            >
+              Yes
+            </u>
+          </a>{' '}
+          ({questionObj.answers[key].helpfulness}) |{' '}
+          <a
+            href=''
+            onClick={e => handleAnswerReported(e, questionObj.answers[key])}
+          >
+            <u>{answerReportedTracker[key] ? 'Reported' : 'Report'}</u>
+          </a>
+        </span>
+      </AnswerDetails>
+      {questionObj.answers[key].photos.length > 0 && (
+        <PhotoContainer>
+          {/* <PhotoBody>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
+              alias, dignissimos sed itaque unde inventore in distinctio
+              exercitationem blanditiis molestiae vel illum eius minus
+              repudiandae rem sequi pariatur nobis! Voluptas.
+            </PhotoBody> */}
+          {/* <br /> */}
+          <Photos>
+            {questionObj.answers[key].photos.map((photoSrc, idx) => (
+              <img
+                key={idx}
+                src={photoSrc}
+                width='200'
+                height='200'
+                loading='lazy'
+              />
+            ))}
+          </Photos>
+          {/* <PhotoDetails>
+              <span>
+                by: <strong>Seller</strong>, | Helpful?{' '}
+                <a href=''>
+                  <u>Yes</u>
+                </a>{' '}
+                (7) |{' '}
+                <a href=''>
+                  <u>Report</u>
+                </a>
+              </span>
+            </PhotoDetails> */}
+        </PhotoContainer>
+      )}
+    </AnswerPortion>
+  ));
+  // .sort(
+  //   (a, b) =>
+  //     questionObj.answers[b.key].helpfulness -
+  //     questionObj.answers[a.key].helpfulness
+  // );
+
+  // const sellerAnswers = [];
+  // for (let i = 0; i < questionsData.results.length; i++) {
+  //   let questionObj = questionsData.results[i];
+  //   for (let key in questionObj.answers) {
+  //     if (questionObj.answers[key].answerer_name === 'Seller') {
+  //       sellerAnswers.push(questionObj.answers[key]);
+  //     }
+  //   }
+  // }
+
+  const sellerAnswers = [];
+  for (let key in questionObj.answers) {
+    if (questionObj.answers[key].answerer_name !== 'Seller') {
+      sellerAnswers.push(questionObj.answers[key]);
+    }
+  }
+
   return (
     <Container>
+      {console.log('SELLERS: ', sellerAnswers)}
       <QuestionPortion>
         <QuestionLeftSection>
           <QuestionBody>Q: {questionObj.question_body}</QuestionBody>
@@ -117,87 +213,7 @@ export default function Question({ questionObj }) {
         </QuestionRightSection>
       </QuestionPortion>
       <br />
-      {Object.keys(questionObj.answers)
-        .map(key => (
-          <AnswerPortion key={key}>
-            <AnswerContainer>
-              <strong>A:</strong>
-              <AnswerBody>{questionObj.answers[key].body}</AnswerBody>
-            </AnswerContainer>
-            <AnswerDetails>
-              <span>
-                by:{' '}
-                {questionObj.answers[key].answerer_name === 'Seller' ? (
-                  <strong>{questionObj.answers[key].answerer_name}</strong>
-                ) : (
-                  questionObj.answers[key].answerer_name
-                )}
-                ,{' '}
-                <Moment format='MMMM Do YYYY'>
-                  {questionObj.answers[key].date}
-                </Moment>{' '}
-                | Helpful?{' '}
-                <a href=''>
-                  <u
-                    onClick={e =>
-                      increaseAnswerHelpfulCount(e, questionObj.answers[key])
-                    }
-                  >
-                    Yes
-                  </u>
-                </a>{' '}
-                ({questionObj.answers[key].helpfulness}) |{' '}
-                <a
-                  href=''
-                  onClick={e =>
-                    handleAnswerReported(e, questionObj.answers[key])
-                  }
-                >
-                  <u>{answerReportedTracker[key] ? 'Reported' : 'Report'}</u>
-                </a>
-              </span>
-            </AnswerDetails>
-            {questionObj.answers[key].photos.length > 0 && (
-              <PhotoContainer>
-                {/* <PhotoBody>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
-              alias, dignissimos sed itaque unde inventore in distinctio
-              exercitationem blanditiis molestiae vel illum eius minus
-              repudiandae rem sequi pariatur nobis! Voluptas.
-            </PhotoBody> */}
-                {/* <br /> */}
-                <Photos>
-                  {questionObj.answers[key].photos.map((photoSrc, idx) => (
-                    <img
-                      key={idx}
-                      src={photoSrc}
-                      width='200'
-                      height='200'
-                      loading='lazy'
-                    />
-                  ))}
-                </Photos>
-                {/* <PhotoDetails>
-              <span>
-                by: <strong>Seller</strong>, | Helpful?{' '}
-                <a href=''>
-                  <u>Yes</u>
-                </a>{' '}
-                (7) |{' '}
-                <a href=''>
-                  <u>Report</u>
-                </a>
-              </span>
-            </PhotoDetails> */}
-              </PhotoContainer>
-            )}
-          </AnswerPortion>
-        ))
-        .sort(
-          (a, b) =>
-            questionObj.answers[b.key].helpfulness -
-            questionObj.answers[a.key].helpfulness
-        )}
+      {mappedAnswers}
       <hr style={{ height: 0.5, borderColor: 'red' }} />
       {showAnswerModal && (
         <AddAnswer
