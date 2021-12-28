@@ -7,6 +7,7 @@ import Thumbnails from './Thumbnails.jsx';
 
 export default function Styles() {
   const [stylesData, setstylesData] = useState([]);
+  const [loadingStatus, setLoadingStatus] = useState(false);
   const { products, setProducts } = useContext(AppContext);
   useEffect(() => {
     const getStyles = async () => {
@@ -23,16 +24,19 @@ export default function Styles() {
           }
         );
         setstylesData(res.data);
+        setLoadingStatus(true);
       } catch (err) {
         console.error(err);
       }
     };
     getStyles();
-  }, [products]);
+  }, []);
 
   return (
     <StylesContext.Provider value={{stylesData, setstylesData}}>
-      <Thumbnails/>
+      {loadingStatus && (
+        <Thumbnails/>
+      )} 
     </StylesContext.Provider>
   );
 }

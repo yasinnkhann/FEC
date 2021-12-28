@@ -11,10 +11,24 @@ const Reviews = styled.span `
 
 export default function ReviewsStars() {
   const {reviewsData, setreviewsData} = useContext(ReviewsContext);
-  //console.log('STARSRATINGSRESULTS', reviewsData);
+  const count = Object.keys(reviewsData.ratings).length;
+  const starsAverage = () => {
+    var sum = 0;
+    var arr = Object.values(reviewsData.ratings);
+    for (var i = 0; i < arr.length; i++) {
+      sum += Number(arr[i]);
+    }
+    console.log((sum / count) * 20);
+  };
+  console.log('STARSRATINGSRESULTS', );
   return (
-    <Reviews>
-      Read All Reviews
-    </Reviews>
+    <div>
+      <Reviews>
+        Read All {count} Reviews
+      </Reviews>
+      {starsAverage()}
+    </div>
+   
+    
   );
 }

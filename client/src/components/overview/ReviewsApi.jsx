@@ -6,6 +6,7 @@ import ReviewsStars from './ReviewsStars.jsx';
 
 export default function Reviews() {
   const [reviewsData, setreviewsData] = useState([]);
+  const [loadingStatus, setLoadingStatus] = useState(false);
   useEffect(() => {
     const getReviews = async () => {
       try {
@@ -21,6 +22,7 @@ export default function Reviews() {
           }
         );
         setreviewsData(res.data);
+        setLoadingStatus(true);
       } catch (err) {
         console.error(err);
       }
@@ -29,7 +31,9 @@ export default function Reviews() {
   }, []);
   return (
     <ReviewsContext.Provider value={{reviewsData, setreviewsData}}>
-      <ReviewsStars/>
+      {loadingStatus && (
+        <ReviewsStars/>
+      )} 
     </ReviewsContext.Provider>
   );
 }
