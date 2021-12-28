@@ -21,7 +21,6 @@ const productStyle = {
   gridRow: '2',
 };
 
-
 export default function RatingsReviews() {
   const { products, setProducts } = useContext(AppContext);
 
@@ -29,7 +28,6 @@ export default function RatingsReviews() {
   const [reviewList, setReviewList] = useState([]);
   const [noReviews, setNoReviews] = useState(true);
   const [metaData, setMetaDatas] = useState(metaDummy);
-
 
   useEffect(() => {
     const getApi = async () => {
@@ -42,12 +40,12 @@ export default function RatingsReviews() {
               // page: 1,
               count: 50,
               // sort: 'newest',
-              product_id: 40344
+              product_id: 40344,
               // TODO: ${productID} need to pass in dynamically for now just sure dummy data
             },
             headers: {
               Authorization: `${TOKEN}`,
-            }
+            },
           }
         );
         // console.log('Rate and Review API Data:', res.data);
@@ -60,12 +58,11 @@ export default function RatingsReviews() {
     getApi();
   }, []);
 
-
   return (
     <div>
       <h3>Hello from the section of ratings and reviews!</h3>
       {/* {console.log('from Product from APP:', products[0]?.id)} */}
-      {console.log('from RatingAndReviews:', ratingAndReviews)}
+      {/* {console.log('from RatingAndReviews:', ratingAndReviews)} */}
       <div style={productStyle}>
         <ProductBreakdown metaData={metaData} />
       </div>
@@ -89,8 +86,6 @@ export default function RatingsReviews() {
 // import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 // import SortOptions from './sortOptions/SortOption.jsx';
 
-
-
 // export default function RatingsReviews() {
 //   const { products, setProducts } = useContext(AppContext);
 //   const [ratingAndReviews, setRatingAndReviews] = useState([]);
@@ -100,9 +95,6 @@ export default function RatingsReviews() {
 //   const [inputValue, setInputValue] = useState('Hatha');
 //   const [showText, setShowText] = useState(true);
 //   const [count, setCount] = useState(0);
-
-
-
 
 //   useEffect(() => {
 //     const getApi = async () => {
@@ -248,7 +240,6 @@ export default function RatingsReviews() {
 //       writeReviewModal: true,
 //     });
 //   }
-
 
 //   render() {
 //     const {
