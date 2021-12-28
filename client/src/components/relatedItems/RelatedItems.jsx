@@ -10,18 +10,21 @@ const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
 
 export default function RelatedItems() {
   // CONTEXT
-  const {selectedProductValue} = useContext(AppContext)
-  const [selectedProduct, setSelectedProduct] = selectedProductValue
+  const {selectedProductValue} = useContext(AppContext);
+  const [selectedProduct, setSelectedProduct] = selectedProductValue;
 
   // STATE
-  const [relatedProducts, setRelatedProducts] = useState([])
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
     const getRelatedProducts = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/:${selectedProduct.id}`,
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/',
           {
+            params: {
+              product_id: selectedProduct.id
+            },
             headers: {
               Authorization: `${TOKEN}`,
             },
@@ -35,12 +38,12 @@ export default function RelatedItems() {
     };
 
     getRelatedProducts();
-  }, [])
+  }, [selectedProduct]);
 
   return (
     <div className="related-items-and-comparison" >
       <h3>RELATED ITEMS</h3>
-      <Carousel name="related-items"/>
+      <Carousel name="related-items" relatedProducts={relatedProducts}/>
       <h3>YOUR OUTFIT</h3>
       <Carousel name="your-outfit" />
     </div>

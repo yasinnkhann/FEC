@@ -8,12 +8,17 @@ import styled from 'styled-components';
  * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT
  */
 
-export default function Carousel({ name }) {
-  const { productsValue, selectedProductValue } = useContext(AppContext);
-  const [products, setProducts] = productsValue;
-  const [selectedProduct, setSelectedProduct] = selectedProductValue;
-  console.log('PRODUCTS::', products);
-  console.log('SELECTED PRODUCT::', selectedProduct);
+// STYLES
+const LeftArrow = styled.div`
+
+`;
+
+const RightArrow = styled.div`
+
+`;
+
+// CAROUSEL
+export default function Carousel({ name, relatedProducts }) {
 
   return (
     <div className="carousel" >
@@ -23,8 +28,8 @@ export default function Carousel({ name }) {
         </div>
         <div className="carousel-middle" style={{display: 'flex'}} >
           {name === 'related-items'
-          ? products.map(product => <Card key={product.id} product={product} name="related-item" />)
-          : <h4>OUTFIT LIST</h4>}
+            ? relatedProducts.map(product => <Card key={product.id} product={product} name="related-item" />)
+            : <h4>OUTFIT LIST</h4>}
         </div>
         <div className="carousel-right" onClick={()=> console.log('Right click')} >
           <ScrollArrows.RightArrow />
