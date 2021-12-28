@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const dummyDataReviews = {
   'product': '40344',
   'page': 0,
