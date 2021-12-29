@@ -38,8 +38,8 @@ export default function QuestionsAnswers() {
           'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
           {
             params: {
-              // product_id: 40344,
-              product_id: products[8]?.id,
+              // product_id: 40347,
+              product_id: products[84]?.id,
               // page: 1,
               // count: 1,
             },
@@ -56,7 +56,7 @@ export default function QuestionsAnswers() {
     };
 
     getQs();
-  }, [products]);
+  }, []);
 
   return (
     <div className='qaWidget'>
@@ -80,9 +80,8 @@ export default function QuestionsAnswers() {
           </QuestionsContext.Provider>
         </>
       )}
-      {/* {console.log('PRODUCTS FROM QA: ', products)}
-      {console.log('QUESTIONS DATA: ', questionsData)} */}
-      {/* {console.log('TEST: ', products[8])} */}
+      {console.log('PRODUCTS FROM QA: ', products)}
+      {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
     </div>
   );
 }
