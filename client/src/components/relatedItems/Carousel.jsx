@@ -1,25 +1,21 @@
+// Dependency imports
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+// API imports
 import { TOKEN } from '../../config.js';
+
+// Context imports
 import AppContext from '../../AppContext.js';
 
+// Component imports
 import ScrollArrows from './ScrollArrows.jsx';
 import Card from './Card.jsx';
 
 /**
  * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT
  */
-
-// STYLES
-const LeftArrow = styled.div`
-
-`;
-
-const RightArrow = styled.div`
-
-`;
 
 // CAROUSEL
 export default function Carousel({ name, relatedProductIds }) {
@@ -96,3 +92,13 @@ export default function Carousel({ name, relatedProductIds }) {
     );
   }
 }
+
+
+// STYLES
+const LeftArrow = styled.div`
+
+`;
+
+const RightArrow = styled.div`
+
+`;

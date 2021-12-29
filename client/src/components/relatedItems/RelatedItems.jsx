@@ -1,26 +1,36 @@
+// Dependency imports
 import React, { useState, useEffect, useContext } from 'react';
-import AppContext from '../../AppContext.js';
-import { TOKEN } from '../../config.js';
-import Carousel from './Carousel.jsx';
 import axios from 'axios';
 
+// Context imports
+import AppContext from '../../AppContext.js';
+
+// API imports
+import { TOKEN } from '../../config.js';
+
+// Component imports
+import Carousel from './Carousel.jsx';
+
+// Variables
 const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
 
-
-
+// RELATED ITEMS
 export default function RelatedItems() {
+
   // CONTEXT
-  const {productsValue, selectedProductValue} = useContext(AppContext);
+  const {productsContext, selectedProductContext} = useContext(AppContext);
 
   // STATE
-  const [selectedProduct, setSelectedProduct] = selectedProductValue;
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [relatedProductIds, setRelatedProductIds] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // HOOKS
   useEffect(() => {
     getRelatedProductIds();
   }, [selectedProduct]);
 
+  // API HANDLER
   const getRelatedProductIds = async () => {
     try {
       const res = await axios.get(
@@ -38,6 +48,7 @@ export default function RelatedItems() {
     }
   };
 
+  // JSX
   if (isLoaded && relatedProductIds.length >= 1) {
     return (
       <div className="related-items-and-comparison" >

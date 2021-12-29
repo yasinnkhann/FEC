@@ -1,7 +1,11 @@
+// Dependency imports
 import React, { useContext, useState, useEffect } from 'react';
+
+// Context imports
 import AppContext from '../../AppContext.js';
 
-const ProductInfo = ({ product }) => {
+// PRODUCT INFO
+export default function ProductInfo({ product }) {
   // CONTEXT
   const {products, setProducts} = useContext(AppContext);
 
@@ -21,8 +25,6 @@ const ProductInfo = ({ product }) => {
       }
     </div>
   );
-};
-
-export default ProductInfo;
+}
 
 
