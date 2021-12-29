@@ -39,3 +39,13 @@ export default function ReviewsStars() {
     </div>
   );
 }
+
+// .stars:before {
+//   content: '★★★★★';
+//   /* content: '☆☆☆☆☆'; */
+//   letter-spacing: 0;
+//   background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+//   background-clip: text;
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+// }
