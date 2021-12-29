@@ -13,6 +13,7 @@ import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
 
 import metaDummy from './metaDummy.jsx';
+import dummyDataReviews from './dummyDataReviews.jsx';
 
 const productStyle = {
   maxWidth: '100%',
@@ -21,51 +22,140 @@ const productStyle = {
   gridRow: '2',
 };
 
-export default function RatingsReviews() {
-  const { products, setProducts } = useContext(AppContext);
 
-  const [ratingAndReviews, setRatingAndReviews] = useState([]);
+const sortOptionsStyle = {
+  marginLeft: '30px',
+  gridColumn: '2/-1',
+  gridRow: '1',
+};
+
+export default function RatingsReviews() {
+  const { productsContext, selectedProductContext } = useContext(AppContext);
+  const [products, setProducts] = productsContext;
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
+
   const [reviewList, setReviewList] = useState([]);
-  const [noReviews, setNoReviews] = useState(true);
-  const [metaData, setMetaDatas] = useState(metaDummy);
+  const [metaData, setMetaData] = useState([]);
+  const [reviewEnd, setReviewEnd] = useState(2);
+  const [starSort, setStarSort] = useState([]);
+  const [listSort, setListSort] = useState(0);
+  const [reviewReady, setReviewReady] = useState(false);
+  const [writeReviewModal, setWriteReviewModal] = useState(false);
+  const [noReviews, setNoReviews] = useState(false);
+  const [hideMoreReviews, setHideMoreReviews] = useState(false);
+
 
   useEffect(() => {
-    const getApi = async () => {
+    // const getReviewApi = async () => {
+    //   try {
+    //     const res = await axios.get(
+    //       `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/?count=50&product_id=${selectedProduct.id}`,
+    //       {
+    //         headers: {
+    //           Authorization: `${TOKEN}`,
+    //         },
+    //       }
+    //     );
+    //     setReviewList(res.data.results);
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // };
+
+    const getMetaApi = async () => {
       try {
         const res = await axios.get(
-          // `/reviews/?product_id=${productID}&count=4`
-          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/',
+          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/?count=50&product_id=${selectedProduct.id}`,
           {
-            params: {
-              // page: 1,
-              count: 50,
-              // sort: 'newest',
-              product_id: 40344,
-              // TODO: ${productID} need to pass in dynamically for now just sure dummy data
-            },
             headers: {
               Authorization: `${TOKEN}`,
             },
           }
         );
-        // console.log('Rate and Review API Data:', res.data);
-        setRatingAndReviews(res.data);
+        // console.log(res.data);
+        setMetaData(res.data);
       } catch (err) {
         console.error(err);
       }
     };
 
-    getApi();
+    getMetaApi();
+    // getReviewApi();
   }, []);
+
+  // const handleReviewData = (reviewData) => {
+  //   axios.post('/reviews', reviewData)
+  //     .then((results) => {
+  //     })
+  //     .catch((err) => {
+  //       console.log('err on review POST', err);
+  //     });
+  // };
+
+  const listSortChange = (event) => {
+    setListSort(event.target.value);
+  };
+
+  const sortByStar = (event) => {
+    console.log(event);
+    if (starSort.indexOf(event.target.id) === -1) {
+      setStarSort([...starSort, event.target.id]);
+    } else {
+      starSort.splice(starSort.indexOf(event.target.id), 1);
+      setStarSort({starSort});
+    }
+  };
+
+  const clearStarFilter = () => {
+    setStarSort([]);
+  };
 
   return (
     <div>
-      <h3>Hello from the section of ratings and reviews!</h3>
-      {/* {console.log('from Product from APP:', products[0]?.id)} */}
-      {/* {console.log('from RatingAndReviews:', ratingAndReviews)} */}
-      <div style={productStyle}>
-        <ProductBreakdown metaData={metaData} />
+      {/* <h3>RATINGS & REVIEWS</h3> */}
+      {/* {console.log('from Product from APP:', products)} */}
+      {/* {console.log('from selectedProduct from APP:', selectedProduct.id)} */}
+      {/* {console.log('from reviewList API:', reviewList)} */}
+      {/* {console.log('from dummyData:', dummyDataReviews)} */}
+      {/* {console.log('from metaDummyData:', metaDummy)} */}
+      {/* {console.log('from metaData:', metaData)} */}
+      {/* {console.log(listSort)} */}
+      {/* {console.log(starSort)} */}
+
+
+      <div>
+        {/* <div style={sortOptionsStyle}>
+          <SortOptions
+            metaData={metaDummy}
+            listSort={listSort}
+            listSortChange={listSortChange}
+          />
+        </div> */}
+        {/* <RatingBreakdown reviewData={reviewList}/> */}
+        <RatingBreakdown
+          metaData={metaDummy}
+          sortByStar={sortByStar}
+          starSort={starSort}
+          clearStarFilter={clearStarFilter}
+        />
       </div>
+      {/* <div style={productStyle}>
+        <ProductBreakdown metaData={metaDummy} />
+      </div> */}
+      {/* <div>
+        <WriteReview
+          metaData={metaDummy}
+          handleReviewData={handleReviewData()}
+          product_id={product_id}
+        />
+      </div> */}
+      {/* <div style={productStyle}>
+        <SortOptions metaData={metaData} />
+      </div>
+      <div style={productStyle}>
+        <ReviewList metaData={metaData} />
+      </div> */}
+
     </div>
   );
 }
@@ -88,7 +178,7 @@ export default function RatingsReviews() {
 
 // export default function RatingsReviews() {
 //   const { products, setProducts } = useContext(AppContext);
-//   const [ratingAndReviews, setRatingAndReviews] = useState([]);
+//   const [reviewList, setreviewList] = useState([]);
 //   const [reviewList, setReviewList] = useState([]);
 //   const [noReviews, setNoReviews] = useState(true);
 //   // const [counter, setCounter] = useState(0);
@@ -116,7 +206,7 @@ export default function RatingsReviews() {
 //           }
 //         );
 //         // console.log('Rate and Review API Data:', res.data);
-//         setRatingAndReviews(res.data);
+//         setreviewList(res.data);
 //       } catch (err) {
 //         console.error(err);
 //       }
@@ -139,7 +229,7 @@ export default function RatingsReviews() {
 //     <div>
 //       <h3>Hello from the section of ratings and reviews!</h3>
 //       {/* {console.log('from Product from APP:', products[0]?.id)} */}
-//       {/* {console.log('from RatingAndReviews:', ratingAndReviews)} */}
+//       {/* {console.log('from reviewList:', reviewList)} */}
 //       {/* <div>
 //         {counter}
 //         <button onClick={increment}>Increment</button>
