@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import StylesContext from '../overview/StylesContext.js';
 
 // PRODUCT PREVIEW IMAGES
-export default function ProductPreviewImages({ imageUrl }) {
+export default function ProductPreviewImages({ imageUrl, productName }) {
 
   // JSX
   return (
-    <Image src={imageUrl} alt="product image" />
+    <Image src={imageUrl} alt={productName} />
   );
 }
 

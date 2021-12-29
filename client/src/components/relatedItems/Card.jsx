@@ -49,7 +49,6 @@ export default function CarouselCard({ product }) {
 
   // EVENT HANDLERS
   const handleClick = (newSelectedProduct) => {
-    console.log(product.name, ' card clicked');
     setSelectedProduct(newSelectedProduct);
   };
 
@@ -67,7 +66,7 @@ export default function CarouselCard({ product }) {
       <ModalContext.Provider value={{modalContext: [showModal, setShowModal]}}>
         {showModal ? <Modal product={product}/> : null}
       </ModalContext.Provider>
-      <ProductPreviewImages imageUrl={imageUrl} />
+      <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
       <ProductInfoStyle>
         <ProductInfo product={product} />
       </ProductInfoStyle>

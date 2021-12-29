@@ -2,13 +2,12 @@
 import React from 'react';
 
 // SCROLL ARROWS
-const ScrollArrow = ({ direction, clickFunction, glyph}) => {
-
+const ScrollArrow = ({ direction }) => {
 
   // JSX
   return (
-    <div onClick={ clickFunction }>
-      <i className={`fas fa-angle-double-${direction}`} >{ glyph }</i>
+    <div>
+      <i className={`fas fa-angle-double-${direction}`} />
     </div>
   );
 };
