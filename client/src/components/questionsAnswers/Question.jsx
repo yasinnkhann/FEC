@@ -20,7 +20,7 @@ export default function Question({ questionObj }) {
   // METHODS
   const increaseQuestionHelpfulCount = (e, questionObj) => {
     e.preventDefault();
-    console.log(questionObj);
+    //console.log(questionObj);
     const questionsDataCopy = [...questionsData.results];
     let incrementedCount = questionObj.question_helpfulness + 1;
     for (let i = 0; i < questionsDataCopy.length; i++) {
