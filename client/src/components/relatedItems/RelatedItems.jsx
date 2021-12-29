@@ -1,48 +1,71 @@
+// Dependency imports
 import React, { useState, useEffect, useContext } from 'react';
-import AppContext from '../../AppContext.js';
-import { TOKEN } from '../../config.js';
-import Carousel from './Carousel.jsx';
 import axios from 'axios';
 
+// Context imports
+import AppContext from '../../AppContext.js';
+
+// API imports
+import { TOKEN } from '../../config.js';
+
+// Component imports
+import Carousel from './Carousel.jsx';
+
+// Variables
 const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
 
-
-
+// RELATED ITEMS
 export default function RelatedItems() {
+
   // CONTEXT
-  const {selectedProductValue} = useContext(AppContext)
-  const [selectedProduct, setSelectedProduct] = selectedProductValue
+  const {productsContext, selectedProductContext} = useContext(AppContext);
 
   // STATE
-  const [relatedProducts, setRelatedProducts] = useState([])
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
+  const [relatedProductIds, setRelatedProductIds] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  // HOOKS
   useEffect(() => {
-    const getRelatedProducts = async () => {
-      try {
-        const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/:${selectedProduct.id}`,
-          {
-            headers: {
-              Authorization: `${TOKEN}`,
-            },
-          }
-        );
-        console.log('RELATED res.data::', res.data);
-        setRelatedProducts(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    getRelatedProductIds();
+  }, [selectedProduct]);
 
-    getRelatedProducts();
-  }, [])
+  // API HANDLER
+  const getRelatedProductIds = async () => {
+    try {
+      const res = await axios.get(
+        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${selectedProduct.id}/related`,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
+      );
+      setIsLoaded(true);
+      setRelatedProductIds(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  return (
-    <div className="related-items-and-comparison" >
-      <h3>RELATED ITEMS</h3>
-      <Carousel name="related-items"/>
-      <h3>YOUR OUTFIT</h3>
-      <Carousel name="your-outfit" />
-    </div>
-  );
+  // JSX
+  if (isLoaded && relatedProductIds.length >= 1) {
+    return (
+      <div className="related-items-and-comparison" >
+        <h3>RELATED ITEMS</h3>
+        <Carousel name="related-items" relatedProductIds={relatedProductIds}/>
+        <h3>YOUR OUTFIT</h3>
+        <Carousel name="your-outfit" />
+      </div>
+    );
+  } else {
+    return (
+      <div className="related-items-and-comparison" >
+        <h3>RELATED ITEMS</h3>
+        <h2>Loading...</h2>
+        <h3>YOUR OUTFIT</h3>
+        <Carousel name="your-outfit" />
+      </div>
+    );
+  }
 }
