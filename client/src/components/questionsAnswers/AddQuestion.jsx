@@ -41,23 +41,23 @@ export default function AddQuestion({ closeModal, question }) {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
+      const body = {
+        body: formData.yourQuestion,
+        name: formData.yourNickName,
+        email: formData.yourEmail,
+        product_id: Number(questionsData.product_id),
+      };
+      console.log('BODY: ', body);
       const res = await axios.post(
         'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
+        body,
         {
-          params: {
-            product_id: products[84]?.id,
-            body: 'hey',
-            name: 'Yasin',
-            email: 'yasinkhan@gmail.com',
-            // page: 1,
-            // count: 1,
-          },
           headers: {
             Authorization: `${TOKEN}`,
           },
         }
       );
-      console.log(res);
+      console.log('ADD Q POST RES: ', res);
     } catch (err) {
       console.error(err);
     }
