@@ -41,19 +41,19 @@ export default function StyleSelector() {
   const [stylesData, setstylesData] = stylesDataContent;
   const [currentStyle, setCurrentStyle] = currentStyleContent;
   const results = stylesData.results;
-  console.log(results);
+  //console.log(results);
 
 
-  console.log('CURRENT STYLE: ', currentStyle);
+  //console.log('CURRENT STYLE: ', currentStyle);
 
   return (
     <div>
-      <Price>{currentStyle.sale_price ? <><Sale>{currentStyle.sale_price}</Sale><OldPrice>{currentStyle.original_price}</OldPrice></> : currentStyle.original_price}</Price>
+      <Price>{currentStyle.sale_price ? <><Sale>On Sale {currentStyle.sale_price}</Sale><OldPrice>{currentStyle.original_price}</OldPrice></> : currentStyle.original_price}</Price>
       <SelectedStyle>Selected Style: </SelectedStyle>
       <StyleName key={currentStyle.style_id}>{currentStyle.name}</StyleName>
       <ThumbsDiv>
         {results.map((photo) => {
-          console.log('PHOTO: ', photo);
+          //console.log('PHOTO: ', photo);
           return (
             <Button onClick={() => {
               setCurrentStyle(photo);

@@ -26,8 +26,8 @@ const Container = styled.div `
 
 
 export default function Overview() {
-  const { productsValue } = useContext(AppContext);
-  const [products, setProducts] = productsValue;
+  const { productsContext } = useContext(AppContext);
+  const [products, setProducts] = productsContext;
   const selectedProduct = products.slice(0, 1);
   const [reviewsData, setreviewsData] = useState([]);
   const [loadingStatusReviews, setLoadingStatusReviews] = useState(false);
@@ -48,7 +48,7 @@ export default function Overview() {
             },
           }
         );
-             setreviewsData(res.data);
+        setreviewsData(res.data);
         setLoadingStatusReviews(true);
       } catch (err) {
         console.error(err);

@@ -6,8 +6,8 @@ const ImgContainer = styled.div `
 grid-column-start: 1;
 grid-column-end: 2;
 padding: 2rem;
-max-height: 700px;
-max-width: 500px;
+height: 800px;
+width: 600px;
 margin-left: 3rem;
 `;
 const Image = styled.img `
