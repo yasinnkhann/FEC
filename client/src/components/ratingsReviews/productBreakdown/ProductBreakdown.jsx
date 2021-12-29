@@ -46,6 +46,42 @@ class ProductBreakdown extends React.Component {
     // console.log('print from Product Breakdown: ', this.props.metaData);
     return (
       <div style={gridLayout}>
+        {/* <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}> */}
+        {
+          characteristics.Comfort
+            && (
+              <div className='breakdown' id='route' style={{
+                gridColumn: '1',
+                gridRow: '1',
+                marginBottom: '10px',
+                width: '210px',
+              }}
+              >
+                <div style={{ fontSize: '13px', color: 'black' }}>Comfort</div>
+
+                <div style={{ display: 'flex', fontSize: '11px', color: 'grey' }}>
+                  <div style={{ marginRight }}>
+                  Uncomfortable
+                  </div>
+                  <div style={marginLeft}>
+                  Perfect
+                  </div>
+                </div>
+
+                <div style={characteristicsBar}>
+                  <span
+                    className="fa fa-caret-up"
+                    style={{
+                      color: 'black',
+                      height: '20px',
+                      marginLeft: `${((this.characteristicStats(characteristics.Comfort.value) / 5) * 100) - 2}%`,
+                    }}
+                  />
+                </div>
+
+              </div>
+            )
+        }
         {
           characteristics.Fit
         && (

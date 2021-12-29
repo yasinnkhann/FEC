@@ -5,6 +5,7 @@ import ProductDetail from './ProductDetail.jsx';
 import ProductDescription from './ProductDescription.jsx';
 import Styles from './Styles.jsx';
 import Reviews from './ReviewsApi.jsx';
+import ImageGallery from './ImageGallery.jsx';
 
 const Grid = styled.div `
 display: grid;
@@ -21,35 +22,35 @@ const Container = styled.div `
 const ImgContainer = styled.div `
 grid-column-start: 1;
 grid-column-end: 2;
-max-width: 550px;
-max-height: 700x;
+padding: 2rem;
+max-height: 700px;
+max-width: 500px;
+margin-left: 6rem;
 `;
 const Image = styled.img `
  width: 100%;
  height: 100%;
  object-fit: cover:
- padding: 0;
+ padding: 2rem;
  position: relative;
 `;
 
 export default function Overview() {
-  const { products, setProducts } = useContext(AppContext);
+  const { productsContext } = useContext(AppContext);
   const selectedProduct = products.slice(0, 1);
   return (
     <Grid>
-      <ImgContainer>
-        <Image src="https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80"/>
-      </ImgContainer>
+      <ImageGallery/>
       <Container>
         <Reviews />
         <ProductDetail
           product={selectedProduct[0]}
         />
+        <Styles/>
       </Container>
       <ProductDescription
         product={selectedProduct[0]}
       />
-      <Styles/>
     </Grid>
 
   );
