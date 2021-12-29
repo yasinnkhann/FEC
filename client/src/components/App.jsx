@@ -45,8 +45,8 @@ export default function App() {
         <>
           <AppContext.Provider value={{
             productsContext: [products, setProducts],
-            selectedProductContext: [selectedProduct, setSelectedProduct]}}
-          >
+            selectedProductContext: [selectedProduct, setSelectedProduct]
+          }}>
             <Overview />
             <RelatedItems />
             <QuestionsAnswers />
