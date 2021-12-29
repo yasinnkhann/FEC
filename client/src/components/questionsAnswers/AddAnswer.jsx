@@ -8,7 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
-  const { products } = useContext(AppContext);
+  const { productsContext } = useContext(AppContext);
+  const [products, setProducts] = productsContext;
   const { questionsData } = useContext(QuestionsContext);
 
   // STATE
