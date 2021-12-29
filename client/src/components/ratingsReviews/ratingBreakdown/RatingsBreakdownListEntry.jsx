@@ -43,7 +43,7 @@ const RatingsBreakdownListEntry = ({
 
     <div id={rating} style={starBar}>
       <div style={{
-        background: 'rgba(51, 170, 51, .8)',
+        background: '#333baacc',
         height: '100%',
         borderRadius: 'inherit',
         width: `${starPercentage(ratings, rating)}%`,

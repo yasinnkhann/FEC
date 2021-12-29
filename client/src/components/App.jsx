@@ -11,6 +11,7 @@ import Loader from 'react-loader-spinner';
 export default function App() {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(products[0]); // For selecting the current product to be shown
 
   useEffect(() => {
     const getApi = async () => {
@@ -29,6 +30,7 @@ export default function App() {
         );
         // console.log('PRODUCTS DATA:', res.data);
         setProducts(res.data);
+        setSelectedProduct(res.data[0]);
         setIsLoaded(true);
       } catch (err) {
         console.error(err);
@@ -42,10 +44,13 @@ export default function App() {
     <Fragment>
       {isLoaded ? (
         <>
-          <AppContext.Provider value={{ products, setProducts }}>
+          <AppContext.Provider value={{
+            productsValue: [products, setProducts],
+            selectedProductValue: [selectedProduct, setSelectedProduct]}}
+          >
             {/* <Overview /> */}
-            {/* <QuestionsAnswers /> */}
             {/* <RelatedItems /> */}
+            {/* <QuestionsAnswers /> */}
             <RatingsReviews />
           </AppContext.Provider>
         </>
