@@ -47,7 +47,6 @@ export default function AddQuestion({ closeModal, question }) {
         email: formData.yourEmail,
         product_id: Number(questionsData.product_id),
       };
-      console.log('BODY: ', body);
       const res = await axios.post(
         'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
         body,
