@@ -1,8 +1,10 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
+import { TOKEN } from '../../config.js';
 
 export default function AddQuestion({ closeModal, question }) {
   // CONTEXT
@@ -38,7 +40,27 @@ export default function AddQuestion({ closeModal, question }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
+    try {
+      const res = await axios.post(
+        'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
+        {
+          params: {
+            product_id: products[84]?.id,
+            body: 'hey',
+            name: 'Yasin',
+            email: 'yasinkhan@gmail.com',
+            // page: 1,
+            // count: 1,
+          },
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
+      );
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
     closeModal();
   };
 

@@ -48,153 +48,151 @@ export default function Question({ questionObj }) {
   const increaseQuestionHelpfulCount = async (e, questionObj) => {
     e.preventDefault();
     try {
+      const body = {};
       const res = await axios.put(
         `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionObj.question_id}/helpful`,
+        body,
         {
-          params: {
-            question_id: questionObj.question_id,
-          },
           headers: {
             Authorization: `${TOKEN}`,
           },
         }
       );
       console.log('Q HELPFUL PUT RES: ', res);
+
+      const questionsDataCopy = [...questionsData.results];
+      let incrementedCount = questionObj.question_helpfulness + 1;
+      for (let i = 0; i < questionsDataCopy.length; i++) {
+        let question = questionsDataCopy[i];
+        for (let key in question) {
+          if (
+            question[key] === questionObj.question_id &&
+            !hasQuestionHelpfulCountIncremented
+          ) {
+            question.question_helpfulness = incrementedCount;
+            setHasQuestionHelpfulCountIncremented(true);
+          }
+        }
+      }
+      setQuestionsData({
+        product_id: questionsData.product_id,
+        results: questionsDataCopy,
+      });
     } catch (err) {
       console.error(err);
     }
-
-    const questionsDataCopy = [...questionsData.results];
-    let incrementedCount = questionObj.question_helpfulness + 1;
-    for (let i = 0; i < questionsDataCopy.length; i++) {
-      let question = questionsDataCopy[i];
-      for (let key in question) {
-        if (
-          question[key] === questionObj.question_id &&
-          !hasQuestionHelpfulCountIncremented
-        ) {
-          question.question_helpfulness = incrementedCount;
-          setHasQuestionHelpfulCountIncremented(true);
-        }
-      }
-    }
-    setQuestionsData({
-      product_id: questionsData.product_id,
-      results: questionsDataCopy,
-    });
   };
 
   const increaseAnswerHelpfulCount = async (e, answerObj) => {
     e.preventDefault();
     try {
+      const body = {};
       const res = await axios.put(
-        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${answerObj.answer_id}/helpful`,
+        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answerObj.answer_id}/helpful`,
+        body,
         {
-          params: {
-            answer_id: answerObj.answer_id,
-          },
           headers: {
             Authorization: `${TOKEN}`,
           },
         }
       );
       console.log('ANS HELPFUL PUT RES: ', res);
+
+      const keyId = answerObj.answer_id;
+      const trackerCopy = Object.assign({}, answerHelpfulTracker);
+      const questionsDataCopy = [...questionsData.results];
+      let incrementedCount = answerObj.helpfulness + 1;
+      for (let i = 0; i < questionsDataCopy.length; i++) {
+        let question = questionsDataCopy[i];
+        for (let key in question) {
+          if (
+            question[key] === questionObj.question_id &&
+            !trackerCopy.hasOwnProperty([keyId])
+          ) {
+            answerObj.helpfulness = incrementedCount;
+            trackerCopy[keyId] = 'Incremented';
+          }
+        }
+      }
+      setQuestionsData({
+        product_id: questionsData.product_id,
+        results: questionsDataCopy,
+      });
+      setAnswerHelpfulTracker(trackerCopy);
     } catch (err) {
       console.error(err);
     }
-    const keyId = answerObj.answer_id;
-    const trackerCopy = Object.assign({}, answerHelpfulTracker);
-    const questionsDataCopy = [...questionsData.results];
-    let incrementedCount = answerObj.helpfulness + 1;
-    for (let i = 0; i < questionsDataCopy.length; i++) {
-      let question = questionsDataCopy[i];
-      for (let key in question) {
-        if (
-          question[key] === questionObj.question_id &&
-          !trackerCopy.hasOwnProperty([keyId])
-        ) {
-          answerObj.helpfulness = incrementedCount;
-          trackerCopy[keyId] = 'Incremented';
-        }
-      }
-    }
-    setQuestionsData({
-      product_id: questionsData.product_id,
-      results: questionsDataCopy,
-    });
-    setAnswerHelpfulTracker(trackerCopy);
   };
 
   const handleQuestionsReported = async (e, questionObj) => {
     e.preventDefault();
+    const body = {};
     try {
       const res = await axios.put(
         `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionObj.question_id}/report`,
+        body,
         {
-          params: {
-            question_id: questionObj.question_id,
-          },
           headers: {
             Authorization: `${TOKEN}`,
           },
         }
       );
       console.log('Q REPORTED PUT RES: ', res);
+
+      const questionsDataCopy = [...questionsData.results];
+      const idx = questionsDataCopy.findIndex(
+        question => question.question_id === questionObj.question_id
+      );
+      if (!hasQuestionBeenReported) {
+        questionsDataCopy[idx].reported = true;
+        setQuestionsData({
+          product_id: questionsData.product_id,
+          results: questionsDataCopy,
+        });
+        setHasQuestionBeenReported(true);
+      }
     } catch (err) {
       console.error(err);
-    }
-
-    const questionsDataCopy = [...questionsData.results];
-    const idx = questionsDataCopy.findIndex(
-      question => question.question_id === questionObj.question_id
-    );
-    if (!hasQuestionBeenReported) {
-      questionsDataCopy[idx].reported = true;
-      setQuestionsData({
-        product_id: questionsData.product_id,
-        results: questionsDataCopy,
-      });
-      setHasQuestionBeenReported(true);
     }
   };
 
   const handleAnswerReported = async (e, answerObj) => {
     e.preventDefault();
     try {
+      const body = {};
       const res = await axios.put(
-        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${answerObj.answer_id}/report`,
+        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answerObj.answer_id}/report`,
+        body,
         {
-          params: {
-            answer_id: answerObj.answer_id,
-          },
           headers: {
             Authorization: `${TOKEN}`,
           },
         }
       );
       console.log('ANS REPORTED PUT RES: ', res);
+
+      const keyId = answerObj.answer_id;
+      const trackerCopy = Object.assign({}, answerReportedTracker);
+      const questionsDataCopy = [...questionsData.results];
+      for (let i = 0; i < questionsDataCopy.length; i++) {
+        let question = questionsDataCopy[i];
+        for (let key in question) {
+          if (
+            question[key] === questionObj.question_id &&
+            !trackerCopy.hasOwnProperty([keyId])
+          ) {
+            trackerCopy[keyId] = 'Reported';
+          }
+        }
+      }
+      setQuestionsData({
+        product_id: questionsData.product_id,
+        results: questionsDataCopy,
+      });
+      setAnswerReportedTracker(trackerCopy);
     } catch (err) {
       console.error(err);
     }
-    const keyId = answerObj.answer_id;
-    const trackerCopy = Object.assign({}, answerReportedTracker);
-    const questionsDataCopy = [...questionsData.results];
-    for (let i = 0; i < questionsDataCopy.length; i++) {
-      let question = questionsDataCopy[i];
-      for (let key in question) {
-        if (
-          question[key] === questionObj.question_id &&
-          !trackerCopy.hasOwnProperty([keyId])
-        ) {
-          trackerCopy[keyId] = 'Reported';
-        }
-      }
-    }
-    setQuestionsData({
-      product_id: questionsData.product_id,
-      results: questionsDataCopy,
-    });
-    setAnswerReportedTracker(trackerCopy);
   };
 
   const openAnswerModal = e => {
@@ -203,7 +201,6 @@ export default function Question({ questionObj }) {
   };
 
   // VARIABLES
-
   const sellerAnswers = answers?.results?.filter(
     answer => answer.answerer_name === 'Seller'
   );
