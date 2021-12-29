@@ -1,3 +1,5 @@
+// look up lazy loading
+
 // Dependency imports
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
@@ -10,7 +12,7 @@ import { TOKEN } from '../../config.js';
 import AppContext from '../../AppContext.js';
 
 // Component imports
-import ScrollArrows from './ScrollArrows.jsx';
+import ScrollArrow from './ScrollArrows.jsx';
 import Card from './Card.jsx';
 
 /**
@@ -24,6 +26,7 @@ export default function Carousel({ name, relatedProductIds }) {
 
   useEffect(() => {
     if (relatedProductIds !== undefined) {
+      setRelatedProducts([]);
       relatedProductIds.forEach(id => {
         updateRelatedProducts(id);
       });
@@ -54,7 +57,7 @@ export default function Carousel({ name, relatedProductIds }) {
         <div className="carousel-row" style={{display: 'flex'}} >
           <div className="carousel-left" onClick={()=> console.log('Left click')} >
             <LeftArrow>
-              <ScrollArrows.LeftArrow />
+              <ScrollArrow />
             </LeftArrow>
           </div>
           <div className="carousel-middle" style={{display: 'flex'}} >
@@ -66,7 +69,7 @@ export default function Carousel({ name, relatedProductIds }) {
           </div>
           <div className="carousel-right" onClick={()=> console.log('Right click')} >
             <RightArrow>
-              <ScrollArrows.RightArrow />
+              <ScrollArrow />
             </RightArrow>
           </div>
         </div>
@@ -78,13 +81,13 @@ export default function Carousel({ name, relatedProductIds }) {
         <div className="carousel-row" style={{display: 'flex'}} >
           <div className="carousel-left" onClick={()=> console.log('Left click')} >
             <LeftArrow>
-              <ScrollArrows.LeftArrow />
+              <ScrollArrow />
             </LeftArrow>
           </div>
           <div>Loading...</div>
           <div className="carousel-right" onClick={()=> console.log('Right click')} >
             <RightArrow>
-              <ScrollArrows.RightArrow />
+              <ScrollArrow />
             </RightArrow>
           </div>
         </div>

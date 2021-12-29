@@ -41,10 +41,10 @@ export default function StyleSelector() {
   const [stylesData, setstylesData] = stylesDataContent;
   const [currentStyle, setCurrentStyle] = currentStyleContent;
   const results = stylesData.results;
-  console.log(results);
+  // console.log(results);
 
 
-  console.log('CURRENT STYLE: ', currentStyle);
+  // console.log('CURRENT STYLE: ', currentStyle);
 
   return (
     <div>
@@ -53,7 +53,7 @@ export default function StyleSelector() {
       <StyleName key={currentStyle.style_id}>{currentStyle.name}</StyleName>
       <ThumbsDiv>
         {results.map((photo) => {
-          console.log('PHOTO: ', photo);
+          // console.log('PHOTO: ', photo);
           return (
             <Button onClick={() => {
               setCurrentStyle(photo);
