@@ -34,6 +34,7 @@ export default function Carousel({ name, relatedProductIds }) {
   const size = useWindowSize();
 
   // HOOKS & INITILIZATION
+
   // Populates relatedProducts state to render each item
   useEffect(() => {
     if (relatedProductIds !== undefined) {
@@ -43,20 +44,18 @@ export default function Carousel({ name, relatedProductIds }) {
         updateRelatedProducts(id);
       });
     }
+
   }, [relatedProductIds]);
 
   // Changes number of items shown based on window size
   useEffect(() => {
-    console.log(size);
-    const width = window.innerWidth;
-    const maxAllowableItems = Math.floor(width / 200);
-    setMaxCardIndex(maxAllowableItems);
-    setVisibleProducts(relatedProducts.slice(currentCardIndex, maxCardIndex));
+    if (relatedProducts[currentCardIndex]) { console.log('CURRENT CARD :: ', relatedProducts[currentCardIndex].data.name); }
+    changeNumAllowedItems();
   }, [size]);
 
 
-
   // API HANDLERS
+  // Gets product info based on id
   const updateRelatedProducts = async (id) => {
     await axios.get(
       `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`,
@@ -77,12 +76,14 @@ export default function Carousel({ name, relatedProductIds }) {
   };
 
   // EVENT HANDLERS
+  // Click handler that adjusts items shown based on left arrow being clicked
   const scrollLeft = () => {
     const finalIndex = relatedProducts.length - 1;
-    const shouldResetIndex = currentCardIndex === 0;
-    const index = shouldResetIndex ? finalIndex : currentCardIndex - 1;
+    const isAtBeginningIndex = currentCardIndex === finalIndex;
+    const index = isAtBeginningIndex ? currentCardIndex + 1 : currentCardIndex - 1;
 
     setCurrentCardIndex(index);
+    setMaxCardIndex(maxCardIndex - 1);
 
     const newRelatedProducts = relatedProducts.slice(currentCardIndex, maxCardIndex);
 
@@ -91,12 +92,14 @@ export default function Carousel({ name, relatedProductIds }) {
     currentCardIndex === finalIndex ? setIsAtEnd(true) : setIsAtEnd(false);
   };
 
+  // Click handler that adjusts items shown based on right arrow being clicked
   const scrollRight = () => {
     const finalIndex = relatedProducts.length - 1;
-    const shouldResetIndex = currentCardIndex === finalIndex;
-    const index = shouldResetIndex ? 0 : currentCardIndex + 1;
+    const isAtFinalIndex = currentCardIndex === finalIndex;
+    const index = isAtFinalIndex ? currentCardIndex - 1 : currentCardIndex + 1;
 
     setCurrentCardIndex(index);
+    setMaxCardIndex(maxCardIndex + 1);
 
     const newRelatedProducts = relatedProducts.slice(currentCardIndex, maxCardIndex);
 
@@ -105,13 +108,12 @@ export default function Carousel({ name, relatedProductIds }) {
     currentCardIndex === finalIndex ? setIsAtEnd(true) : setIsAtEnd(false);
   };
 
-  // HELPER FUNCTIONS
-  const getWindowDimensions = () => {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height
-    };
+  // Adjust number of items allowed to be shown on screen based on window size
+  const changeNumAllowedItems = () => {
+    const width = window.innerWidth;
+    const maxAllowableItems = Math.floor(width / 200);
+    setMaxCardIndex(maxAllowableItems);
+    setVisibleProducts(relatedProducts.slice(currentCardIndex, maxCardIndex));
   };
 
   // JSX
@@ -151,7 +153,7 @@ export default function Carousel({ name, relatedProductIds }) {
           <div>Loading...</div>
           <div className="carousel-right" onClick={() => scrollRight()} >
             <RightArrow>
-              <ScrollArrow />
+              {relatedProducts.length <= maxCardIndex ? null : isAtEnd ? null : <ScrollArrow direction={'right'} />}
             </RightArrow>
           </div>
         </div>
