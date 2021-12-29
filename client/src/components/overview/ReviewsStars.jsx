@@ -40,7 +40,7 @@ export default function ReviewsStars() {
     })
       .forEach(([key, value]) => {
         count += value;
-        sum += (key * value); 
+        sum += (key * value);
       });
     return (sum / count);
   };
@@ -52,7 +52,7 @@ export default function ReviewsStars() {
       </Reviews>
       <Stars rating={average()}></Stars>
     </div>
-    
+
   );
 }
 
