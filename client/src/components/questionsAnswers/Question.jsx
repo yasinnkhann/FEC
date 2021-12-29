@@ -261,11 +261,6 @@ export default function Question({ questionObj }) {
 
   return (
     <Container>
-      {console.log('SELLERS: ', sellerAnswers)}
-      {console.log('ORDERED: ', orderedAnswers)}
-      {console.log('FINAL: ', finalAnswers)}
-      {/* {console.log('NO SELLERS: ', noSellerArr)} */}
-      {/* {console.log('ANS ARR: ', ansArr)} */}
       <QuestionPortion>
         <QuestionLeftSection>
           <QuestionBody>Q: {questionObj.question_body}</QuestionBody>

@@ -43,7 +43,7 @@ export default function QuestionsAnswers() {
           {
             params: {
               // product_id: 40347,
-              product_id: products[84]?.id,
+              product_id: products[57]?.id,
               // page: 1,
               // count: 1,
             },

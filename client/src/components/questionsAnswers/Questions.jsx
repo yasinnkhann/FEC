@@ -8,7 +8,9 @@ export default function Questions({ questionsData, filteredData }) {
   const { useFilteredData, setUseFilteredData } = useContext(QuestionsContext);
 
   // STATE
-  const [showRemainingQs, setShowRemainingQs] = useState(false);
+  const [remainingQsList, setRemainingQsList] = useState([]);
+  const [remainingQsCount, setRemainingQsCount] = useState(0);
+  const [isRemainingQsBtnShown, setIsRemainingQsBtnShown] = useState(true);
 
   // VARIABLES
   let initialQs, remainingQs;
@@ -65,16 +67,42 @@ export default function Questions({ questionsData, filteredData }) {
     (questionsData?.length > 4 && !useFilteredData) ||
     (filteredData.length !== 0 && useFilteredData);
 
+  // METHODS
+  const handleRemainingQs = remainingQs => {
+    const remainingQsCopy = [...remainingQs];
+    console.log('remainingQsCopy: ', remainingQsCopy);
+    // console.log(
+    //   'remainingQs: ',
+    //   remainingQsCopy[0]?.props?.questionObj?.answers
+    // );
+
+    let newEndPos = remainingQsCount + 2;
+    // if pos exists
+    if (remainingQsCopy.indexOf(newEndPos) !== -1) {
+      const newRemainingQs = remainingQsCopy.slice(remainingQsCount, newEndPos);
+      setRemainingQsCount(newEndPos);
+      setRemainingQsList(newRemainingQs);
+      setIsRemainingQsBtnShown(true);
+      // if pos does not exist
+    } else {
+      setRemainingQsCount(0);
+      setRemainingQsList(remainingQs);
+      setIsRemainingQsBtnShown(false);
+    }
+    return;
+  };
+
   return (
     <Container>
       {initialQs?.length > 0 && initialQs}
-      {showMoreAnsweredQsCondition && !showRemainingQs ? (
-        <MoreAnsweredQsBtn onClick={() => setShowRemainingQs(true)}>
+      {showMoreAnsweredQsCondition && isRemainingQsBtnShown ? (
+        <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>
           More Answered Questions
         </MoreAnsweredQsBtn>
       ) : null}
-      {showRemainingQs && showRemainingQsCondition ? remainingQs : null}
-
+      {remainingQsList?.length > 0 && showRemainingQsCondition
+        ? remainingQsList
+        : null}
       {/* {console.log('INITIAL QS: ', initialQs)}
       {console.log('REMAINING QS: ', remainingQs)}
       {console.log('FILTERED DATA: ', filteredData)}
@@ -83,6 +111,9 @@ export default function Questions({ questionsData, filteredData }) {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  overflow-y: scroll;
+  max-height: 100vh;
+`;
 
 const MoreAnsweredQsBtn = styled.button``;
