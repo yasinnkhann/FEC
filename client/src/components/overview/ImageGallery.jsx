@@ -6,7 +6,7 @@ const ImgContainer = styled.div `
 grid-column-start: 1;
 grid-column-end: 2;
 padding: 2rem;
-height: 800px;
+height: 650px;
 width: 600px;
 margin-left: 3rem;
 `;

@@ -27,7 +27,7 @@ const SelectedStyle = styled.h3 `
 const Button = styled.button `
   margin: 5px;
 `;
-const Price = styled.p`
+const Price = styled.h3`
   margin-left: 5rem;
 `;
 const Sale = styled.p `
@@ -48,7 +48,7 @@ export default function StyleSelector() {
 
   return (
     <div>
-      <Price>{currentStyle.sale_price ? <><Sale>On Sale {currentStyle.sale_price}</Sale><OldPrice>{currentStyle.original_price}</OldPrice></> : currentStyle.original_price}</Price>
+      <Price>{currentStyle.sale_price ? <><Sale> {currentStyle.sale_price}</Sale><OldPrice>{currentStyle.original_price}</OldPrice></> : currentStyle.original_price}</Price>
       <SelectedStyle>Selected Style: </SelectedStyle>
       <StyleName key={currentStyle.style_id}>{currentStyle.name}</StyleName>
       <ThumbsDiv>
