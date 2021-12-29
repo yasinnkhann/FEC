@@ -8,7 +8,8 @@ import { TOKEN } from '../../config.js';
 
 export default function AddQuestion({ closeModal, question }) {
   // CONTEXT
-  const { products } = useContext(AppContext);
+  const { productsContext } = useContext(AppContext);
+  const [products, setProducts] = productsContext;
   const { questionsData } = useContext(QuestionsContext);
 
   // STATE

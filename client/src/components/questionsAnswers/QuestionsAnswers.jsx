@@ -15,7 +15,8 @@ export default function QuestionsAnswers() {
   const [useFilteredData, setUseFilteredData] = useState(false);
 
   // CONTEXT
-  const { products, setProducts } = useContext(AppContext);
+  const { productsContext } = useContext(AppContext);
+  const [products, setProducts] = productsContext;
 
   // METHODS
   const handleSearchQuery = query => {

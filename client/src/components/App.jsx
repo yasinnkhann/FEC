@@ -44,13 +44,15 @@ export default function App() {
     <Fragment>
       {isLoaded ? (
         <>
-          <AppContext.Provider value={{
-            productsContext: [products, setProducts],
-            selectedProductContext: [selectedProduct, setSelectedProduct]
-          }}>
+          <AppContext.Provider
+            value={{
+              productsContext: [products, setProducts],
+              selectedProductContext: [selectedProduct, setSelectedProduct],
+            }}
+          >
             {/* <Overview /> */}
-            <RelatedItems />
-            {/* <QuestionsAnswers /> */}
+            {/* <RelatedItems /> */}
+            <QuestionsAnswers />
             {/* <RatingsReviews /> */}
           </AppContext.Provider>
         </>
