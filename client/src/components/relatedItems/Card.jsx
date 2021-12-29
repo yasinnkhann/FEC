@@ -42,7 +42,7 @@ export default function CarouselCard({ product }) {
       <ModalContext.Provider value={{modalContext: [showModal, setShowModal]}}>
         {showModal ? <Modal product={product}/> : null}
       </ModalContext.Provider>
-      <ProductPreviewImages />
+      <ProductPreviewImages product={product} />
       <ProductInfo product={product} />
     </div>
   );
