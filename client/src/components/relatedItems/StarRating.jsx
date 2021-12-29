@@ -37,12 +37,11 @@ export default function StarRating() {
     return (sum / count);
   };
 
+  const av = average();
+
   // JSX
   return (
-    <div>
-      <Stars rating={average()}></Stars>
-    </div>
-
+    <h5>★★★★★</h5>
   );
 }
 

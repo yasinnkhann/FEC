@@ -8,8 +8,9 @@ import axios from 'axios';
 // API imports
 import { TOKEN } from '../../config.js';
 
-// Context imports
+// Context & Hooks imports
 import AppContext from '../../AppContext.js';
+import useWindowSize from './useWindowSize.js';
 
 // Component imports
 import ScrollArrow from './ScrollArrows.jsx';
@@ -26,10 +27,14 @@ export default function Carousel({ name, relatedProductIds }) {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [maxCardIndex, setMaxCardIndex] = useState(8);
   const [isAtBeginning, setIsAtBeginning] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const size = useWindowSize();
 
   // HOOKS & INITILIZATION
+  // Populates relatedProducts state to render each item
   useEffect(() => {
     if (relatedProductIds !== undefined) {
       setRelatedProducts([]);
@@ -40,9 +45,16 @@ export default function Carousel({ name, relatedProductIds }) {
     }
   }, [relatedProductIds]);
 
+  // Changes number of items shown based on window size
   useEffect(() => {
-    getWindowDimensions();
-  }, []);
+    console.log(size);
+    const width = window.innerWidth;
+    const maxAllowableItems = Math.floor(width / 200);
+    setMaxCardIndex(maxAllowableItems);
+    setVisibleProducts(relatedProducts.slice(currentCardIndex, maxCardIndex));
+  }, [size]);
+
+
 
   // API HANDLERS
   const updateRelatedProducts = async (id) => {
@@ -69,18 +81,28 @@ export default function Carousel({ name, relatedProductIds }) {
     const finalIndex = relatedProducts.length - 1;
     const shouldResetIndex = currentCardIndex === 0;
     const index = shouldResetIndex ? finalIndex : currentCardIndex - 1;
-    const newRelatedProducts = relatedProducts.slice(index);
+
     setCurrentCardIndex(index);
+
+    const newRelatedProducts = relatedProducts.slice(currentCardIndex, maxCardIndex);
+
     setVisibleProducts(newRelatedProducts);
+    currentCardIndex === 0 ? setIsAtBeginning(true) : setIsAtBeginning(false);
+    currentCardIndex === finalIndex ? setIsAtEnd(true) : setIsAtEnd(false);
   };
 
   const scrollRight = () => {
     const finalIndex = relatedProducts.length - 1;
     const shouldResetIndex = currentCardIndex === finalIndex;
     const index = shouldResetIndex ? 0 : currentCardIndex + 1;
-    const newRelatedProducts = relatedProducts.slice(index);
+
     setCurrentCardIndex(index);
+
+    const newRelatedProducts = relatedProducts.slice(currentCardIndex, maxCardIndex);
+
     setVisibleProducts(newRelatedProducts);
+    currentCardIndex === 0 ? setIsAtBeginning(true) : setIsAtBeginning(false);
+    currentCardIndex === finalIndex ? setIsAtEnd(true) : setIsAtEnd(false);
   };
 
   // HELPER FUNCTIONS
@@ -111,7 +133,7 @@ export default function Carousel({ name, relatedProductIds }) {
           </div>
           <div className="carousel-right" onClick={() => scrollRight()} >
             <RightArrow>
-              <ScrollArrow direction={'right'} />
+              {relatedProducts.length <= maxCardIndex ? null : isAtEnd ? null : <ScrollArrow direction={'right'} />}
             </RightArrow>
           </div>
         </div>
@@ -121,13 +143,13 @@ export default function Carousel({ name, relatedProductIds }) {
     return (
       <CarouselStyle className="carousel" >
         <div className="carousel-row" style={{display: 'flex'}} >
-          <div className="carousel-left" onClick={()=> console.log('Left click')} >
+          <div className="carousel-right" onClick={() => scrollLeft()} >
             <LeftArrow>
               <ScrollArrow />
             </LeftArrow>
           </div>
           <div>Loading...</div>
-          <div className="carousel-right" onClick={()=> console.log('Right click')} >
+          <div className="carousel-right" onClick={() => scrollRight()} >
             <RightArrow>
               <ScrollArrow />
             </RightArrow>
@@ -142,6 +164,7 @@ export default function Carousel({ name, relatedProductIds }) {
 // STYLES
 const CarouselStyle = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 const LeftArrow = styled.div`

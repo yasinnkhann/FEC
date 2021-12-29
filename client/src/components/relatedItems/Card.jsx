@@ -64,7 +64,7 @@ export default function CarouselCard({ product }) {
       onMouseLeave={() => setShowModal(false)}
       onClick={() => handleClick(product)} >
       <ModalContext.Provider value={{modalContext: [showModal, setShowModal]}}>
-        {showModal ? <Modal product={product}/> : null}
+        {/* {showModal ? <Modal product={product}/> : null} */}
       </ModalContext.Provider>
       <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
       <ProductInfoStyle>

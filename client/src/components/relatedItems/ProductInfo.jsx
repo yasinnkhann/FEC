@@ -27,7 +27,8 @@ export default function ProductInfo({ product }) {
           <InfoDetailStyle>{product.name}</InfoDetailStyle>
           <InfoDetailStyle>{product.sale_price ? `Sale price! $${price}` : `Price: $${price}` }</InfoDetailStyle>
           <InfoDetailStyle>{`Category: ${product.category}`}</InfoDetailStyle>
-          <InfoDetailStyle>{`Rating ${<StarRating />}`}</InfoDetailStyle>
+          <InfoDetailStyle>★★★★★</InfoDetailStyle>
+          {/* <InfoDetailStyle>{`Rating ${<StarRating />}`}</InfoDetailStyle> */}
         </InfoCardStyle>
         : <h3>This will be an outfit</h3>
       }
