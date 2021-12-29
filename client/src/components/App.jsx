@@ -28,7 +28,6 @@ export default function App() {
             },
           }
         );
-        // console.log('PRODUCTS DATA:', res.data);
         setProducts(res.data);
         setSelectedProduct(res.data[0]);
         setIsLoaded(true);
