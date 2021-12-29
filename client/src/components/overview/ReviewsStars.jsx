@@ -21,7 +21,6 @@ const Stars = styled.span `
   }
 `;
 export default function ReviewsStars() {
-<<<<<<< HEAD
   const {reviewsData, setreviewsData} = useContext(ReviewsContext);
   const totalReviews = () => {
     let count = 0;
@@ -45,7 +44,7 @@ export default function ReviewsStars() {
       });
     return (sum / count);
   };
-  console.log('STARSRATINGSRESULTS', reviewsData.ratings);
+  //console.log('STARSRATINGSRESULTS', reviewsData.ratings);
   return (
     <div>
       <Reviews>
@@ -68,23 +67,3 @@ export default function ReviewsStars() {
 //   -webkit-text-fill-color: transparent;
 // }
 
-=======
-  const { reviewsData, setreviewsData } = useContext(ReviewsContext);
-  const count = Object.keys(reviewsData.ratings).length;
-  const starsAverage = () => {
-    var sum = 0;
-    var arr = Object.values(reviewsData.ratings);
-    for (var i = 0; i < arr.length; i++) {
-      sum += Number(arr[i]);
-    }
-    // console.log((sum / count) * 20);
-  };
-  // console.log('STARSRATINGSRESULTS', );
-  return (
-    <div>
-      <Reviews>Read All {count} Reviews</Reviews>
-      {starsAverage()}
-    </div>
-  );
-}
->>>>>>> d5b7c4130cd93d5c279df1e23b8d7c691e3aa11b
