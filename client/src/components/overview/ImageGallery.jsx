@@ -1,6 +1,6 @@
-import React from 'react';
-import StylesContext from './StylesContext.js';
+import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
+import StylesContext from './StylesContext';
 
 const ImgContainer = styled.div `
 grid-column-start: 1;
@@ -8,7 +8,7 @@ grid-column-end: 2;
 padding: 2rem;
 max-height: 700px;
 max-width: 500px;
-margin-left: 6rem;
+margin-left: 3rem;
 `;
 const Image = styled.img `
  width: 100%;
@@ -17,14 +17,13 @@ const Image = styled.img `
  padding: 2rem;
  position: relative;
 `;
-/* <ImgContainer>
-<Image src="https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80"/>
-</ImgContainer> */
-export default function ImageGallery({selected}) {
-  console.log('IMAGE GALLERY: ', selected);
+export default function ImageGallery() {
+  const {stylesDataContent, currentStyleContent} = useContext(StylesContext);
+  const [stylesData, setstylesData] = stylesDataContent;
+  const [currentStyle, setCurrentStyle] = currentStyleContent;
   return (
     <ImgContainer>
-      <Image src="https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80"/>
-    </ImgContainer> 
+      <Image src={currentStyle.photos[0].url}></Image>
+    </ImgContainer>
   );
 }
