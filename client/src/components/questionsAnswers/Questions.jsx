@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import QuestionsContext from './QuestionsContext.js';
 import Question from './Question.jsx';
-import AddQuestion from './AddQuestion.jsx';
 
 export default function Questions({ questionsData, filteredData }) {
   // CONTEXT
@@ -10,7 +9,6 @@ export default function Questions({ questionsData, filteredData }) {
 
   // STATE
   const [showRemainingQs, setShowRemainingQs] = useState(false);
-  const [showQuestionModal, setShowQuestionModal] = useState(false);
 
   // VARIABLES
   let initialQs, remainingQs;
@@ -69,32 +67,22 @@ export default function Questions({ questionsData, filteredData }) {
 
   return (
     <Container>
-      {initialQs?.length > 0 ? (
-        initialQs
-      ) : (
-        <SubmitNewQBtn onClick={() => setShowQuestionModal(true)}>
-          Submit a new question
-        </SubmitNewQBtn>
-      )}
+      {initialQs?.length > 0 && initialQs}
       {showMoreAnsweredQsCondition && !showRemainingQs ? (
         <MoreAnsweredQsBtn onClick={() => setShowRemainingQs(true)}>
           More Answered Questions
         </MoreAnsweredQsBtn>
       ) : null}
       {showRemainingQs && showRemainingQsCondition ? remainingQs : null}
-      {showQuestionModal && (
-        <AddQuestion closeModal={() => setShowQuestionModal(false)} />
-      )}
-      {console.log('INITIAL QS: ', initialQs)}
+
+      {/* {console.log('INITIAL QS: ', initialQs)}
       {console.log('REMAINING QS: ', remainingQs)}
       {console.log('FILTERED DATA: ', filteredData)}
-      {console.log('QUESTIONS DATA: ', questionsData)}
+      {console.log('QUESTIONS DATA: ', questionsData)} */}
     </Container>
   );
 }
 
 const Container = styled.div``;
-
-const SubmitNewQBtn = styled.button``;
 
 const MoreAnsweredQsBtn = styled.button``;

@@ -171,7 +171,7 @@ export default function AddAnswer({ closeModal, question }) {
           <br />
           <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
           <br />
-          {numOfImages <= 4 && (
+          {numOfImages <= 5 && (
             <>
               <input
                 type='file'
@@ -188,7 +188,8 @@ export default function AddAnswer({ closeModal, question }) {
                     src={URL.createObjectURL(thumbnail)}
                     alt='uploaded photo'
                     style={{
-                      height: '75px',
+                      height: '45px',
+                      width: '45px',
                       border: '1px solid #000',
                       margin: '5px',
                     }}
