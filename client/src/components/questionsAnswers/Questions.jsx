@@ -27,7 +27,7 @@ export default function Questions({ questionsData, filteredData }) {
           a.props.questionObj.question_helpfulness
       );
     remainingQs = questionsData
-      ?.slice(4, questionsData?.length)
+      ?.slice(4)
       .map(question => (
         <Question key={question.question_id} questionObj={question} />
       ))
@@ -48,7 +48,7 @@ export default function Questions({ questionsData, filteredData }) {
           a.props.questionObj.question_helpfulness
       );
     remainingQs = filteredData
-      ?.slice(4, filteredData?.length)
+      ?.slice(4)
       .map(question => (
         <Question key={question.question_id} questionObj={question} />
       ))
