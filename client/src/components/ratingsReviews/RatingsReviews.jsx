@@ -30,9 +30,9 @@ const sortOptionsStyle = {
 };
 
 export default function RatingsReviews() {
-  const { productsValue, selectedProductValue } = useContext(AppContext);
-  const [products, setProducts] = productsValue;
-  const [selectedProduct, setSelectedProduct] = selectedProductValue;
+  const { productsContext, selectedProductContext } = useContext(AppContext);
+  const [products, setProducts] = productsContext;
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
 
   const [reviewList, setReviewList] = useState([]);
   const [metaData, setMetaData] = useState([]);

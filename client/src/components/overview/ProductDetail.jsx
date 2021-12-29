@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Styles from './Styles.jsx';
 
 
 const Name = styled.h1 `
@@ -15,17 +14,13 @@ const Category = styled.h3`
 const Description = styled.p `
   padding: 0.5rem;
 `;
-const Price = styled.p`
-  margin-left: 5rem;
 
-`;
 
 export default function ProductDetail({product}) {
   return (
     <div>
       <Category>{product?.category}</Category>
       <Name>{product?.name}</Name>
-      <Price>{product?.default_price}</Price>
     </div>
   );
 }
