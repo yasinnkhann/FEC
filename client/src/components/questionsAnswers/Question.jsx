@@ -211,7 +211,11 @@ export default function Question({ questionObj }) {
 
   const finalAnswers = sellerAnswers?.concat(orderedAnswers);
 
-  const mappedAnswers = finalAnswers?.map(answer => (
+  const initialFinalAnswers = finalAnswers?.slice(0, 2);
+
+  const remainingFinalAnswers = finalAnswers?.slice(2);
+
+  const mappedAnswers = initialFinalAnswers?.map(answer => (
     <AnswerPortion key={answer?.answer_id}>
       <AnswerContainer>
         <strong>A:</strong>
