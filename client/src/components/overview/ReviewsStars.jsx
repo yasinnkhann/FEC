@@ -31,7 +31,20 @@ export default function ReviewsStars() {
     }
     // console.log((sum / count) * 20);
   };
-  // console.log('STARSRATINGSRESULTS', );
+  const average = () => {
+    let count = 0;
+    let sum = 0;
+    Object.entries(reviewsData.ratings)
+      .map(([key, value]) => {
+        return [parseInt(key), parseInt(value)];
+      })
+      .forEach(([key, value]) => {
+        count += value;
+        sum += key * value;
+      });
+    return sum / count;
+  };
+  //console.log('STARSRATINGSRESULTS', reviewsData.ratings);
   return (
     <div>
       <Reviews>Read All {count} Reviews</Reviews>

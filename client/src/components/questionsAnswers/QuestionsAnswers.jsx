@@ -15,7 +15,8 @@ export default function QuestionsAnswers() {
   const [useFilteredData, setUseFilteredData] = useState(false);
 
   // CONTEXT
-  const { productsContext } = useContext(AppContext);
+  const { productsContext, selectedProductContext } = useContext(AppContext);
+
   const [products, setProducts] = productsContext;
 
   // METHODS
