@@ -24,13 +24,21 @@ export default function CarouselCard({ product }) {
   // EVENT HANDLERS
   const handleClick = (newSelectedProduct) => {
     console.log(product.name, ' card clicked');
+    setSelectedProduct(newSelectedProduct);
+  };
+
+  const handleHover = () => {
     setShowModal(!showModal);
-    // setSelectedProduct(newSelectedProduct);
   };
 
   // JSX
   return (
-    <div className="carousel-card" style={{border: '1px solid black'}} onClick={() => handleClick(product)} >
+    <div
+      className="carousel-card"
+      style={{border: '1px solid black'}}
+      onMouseEnter={() => setShowModal(true)}
+      onMouseLeave={() => setShowModal(false)}
+      onClick={() => handleClick(product)} >
       <ModalContext.Provider value={{modalContext: [showModal, setShowModal]}}>
         {showModal ? <Modal product={product}/> : null}
       </ModalContext.Provider>
