@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 const starStyle = {
   display: 'flex', marginLeft: '2px', marginRight: '2px', width: '30px', textAlign: 'center', borderRadius: '40px', padding: '5px', fontSize: '10px', border: 'none', boxShadow: '2px 2px 4px gold', cursor: 'pointer',
