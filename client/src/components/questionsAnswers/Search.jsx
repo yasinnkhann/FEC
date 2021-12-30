@@ -27,9 +27,11 @@ export default function Search(props) {
 }
 
 const Container = styled.div`
-  position: relative;
   display: flex;
   min-width: 100px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 `;
 
 const SearchBar = styled.input`
