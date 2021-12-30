@@ -51,7 +51,7 @@ export default function App() {
           >
             <Overview />
             <RelatedItems />
-            <QuestionsAnswers />
+            {/* <QuestionsAnswers /> */}
             <RatingsReviews />
           </AppContext.Provider>
         </>
