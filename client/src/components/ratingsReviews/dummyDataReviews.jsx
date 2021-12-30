@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const dummyDataReviews = {
+const dummyDataReviews = {
   'product': '40344',
   'page': 0,
   'count': 50,
@@ -690,3 +690,5 @@ export const dummyDataReviews = {
     }
   ]
 };
+
+export default dummyDataReviews;

@@ -8,7 +8,7 @@ const Reviews = styled.span`
   text-decoration: underline;
   margin-left: 3rem;
 `;
-const Stars = styled.span `
+const Stars = styled.span`
   display: inline-block;
   font-family: Times;
 
@@ -21,41 +21,37 @@ const Stars = styled.span `
   }
 `;
 export default function ReviewsStars() {
-  const {reviewsData, setreviewsData} = useContext(ReviewsContext);
-  const totalReviews = () => {
-    let count = 0;
-    Object.entries(reviewsData.ratings).map(([key, value]) => {
-      return [parseInt(key), parseInt(value)];
-    })
-      .forEach(([key, value]) => {
-        count += value;
-      });
-    return count;
+  const { reviewsData, setreviewsData } = useContext(ReviewsContext);
+  const count = Object.keys(reviewsData.ratings).length;
+  const starsAverage = () => {
+    var sum = 0;
+    var arr = Object.values(reviewsData.ratings);
+    for (var i = 0; i < arr.length; i++) {
+      sum += Number(arr[i]);
+    }
+    // console.log((sum / count) * 20);
   };
   const average = () => {
     let count = 0;
     let sum = 0;
-    Object.entries(reviewsData.ratings).map(([key, value]) => {
-      return [parseInt(key), parseInt(value)];
-    })
+    Object.entries(reviewsData.ratings)
+      .map(([key, value]) => {
+        return [parseInt(key), parseInt(value)];
+      })
       .forEach(([key, value]) => {
         count += value;
-        sum += (key * value);
+        sum += key * value;
       });
-    return (sum / count);
+    return sum / count;
   };
   //console.log('STARSRATINGSRESULTS', reviewsData.ratings);
   return (
     <div>
-      <Reviews>
-        <a href='#route'>Read All {totalReviews()} Reviews</a>
-      </Reviews>
-      <Stars rating={average()}></Stars>
+      <Reviews>Read All {count} Reviews</Reviews>
+      {starsAverage()}
     </div>
-
   );
 }
-
 
 // .stars:before {
 //   content: '★★★★★';
@@ -66,4 +62,3 @@ export default function ReviewsStars() {
 //   -webkit-background-clip: text;
 //   -webkit-text-fill-color: transparent;
 // }
-
