@@ -21,6 +21,7 @@ export default function RelatedItems() {
   const {productsContext, selectedProductContext} = useContext(AppContext);
 
   // STATE
+
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [relatedProductIds, setRelatedProductIds] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
