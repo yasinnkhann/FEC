@@ -17,6 +17,7 @@ const Image = styled.img `
  padding: 2rem;
  position: relative;
 `;
+
 export default function ImageGallery() {
   const {stylesDataContent, currentStyleContent} = useContext(StylesContext);
   const [stylesData, setstylesData] = stylesDataContent;

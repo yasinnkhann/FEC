@@ -85,10 +85,10 @@ export default function Questions({ questionsData, filteredData }) {
       {showQuestionModal && (
         <AddQuestion closeModal={() => setShowQuestionModal(false)} />
       )}
-      {console.log('INITIAL QS: ', initialQs)}
+      {/* {console.log('INITIAL QS: ', initialQs)}
       {console.log('REMAINING QS: ', remainingQs)}
       {console.log('FILTERED DATA: ', filteredData)}
-      {console.log('QUESTIONS DATA: ', questionsData)}
+      {console.log('QUESTIONS DATA: ', questionsData)} */}
     </Container>
   );
 }

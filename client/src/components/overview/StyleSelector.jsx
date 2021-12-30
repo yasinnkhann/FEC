@@ -2,11 +2,6 @@ import React, {useContext, useState} from 'react';
 import StylesContext from './StylesContext.js';
 import styled from 'styled-components';
 import { Photo } from '@material-ui/icons';
-//import fbIcon from './icons/fbmetaiconnew.png';
-//import pinIcon from './icons/pinteresticonnew.png';
-//import twitterIcon from './icons/twittericon.jpg';
-// import fbIcon from './fbmetaicon.jpg';
-// import fbIcon from './fbmetaicon.jpg';
 
 const StylePicsDiv = styled.div `
   display: flex;

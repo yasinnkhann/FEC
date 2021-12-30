@@ -58,7 +58,7 @@ export default function Question({ questionObj }) {
           },
         }
       );
-      console.log('Q HELPFUL PUT RES: ', res);
+      // console.log('Q HELPFUL PUT RES: ', res);
 
       const questionsDataCopy = [...questionsData.results];
       let incrementedCount = questionObj.question_helpfulness + 1;
@@ -96,7 +96,7 @@ export default function Question({ questionObj }) {
           },
         }
       );
-      console.log('ANS HELPFUL PUT RES: ', res);
+      // console.log('ANS HELPFUL PUT RES: ', res);
 
       const keyId = answerObj.answer_id;
       const trackerCopy = Object.assign({}, answerHelpfulTracker);
@@ -137,7 +137,7 @@ export default function Question({ questionObj }) {
           },
         }
       );
-      console.log('Q REPORTED PUT RES: ', res);
+      // console.log('Q REPORTED PUT RES: ', res);
 
       const questionsDataCopy = [...questionsData.results];
       const idx = questionsDataCopy.findIndex(
@@ -169,7 +169,7 @@ export default function Question({ questionObj }) {
           },
         }
       );
-      console.log('ANS REPORTED PUT RES: ', res);
+      // console.log('ANS REPORTED PUT RES: ', res);
 
       const keyId = answerObj.answer_id;
       const trackerCopy = Object.assign({}, answerReportedTracker);
@@ -261,9 +261,9 @@ export default function Question({ questionObj }) {
 
   return (
     <Container>
-      {console.log('SELLERS: ', sellerAnswers)}
+      {/* {console.log('SELLERS: ', sellerAnswers)}
       {console.log('ORDERED: ', orderedAnswers)}
-      {console.log('FINAL: ', finalAnswers)}
+      {console.log('FINAL: ', finalAnswers)} */}
       {/* {console.log('NO SELLERS: ', noSellerArr)} */}
       {/* {console.log('ANS ARR: ', ansArr)} */}
       <QuestionPortion>

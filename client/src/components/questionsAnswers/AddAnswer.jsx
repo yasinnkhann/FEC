@@ -8,8 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
-  const { productsContext } = useContext(AppContext);
-  const [products, setProducts] = productsContext;
+  const { products } = useContext(AppContext);
   const { questionsData } = useContext(QuestionsContext);
 
   // STATE
@@ -60,7 +59,7 @@ export default function AddAnswer({ closeModal, question }) {
         'http://localhost:3000/api/qa/uploads',
         formData
       );
-      console.log('RES: ', res);
+      //console.log('RES: ', res);
       closeModal();
     } catch (err) {
       console.error(err);
