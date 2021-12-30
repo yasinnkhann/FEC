@@ -21,7 +21,7 @@ export default function App() {
           {
             params: {
               // page: 1,
-              count: 100,
+              count: 2000,
             },
             headers: {
               Authorization: `${TOKEN}`,
@@ -49,10 +49,10 @@ export default function App() {
               selectedProductContext: [selectedProduct, setSelectedProduct],
             }}
           >
-            {/* <Overview /> */}
-            {/* <RelatedItems /> */}
+            <Overview />
+            <RelatedItems />
             <QuestionsAnswers />
-            {/* <RatingsReviews /> */}
+            <RatingsReviews />
           </AppContext.Provider>
         </>
       ) : (

@@ -67,6 +67,10 @@ export default function Carousel({ name, relatedProductIds }) {
     return () => resetVisibleProducts();
   }, [selectedProduct]);
 
+  useEffect(() => {
+    setVisibleProducts(relatedProducts.slice(startIndex, endIndex));
+  }, [startIndex]);
+
   // API HANDLERS
   // Gets one product's info based on id
   const updateRelatedProducts = async (id) => {
@@ -94,7 +98,6 @@ export default function Carousel({ name, relatedProductIds }) {
   // EVENT HANDLERS
   // Click handler that adjusts items shown based on left arrow being clicked
   const scrollLeft = (e) => {
-    e.preventDefault();
     const relatedFirstIndex = relatedProducts[0];
     const visibleFirstIndex = visibleProducts[0];
     if (isAtBeginningIndex() || startIndex - 1 < 0) {
@@ -113,7 +116,6 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Click handler that adjusts items shown based on right arrow being clicked
   const scrollRight = (e) => {
-    e.preventDefault();
     const relatedLastIndex = relatedProducts.length - 1;
     const visibleLastIndex = visibleProducts.length - 1;
     if (isAtFinalIndex()) {
