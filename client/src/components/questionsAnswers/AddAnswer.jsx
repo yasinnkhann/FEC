@@ -89,7 +89,7 @@ export default function AddAnswer({ closeModal, question }) {
           },
         }
       );
-      console.log('ADD ANS POST RES: ', res);
+      //console.log('RES: ', res);
       closeModal();
     } catch (err) {
       console.error(err);
