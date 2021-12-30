@@ -6,6 +6,7 @@ import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';
 import Search from './Search.jsx';
+import Accordion from './Accordion.jsx';
 
 export default function QuestionsAnswers() {
   // STATE
@@ -79,6 +80,7 @@ export default function QuestionsAnswers() {
               questionsData={questionsData.results}
               filteredData={filteredQuestions}
             />
+            {/* <Accordion /> */}
           </QuestionsContext.Provider>
         </>
       )}

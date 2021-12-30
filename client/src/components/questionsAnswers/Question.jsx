@@ -227,10 +227,10 @@ export default function Question({ questionObj }) {
 
   const initialMappedAnswers = initialFinalAnswers?.map(answer => (
     <AnswerPortion key={answer?.answer_id}>
-      <AnswerContainer>
+      <AnswerHeader>
         <strong>A:</strong>
         <AnswerBody>{answer?.body}</AnswerBody>{' '}
-      </AnswerContainer>
+      </AnswerHeader>
       <AnswerDetails>
         <span>
           by:{' '}
@@ -271,10 +271,10 @@ export default function Question({ questionObj }) {
 
   const remainingMappedAnswers = remainingFinalAnswers?.map(answer => (
     <AnswerPortion key={answer?.answer_id}>
-      <AnswerContainer>
+      <AnswerHeader>
         <strong>A:</strong>
         <AnswerBody>{answer?.body}</AnswerBody>{' '}
-      </AnswerContainer>
+      </AnswerHeader>
       <AnswerDetails>
         <span>
           by:{' '}
@@ -384,7 +384,7 @@ const AddAnswerSec = styled.span``;
 
 const AnswerPortion = styled.div``;
 
-const AnswerContainer = styled.div``;
+const AnswerHeader = styled.div``;
 
 const AnswerBody = styled.p``;
 

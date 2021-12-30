@@ -72,7 +72,7 @@ export default function Questions({ questionsData, filteredData }) {
   // METHODS
   const handleRemainingQs = remainingQs => {
     const remainingQsCopy = [...remainingQs];
-    console.log('remainingQsCopy: ', remainingQsCopy);
+    // console.log('remainingQsCopy: ', remainingQsCopy);
     // console.log(
     //   'remainingQs: ',
     //   remainingQsCopy[0]?.props?.questionObj?.answers
