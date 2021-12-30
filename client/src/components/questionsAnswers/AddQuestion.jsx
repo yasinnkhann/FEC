@@ -133,7 +133,7 @@ export default function AddQuestion({ closeModal, question }) {
           <span>- For authentication reasons, you will not be emailed.</span>
           <br />
           <br />
-          <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
+          <SubmitBtn type='submit'>Submit Question</SubmitBtn>
           <CloseBtn onClick={closeModal}>
             <CloseIcon />
           </CloseBtn>
