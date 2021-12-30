@@ -31,7 +31,7 @@
 //           Helpful? <u>Yes</u> ({item.helpfulness}) | <u>Report</u>
 //         </div>
 //         <div>
-//           <h4>_________________________________________________________________________________________________________________________________________________________________</h4>
+//           <h4>______</h4>
 //         </div>
 //       </React.Fragment>
 //     );
@@ -100,6 +100,7 @@ const filtersContainer = {
 };
 
 const averageRating = (obj) => {
+  // console.log(obj); // {1: '15', 2: '12', 3: '36', 4: '54', 5: '133'}
   let wholeTotal = 0;
   let responseTotal = 0;
   for (const star in obj) {
@@ -110,6 +111,7 @@ const averageRating = (obj) => {
   if (isNaN((Math.round(result * 4) / 4).toFixed(1))) {
     return 0;
   }
+  // console.log(result); //4.112
   return result;
 };
 
@@ -206,40 +208,6 @@ const RatingBreakdown = (props) => {
 export default RatingBreakdown;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import PropTypes from 'prop-types';
-
-// const averageRating = (obj) => {
-//   let wholeTotal = 0;
-//   let responseTotal = 0;
-//   if (obj) {
-//     const possibleRatings = Object.keys(obj);
-//     possibleRatings.forEach((rating) => {
-//       wholeTotal += (Number(obj[rating]) * Number(rating));
-//       responseTotal += Number(obj[rating]);
-//     });
-//     const result = wholeTotal / responseTotal;
-//     if (Number.isNaN((Math.round(result * 4) / 4).toFixed(1))) {
-//       return 0;
-//     }
-//     return result.toFixed(1);
-//   }
-// };
-
 const StarRating = ({ averageRating, height, width }) => {
   let rating = averageRating || 0;
   const stars = [];
@@ -270,7 +238,7 @@ const StarRating = ({ averageRating, height, width }) => {
         stars.push(1.0);
         break;
       default:
-        console.log('OOPS');
+        // console.log('Testing From star right!');
         stars.push(0);
         break;
       }
@@ -279,6 +247,7 @@ const StarRating = ({ averageRating, height, width }) => {
     }
     rating -= 1;
   }
+  // console.log(stars);
 
   return (
     <div>
@@ -295,7 +264,7 @@ const StarRating = ({ averageRating, height, width }) => {
             position: 'relative',
             display: 'inline-block',
             height: `${height}px`,
-            backgroundColor: '#333333',
+            backgroundColor: '#f7df07',
             width: `${parseInt(item * width, 10)}px`,
           }}
           >
@@ -304,7 +273,7 @@ const StarRating = ({ averageRating, height, width }) => {
                 height: `${height}px`,
                 width: `${width}px`,
               }}
-              src="https://www.pngfind.com/pngs/m/8-80639_transparent-background-star-icon-png-download-.png"
+              src="star.png"
               alt="stars alt"
             />
           </div>
@@ -313,11 +282,3 @@ const StarRating = ({ averageRating, height, width }) => {
     </div>
   );
 };
-
-StarRating.propTypes = {
-  averageRating: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-};
-
-// src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzgwaY9FzrIprpUOQQHCIehHKVdU3p_6B-vg&usqp=CAU"

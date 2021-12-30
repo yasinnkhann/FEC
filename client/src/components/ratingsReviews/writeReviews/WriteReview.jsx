@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import CharacteristicsRadioList from './CharacteristicsRadioList.jsx';
-// import HandleReviewData from './handleReviewData.jsx';
 
 const gridLayout = {
   display: 'grid',
@@ -333,7 +332,6 @@ class WriteReview extends React.Component {
               placeholder="Example: jackson11!"
             />
             <br />
-            <small><i>For privacy reasons, do not use your full name or email address.</i></small>
           </div>
 
           <div style={reviewStyle}>
@@ -368,7 +366,6 @@ class WriteReview extends React.Component {
               placeholder="Example: jackson11@email.com"
             />
             <br />
-            <small><i>For authentication reasons, you will not be emailed.</i></small>
           </div>
 
           <button

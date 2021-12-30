@@ -5,6 +5,7 @@ import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
+import { TOKEN, cloudinaryInfo } from '../../config.js';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
@@ -14,7 +15,7 @@ export default function AddAnswer({ closeModal, question }) {
   // STATE
   const [numOfImages, setNumOfImages] = useState(0);
   const [images, setImages] = useState('');
-  const [formData, setFormData] = useState({
+  const [addAnsData, setAddAnsData] = useState({
     yourAnswer: '',
     yourNickName: '',
     yourEmail: '',
@@ -37,7 +38,7 @@ export default function AddAnswer({ closeModal, question }) {
   }, []);
 
   const handleChange = ({ target: { name, value } }) => {
-    setFormData({ ...formData, hasChanged: true, [name]: value });
+    setAddAnsData({ ...addAnsData, hasChanged: true, [name]: value });
   };
 
   const handleFileUpload = e => {
@@ -47,17 +48,45 @@ export default function AddAnswer({ closeModal, question }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('images', images);
-
-    for (const key of Object.keys(images)) {
-      formData.append('images', images[key]);
+    if (images.length > 5) {
+      alert('Cannot upload files more than 5 files');
+      setImages('');
+      setNumOfImages(0);
+      return;
     }
+    const photoUrls = [];
 
+    for (let i = 0; i < images.length; i++) {
+      const formData = new FormData();
+      formData.append('file', images[i]);
+      formData.append('upload_preset', cloudinaryInfo.CLOUDINARY_UPLOAD_PRESET);
+      // console.log('FORM DATA: ', ...formData);
+      try {
+        const uploadRes = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloudinaryInfo.CLOUDINARY_NAME}/image/upload`,
+          formData
+        );
+        console.log('UPLOAD RES: ', uploadRes);
+        photoUrls.push(uploadRes.data.secure_url);
+      } catch (err) {
+        console.error(err);
+      }
+    }
     try {
+      const body = {
+        body: addAnsData.yourAnswer,
+        name: addAnsData.yourNickName,
+        email: addAnsData.yourEmail,
+        photos: photoUrls,
+      };
       const res = await axios.post(
-        'http://localhost:3000/api/qa/uploads',
-        formData
+        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`,
+        body,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
       );
       //console.log('RES: ', res);
       closeModal();
@@ -81,7 +110,7 @@ export default function AddAnswer({ closeModal, question }) {
           </label>
           <textarea
             name='yourAnswer'
-            value={formData.yourAnswer}
+            value={addAnsData.yourAnswer}
             onChange={handleChange}
             id='yourAnswer'
             cols='45'
@@ -100,7 +129,7 @@ export default function AddAnswer({ closeModal, question }) {
           </label>
           <input
             name='yourNickName'
-            value={formData.yourNickName}
+            value={addAnsData.yourNickName}
             onChange={handleChange}
             type='text'
             id='yourNickName'
@@ -123,7 +152,7 @@ export default function AddAnswer({ closeModal, question }) {
           </label>
           <input
             name='yourEmail'
-            value={formData.yourEmail}
+            value={addAnsData.yourEmail}
             onChange={handleChange}
             type='email'
             id='yourEmail'
@@ -141,7 +170,7 @@ export default function AddAnswer({ closeModal, question }) {
           <br />
           <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
           <br />
-          {numOfImages <= 4 && (
+          {numOfImages <= 5 && (
             <>
               <input
                 type='file'
@@ -158,7 +187,8 @@ export default function AddAnswer({ closeModal, question }) {
                     src={URL.createObjectURL(thumbnail)}
                     alt='uploaded photo'
                     style={{
-                      height: '75px',
+                      height: '45px',
+                      width: '45px',
                       border: '1px solid #000',
                       margin: '5px',
                     }}
