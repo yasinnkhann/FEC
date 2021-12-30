@@ -6,7 +6,6 @@ import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';
 import Search from './Search.jsx';
-import AddQuestion from './AddQuestion.jsx';
 
 export default function QuestionsAnswers() {
   // STATE
@@ -14,7 +13,6 @@ export default function QuestionsAnswers() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [useFilteredData, setUseFilteredData] = useState(false);
-  const [showQuestionModal, setShowQuestionModal] = useState(false);
 
   // CONTEXT
   const { productsContext, selectedProductContext } = useContext(AppContext);
@@ -43,7 +41,7 @@ export default function QuestionsAnswers() {
           {
             params: {
               // product_id: 40347,
-              product_id: products[57]?.id,
+              product_id: products[1010]?.id,
               // page: 1,
               // count: 1,
             },
@@ -81,12 +79,6 @@ export default function QuestionsAnswers() {
               questionsData={questionsData.results}
               filteredData={filteredQuestions}
             />
-            <CreateNewQBtn onClick={() => setShowQuestionModal(true)}>
-              Create a new question
-            </CreateNewQBtn>
-            {showQuestionModal && (
-              <AddQuestion closeModal={() => setShowQuestionModal(false)} />
-            )}
           </QuestionsContext.Provider>
         </>
       )}

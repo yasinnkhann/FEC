@@ -20,6 +20,7 @@ export default function Question({ questionObj }) {
   const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [hasQuestionBeenReported, setHasQuestionBeenReported] = useState(false);
+  const [showRemainderAnswers, setShowRemainderAnswers] = useState(false);
 
   // METHODS
   useEffect(() => {
@@ -200,6 +201,15 @@ export default function Question({ questionObj }) {
     setShowAnswerModal(true);
   };
 
+  const handleSeeMoreAnswers = e => {
+    e.preventDefault();
+    if (showRemainderAnswers) {
+      setShowRemainderAnswers(false);
+    } else {
+      setShowRemainderAnswers(true);
+    }
+  };
+
   // VARIABLES
   const sellerAnswers = answers?.results?.filter(
     answer => answer.answerer_name === 'Seller'
@@ -215,7 +225,51 @@ export default function Question({ questionObj }) {
 
   const remainingFinalAnswers = finalAnswers?.slice(2);
 
-  const mappedAnswers = initialFinalAnswers?.map(answer => (
+  const initialMappedAnswers = initialFinalAnswers?.map(answer => (
+    <AnswerPortion key={answer?.answer_id}>
+      <AnswerContainer>
+        <strong>A:</strong>
+        <AnswerBody>{answer?.body}</AnswerBody>{' '}
+      </AnswerContainer>
+      <AnswerDetails>
+        <span>
+          by:{' '}
+          {answer?.answerer_name === 'Seller' ? (
+            <strong>{answer?.answerer_name}</strong>
+          ) : (
+            answer?.answerer_name
+          )}
+          , <Moment format='MMMM Do YYYY'>{answer?.date}</Moment> | Helpful?{' '}
+          <a href=''>
+            <u onClick={e => increaseAnswerHelpfulCount(e, answer)}>Yes</u>
+          </a>{' '}
+          ({answer?.helpfulness}) |{' '}
+          <a href='' onClick={e => handleAnswerReported(e, answer)}>
+            <u>
+              {answerReportedTracker[answer?.answer_id] ? 'Reported' : 'Report'}
+            </u>
+          </a>
+        </span>
+      </AnswerDetails>
+      {answer?.photos.length > 0 && (
+        <PhotoContainer>
+          <Photos>
+            {answer?.photos?.map((photoSrc, idx) => (
+              <img
+                key={idx}
+                src={photoSrc.url}
+                width='200'
+                height='200'
+                loading='lazy'
+              />
+            ))}
+          </Photos>
+        </PhotoContainer>
+      )}
+    </AnswerPortion>
+  ));
+
+  const remainingMappedAnswers = remainingFinalAnswers?.map(answer => (
     <AnswerPortion key={answer?.answer_id}>
       <AnswerContainer>
         <strong>A:</strong>
@@ -262,34 +316,48 @@ export default function Question({ questionObj }) {
   return (
     <Container>
       <QuestionPortion>
-        <QuestionLeftSection>
-          <QuestionBody>Q: {questionObj.question_body}</QuestionBody>
-        </QuestionLeftSection>
-        <QuestionRightSection>
-          <span>Helpful?</span>{' '}
-          <a
-            href=''
-            onClick={e => increaseQuestionHelpfulCount(e, questionObj)}
-          >
-            <u>Yes</u>
-          </a>{' '}
-          <QuestionHelpfulCount>
-            ({questionObj.question_helpfulness})
-          </QuestionHelpfulCount>{' '}
-          <QuestionReportStatus>
-            |{' '}
+        <QuestionLeftSide>
+          <QuestionBodySec>
+            <h4>Q: {questionObj.question_body}</h4>
+          </QuestionBodySec>{' '}
+        </QuestionLeftSide>
+        <QuestionRightSide>
+          <QuestionHelpfulSec>
+            Helpful?{' '}
+            <a
+              href=''
+              onClick={e => increaseQuestionHelpfulCount(e, questionObj)}
+            >
+              <u>Yes</u>
+            </a>{' '}
+            ({questionObj.question_helpfulness}) |{' '}
+          </QuestionHelpfulSec>{' '}
+          <QuestionReportedSec>
             <a href='' onClick={e => handleQuestionsReported(e, questionObj)}>
               <u>{questionObj.reported ? 'Reported' : 'Report'}</u>
             </a>
             {' | '}
-          </QuestionReportStatus>
-          <a href='' onClick={openAnswerModal}>
-            <u>Add Answer</u>
-          </a>
-        </QuestionRightSection>
+          </QuestionReportedSec>
+          <AddAnswerSec>
+            <a href='' onClick={openAnswerModal}>
+              <u>Add Answer</u>
+            </a>
+          </AddAnswerSec>
+        </QuestionRightSide>
       </QuestionPortion>
       <br />
-      {mappedAnswers}
+      {initialMappedAnswers}
+      <br />
+      {remainingFinalAnswers?.length > 0 && (
+        <span>
+          <a href='' onClick={handleSeeMoreAnswers}>
+            <u>
+              {showRemainderAnswers ? 'Collapse answers' : 'See more answers'}
+            </u>
+          </a>
+        </span>
+      )}
+      {showRemainderAnswers && remainingMappedAnswers}
       <hr style={{ height: 0.5, borderColor: 'red' }} />
       {showAnswerModal && (
         <AddAnswer
@@ -297,6 +365,7 @@ export default function Question({ questionObj }) {
           question={questionObj}
         />
       )}
+      {console.log('ANSWERS: ', answers)}
     </Container>
   );
 }
@@ -305,15 +374,13 @@ const Container = styled.div``;
 
 const QuestionPortion = styled.div``;
 
-const QuestionLeftSection = styled.div``;
+const QuestionBodySec = styled.span``;
 
-const QuestionRightSection = styled.div``;
+const QuestionHelpfulSec = styled.span``;
 
-const QuestionBody = styled.h4``;
+const QuestionReportedSec = styled.span``;
 
-const QuestionHelpfulCount = styled.span``;
-
-const QuestionReportStatus = styled.span``;
+const AddAnswerSec = styled.span``;
 
 const AnswerPortion = styled.div``;
 
@@ -326,3 +393,9 @@ const AnswerDetails = styled.div``;
 const PhotoContainer = styled.div``;
 
 const Photos = styled.div``;
+
+const QuestionLeftSide = styled.div``;
+
+const QuestionRightSide = styled.div`
+  text-align: right;
+`;

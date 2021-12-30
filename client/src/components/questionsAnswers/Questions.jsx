@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import QuestionsContext from './QuestionsContext.js';
 import Question from './Question.jsx';
+import AddQuestion from './AddQuestion.jsx';
 
 export default function Questions({ questionsData, filteredData }) {
   // CONTEXT
@@ -11,6 +12,7 @@ export default function Questions({ questionsData, filteredData }) {
   const [remainingQsList, setRemainingQsList] = useState([]);
   const [remainingQsCount, setRemainingQsCount] = useState(0);
   const [isRemainingQsBtnShown, setIsRemainingQsBtnShown] = useState(true);
+  const [showQuestionModal, setShowQuestionModal] = useState(false);
 
   // VARIABLES
   let initialQs, remainingQs;
@@ -103,17 +105,26 @@ export default function Questions({ questionsData, filteredData }) {
       {remainingQsList?.length > 0 && showRemainingQsCondition
         ? remainingQsList
         : null}
+      <CreateNewQBtn onClick={() => setShowQuestionModal(true)}>
+        Submit a new question
+      </CreateNewQBtn>
+      {showQuestionModal && (
+        <AddQuestion closeModal={() => setShowQuestionModal(false)} />
+      )}
       {/* {console.log('INITIAL QS: ', initialQs)}
       {console.log('REMAINING QS: ', remainingQs)}
-      {console.log('FILTERED DATA: ', filteredData)}
-      {console.log('QUESTIONS DATA: ', questionsData)} */}
+      {console.log('FILTERED DATA: ', filteredData)} */}
+      {console.log('QUESTIONS DATA: ', questionsData)}
     </Container>
   );
 }
 
 const Container = styled.div`
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   max-height: 100vh;
+  /* overflow-y: hidden; */
 `;
 
 const MoreAnsweredQsBtn = styled.button``;
+
+const CreateNewQBtn = styled.button``;
