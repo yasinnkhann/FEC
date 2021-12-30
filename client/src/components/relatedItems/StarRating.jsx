@@ -26,8 +26,8 @@ export default function StarRating({ product }) {
       }
     )
       .then(res => console.log(res))
-      .then(res => if (res.data) { return res.data.ratings })
-      .then(ratings => console.log(ratings));
+      .then(ratings => console.log(ratings))
+      .catch(err => console.log(err))
   };
 
   // JSX
