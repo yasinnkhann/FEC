@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import ReviewsContext from './ReviewsContext.js';
 import styled from 'styled-components';
 import { forEach } from 'lodash';
+import Rating from '@material-ui/lab/Rating';
 
 const Reviews = styled.span `
   cursor: pointer;
@@ -12,19 +13,10 @@ const Reviews = styled.span `
 const Stars = styled.div `
   display: inline-block;
   font-family: Times;
-  margin-left: 5rem;
+  margin-left: 4rem;
   padding-top: 1rem;
 `;
 
-
-//   &::before {
-//     content: '★★★★★';
-//    background: linear-gradient(90deg)
-//     background-clip: text;
-//     -webkit-background-clip: text;
-//     -webkit-text-fill-color: transparent;
-//   }
-// ;
 export default function ReviewsStars() {
   const {reviewsData, setreviewsData} = useContext(ReviewsContext);
   const totalReviews = () => {
@@ -52,12 +44,24 @@ export default function ReviewsStars() {
   //console.log('STARSRATINGSRESULTS', reviewsData.ratings);
   return (
     <div>
-      <Reviews>
-        <a href='#route'>Read All {totalReviews()} Reviews</a>
-      </Reviews>
-      <div>
-        <Stars>{average()}</Stars>
-      </div>
+      {totalReviews() ?
+        <>
+          <Reviews>
+            <a href='#route'>Read All {totalReviews()} Reviews</a>
+          </Reviews>
+          <div>
+            <Stars>
+              <Rating
+                name="read-only"
+                value={average()}
+                precision={0.25}
+                max={5}
+                size="small"
+                readOnly />
+            </Stars>
+          </div>
+        </>
+        : null}
     </div>
 
   );
