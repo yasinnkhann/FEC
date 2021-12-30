@@ -24,13 +24,15 @@ export default function ProductInfo({ product }) {
     <Fragment>
       { product !== null ?
         <InfoCardStyle className="product-info" >
-          <InfoDetailStyle>{product.name}</InfoDetailStyle>
-          <InfoDetailStyle>{product.sale_price ? `Sale price! $${price}` : `Price: $${price}` }</InfoDetailStyle>
-          <InfoDetailStyle>{`Category: ${product.category}`}</InfoDetailStyle>
-          <InfoDetailStyle>
+          <Infoh4>{product.name}</Infoh4>
+          <Infoh4>{product.sale_price ? `Sale price! $${price}` : `Price: $${price}` }</Infoh4>
+          <Infoh4>{`Category: ${product.category}`}</Infoh4>
+          <Infoh4>
             <StarRating product={product} />
-          </InfoDetailStyle>
-          {/* <InfoDetailStyle>{`Rating ${<StarRating />}`}</InfoDetailStyle> */}
+          </Infoh4>
+          <Infoh4>
+            <StarRating />
+          </Infoh4>
         </InfoCardStyle>
         : <h3>This will be an outfit</h3>
       }
@@ -38,7 +40,7 @@ export default function ProductInfo({ product }) {
   );
 }
 
-const InfoDetailStyle = styled.h4`
+const Infoh4 = styled.h4`
   margin: 0px;
 `;
 

@@ -49,9 +49,9 @@ export default function App() {
               selectedProductContext: [selectedProduct, setSelectedProduct],
             }}
           >
-            <Overview />
+            {/* <Overview />  */}
             <RelatedItems />
-            <QuestionsAnswers />
+            {/* <QuestionsAnswers /> */}
             {/* <RatingsReviews /> */}
           </AppContext.Provider>
         </>

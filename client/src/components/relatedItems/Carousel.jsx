@@ -53,9 +53,10 @@ export default function Carousel({ name, relatedProductIds }) {
       });
     }
 
+
+
     return () => {
 
-      console.log('useEffect return func!');
       resetVisibleProducts();
     };
   }, [relatedProductIds]);
@@ -63,7 +64,6 @@ export default function Carousel({ name, relatedProductIds }) {
   // Reset shown products when new item is selected
   useEffect(() => {
 
-    console.log('useEffect func!');
     return () => resetVisibleProducts();
   }, [selectedProduct]);
 
