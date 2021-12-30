@@ -1,13 +1,17 @@
 // Dependency imports
 import React from 'react';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 // SCROLL ARROWS
 const ScrollArrow = ({ direction }) => {
-
+  console.log(ChevronLeftIcon, ChevronRightIcon);
   // JSX
   return (
     <div>
-      <i className={`fas fa-angle-double-${direction}`} />
+      {
+        direction === 'left' ? <ChevronLeftIcon /> : <ChevronRightIcon />
+      }
     </div>
   );
 };
