@@ -41,7 +41,7 @@ export default function StarRating() {
 
   // JSX
   return (
-    <h5>★★★★★</h5>
+    <h5></h5>
   );
 }
 
