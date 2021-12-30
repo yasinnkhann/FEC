@@ -64,7 +64,7 @@ export default function Carousel({ name, relatedProductIds }) {
   }, [selectedProduct]);
 
   useEffect(() => {
-    console.log('start and end index changed!');
+    // console.log('start and end index changed!');
   }, [startIndex, endIndex]);
 
   // API HANDLERS
@@ -93,15 +93,20 @@ export default function Carousel({ name, relatedProductIds }) {
   // Click handler that adjusts items shown based on left arrow being clicked
   const scrollLeft = (e) => {
     e.preventDefault();
-    if (isAtBeginningIndex()) {
+    const relatedFirstIndex = relatedProducts[0];
+    const visibleFirstIndex = visibleProducts[0];
+    if (isAtBeginningIndex() || startIndex - 1 < 0) {
       setStartIndex(0);
-      setEndIndex(visibleProducts.length - 1);
+      setEndIndex(visibleProducts.length);
     } else {
       setStartIndex(startIndex - 1);
       setEndIndex(endIndex - 1);
+      // startIndex - 1 < 0 ? setStartIndex(0) : setStartIndex(startIndex - 1);
+      // startIndex - 1 < 0 ? setEndIndex(visibleProducts.length - 1) : setEndIndex(endIndex - 1);
     }
-
-    changeVisibleProductsArray(startIndex, endIndex);
+    const newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
+    setVisibleProducts(newVisibleProducts);
+    // changeVisibleProductsArray(startIndex, endIndex);
   };
 
   // Click handler that adjusts items shown based on right arrow being clicked
@@ -135,6 +140,7 @@ export default function Carousel({ name, relatedProductIds }) {
     if (!relatedProducts[0] || !visibleProducts[0]) { return; }
     const firstRelatedItem = relatedProducts[0].data.id;
     const firstVisibleItem = visibleProducts[0].data.id;
+    console.log('first vis, first rel ', firstVisibleItem, firstRelatedItem)
     return firstVisibleItem === firstRelatedItem;
   };
 
