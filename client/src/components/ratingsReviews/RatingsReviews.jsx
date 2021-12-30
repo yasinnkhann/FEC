@@ -276,11 +276,11 @@ export default function RatingsReviews() {
 
           <div>
             <div style={sortOptionsStyle}>
-              {/* <SortOptions
+              <SortOptions
                 metaData={metaData}
                 listSort={listSort}
                 listSortChange={listSortChange}
-              /> */}
+              />
             </div>
           </div>
           <div>
