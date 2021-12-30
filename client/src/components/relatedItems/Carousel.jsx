@@ -27,21 +27,21 @@ export default function Carousel({ name, relatedProductIds }) {
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [visibleProducts, setVisibleProducts] = useState(relatedProducts.slice(currentCardIndex, maxCardIndex));
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [maxCardIndex, setMaxCardIndex] = useState(1);
+  const [visibleProducts, setVisibleProducts] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const size = useWindowSize();
 
   // HOOKS & INITILIZATION
 
   // Changes number of items shown based on window size
-  useEffect(() => {
-    if (relatedProducts[currentCardIndex]) { console.log('CURRENT CARD :: ', relatedProducts[currentCardIndex].data.name); }
-    const newMaxIndex = getMaxIndexBasedOnScreenSize();
-    setMaxCardIndex(newMaxIndex);
-    changeVisibleProductsArray();
-  }, [size]);
+  // useEffect(() => {
+  //   if (relatedProducts[startIndex]) { console.log('CURRENT CARD :: ', relatedProducts[startIndex].data.name); }
+  //   const newMaxIndex = getMaxIndexBasedOnScreenSize();
+  //   setEndIndex(newMaxIndex);
+  //   changeVisibleProductsArray();
+  // }, [size]);
 
   // Populates relatedProducts state to render each item
   useEffect(() => {
@@ -53,14 +53,18 @@ export default function Carousel({ name, relatedProductIds }) {
       });
     }
 
+    return () => {
+      resetVisibleProducts();
+    };
   }, [relatedProductIds]);
 
+  // Reset shown products when new item is selected
   useEffect(() => {
     resetVisibleProducts();
   }, [selectedProduct]);
 
   // API HANDLERS
-  // Gets product info based on id
+  // Gets one product's info based on id
   const updateRelatedProducts = async (id) => {
     await axios.get(
       `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`,
@@ -77,63 +81,83 @@ export default function Carousel({ name, relatedProductIds }) {
         setRelatedProducts(state => [...state, productData]);
         setVisibleProducts(state => [...state, productData]);
       })
-      // .then(() => setVisibleProducts(relatedProducts.slice(currentCardIndex, maxCardIndex)))
-      .then(() => setIsLoaded(true));
+      .then(() => setIsLoaded(true))
+      .catch(err => console.log(err));
   };
 
   // EVENT HANDLERS
   // Click handler that adjusts items shown based on left arrow being clicked
   const scrollLeft = (e) => {
-    const beginningIndex = 0;
-    const isAtBeginningIndex = currentCardIndex === beginningIndex;
-    if (isAtBeginningIndex || currentCardIndex - 1 < 0) {
-      let maxIndex = getMaxIndexBasedOnScreenSize();
-      setCurrentCardIndex(0);
-      setMaxCardIndex(maxIndex);
+
+    if (isAtBeginningIndex()) {
+      setStartIndex(0);
+      setEndIndex(visibleProducts.length - 1);
     } else {
-      setCurrentCardIndex(currentCardIndex - 1);
-      setMaxCardIndex(maxCardIndex - 1);
+      setStartIndex(startIndex - 1);
+      setEndIndex(endIndex - 1);
     }
 
-    changeVisibleProductsArray();
+    changeVisibleProductsArray(startIndex, endIndex);
   };
 
   // Click handler that adjusts items shown based on right arrow being clicked
   const scrollRight = (e) => {
-    // console.log(e);
-    const finalIndex = relatedProducts.length - 1;
-    console.log(`currentCardIndex: ${currentCardIndex}\nfinalIndex: ${finalIndex}`);
-    const isAtFinalIndex = currentCardIndex === finalIndex;
-    const newCurrentCardindex = isAtFinalIndex ? currentCardIndex - 1 : currentCardIndex + 1;
+    const relatedLastIndex = relatedProducts.length - 1;
+    const visibleLastIndex = visibleProducts.length - 1;
+    if (isAtFinalIndex()) {
+      setStartIndex(relatedLastIndex - visibleLastIndex);
+      setEndIndex(relatedLastIndex);
+    } else {
+      setStartIndex(startIndex + 1);
+      setEndIndex(endIndex + 1);
+    }
 
-    setCurrentCardIndex(newCurrentCardindex);
-    setMaxCardIndex(visibleProducts.length);
-
-    changeVisibleProductsArray();
+    changeVisibleProductsArray(startIndex, endIndex);
   };
 
   // HELPER FUNCTIONS
-  const getMaxIndexBasedOnScreenSize = () => {
-    const width = window.innerWidth;
-    return (Math.floor(width / 200) - 1);
+  // Takes a start and end index and sets the shown products to the result of slicing all products with index params
+  const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
+    setVisibleProducts(relatedProducts.slice(newStartIndex, newEndIndex));
   };
 
-  const changeVisibleProductsArray = () => {
-    setVisibleProducts(relatedProducts.slice(0, maxCardIndex));
+  // Checks the last item of all products and last item of shown products and checks if they are the same
+  const isAtFinalIndex = () => {
+    const finalRelatedItem = relatedProducts[relatedProducts.length - 1];
+    const finalVisibleItem = visibleProducts[visibleProducts.length - 1];
+    return finalVisibleItem === finalRelatedItem;
   };
 
+  // Checks the first item of all products and first item of shown products and checks if they are the same
+  const isAtBeginningIndex = () => {
+    const firstRelatedItem = relatedProducts[0];
+    const firstVisibleItem = relatedProducts[0];
+    return firstRelatedItem === firstVisibleItem;
+  };
+
+  // Resets start and end index then changes shown products based on new indices
   const resetVisibleProducts = () => {
-    resetCurrentCardIndex();
-    resetMaxCardIndex();
+    resetStartIndex();
+    resetEndIndex();
+    changeVisibleProductsArray(startIndex, endIndex);
   };
 
-  const resetCurrentCardIndex = () => {
-    setCurrentCardIndex(0);
+  const resetStartIndex = () => {
+    setStartIndex(0);
   };
 
-  const resetMaxCardIndex = () => {
+  const resetEndIndex = () => {
     const newMax = getMaxIndexBasedOnScreenSize();
-    setMaxCardIndex(newMax);
+    setEndIndex(newMax - 1);
+  };
+
+  // Divides width of inner window by width of a card and rounds up to the nearest integer
+  // then returns it. If the remainder of window width divided by card width is above zero
+  // then the previous calculation is return, if not then we hard set the return value to 1
+  const getMaxIndexBasedOnScreenSize = () => {
+    const width = window.innerWidt;
+    const maxIndexBasedOnScreenSize = width % 200 > 0 ? Math.ceil(width / 200) : 1;
+    return maxIndexBasedOnScreenSize;
   };
 
   // JSX
@@ -142,7 +166,7 @@ export default function Carousel({ name, relatedProductIds }) {
       <div className="carousel-row" style={{display: 'flex'}} >
         <div className="carousel-left" onClick={(e) => scrollLeft(e)} >
           <LeftArrow>
-            {currentCardIndex === 0 ? null : relatedProducts.length < maxCardIndex ? null : <ScrollArrow direction={'left'} />}
+            {relatedProducts.length - 1 <= endIndex ? null : startIndex === 0 ? null : <ScrollArrow direction={'left'} />}
           </LeftArrow>
         </div>
         {isLoaded && relatedProducts.length >= 1
@@ -157,7 +181,7 @@ export default function Carousel({ name, relatedProductIds }) {
         }
         <div className="carousel-right" onClick={(e) => scrollRight(e)} >
           <RightArrow>
-            {relatedProducts.length - 1 < maxCardIndex ? null : currentCardIndex === relatedProducts.length - 1 ? null : <ScrollArrow direction={'right'} />}
+            {relatedProducts.length < endIndex ? null : startIndex === relatedProducts.length - 1 ? null : <ScrollArrow direction={'right'} />}
           </RightArrow>
         </div>
       </div>
