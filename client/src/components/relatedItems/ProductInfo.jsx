@@ -13,10 +13,12 @@ export default function ProductInfo({ product }) {
 
   // STATE
   const [price, setPrice] = useState(product.default_price);
+  const [hasSalePrice, setHasSalePrice] = useState(false);
 
   useEffect(() => {
     if (product.sale_price) {
       setPrice(product.sale_price);
+      setHasSalePrice(true);
     }
   }, []);
 
@@ -24,15 +26,20 @@ export default function ProductInfo({ product }) {
     <Fragment>
       { product !== null ?
         <InfoCardStyle className="product-info" >
-          <Infoh4>{product.name}</Infoh4>
-          <Infoh4>{product.sale_price ? `Sale price! $${price}` : `Price: $${price}` }</Infoh4>
-          <Infoh4>{`Category: ${product.category}`}</Infoh4>
-          <Infoh4>
+          <Info>{product.name}</Info>
+          <SalePrice>
+            {product.sale_price ? `Sale price! $${price}` : null}
+          </SalePrice>
+          <Price>
+            {`Price: $${price}`}
+          </Price>
+          <Info>{`Category: ${product.category}`}</Info>
+          <Info>
             <StarRating product={product} />
-          </Infoh4>
-          <Infoh4>
+          </Info>
+          <Info>
             <StarRating />
-          </Infoh4>
+          </Info>
         </InfoCardStyle>
         : <h3>This will be an outfit</h3>
       }
@@ -40,8 +47,19 @@ export default function ProductInfo({ product }) {
   );
 }
 
-const Infoh4 = styled.h4`
+const Info = styled.h4`
   margin: 0px;
+`;
+
+const Price = styled.h4`
+  margin: 0px;
+  ${({ hasSalePrice }) => hasSalePrice && `
+    text-decoration: line-through;
+  `}
+`;
+
+const SalePrice = styled.h4`
+  color: red;
 `;
 
 const InfoCardStyle = styled.div`
