@@ -162,7 +162,7 @@ export default function RatingsReviews() {
 
     setTimeout(() => {
       setLoaded(true);
-    }, 500);
+    }, 700);
 
     const getReviewApi = async () => {
       try {
@@ -292,7 +292,7 @@ export default function RatingsReviews() {
             />
           </div>
           <div style={productStyle}>
-            {/* <ProductBreakdown metaData={metaData}/> */}
+            <ProductBreakdown metaData={metaData}/>
           </div>
           <div>
             {/* <WriteReview
