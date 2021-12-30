@@ -2,26 +2,14 @@
 import React from 'react';
 
 // SCROLL ARROWS
-const ScrollArrows = {
-  LeftArrow() {
+const ScrollArrow = ({ direction }) => {
 
-    // JSX
-    return (
-      <div>
-        <i className="fas fa-angle-double-left" ></i>
-      </div>
-    );
-  },
-
-  RightArrow() {
-
-    // JSX
-    return (
-      <div>
-        <i className="fas fa-angle-double-right" ></i>
-      </div>
-    );
-  }
+  // JSX
+  return (
+    <div>
+      <i className={`fas fa-angle-double-${direction}`} />
+    </div>
+  );
 };
 
-export default ScrollArrows;
+export default ScrollArrow;

@@ -60,7 +60,7 @@ export default function AddAnswer({ closeModal, question }) {
         'http://localhost:3000/api/qa/uploads',
         formData
       );
-      console.log('RES: ', res);
+      // console.log('RES: ', res);
       closeModal();
     } catch (err) {
       console.error(err);
