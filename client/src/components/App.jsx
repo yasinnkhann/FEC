@@ -49,10 +49,10 @@ export default function App() {
               selectedProductContext: [selectedProduct, setSelectedProduct],
             }}
           >
-            {/* <Overview /> */}
-            {/* <RelatedItems /> */}
+            <Overview />
+            <RelatedItems />
             <QuestionsAnswers />
-            {/* <RatingsReviews /> */}
+            <RatingsReviews />
           </AppContext.Provider>
         </>
       ) : (
