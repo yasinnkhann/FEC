@@ -22,18 +22,26 @@ import Card from './Card.jsx';
 
 // CAROUSEL
 export default function Carousel({ name, relatedProductIds }) {
+  const {selectedProductContext} = useContext(AppContext);
 
   // STATE
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [visibleProducts, setVisibleProducts] = useState([]);
+  const [visibleProducts, setVisibleProducts] = useState(relatedProducts.slice(currentCardIndex, maxCardIndex));
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [maxCardIndex, setMaxCardIndex] = useState(8);
-  const [isAtBeginning, setIsAtBeginning] = useState(true);
-  const [isAtEnd, setIsAtEnd] = useState(false);
+  const [maxCardIndex, setMaxCardIndex] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
   const size = useWindowSize();
 
   // HOOKS & INITILIZATION
+
+  // Changes number of items shown based on window size
+  useEffect(() => {
+    if (relatedProducts[currentCardIndex]) { console.log('CURRENT CARD :: ', relatedProducts[currentCardIndex].data.name); }
+    const newMaxIndex = getMaxIndexBasedOnScreenSize();
+    setMaxCardIndex(newMaxIndex);
+    changeVisibleProductsArray();
+  }, [size]);
 
   // Populates relatedProducts state to render each item
   useEffect(() => {
@@ -47,12 +55,9 @@ export default function Carousel({ name, relatedProductIds }) {
 
   }, [relatedProductIds]);
 
-  // Changes number of items shown based on window size
   useEffect(() => {
-    if (relatedProducts[currentCardIndex]) { console.log('CURRENT CARD :: ', relatedProducts[currentCardIndex].data.name); }
-    changeNumAllowedItems();
-  }, [size]);
-
+    resetVisibleProducts();
+  }, [selectedProduct]);
 
   // API HANDLERS
   // Gets product info based on id
@@ -72,94 +77,92 @@ export default function Carousel({ name, relatedProductIds }) {
         setRelatedProducts(state => [...state, productData]);
         setVisibleProducts(state => [...state, productData]);
       })
+      // .then(() => setVisibleProducts(relatedProducts.slice(currentCardIndex, maxCardIndex)))
       .then(() => setIsLoaded(true));
   };
 
   // EVENT HANDLERS
   // Click handler that adjusts items shown based on left arrow being clicked
-  const scrollLeft = () => {
-    const finalIndex = relatedProducts.length - 1;
-    const isAtBeginningIndex = currentCardIndex === finalIndex;
-    const index = isAtBeginningIndex ? currentCardIndex + 1 : currentCardIndex - 1;
+  const scrollLeft = (e) => {
+    const beginningIndex = 0;
+    const isAtBeginningIndex = currentCardIndex === beginningIndex;
+    if (isAtBeginningIndex || currentCardIndex - 1 < 0) {
+      let maxIndex = getMaxIndexBasedOnScreenSize();
+      setCurrentCardIndex(0);
+      setMaxCardIndex(maxIndex);
+    } else {
+      setCurrentCardIndex(currentCardIndex - 1);
+      setMaxCardIndex(maxCardIndex - 1);
+    }
 
-    setCurrentCardIndex(index);
-    setMaxCardIndex(maxCardIndex - 1);
-
-    const newRelatedProducts = relatedProducts.slice(currentCardIndex, maxCardIndex);
-
-    setVisibleProducts(newRelatedProducts);
-    currentCardIndex === 0 ? setIsAtBeginning(true) : setIsAtBeginning(false);
-    currentCardIndex === finalIndex ? setIsAtEnd(true) : setIsAtEnd(false);
+    changeVisibleProductsArray();
   };
 
   // Click handler that adjusts items shown based on right arrow being clicked
-  const scrollRight = () => {
+  const scrollRight = (e) => {
+    // console.log(e);
     const finalIndex = relatedProducts.length - 1;
+    console.log(`currentCardIndex: ${currentCardIndex}\nfinalIndex: ${finalIndex}`);
     const isAtFinalIndex = currentCardIndex === finalIndex;
-    const index = isAtFinalIndex ? currentCardIndex - 1 : currentCardIndex + 1;
+    const newCurrentCardindex = isAtFinalIndex ? currentCardIndex - 1 : currentCardIndex + 1;
 
-    setCurrentCardIndex(index);
-    setMaxCardIndex(maxCardIndex + 1);
+    setCurrentCardIndex(newCurrentCardindex);
+    setMaxCardIndex(visibleProducts.length);
 
-    const newRelatedProducts = relatedProducts.slice(currentCardIndex, maxCardIndex);
-
-    setVisibleProducts(newRelatedProducts);
-    currentCardIndex === 0 ? setIsAtBeginning(true) : setIsAtBeginning(false);
-    currentCardIndex === finalIndex ? setIsAtEnd(true) : setIsAtEnd(false);
+    changeVisibleProductsArray();
   };
 
-  // Adjust number of items allowed to be shown on screen based on window size
-  const changeNumAllowedItems = () => {
+  // HELPER FUNCTIONS
+  const getMaxIndexBasedOnScreenSize = () => {
     const width = window.innerWidth;
-    const maxAllowableItems = Math.floor(width / 200);
-    setMaxCardIndex(maxAllowableItems);
-    setVisibleProducts(relatedProducts.slice(currentCardIndex, maxCardIndex));
+    return (Math.floor(width / 200) - 1);
+  };
+
+  const changeVisibleProductsArray = () => {
+    setVisibleProducts(relatedProducts.slice(0, maxCardIndex));
+  };
+
+  const resetVisibleProducts = () => {
+    resetCurrentCardIndex();
+    resetMaxCardIndex();
+  };
+
+  const resetCurrentCardIndex = () => {
+    setCurrentCardIndex(0);
+  };
+
+  const resetMaxCardIndex = () => {
+    const newMax = getMaxIndexBasedOnScreenSize();
+    setMaxCardIndex(newMax);
   };
 
   // JSX
-  if (isLoaded && relatedProducts.length >= 1) {
-    return (
-      <CarouselStyle className="carousel" >
-        <div className="carousel-row" style={{display: 'flex'}} >
-          <div className="carousel-left" onClick={() => scrollLeft()} >
-            <LeftArrow>
-              {isAtBeginning ? null : <ScrollArrow direction={'left'} />}
-            </LeftArrow>
-          </div>
-          <div className="carousel-middle" style={{display: 'flex'}} >
+  return (
+    <CarouselStyle className="carousel" >
+      <div className="carousel-row" style={{display: 'flex'}} >
+        <div className="carousel-left" onClick={(e) => scrollLeft(e)} >
+          <LeftArrow>
+            {currentCardIndex === 0 ? null : relatedProducts.length < maxCardIndex ? null : <ScrollArrow direction={'left'} />}
+          </LeftArrow>
+        </div>
+        {isLoaded && relatedProducts.length >= 1
+          ? <div className="carousel-middle" style={{display: 'flex'}} >
             {name === 'related-items'
               ? visibleProducts.map(product =>
                 <Card key={product.data.id} product={product.data} name="related-item" />
               )
               : <h4>OUTFIT LIST</h4>}
           </div>
-          <div className="carousel-right" onClick={() => scrollRight()} >
-            <RightArrow>
-              {relatedProducts.length <= maxCardIndex ? null : isAtEnd ? null : <ScrollArrow direction={'right'} />}
-            </RightArrow>
-          </div>
+          : <div>Loading...</div>
+        }
+        <div className="carousel-right" onClick={(e) => scrollRight(e)} >
+          <RightArrow>
+            {relatedProducts.length - 1 < maxCardIndex ? null : currentCardIndex === relatedProducts.length - 1 ? null : <ScrollArrow direction={'right'} />}
+          </RightArrow>
         </div>
-      </CarouselStyle>
-    );
-  } else {
-    return (
-      <CarouselStyle className="carousel" >
-        <div className="carousel-row" style={{display: 'flex'}} >
-          <div className="carousel-right" onClick={() => scrollLeft()} >
-            <LeftArrow>
-              <ScrollArrow />
-            </LeftArrow>
-          </div>
-          <div>Loading...</div>
-          <div className="carousel-right" onClick={() => scrollRight()} >
-            <RightArrow>
-              {relatedProducts.length <= maxCardIndex ? null : isAtEnd ? null : <ScrollArrow direction={'right'} />}
-            </RightArrow>
-          </div>
-        </div>
-      </CarouselStyle>
-    );
-  }
+      </div>
+    </CarouselStyle>
+  );
 }
 
 
