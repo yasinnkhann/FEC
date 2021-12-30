@@ -276,20 +276,20 @@ export default function RatingsReviews() {
 
           <div>
             <div style={sortOptionsStyle}>
-              <SortOptions
+              {/* <SortOptions
                 metaData={metaData}
                 listSort={listSort}
                 listSortChange={listSortChange}
-              />
+              /> */}
             </div>
           </div>
           <div>
-            <RatingBreakdown
+            {/* <RatingBreakdown
               metaData={metaData}
               sortByStar={sortByStar}
               starSort={starSort}
               clearStarFilter={clearStarFilter}
-            />
+            /> */}
           </div>
           <div style={productStyle}>
             <ProductBreakdown metaData={metaData}/>
