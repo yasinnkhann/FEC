@@ -36,12 +36,12 @@ export default function Carousel({ name, relatedProductIds }) {
   // HOOKS & INITILIZATION
 
   // Changes number of items shown based on window size
-  // useEffect(() => {
-  //   if (relatedProducts[startIndex]) { console.log('CURRENT CARD :: ', relatedProducts[startIndex].data.name); }
-  //   const newMaxIndex = getMaxIndexBasedOnScreenSize();
-  //   setEndIndex(newMaxIndex);
-  //   changeVisibleProductsArray();
-  // }, [size]);
+  useEffect(() => {
+    // if (relatedProducts[startIndex]) { console.log('CURRENT CARD :: ', relatedProducts[startIndex].data.name); }
+    const newEndIndex = getMaxIndexBasedOnScreenSize();
+    setEndIndex(newEndIndex - 1);
+    changeVisibleProductsArray(startIndex, endIndex);
+  }, [size]);
 
   // Populates relatedProducts state to render each item
   useEffect(() => {
@@ -62,6 +62,10 @@ export default function Carousel({ name, relatedProductIds }) {
   useEffect(() => {
     resetVisibleProducts();
   }, [selectedProduct]);
+
+  useEffect(() => {
+    console.log('start and end index changed!');
+  }, [startIndex, endIndex]);
 
   // API HANDLERS
   // Gets one product's info based on id
@@ -88,7 +92,7 @@ export default function Carousel({ name, relatedProductIds }) {
   // EVENT HANDLERS
   // Click handler that adjusts items shown based on left arrow being clicked
   const scrollLeft = (e) => {
-
+    e.preventDefault();
     if (isAtBeginningIndex()) {
       setStartIndex(0);
       setEndIndex(visibleProducts.length - 1);
@@ -102,6 +106,7 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Click handler that adjusts items shown based on right arrow being clicked
   const scrollRight = (e) => {
+    e.preventDefault();
     const relatedLastIndex = relatedProducts.length - 1;
     const visibleLastIndex = visibleProducts.length - 1;
     if (isAtFinalIndex()) {
@@ -116,23 +121,21 @@ export default function Carousel({ name, relatedProductIds }) {
   };
 
   // HELPER FUNCTIONS
-  // Takes a start and end index and sets the shown products to the result of slicing all products with index params
-  const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
-    setVisibleProducts(relatedProducts.slice(newStartIndex, newEndIndex));
-  };
 
   // Checks the last item of all products and last item of shown products and checks if they are the same
   const isAtFinalIndex = () => {
-    const finalRelatedItem = relatedProducts[relatedProducts.length - 1];
-    const finalVisibleItem = visibleProducts[visibleProducts.length - 1];
+    if (!relatedProducts[relatedProducts.length - 1] || !visibleProducts[visibleProducts.length - 1]) { return; }
+    const finalRelatedItem = relatedProducts[relatedProducts.length - 1].data.id;
+    const finalVisibleItem = visibleProducts[visibleProducts.length - 1].data.id;
     return finalVisibleItem === finalRelatedItem;
   };
 
   // Checks the first item of all products and first item of shown products and checks if they are the same
   const isAtBeginningIndex = () => {
-    const firstRelatedItem = relatedProducts[0];
-    const firstVisibleItem = relatedProducts[0];
-    return firstRelatedItem === firstVisibleItem;
+    if (!relatedProducts[0] || !visibleProducts[0]) { return; }
+    const firstRelatedItem = relatedProducts[0].data.id;
+    const firstVisibleItem = visibleProducts[0].data.id;
+    return firstVisibleItem === firstRelatedItem;
   };
 
   // Resets start and end index then changes shown products based on new indices
@@ -155,21 +158,27 @@ export default function Carousel({ name, relatedProductIds }) {
   // then returns it. If the remainder of window width divided by card width is above zero
   // then the previous calculation is return, if not then we hard set the return value to 1
   const getMaxIndexBasedOnScreenSize = () => {
-    const width = window.innerWidt;
+    const width = window.innerWidth;
     const maxIndexBasedOnScreenSize = width % 200 > 0 ? Math.ceil(width / 200) : 1;
     return maxIndexBasedOnScreenSize;
+  };
+
+  // Takes a start and end index and sets the shown products to the result of slicing all products with index params
+  const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
+    console.log(relatedProducts.slice(newStartIndex, newEndIndex));
+    setVisibleProducts(relatedProducts.slice(newStartIndex, newEndIndex));
   };
 
   // JSX
   return (
     <CarouselStyle className="carousel" >
       <div className="carousel-row" style={{display: 'flex'}} >
-        <div className="carousel-left" onClick={(e) => scrollLeft(e)} >
+        {isAtBeginningIndex() ? null : <button className="carousel-left" onClick={(e) => scrollLeft(e)} >
           <LeftArrow>
-            {relatedProducts.length - 1 <= endIndex ? null : startIndex === 0 ? null : <ScrollArrow direction={'left'} />}
+            <ScrollArrow direction={'left'} />
           </LeftArrow>
-        </div>
-        {isLoaded && relatedProducts.length >= 1
+        </button>}
+        {isLoaded && visibleProducts.length >= 1
           ? <div className="carousel-middle" style={{display: 'flex'}} >
             {name === 'related-items'
               ? visibleProducts.map(product =>
@@ -179,11 +188,11 @@ export default function Carousel({ name, relatedProductIds }) {
           </div>
           : <div>Loading...</div>
         }
-        <div className="carousel-right" onClick={(e) => scrollRight(e)} >
+        {isAtFinalIndex() ? null : <button className="carousel-right" onClick={(e) => scrollRight(e)} >
           <RightArrow>
-            {relatedProducts.length < endIndex ? null : startIndex === relatedProducts.length - 1 ? null : <ScrollArrow direction={'right'} />}
+            <ScrollArrow direction={'right'} />
           </RightArrow>
-        </div>
+        </button>}
       </div>
     </CarouselStyle>
   );
