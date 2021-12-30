@@ -54,18 +54,18 @@ export default function Carousel({ name, relatedProductIds }) {
     }
 
     return () => {
+
+      console.log('useEffect return func!');
       resetVisibleProducts();
     };
   }, [relatedProductIds]);
 
   // Reset shown products when new item is selected
   useEffect(() => {
-    resetVisibleProducts();
-  }, [selectedProduct]);
 
-  useEffect(() => {
-    // console.log('start and end index changed!');
-  }, [startIndex, endIndex]);
+    console.log('useEffect func!');
+    return () => resetVisibleProducts();
+  }, [selectedProduct]);
 
   // API HANDLERS
   // Gets one product's info based on id
@@ -83,7 +83,9 @@ export default function Carousel({ name, relatedProductIds }) {
     )
       .then(productData => {
         setRelatedProducts(state => [...state, productData]);
-        setVisibleProducts(state => [...state, productData]);
+        visibleProducts.length <= 5
+          ? setVisibleProducts(state => [...state, productData])
+          : null;
       })
       .then(() => setIsLoaded(true))
       .catch(err => console.log(err));
@@ -140,24 +142,12 @@ export default function Carousel({ name, relatedProductIds }) {
     if (!relatedProducts[0] || !visibleProducts[0]) { return; }
     const firstRelatedItem = relatedProducts[0].data.id;
     const firstVisibleItem = visibleProducts[0].data.id;
-    console.log('first vis, first rel ', firstVisibleItem, firstRelatedItem)
     return firstVisibleItem === firstRelatedItem;
   };
 
   // Resets start and end index then changes shown products based on new indices
   const resetVisibleProducts = () => {
-    resetStartIndex();
-    resetEndIndex();
-    changeVisibleProductsArray(startIndex, endIndex);
-  };
-
-  const resetStartIndex = () => {
-    setStartIndex(0);
-  };
-
-  const resetEndIndex = () => {
-    const newMax = getMaxIndexBasedOnScreenSize();
-    setEndIndex(newMax - 1);
+    changeVisibleProductsArray(0, 5);
   };
 
   // Divides width of inner window by width of a card and rounds up to the nearest integer
@@ -171,8 +161,8 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Takes a start and end index and sets the shown products to the result of slicing all products with index params
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
-    console.log(relatedProducts.slice(newStartIndex, newEndIndex));
-    setVisibleProducts(relatedProducts.slice(newStartIndex, newEndIndex));
+    const newVisibleProducts = relatedProducts.slice(newStartIndex, newEndIndex);
+    setVisibleProducts(newVisibleProducts);
   };
 
   // JSX
