@@ -9,7 +9,8 @@ import { TOKEN, cloudinaryInfo } from '../../config.js';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
-  const { products } = useContext(AppContext);
+  const { productsContext } = useContext(AppContext);
+  const [products, setProducts] = productsContext;
   const { questionsData } = useContext(QuestionsContext);
 
   // STATE
