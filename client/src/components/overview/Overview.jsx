@@ -10,6 +10,9 @@ import ReviewsContext from './ReviewsContext.js';
 import ReviewsStars from './ReviewsStars.jsx';
 import StyleSelector from './StyleSelector.jsx';
 import StylesContext from './StylesContext.js';
+import Icons from './Icons.jsx';
+
+
 
 const Grid = styled.div `
 display: grid;
@@ -107,6 +110,7 @@ export default function Overview() {
               <StyleSelector/>
             )}
           </StylesContext.Provider>
+          <Icons/>
         </Container>
       </Grid>
       <ProductDescription

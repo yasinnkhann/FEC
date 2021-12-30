@@ -6,8 +6,8 @@ const ImgContainer = styled.div `
 grid-column-start: 1;
 grid-column-end: 2;
 padding: 2rem;
-max-height: 700px;
-max-width: 500px;
+height: 650px;
+width: 600px;
 margin-left: 3rem;
 `;
 const Image = styled.img `
@@ -17,6 +17,7 @@ const Image = styled.img `
  padding: 2rem;
  position: relative;
 `;
+
 export default function ImageGallery() {
   const {stylesDataContent, currentStyleContent} = useContext(StylesContext);
   const [stylesData, setstylesData] = stylesDataContent;
