@@ -120,11 +120,10 @@ export default function Questions({ questionsData, filteredData }) {
 }
 
 const Container = styled.div`
-  /* overflow-y: scroll; */
   max-height: 100vh;
-  /* overflow-y: hidden; */
 `;
 
 const MoreAnsweredQsBtn = styled.button``;
 
 const CreateNewQBtn = styled.button``;
+
