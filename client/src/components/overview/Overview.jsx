@@ -13,7 +13,6 @@ import StylesContext from './StylesContext.js';
 import Icons from './Icons.jsx';
 
 
-
 const Grid = styled.div `
 display: grid;
 grid-template-columns: 60% 40%;
@@ -22,11 +21,15 @@ grid-row-gap: 0.5rem;
 margin-top: 2rem;
 margin-bottom: 2rem;
 `;
+
 const Container = styled.div `
  grid-column-start: 2;
  grid-column-end: 3;
+ display: flex;
+ align-items: center;
+ flex-direction: column;
+ text-align: center;
 `;
-
 
 export default function Overview() {
   const { productsContext } = useContext(AppContext);
