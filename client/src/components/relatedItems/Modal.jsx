@@ -50,12 +50,10 @@ export const Modal = ({ product, fade = false }, ref) => {
     if (e.keyCode === 27) {close(); }
   }, [close]);
 
-  const renderComparison = (currentProduct, selectedProduct) => {
+  const renderCategories = (currentProduct, selectedProduct) => {
 
     let currentProductArray = Object.entries(currentProduct);
     let selectedProductArray = Object.entries(selectedProduct);
-
-    console.log(currentProductArray);
 
     return (
       <ul className="categories">
@@ -71,6 +69,10 @@ export const Modal = ({ product, fade = false }, ref) => {
         }
       </ul>
     );
+  };
+
+  const renderDetails = (givenProduct) => {
+    let givenProductArray;
   };
 
   const formatWord = (wordToBeFormatted) => {
@@ -103,7 +105,9 @@ export const Modal = ({ product, fade = false }, ref) => {
         </ModalOverlay>
         <ModalBody className="modal-body">
           {/* ACTUAL INFO */}
-          {renderComparison(product, selectedProduct)}
+          {renderDetails(product)}
+          {renderCategories(product, selectedProduct)}
+          {renderDetails(selectedProduct)}
         </ModalBody>
       </ModalStyle>
     ) : null,
@@ -131,7 +135,7 @@ const ModalStyle = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.65);
+  /* background-color: rgba(0, 0, 0, 0.65); */
   width: 100%;
   height: 100%;
   display: flex;
@@ -180,11 +184,12 @@ const ModalClose = styled.a`
 `;
 
 const ModalBody = styled.div`
+  text-align: center;
   z-index: 2;
   position: relative;
   justify-content: center;
   margin: 0 auto;
-  background-color: #303030;
+  background-color: white;
   border: 1px solid rgba(1, 1, 1, 0.25);
   border-radius: 3px;
   overflow-x: hidden;
@@ -196,9 +201,16 @@ const ModalBody = styled.div`
 `;
 
 const CategoryList = styled.ul`
-
+  width: 150px;
+  max-width: 150px;
+  padding: 0, 40, 0, 0;
+  margin: 0 auto;
 `;
 
 const CategoryListItem = styled.li`
+  color: rgba(65, 65, 65, 1);
   list-style-type: none;
+  margin: 0 auto;
+  padding: 5px;
+  max-width: 150px;
 `;

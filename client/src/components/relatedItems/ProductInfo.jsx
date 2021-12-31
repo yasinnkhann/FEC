@@ -37,9 +37,6 @@ export default function ProductInfo({ product }) {
           <Info>
             <StarRating product={product} />
           </Info>
-          <Info>
-            <StarRating />
-          </Info>
         </InfoCardStyle>
         : <h3>This will be an outfit</h3>
       }
