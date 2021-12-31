@@ -131,7 +131,7 @@ const fadeIn = keyframes`
 const ModalStyle = styled.div`
   position: fixed;
   overflow: hidden;
-  top: 0;
+  top: 250px;
   right: 0;
   bottom: 0;
   left: 0;
