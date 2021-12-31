@@ -22,23 +22,11 @@ export const Modal = ({ product, fade = false }, ref) => {
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [isOpen, setIsOpen] = useState(false);
 
-  // HELPER FUNCTIONS
-  const close = () => {
-    setIsOpen(false);
-    console.log('close clicked');
-  };
-
+  // HOOKS
   useImperativeHandle(ref, () => ({
-    open: () => {
-      setIsOpen(true);
-      console.log('open clicked');
-    },
+    open: () => { setIsOpen(true); },
     close
   }), [close]);
-
-  const handleEscape = useCallback(e => {
-    if (e.keyCode === 27) {close(); }
-  }, [close]);
 
   useEffect(() => {
     if (isOpen) {
@@ -50,6 +38,57 @@ export const Modal = ({ product, fade = false }, ref) => {
       document.addEventListener('click', handleEscape, false);
     };
   }, [handleEscape, isOpen]);
+
+  // HELPER FUNCTIONS
+  // Closes modal
+  const close = () => {
+    setIsOpen(false);
+  };
+
+  // Triggers close on escape keydown or click
+  const handleEscape = useCallback(e => {
+    if (e.keyCode === 27) {close(); }
+  }, [close]);
+
+  const renderComparison = (currentProduct, selectedProduct) => {
+
+    let currentProductArray = Object.entries(currentProduct);
+    let selectedProductArray = Object.entries(selectedProduct);
+
+    console.log(currentProductArray);
+
+    return (
+      <ul className="categories">
+        {
+          currentProductArray.map(product => {
+            let category = formatWord(product[0]);
+            return (
+              <CategoryListItem key={currentProduct.id}>
+                {category}
+              </CategoryListItem>
+            );
+          })
+        }
+      </ul>
+    );
+  };
+
+  const formatWord = (wordToBeFormatted) => {
+    let capitalizedWord = capitalize(wordToBeFormatted);
+    let formattedWord = capitalizedWord.replace('_', ' ');
+    return formattedWord;
+  };
+
+  const capitalize = (wordToCapitalize) => {
+    if (typeof wordToCapitalize !== 'string') {
+      wordToCapitalize = wordToCapitalize.toString();
+    }
+    let capitalizedWord = wordToCapitalize.toLowerCase();
+    let firstLetter = capitalizedWord.slice(0, 1).toUpperCase();
+    capitalizedWord = firstLetter.concat(capitalizedWord.slice(1));
+    console.log(capitalizedWord);
+    return capitalizedWord;
+  };
 
   // JSX
   return createPortal(
@@ -63,12 +102,8 @@ export const Modal = ({ product, fade = false }, ref) => {
           </ModalClose>
         </ModalOverlay>
         <ModalBody className="modal-body">
-          {/* TEMPLATE FOR INFO */}
-          <h5>{selectedProduct }</h5>
-          <h5>{product }</h5>
           {/* ACTUAL INFO */}
-          <h5>{selectedProduct.name}</h5>
-          <h5>{product.name}</h5>
+          {renderComparison(product, selectedProduct)}
         </ModalBody>
       </ModalStyle>
     ) : null,
@@ -129,7 +164,7 @@ const ModalClose = styled.a`
   cursor: pointer;
   font-size: 1.25em;
   padding: 7px;
-  background: rgba(255, 255, 255, 0.749);
+  background: rgba(1, 1, 1, 0.749);
   border-radius: 50%;
   width: 42px;
   height: 42px;
@@ -140,16 +175,17 @@ const ModalClose = styled.a`
   display: inline-block;
   text-align: center;
   :hover & {
-    background: rgba(255, 255, 255, 0.989);
+    background: rgba(1, 1, 1, 0.989);
   }
 `;
 
 const ModalBody = styled.div`
   z-index: 2;
   position: relative;
+  justify-content: center;
   margin: 0 auto;
   background-color: #303030;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(1, 1, 1, 0.25);
   border-radius: 3px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -157,4 +193,12 @@ const ModalBody = styled.div`
   height: 350px;
   padding: 15px 20px;
   color: #c3c0c0;
+`;
+
+const CategoryList = styled.ul`
+
+`;
+
+const CategoryListItem = styled.li`
+  list-style-type: none;
 `;

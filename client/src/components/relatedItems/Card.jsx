@@ -61,7 +61,7 @@ export default function CarouselCard({ product }) {
       <ActionStyle onClick={() => modal.current.open()}>
         <ActionButton name="open-modal" />
       </ActionStyle>
-      <Modal ref={modal} product={product} />
+      <Modal key={product.id} ref={modal} product={product} />
       <ProductInfoStyle onClick={() => handleClick(product)} >
         <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
         <ProductInfo product={product} />
@@ -83,7 +83,7 @@ const CardStyle = styled.div`
 
 const ProductInfoStyle = styled.div`
   width: 200px;
-  height: 100px;
+  height: 100%;
   position: absolute;
   bottom: 0;
   overflow: auto;
