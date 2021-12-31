@@ -356,7 +356,7 @@ export default function RatingsReviews() {
                 />
               </div>
               <div style={productStyle}>
-                <ProductBreakdown metaData={metaData} />
+                {/* <ProductBreakdown metaData={metaData} /> */}
               </div>
               {writeReviewModal && (
                 <div
@@ -370,11 +370,11 @@ export default function RatingsReviews() {
                     aria-hidden="true"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <WriteReview
+                    {/* <WriteReview
                       handleReviewData={handleReviewData}
                       productID={selectedProduct}
                       metaData={metaData}
-                    />
+                    /> */}
                     <br />
                   </div>
                 </div>
@@ -389,14 +389,14 @@ export default function RatingsReviews() {
               <div style={reviewListStyle}>
 
                 {/* <div style={{display: 'flex',}}> */}
-                <ReviewList
+                {/* <ReviewList
                   reviewCache={reviewCache}
                   reviewCacheState={reviewCacheState}
                   starSort={starSort}
                   reviewList={reviewList}
                   reviewEnd={reviewEnd}
                   handlePut={handlePut}
-                />
+                /> */}
               </div>
               <div style={reviewButtonsStyle}>
                 <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
