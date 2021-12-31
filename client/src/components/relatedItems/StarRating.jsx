@@ -1,65 +1,68 @@
 // Dependency imports
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import Rating from '@material-ui/lab/Rating';
 import styled from 'styled-components';
-import { forEach } from 'lodash';
+import axios from 'axios';
 
-// Context imports
-import ReviewsContext from '../overview/ReviewsContext.js';
+// API imports
+import { TOKEN } from '../../config.js';
 
 // STAR RATING
-export default function StarRating() {
+export default function StarRating({ product }) {
+  const [averageRating, setAverageRating] = useState(0);
 
-  // CONTEXT
-  const {reviewsData, setreviewsData} = useContext(ReviewsContext);
+  useEffect(() => {
+    if (product !== undefined) {
+      getReviewMetaData(product.id);
+    }
+  }, []);
 
-  // HELPER FUNCTIONS
-  const totalReviews = () => {
-    let count = 0;
-    Object.entries(reviewsData.ratings).map(([key, value]) => {
-      return [parseInt(key), parseInt(value)];
-    })
-      .forEach(([key, value]) => {
-        count += value;
-      });
-    return count;
+  const getReviewMetaData = async (id) => {
+    await axios.get(
+      'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta',
+      {
+        params: {
+          product_id: id
+        },
+        headers: {
+          Authorization: `${TOKEN}`,
+        },
+      }
+    )
+      .then(res => res.data.ratings)
+      .then(ratings => getAverageRating(ratings))
+      .then(avgRating => setAverageRating(avgRating))
+      .catch(err => console.log(err));
   };
 
-  const average = () => {
-    let count = 0;
-    let sum = 0;
-    Object.entries(reviewsData.ratings).map(([key, value]) => {
-      return [parseInt(key), parseInt(value)];
-    })
-      .forEach(([key, value]) => {
-        count += value;
-        sum += (key * value);
-      });
-    return (sum / count);
+  const getAverageRating = (ratings) => {
+    const ratingsArr = [...Object.values(ratings)];
+    const totalRatings = ratingsArr.reduce(addNumRatings);
+    const averageRating = totalRatings / 5;
+    return averageRating;
   };
 
-  const av = average();
+  const addNumRatings = (acc, next) => {
+    return Number(acc) + Number(next);
+  };
 
   // JSX
   return (
-    <h5></h5>
+    <Stars className="star-rating">
+      <Rating
+        name="read-only"
+        value={averageRating}
+        precision={0.25}
+        max={5}
+        size="small"
+        readOnly />
+    </Stars>
   );
 }
 
-// STYLE
-const Reviews = styled.span`
-  cursor: pointer;
-  text-decoration: underline;
-  margin-left: 3rem;
-`;
-const Stars = styled.span `
+const Stars = styled.div`
   display: inline-block;
   font-family: Times;
-
-  &::before {
-    content: '★★★★★';
-   background: linear-gradient(90deg)
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  margin-left: 4rem;
+  padding-top: 1rem;
 `;
