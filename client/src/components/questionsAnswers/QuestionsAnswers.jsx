@@ -41,7 +41,7 @@ export default function QuestionsAnswers() {
           {
             params: {
               // product_id: 40347,
-              product_id: products[234]?.id,
+              product_id: products[45]?.id,
               // page: 1,
               // count: 1,
             },
@@ -90,5 +90,3 @@ export default function QuestionsAnswers() {
 }
 
 const QATitle = styled.h3``;
-
-const CreateNewQBtn = styled.button``;
