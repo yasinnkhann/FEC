@@ -6,31 +6,29 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import styled from 'styled-components';
 
-// const ShareIcon = styled.button `
-//   height: 20px;
-//   margin: 5px;
-//   width: 20px;
-//   border-radius: 50%;
-// `;
 
 const ShareIconDiv = styled.div `
-  padding-left: 1rem;
+  /* padding-left: 2rem; */
 `;
+
 const FBIcon = styled.button `
   margin: 0.5rem;
   color: white;
   background: #3b5998;
 `;
+
 const PinIcon = styled.button `
   margin: 0.5rem;
   color: white;
   background: #c8232c;
 `;
+
 const TwitIcon = styled.button `
   margin: 0.5rem;
   color: white;
   background: #00acee;
 `;
+
 const GramIcon = styled.button `
 margin: 0.5rem;
 color: white;
@@ -51,13 +49,3 @@ export default function Icons() {
     </ShareIconDiv>
   );
 }
-
-
-
-// @material-ui/icons components
-// core components
-
-// import componentStylesButtons from 'assets/theme/components/button.js';
-
-// const useStylesButtons = makeStyles(componentStylesButtons);
-
