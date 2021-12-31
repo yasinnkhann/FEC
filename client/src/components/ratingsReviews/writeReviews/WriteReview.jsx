@@ -47,6 +47,7 @@ const summaryStyle = {
   padding: '3px',
   gridColumn: '1',
   gridRow: '4',
+
 };
 
 const nameStyle = {
@@ -99,13 +100,18 @@ const emailStyle = {
 };
 
 const submitStyle = {
-  border: '1px solid grey',
-  boxShadow: '2px 2px 4px grey',
-  backgroundColor: 'white',
   fontFamily: 'Open Sans',
-  cursor: 'pointer',
-  width: '300px',
+  backgroundColor: '#ddd',
+  border: 'none',
+  color: 'black',
+  padding: '10px 20px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
   margin: 'auto',
+  cursor: 'pointer',
+  borderRadius: '16px',
+  boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
   gridColumn: '1/-1',
   gridRow: '7',
@@ -175,7 +181,6 @@ class WriteReview extends React.Component {
   }
 
   HandleReviewData(e) {
-    // mandatory  fields
     const { rating, characteristics } = this.state;
     const { recommend } = this.state;
     const { body } = this.state;
@@ -231,19 +236,16 @@ class WriteReview extends React.Component {
           <div style={{
             gridColumn: '1/-1',
             gridRow: '1',
-          }}
-          >
-            <h1 style={{ textAlign: 'center' }}>Tell us about this product!</h1>
-            <small>* Required fields</small>
+          }}>
+            <h3 style={{ textAlign: 'center' }}>Tell us about this product!</h3>
+            <small>(<b style={{color: 'red', }}> * </b> Required fields)</small>
           </div>
           <div style={starStyle}>
-
-            <b>* Overall</b>
+            <b><b style={{color: 'red', }}> * </b>Overall</b>
 
             <div style={{
               display: 'flex', justifyContent: 'center', fontSize: '20px', marginTop: '5px', marginBottom: '5px',
-            }}
-            >
+            }}>
               {
                 mouseOver[0] === 1
                   ? <span className="fa fa-star" aria-hidden="true" onMouseEnter={() => { this.setState({ mouseOver: [1, 0, 0, 0, 0] }); }} onClick={() => { this.setState({ rating: 1, mouseOver: [1, 0, 0, 0, 0] }); }} />
@@ -271,26 +273,15 @@ class WriteReview extends React.Component {
               }
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <div style={autoFlex}>
-                1 - Poor
-              </div>
-              <div style={autoFlex}>
-                2 - Fair
-              </div>
-              <div style={autoFlex}>
-                3 - Average
-              </div>
-              <div style={autoFlex}>
-                4 - Good
-              </div>
-              <div style={autoFlex}>
-                5 - Great
-              </div>
+              <div style={autoFlex}> 1 - Poor </div>
+              <div style={autoFlex}> 2 - Fair </div>
+              <div style={autoFlex}> 3 - Average </div>
+              <div style={autoFlex}> 4 - Good </div>
+              <div style={autoFlex}> 5 - Great </div>
             </div>
           </div>
-
           <div style={recommendStyle}>
-            <b>* Would you recommend this product?</b>
+            <b><b style={{color: 'red', }}> * </b> Would you recommend this product?</b>
             <div>
               <input type="radio" id="yes" name="recommend" value onClick={this.recommendRadioClick} />
               <label htmlFor="yes">Yes</label>
@@ -298,14 +289,11 @@ class WriteReview extends React.Component {
               <label htmlFor="no">No</label>
             </div>
           </div>
-
           <div style={characteristicsStyle}>
             <CharacteristicsRadioList
               metaData={metaData}
-              characteristicsRadioClick={this.characteristicsRadioClick}
-            />
+              characteristicsRadioClick={this.characteristicsRadioClick}/>
           </div>
-
           <div style={summaryStyle}>
             <label htmlFor="summary">Review Summary (optional): </label>
             <textarea
@@ -313,7 +301,7 @@ class WriteReview extends React.Component {
               type="text"
               value={summary}
               style={{
-                width: '90%', height: '60px', border: '1px solid grey', borderRadius: '5px', fontFamily: 'Open sans', resize: 'none',
+                width: '90%', height: '28px', border: '1px solid grey', borderRadius: '5px', fontFamily: 'Open sans', resize: 'none',
               }}
               name="summary"
               onChange={this.onInputChange}
@@ -322,7 +310,7 @@ class WriteReview extends React.Component {
           </div>
 
           <div style={nameStyle}>
-            <label htmlFor="name"><b>* Your Name: </b></label>
+            <label htmlFor="name"><b><b style={{color: 'red', }}> * </b> Your Name: </b></label>
             <input
               type="text"
               name="name"
@@ -335,7 +323,7 @@ class WriteReview extends React.Component {
           </div>
 
           <div style={reviewStyle}>
-            <label htmlFor="body"><b>* Your Review: </b></label>
+            <label htmlFor="body"><b><b style={{color: 'red', }}> * </b> Your Review: </b></label>
             <textarea
               type="text"
               style={innerReviewStyle}
@@ -350,11 +338,12 @@ class WriteReview extends React.Component {
 
           <div style={photoStyle}>
             Upload photos (optional)
-            <button type="button" onClick={(e) => e.preventDefault}>Add photos</button>
+            <button style={{marginLeft: '5px', borderRadius: '16px', boxShadow: '0px 4px 8px 0px #0afa0a33',
+            }} type="button" onClick={(e) => e.preventDefault}>+ Add photos</button>
           </div>
 
           <div style={emailStyle}>
-            <label htmlFor="email"><b>* Email: </b></label>
+            <label htmlFor="email"><b><b style={{color: 'red', }}> * </b> Email: </b></label>
             <input
               type="text"
               style={{
@@ -363,7 +352,7 @@ class WriteReview extends React.Component {
               name="email"
               value={email}
               onChange={this.onInputChange}
-              placeholder="Example: jackson11@email.com"
+              placeholder="william@gmail.com"
             />
             <br />
           </div>
@@ -382,10 +371,5 @@ class WriteReview extends React.Component {
     );
   }
 }
-
-// WriteReview.propTypes = {
-//   metaData: PropTypes.node.isRequired,
-//   productID: PropTypes.node.isRequired,
-// };
 
 export default WriteReview;
