@@ -102,13 +102,13 @@ export const Modal = ({ product, fade = false }, ref) => {
           <ModalClose onClick={close} >
             <ActionButton name="close-modal" />
           </ModalClose>
+          <ModalBody className="modal-body">
+            {/* ACTUAL INFO */}
+            {renderDetails(product)}
+            {renderCategories(product, selectedProduct)}
+            {renderDetails(selectedProduct)}
+          </ModalBody>
         </ModalOverlay>
-        <ModalBody className="modal-body">
-          {/* ACTUAL INFO */}
-          {renderDetails(product)}
-          {renderCategories(product, selectedProduct)}
-          {renderDetails(selectedProduct)}
-        </ModalBody>
       </ModalStyle>
     ) : null,
     modalElement
