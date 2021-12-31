@@ -1,54 +1,7 @@
-// import React from 'react';
-// import styled from 'styled-components';
-// import RatingsBreakdownList from './RatingsBreakdownList.jsx';
-// import StarFilterEntry from './StarFilterEntry.jsx';
-// // import ImageList from './ImageList.jsx';
-
-// const RatingBreakdown = ({reviewData}) => {
-//   const onDetailClick = (index) => {
-//     // console.log('Detail clicked: ', index);
-//   };
-
-//   // console.log('From ReviewBreakdown: ', reviewData);
-//   const renderedDummyData = reviewData.map((item, index) => {
-//     return (
-//       <React.Fragment key={item.review_id}>
-//         <div>
-//           Item ID: {item.review_id} | Rating: {item.rating}
-//         </div>
-//         <div>
-//           user: {item.reviewer_name} | Date: {item.date}
-//         </div>
-//         <div>
-//           <h4>{item.summary}</h4>
-//         </div>
-//         <div onClick={() => onDetailClick(index)}>
-//           {item.body}
-//           {/* <ImageList imageData={item.photos}/> */}
-//         </div>
-//         <br></br>
-//         <div>
-//           Helpful? <u>Yes</u> ({item.helpfulness}) | <u>Report</u>
-//         </div>
-//         <div>
-//           <h4>______</h4>
-//         </div>
-//       </React.Fragment>
-//     );
-//   });
-
-//   return (
-//     <div>
-//       {/* <h3>{reviewData.length} reviews</h3> */}
-//       {renderedDummyData}
-//     </div>
-//   );
-// };
-
-// export default RatingBreakdown;
-
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { forEach } from 'lodash';
+import Rating from '@material-ui/lab/Rating';
 import RatingsBreakdownList from './RatingsBreakdownList.jsx';
 import StarFilterEntry from './StarFilterEntry.jsx';
 
@@ -99,8 +52,14 @@ const filtersContainer = {
   justifyContent: 'center',
 };
 
+const Stars = styled.div `
+  display: inline-block;
+  font-family: Times;
+  margin-left: 0rem;
+  padding-top: 1rem;
+`;
+
 const averageRating = (obj) => {
-  // console.log(obj); // {1: '15', 2: '12', 3: '36', 4: '54', 5: '133'}
   let wholeTotal = 0;
   let responseTotal = 0;
   for (const star in obj) {
@@ -111,7 +70,6 @@ const averageRating = (obj) => {
   if (isNaN((Math.round(result * 4) / 4).toFixed(1))) {
     return 0;
   }
-  // console.log(result); //4.112
   return result;
 };
 
@@ -131,11 +89,10 @@ const RatingBreakdown = (props) => {
   const { sortByStar } = props;
   const { starSort } = props;
   const { clearStarFilter } = props;
-  // console.log(props);
   return (
     <div style={gridLayout}>
       <div style={headerStyle}>
-        Ratings & Reviews
+        RATINGS & REVIEWS
       </div>
 
       <div style={avgRatingSpacing}>
@@ -148,7 +105,16 @@ const RatingBreakdown = (props) => {
       }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <StarRating averageRating={averageRating(ratings)} height={36} width={31} />
+          {/* <StarRating averageRating={averageRating(ratings)} height={36} width={31} /> */}
+          <Stars>
+            <Rating
+              name="read-only"
+              value={averageRating(ratings)}
+              precision={0.25}
+              max={5}
+              size="large"
+              readOnly />
+          </Stars>
         </div>
       </div>
 
@@ -207,78 +173,148 @@ const RatingBreakdown = (props) => {
 
 export default RatingBreakdown;
 
+//==========starRating version ===========================
+// const StarRating = ({ averageRating, height, width }) => {
+//   let rating = averageRating || 0;
+//   const stars = [];
+//   while (stars.length < 5) {
+//     if (rating > 1) {
+//       stars.push(1);
+//     } else if (rating > 0) {
+//       const empty = Math.abs(0 - rating);
+//       const quart = Math.abs(0.25 - rating);
+//       const half = Math.abs(0.5 - rating);
+//       const three = Math.abs(0.75 - rating);
+//       const full = Math.abs(1 - rating);
+//       const closest = Math.min(empty, quart, half, three, full);
+//       switch (closest) {
+//       case (empty):
+//         stars.push(0);
+//         break;
+//       case quart:
+//         stars.push(0.28);
+//         break;
+//       case half:
+//         stars.push(0.5);
+//         break;
+//       case three:
+//         stars.push(0.72);
+//         break;
+//       case full:
+//         stars.push(1.0);
+//         break;
+//       default:
+//         // console.log('Testing From star right!');
+//         stars.push(0);
+//         break;
+//       }
+//     } else {
+//       stars.push(0);
+//     }
+//     rating -= 1;
+//   }
+//   // console.log(stars);
 
-const StarRating = ({ averageRating, height, width }) => {
-  let rating = averageRating || 0;
-  const stars = [];
-  while (stars.length < 5) {
-    if (rating > 1) {
-      stars.push(1);
-    } else if (rating > 0) {
-      const empty = Math.abs(0 - rating);
-      const quart = Math.abs(0.25 - rating);
-      const half = Math.abs(0.5 - rating);
-      const three = Math.abs(0.75 - rating);
-      const full = Math.abs(1 - rating);
-      const closest = Math.min(empty, quart, half, three, full);
-      switch (closest) {
-      case (empty):
-        stars.push(0);
-        break;
-      case quart:
-        stars.push(0.28);
-        break;
-      case half:
-        stars.push(0.5);
-        break;
-      case three:
-        stars.push(0.72);
-        break;
-      case full:
-        stars.push(1.0);
-        break;
-      default:
-        // console.log('Testing From star right!');
-        stars.push(0);
-        break;
-      }
-    } else {
-      stars.push(0);
-    }
-    rating -= 1;
-  }
-  // console.log(stars);
+//   return (
+//     <div>
+//       {stars.map((item, i) => (
+//         <div
+//           style={{
+//             height: `${height}px`,
+//             width: `${width}px`,
+//             display: 'inline-block',
+//           }}
+//           key={i.toString()}
+//         >
+//           <div style={{
+//             position: 'relative',
+//             display: 'inline-block',
+//             height: `${height}px`,
+//             backgroundColor: '#f7df07',
+//             width: `${parseInt(item * width, 10)}px`,
+//           }}
+//           >
+//             <img
+//               style={{
+//                 height: `${height}px`,
+//                 width: `${width}px`,
+//               }}
+//               src="star.png"
+//               alt="stars alt"
+//             />
+//           </div>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
 
-  return (
-    <div>
-      {stars.map((item, i) => (
-        <div
-          style={{
-            height: `${height}px`,
-            width: `${width}px`,
-            display: 'inline-block',
-          }}
-          key={i.toString()}
-        >
-          <div style={{
-            position: 'relative',
-            display: 'inline-block',
-            height: `${height}px`,
-            backgroundColor: '#f7df07',
-            width: `${parseInt(item * width, 10)}px`,
-          }}
-          >
-            <img
-              style={{
-                height: `${height}px`,
-                width: `${width}px`,
-              }}
-              src="star.png"
-              alt="stars alt"
-            />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
+//==============Material UI star rating ================
+// import React, { useContext } from 'react';
+// import ReviewsContext from './ReviewsContext.js';
+// import styled from 'styled-components';
+// import { forEach } from 'lodash';
+// import Rating from '@material-ui/lab/Rating';
+
+// const Reviews = styled.span `
+//   cursor: pointer;
+//   text-decoration: underline;
+//   margin-left: 3rem;
+// `;
+
+// const Stars = styled.div `
+//   display: inline-block;
+//   font-family: Times;
+//   margin-left: 4rem;
+//   padding-top: 1rem;
+// `;
+
+// export default function ReviewsStars() {
+//   const {reviewsData, setreviewsData} = useContext(ReviewsContext);
+//   const totalReviews = () => {
+//     let count = 0;
+//     Object.entries(reviewsData.ratings).map(([key, value]) => {
+//       return [parseInt(key), parseInt(value)];
+//     })
+//       .forEach(([key, value]) => {
+//         count += value;
+//       });
+//     return count;
+//   };
+//   const average = () => {
+//     let count = 0;
+//     let sum = 0;
+//     Object.entries(reviewsData.ratings).map(([key, value]) => {
+//       return [parseInt(key), parseInt(value)];
+//     })
+//       .forEach(([key, value]) => {
+//         count += value;
+//         sum += (key * value);
+//       });
+//     return (sum / count);
+//   };
+//   //console.log('STARSRATINGSRESULTS', reviewsData.ratings);
+//   return (
+//     <div>
+//       {totalReviews() ?
+//         <>
+//           <Reviews>
+//             <a href='#route'>Read All {totalReviews()} Reviews</a>
+//           </Reviews>
+//           <div>
+//             <Stars>
+//               <Rating
+//                 name="read-only"
+//                 value={average()}
+//                 precision={0.25}
+//                 max={5}
+//                 size="small"
+//                 readOnly />
+//             </Stars>
+//           </div>
+//         </>
+//         : null}
+//     </div>
+
+//   );
+// }

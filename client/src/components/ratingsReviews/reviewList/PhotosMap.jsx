@@ -9,9 +9,7 @@ const imgContainer = {
 const PhotosMap = ({ photos }) => (
   <div>
     <div style={imgContainer}>
-      {photos.map((photo) => (
-        <PhotoMapEntry photo={photo} key={photo.id} />
-      ))}
+      {photos.map((photo) => (<PhotoMapEntry photo={photo} key={photo.id} />))}
     </div>
   </div>
 );
