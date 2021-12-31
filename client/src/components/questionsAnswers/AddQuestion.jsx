@@ -74,6 +74,7 @@ export default function AddQuestion({ closeModal, question }) {
             Your Question<span style={{ color: 'red' }}>* </span>
           </label>
           <textarea
+            style={{ verticalAlign: 'top' }}
             name='yourQuestion'
             value={formData.yourQuestion}
             onChange={handleChange}
@@ -135,7 +136,7 @@ export default function AddQuestion({ closeModal, question }) {
           <br />
           <SubmitBtn type='submit'>Submit Question</SubmitBtn>
           <CloseBtn onClick={closeModal}>
-            <CloseIcon />
+            <XIcon />
           </CloseBtn>
         </Content>
       </Overlay>
@@ -167,6 +168,17 @@ const Content = styled.form`
   padding-left: 35px;
   padding-bottom: 35px;
   -webkit-overflow-scrolling: 'touch';
+  text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+`;
+
+const XIcon = styled(CloseIcon)`
+  && {
+    color: red;
+    font-size: 2rem;
+  }
 `;
 
 const CloseBtn = styled.button`
@@ -178,4 +190,13 @@ const CloseBtn = styled.button`
   height: 3rem;
 `;
 
-const SubmitBtn = styled.button``;
+const SubmitBtn = styled.button`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+	padding: 8px 12px;
+	border-radius 6px;
+	border: none;
+	background: #000;
+	color: #fff;
+	cursor: pointer;
+`;

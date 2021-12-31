@@ -121,12 +121,17 @@ export default function Questions({ questionsData, filteredData }) {
 
 const Container = styled.div`
   max-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: space-between;
+  text-align: left;
 `;
 
 const MoreAnsweredQsBtn = styled.button`
   margin-top: 1rem;
-  margin-bottom: 1rem;
-  margin-left: 43%;
 	padding: 8px 12px;
 	border-radius 6px;
 	border: none;
@@ -138,7 +143,6 @@ const MoreAnsweredQsBtn = styled.button`
 const CreateNewQBtn = styled.button`
   margin-top: 1rem;
   margin-bottom: 1rem;
-  margin-left: 43%;
 	padding: 8px 12px;
 	border-radius 6px;
 	border: none;

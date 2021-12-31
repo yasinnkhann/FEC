@@ -193,6 +193,12 @@ const Container = styled.div`
   box-shadow: 1px 1px 10px #ccc;
   padding: 15px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  min-width: 97%;
 `;
 
 const QuestionPortion = styled.div`
@@ -205,9 +211,13 @@ const QuestionLeftSide = styled.span`
 `;
 
 const QuestionRightSide = styled.span`
-  float: right;
+  /* float: right;
   display: flex;
-  align-items: center;
+  align-items: center; */
+  display: flex;
+  align-content: stretch;
+  justify-content: flex-end;
+  padding-left: 10px;
 `;
 
 const QuestionBodySec = styled.span`
