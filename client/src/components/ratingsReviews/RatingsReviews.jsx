@@ -236,6 +236,15 @@ export default function RatingsReviews() {
 
     getMetaApi();
     getReviewApi();
+
+    { /* <script src="https://kit.fontawesome.com/1f15c8017d.js" crossorigin="anonymous"></script> */ }
+    const script = document.createElement('script');
+    script.src = 'https://kit.fontawesome.com/1f15c8017d.js';
+    script.crossorigin = 'anonymous';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => { document.body.removeChild(script); };
+
   }, []);
 
   const listSortChange = (event) => {
@@ -340,7 +349,7 @@ export default function RatingsReviews() {
       {isLoaded ? (
         <div style = {mainDiv}>
           {/* {console.log('from reviewList:', reviewList, 'from metaData:', metaData)} */}
-          {/* {console.log('selectedProduct:: ', selectedProduct)} */}
+          {console.log('selectedProduct:: ', selectedProduct)}
           {/* {console.log('review CacheData:: ', reviewCache)} */}
           {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
           {/* {console.log('listSort:: ', listSort)}  */}
@@ -356,7 +365,7 @@ export default function RatingsReviews() {
                 />
               </div>
               <div style={productStyle}>
-                {/* <ProductBreakdown metaData={metaData} /> */}
+                <ProductBreakdown metaData={metaData} />
               </div>
               {writeReviewModal && (
                 <div
@@ -370,11 +379,11 @@ export default function RatingsReviews() {
                     aria-hidden="true"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {/* <WriteReview
+                    <WriteReview
                       handleReviewData={handleReviewData}
                       productID={selectedProduct}
                       metaData={metaData}
-                    /> */}
+                    />
                     <br />
                   </div>
                 </div>
@@ -387,16 +396,14 @@ export default function RatingsReviews() {
                 />
               </div>
               <div style={reviewListStyle}>
-
-                {/* <div style={{display: 'flex',}}> */}
-                {/* <ReviewList
+                <ReviewList
                   reviewCache={reviewCache}
                   reviewCacheState={reviewCacheState}
                   starSort={starSort}
                   reviewList={reviewList}
                   reviewEnd={reviewEnd}
                   handlePut={handlePut}
-                /> */}
+                />
               </div>
               <div style={reviewButtonsStyle}>
                 <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
