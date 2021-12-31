@@ -7,7 +7,7 @@ import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
 import { TOKEN, cloudinaryInfo } from '../../config.js';
 
-export default function AddAnswer({ closeModal, question, collapsePanel }) {
+export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
   const { productsContext } = useContext(AppContext);
   const [products, setProducts] = productsContext;
@@ -44,7 +44,6 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
 
   const handleCloseModal = () => {
     closeModal();
-    collapsePanel();
   };
 
   const handleFileUpload = e => {
@@ -96,7 +95,6 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
       );
       console.log('SUBMIT RES: ', res);
       closeModal();
-      collapsePanel();
     } catch (err) {
       console.error(err);
       alert('Cannot upload files more than 5 files');

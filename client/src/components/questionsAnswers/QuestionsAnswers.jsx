@@ -50,7 +50,6 @@ export default function QuestionsAnswers() {
             },
           }
         );
-        console.log('RESPONSE: ', res.data);
         setQuestionsData(res.data);
         setIsLoaded(true);
       } catch (err) {

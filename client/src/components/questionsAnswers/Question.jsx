@@ -17,7 +17,7 @@ export default function Question({ questionObj }) {
   ] = useState(false);
   const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [hasQuestionBeenReported, setHasQuestionBeenReported] = useState(false);
-  const [expand, setExpand] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // METHODS
   const increaseQuestionHelpfulCount = async (e, questionObj) => {
@@ -94,6 +94,7 @@ export default function Question({ questionObj }) {
 
   const openAnsModal = e => {
     e.preventDefault();
+    e.stopPropagation();
     setShowAnswerModal(true);
   };
 
@@ -101,7 +102,7 @@ export default function Question({ questionObj }) {
 
   const renderQ = () => {
     return (
-      <QuestionPortion onClick={() => setExpand(!expand)}>
+      <QuestionPortion onClick={() => setIsExpanded(!isExpanded)}>
         <QuestionLeftSide>
           <QuestionBodySec>Q: {questionObj.question_body}</QuestionBodySec>{' '}
         </QuestionLeftSide>
@@ -129,7 +130,7 @@ export default function Question({ questionObj }) {
               <u>Add Answer</u>
             </a>
           </AddAnswerSec>
-          {(expand && (
+          {(isExpanded && (
             <svg
               style={{ transform: 'rotate(178deg)' }}
               stroke='currentColor'
@@ -161,21 +162,20 @@ export default function Question({ questionObj }) {
   };
 
   return (
-    <Container style={{ height: (expand && '100%') || '45px' }}>
+    <Container style={{ height: (isExpanded && '100%') || '45px' }}>
       {renderQ()}
-      {expand && (
+      {isExpanded && (
         <>
           <br />
           <hr />
           <Answer questionObj={questionObj} />
-          {showAnswerModal && (
-            <AddAnswer
-              closeModal={() => setShowAnswerModal(false)}
-              collapsePanel={() => setExpand(false)}
-              question={questionObj}
-            />
-          )}
         </>
+      )}
+      {showAnswerModal && (
+        <AddAnswer
+          closeModal={() => setShowAnswerModal(false)}
+          question={questionObj}
+        />
       )}
     </Container>
   );
