@@ -61,7 +61,7 @@ export default function CarouselCard({ product }) {
       <ActionStyle onClick={() => modal.current.open()}>
         <ActionButton name="open-modal" />
       </ActionStyle>
-      <Modal key={product.id} ref={modal} product={product} />
+      <Modal key={`modal-${product.id}`} ref={modal} product={product} />
       <ProductInfoStyle onClick={() => handleClick(product)} >
         <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
         <ProductInfo product={product} />
