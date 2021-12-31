@@ -11,6 +11,8 @@ import WriteReview from './writeReviews/WriteReview.jsx';
 import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
+
+// import './ratingsReviewsStyles.css';
 // import metaDummy from './metaDummy.jsx';
 // import dummyDataReviews from './dummyDataReviews.jsx';
 
@@ -34,12 +36,17 @@ const mainDiv = {
   justifyContent: 'center',
   alignItems: 'center',
   maxHeight: '100%',
-  maxWidth: '80%',
+  maxWidth: '100%',
   marginTop: '20px',
   marginLeft: 'auto',
   marginRight: 'auto',
-  // marginTop: '30px',
   marginBottom: '30px',
+
+  fontFamily: 'Open Sans, sans-serif, Arial',
+  scrollBehavior: 'smooth',
+  // overflowScrolling: 'touch',
+  // WebkitOverflowScrolling: 'touch',
+  // '::WebkitScrollbar': { display: 'none' },
 };
 
 const ratingGrid = {
@@ -49,31 +56,56 @@ const ratingGrid = {
 };
 
 const addReviewBtnStyle = {
-  border: '1px solid grey',
-  boxShadow: '2px 2px 4px grey',
-  backgroundColor: 'white',
+  // border: '1px solid grey',
+  // boxShadow: '2px 2px 4px grey',
+  // backgroundColor: 'white',
+  // padding: '10px',
+  // margin: 'auto',
+  // width: 'auto',
+  // maxWidth: '300px',
+  // minWidth: '150px',
+  // borderRadius: '16px',
+  backgroundColor: '#ddd',
+  border: 'none',
+  color: 'black',
+  padding: '10px 20px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
+  margin: '4px 2px',
+  cursor: 'pointer',
+  borderRadius: '16px',
+  boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
-  marginLeft: '20px',
-  width: 'auto',
-  maxWidth: '300px',
-  minWidth: '150px',
 };
 
-const noReviewsAddBtn = {
-  border: '1px solid grey',
-  boxShadow: '2px 2px 4px grey',
-  backgroundColor: 'white',
-  padding: '10px',
-  width: '300px',
-  margin: 'auto',
-  gridRow: '2',
-};
+// const noReviewsAddBtn = {
+//   border: '1px solid grey',
+//   boxShadow: '2px 2px 4px grey',
+//   backgroundColor: 'white',
+//   padding: '10px',
+//   width: '300px',
+//   margin: 'auto',
+//   gridRow: '2',
+// };
 
 const moreReviewsBtn = {
-  border: '1px solid grey',
-  width: '150px',
-  boxShadow: '2px 2px 4px grey',
-  backgroundColor: 'white',
+  // border: '1px solid grey',
+  // width: '150px',
+  // boxShadow: '2px 2px 4px grey',
+  // backgroundColor: 'white',
+  // padding: '10px',
+  backgroundColor: '#ddd',
+  border: 'none',
+  color: 'black',
+  padding: '10px 20px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
+  margin: '4px 2px',
+  cursor: 'pointer',
+  borderRadius: '16px',
+  boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
 };
 
@@ -138,25 +170,23 @@ const reviewButtonsStyle = {
 };
 
 export default function RatingsReviews() {
+  // CONTEXT
   const { productsContext, selectedProductContext } = useContext(AppContext);
   const [products, setProducts] = productsContext;
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
-
+  // STATE
   const [reviewList, setReviewList] = useState([]);
   const [metaData, setMetaData] = useState([]);
   const [reviewEnd, setReviewEnd] = useState(2);
   const [starSort, setStarSort] = useState([]);
   const [listSort, setListSort] = useState(0);
-  const [reviewReady, setReviewReady] = useState(false);
+  const [reviewsReady, setReviewReady] = useState(false);
   const [writeReviewModal, setWriteReviewModal] = useState(false);
   const [noReviews, setNoReviews] = useState(false);
   const [hideMoreReviews, setHideMoreReviews] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
   const [reviewCache, setReviewCache] = useState([]);
   const [reviewCacheState, setReviewCacheState] = useState(0);
-
-  // const [isLoadedReviewList, setLoadedReviewList] = useState(false);
-  // const [isLoadedMetaData, setLoadedMetaData] = useState(false);
 
   useEffect(() => {
 
@@ -174,9 +204,13 @@ export default function RatingsReviews() {
             },
           }
         );
-        // console.log(res.data.results);
+        // console.log(res.data.results.length);
         setReviewList(res.data);
-        // setLoadedReviewList(true);
+        setReviewReady(true);
+
+        if (res.data.results.length === 0) {
+          setNoReviews(true);
+        }
         reviewCache.push(res.data);
       } catch (err) {
         console.error(err);
@@ -195,7 +229,6 @@ export default function RatingsReviews() {
         );
         // console.log(res.data);
         setMetaData(res.data);
-        // setLoadedMetaData(true);
       } catch (err) {
         console.error(err);
       }
@@ -204,15 +237,6 @@ export default function RatingsReviews() {
     getMetaApi();
     getReviewApi();
   }, []);
-
-  // const handleReviewData = (reviewData) => {
-  //   axios.post('/reviews', reviewData)
-  //     .then((results) => {
-  //     })
-  //     .catch((err) => {
-  //       console.log('err on review POST', err);
-  //     });
-  // };
 
   const listSortChange = (event) => {
     setListSort(event.target.value);
@@ -234,7 +258,6 @@ export default function RatingsReviews() {
   const handleReviewData = (reviewData) => {
     axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
       .then((results) => {
-        // console.log(results);
       })
       .catch((err) => {
         console.log('err on review POST', err);
@@ -244,7 +267,6 @@ export default function RatingsReviews() {
   const handlePut = (review_id, type) => {
     axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/${type}`)
       .then((results) => {
-        // console.log(results);
       })
       .catch((err) => {
         console.log(err.data);
@@ -263,75 +285,145 @@ export default function RatingsReviews() {
       setReviewEnd(newEnd);
     }
   };
+  const exitWriteReviewClick = () => {
+    setWriteReviewModal(false);
+  };
+
+  const writeReviewClick = () => {
+    setWriteReviewModal(true);
+  };
+
+  if (noReviews) {
+    return (
+      <div style={noReviewsGrid}>
+        <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
+          Let be the first to add review to this product!
+        </div>
+        <button
+          className="addReview"
+          type="button"
+          onClick={writeReviewClick}
+          style={addReviewBtnStyle}
+        >
+          ADD A REVIEW +
+        </button>
+        {
+          writeReviewModal
+        && (
+          <div
+            style={modalStyle}
+            aria-hidden="true"
+            role="button"
+            onClick={exitWriteReviewClick}
+          >
+            <div
+              style={innerModalStyle}
+              aria-hidden="true"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <WriteReview
+                handleReviewData={handleReviewData}
+                productID={selectedProduct}
+                metaData={metaData}
+              />
+              <br />
+            </div>
+          </div>
+        )
+        }
+      </div>
+    );
+  }
 
   return (
     <Fragment>
       {isLoaded ? (
-        <div>
+        <div style = {mainDiv}>
           {/* {console.log('from reviewList:', reviewList, 'from metaData:', metaData)} */}
           {/* {console.log('selectedProduct:: ', selectedProduct)} */}
           {/* {console.log('review CacheData:: ', reviewCache)} */}
           {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
+          {/* {console.log('listSort:: ', listSort)}  */}
 
-
-          <div>
-            <div style={sortOptionsStyle}>
-              {/* <SortOptions
-                metaData={metaData}
-                listSort={listSort}
-                listSortChange={listSortChange}
-              /> */}
-            </div>
-          </div>
-          <div>
-            {/* <RatingBreakdown
-              metaData={metaData}
-              sortByStar={sortByStar}
-              starSort={starSort}
-              clearStarFilter={clearStarFilter}
-            /> */}
-          </div>
-          <div style={productStyle}>
-            <ProductBreakdown metaData={metaData}/>
-          </div>
-          <div>
-            {/* <WriteReview
-              metaData={metaData}
-              handleReviewData={handleReviewData}
-            /> */}
-          </div>
-          <div style={productStyle}>
-            {/* {console.log(dummyDataReviews)} */}
-            {/* <ReviewList
-              reviewList={reviewList}
-              starSort={starSort}
-              reviewEnd={reviewEnd}
-              handlePut={handlePut}
-            /> */}
-          </div>
-          {/* <div style={reviewButtonsStyle}>
-            <div style={{ display: 'flex', margin: 'auto', justifyContent: 'space-evenly' }}>
-              <button
-                id="addReview"
-                type="button"
-                // onClick={this.writeReviewClick}
-                style={addReviewBtnStyle}
-              >
-              ADD REVIEWS
-              </button>
-
-              {reviewList.results.length > 2 && hideMoreReviews === false && (
-                <button
-                  className="moreReviews"
-                  type="button"
-                  style={moreReviewsBtn}
-                  onClick={moreReviewsClick}
+          {reviewsReady === true && (
+            <div style={gridLayout}>
+              <div style={ratingGrid}>
+                <RatingBreakdown
+                  metaData={metaData}
+                  sortByStar={sortByStar}
+                  starSort={starSort}
+                  clearStarFilter={clearStarFilter}
+                />
+              </div>
+              <div style={productStyle}>
+                <ProductBreakdown metaData={metaData} />
+              </div>
+              {writeReviewModal && (
+                <div
+                  style={modalStyle}
+                  aria-hidden="true"
+                  role="button"
+                  onClick={exitWriteReviewClick}
                 >
-                  MORE REVIEWS
-                </button>
+                  <div
+                    style={innerModalStyle}
+                    aria-hidden="true"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <WriteReview
+                      handleReviewData={handleReviewData}
+                      productID={selectedProduct}
+                      metaData={metaData}
+                    />
+                    <br />
+                  </div>
+                </div>
               )}
+              <div style={sortOptionsStyle}>
+                <SortOptions
+                  metaData={metaData}
+                  listSort={listSort}
+                  listSortChange={listSortChange}
+                />
+              </div>
+              <div style={reviewListStyle}>
+
+                {/* <div style={{display: 'flex',}}> */}
+                <ReviewList
+                  reviewCache={reviewCache}
+                  reviewCacheState={reviewCacheState}
+                  starSort={starSort}
+                  reviewList={reviewList}
+                  reviewEnd={reviewEnd}
+                  handlePut={handlePut}
+                />
+              </div>
+              <div style={reviewButtonsStyle}>
+                <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
+                  {reviewList.results.length > 2 && hideMoreReviews === false && (
+                    <button
+                      className="moreReviews"
+                      type="button"
+                      style={moreReviewsBtn}
+                      onClick={moreReviewsClick}
+                    >
+                   MORE REVIEWS
+                    </button>
+                  )}
+                  <button
+                    id="addReview"
+                    type="button"
+                    onClick={writeReviewClick}
+                    style={addReviewBtnStyle}
+                  >
+                  ADD A REVIEW +
+                  </button>
+                </div>
+              </div>
+
             </div>
-          </div> */}
+          )
+          }
         </div>
       ) : <Loader
         type='Oval'
@@ -343,402 +435,3 @@ export default function RatingsReviews() {
     </Fragment>
   );
 }
-
-
-//======================Practice Code ========================
-
-// /* eslint-disable camelcase */
-// import React, { useState, useEffect, useContext } from 'react';
-// import axios from 'axios';
-// import styled from 'styled-components';
-
-// import AppContext from '../../AppContext.js';
-// import { TOKEN } from '../../config.js';
-
-// import ReviewList from './reviewList/ReviewList.jsx';
-// import WriteReview from './writeReviews/WriteReview.jsx';
-// import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
-// import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
-// import SortOptions from './sortOptions/SortOption.jsx';
-
-// export default function RatingsReviews() {
-//   const { products, setProducts } = useContext(AppContext);
-//   const [reviewList, setreviewList] = useState([]);
-//   const [reviewList, setReviewList] = useState([]);
-//   const [noReviews, setNoReviews] = useState(true);
-//   // const [counter, setCounter] = useState(0);
-//   const [inputValue, setInputValue] = useState('Hatha');
-//   const [showText, setShowText] = useState(true);
-//   const [count, setCount] = useState(0);
-
-//   useEffect(() => {
-//     const getApi = async () => {
-//       try {
-//         const res = await axios.get(
-//           // `/reviews/?product_id=${productID}&count=4`
-//           'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/',
-//           {
-//             params: {
-//               // page: 1,
-//               count: 50,
-//               // sort: 'newest',
-//               product_id: 40344
-//               // TODO: ${productID} need to pass in dynamically for now just sure dummy data
-//             },
-//             headers: {
-//               Authorization: `${TOKEN}`,
-//             }
-//           }
-//         );
-//         // console.log('Rate and Review API Data:', res.data);
-//         setreviewList(res.data);
-//       } catch (err) {
-//         console.error(err);
-//       }
-//     };
-
-//     getApi();
-//   }, []);
-
-//   // const increment = () => {
-//   //   setCounter(counter + 1);
-//   // };
-
-//   let onChange = (event) => {
-//     const newValue = event.target.value;
-//     setInputValue(newValue);
-
-//   };
-
-//   return (
-//     <div>
-//       <h3>Hello from the section of ratings and reviews!</h3>
-//       {/* {console.log('from Product from APP:', products[0]?.id)} */}
-//       {/* {console.log('from reviewList:', reviewList)} */}
-//       {/* <div>
-//         {counter}
-//         <button onClick={increment}>Increment</button>
-//       </div> */}
-//       <div>
-//         <input placeholder="Enter sth here..." onChange={onChange}/>
-//         {inputValue}
-//       </div>
-//       <div>
-//         <h1>{count}</h1>
-//         <button
-//           onClick={() => {
-//             setCount(count + 1);
-//             setShowText(!showText);
-//           }}
-//         >
-//           Click Here
-//         </button>
-//         {showText && <p>This is a text</p>}
-//       </div>
-//     </div>
-//   );
-// }
-
-//======================Practice Code ========================
-// class RatingsReviews extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     const { metaData } = this.props;
-//     this.state = {
-//       reviewList: [],
-//       metaData,
-//       reviewEnd: 2,
-//       starSort: [],
-//       listSort: 0,
-//       reviewsReady: false,
-//       writeReviewModal: false,
-//       noReviews: false,
-//       hideMoreReviews: false,
-//     };
-//   }
-
-//   componentDidMount() {
-//     /// /GET product reviews/////
-//     const { productID } = this.props;
-
-//     axios.get(`/reviews/?product_id=${productID}&count=4`)
-//       .then((results) => {
-//         if (results.data.results.length === 0) {
-//           this.setState({
-//             noReviews: true,
-//           });
-//         }
-//         this.setState({
-//           reviewList: results.data.results,
-//           reviewsReady: true,
-//         });
-//       })
-//       .catch((err) => {
-//         console.log('error on review GET request', err);
-//       });
-
-//     axios.get(`/reviews/?product_id=${productID}&count=1000`)
-//       .then((results) => {
-//         reviewCache.reviewCache.push(results.data);
-//       })
-//       .catch((err) => {
-//         console.log('err on 1000 get', err);
-//       });
-//   }
-
-//   handleReviewData(reviewData) {
-//     axios.post('/reviews', reviewData)
-//       .then((results) => {
-//       })
-//       .catch((err) => {
-//         console.log('err on review POST', err);
-//       });
-//   }
-
-//   handlePut(review_id, type) {
-//     axios.put(`/reviews/${review_id}/${type}`)
-//       .then((results) => {
-//       })
-//       .catch((err) => {
-//         console.log(err.data);
-//       });
-//   }
-
-//   exitWriteReviewClick() {
-//     this.setState({
-//       writeReviewModal: false,
-//     });
-//   }
-
-//   writeReviewClick(e) {
-//     this.setState({
-//       writeReviewModal: true,
-//     });
-//   }
-
-//   render() {
-//     const {
-//       noReviews, metaData, writeReviewModal,
-//       reviewsReady, reviewList, listSort, reviewEnd, hideMoreReviews, starSort,
-//     } = this.state;
-
-//     const { productID, reviewCacheState } = this.props;
-//     return (
-//       <div>
-//         <div>Be the first to write a review!</div>
-//         <button
-//           className="addReview"
-//           type="button"
-//           onClick={this.writeReviewClick}
-//         >
-//             ADD A REVIEW +
-//         </button>
-//         {
-//           writeReviewModal
-//           && (
-//             <div role="button" onClick={this.exitWriteReviewClick} >
-//               <div onClick={(e) => e.stopPropagation()}>
-//                 <WriteReview
-//                   handleReviewData={this.handleReviewData}
-//                   productID={productID}
-//                   metaData={metaData}
-//                 />
-//                 <br/>
-//               </div>
-//             </div>
-//           )
-//         }
-//       </div>
-//     );
-//   }
-// }
-
-// export default RatingsReviews;
-
-
-//=========================================working code 12/29/2021===============================
-// import React, { useState, useEffect, useContext } from 'react';
-// import axios from 'axios';
-// import styled from 'styled-components';
-
-// import AppContext from '../../AppContext.js';
-// import { TOKEN } from '../../config.js';
-
-// import ReviewList from './reviewList/ReviewList.jsx';
-// import WriteReview from './writeReviews/WriteReview.jsx';
-// import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
-// import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
-// import SortOptions from './sortOptions/SortOption.jsx';
-
-// import metaDummy from './metaDummy.jsx';
-// import dummyDataReviews from './dummyDataReviews.jsx';
-
-// const productStyle = {
-//   maxWidth: '100%',
-//   margin: 'auto',
-//   gridColumn: '1',
-//   gridRow: '2',
-// };
-
-
-// const sortOptionsStyle = {
-//   marginLeft: '30px',
-//   gridColumn: '2/-1',
-//   gridRow: '1',
-// };
-
-// export default function RatingsReviews() {
-//   const { productsContext, selectedProductContext } = useContext(AppContext);
-//   const [products, setProducts] = productsContext;
-//   const [selectedProduct, setSelectedProduct] = selectedProductContext;
-
-//   const [reviewList, setReviewList] = useState([]);
-//   const [metaData, setMetaData] = useState([]);
-//   const [reviewEnd, setReviewEnd] = useState(2);
-//   const [starSort, setStarSort] = useState([]);
-//   const [listSort, setListSort] = useState(0);
-//   const [reviewReady, setReviewReady] = useState(false);
-//   const [writeReviewModal, setWriteReviewModal] = useState(false);
-//   const [noReviews, setNoReviews] = useState(false);
-//   const [hideMoreReviews, setHideMoreReviews] = useState(false);
-
-
-//   useEffect(() => {
-//     const getReviewApi = async () => {
-//       try {
-//         const res = await axios.get(
-//           `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/?count=50&product_id=${selectedProduct.id}`,
-//           {
-//             headers: {
-//               Authorization: `${TOKEN}`,
-//             },
-//           }
-//         );
-//         // console.log(res.data.results);
-//         setReviewList(res.data.results);
-//       } catch (err) {
-//         console.error(err);
-//       }
-//     };
-
-//     const getMetaApi = async () => {
-//       try {
-//         const res = await axios.get(
-//           `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/?count=50&product_id=${selectedProduct.id}`,
-//           {
-//             headers: {
-//               Authorization: `${TOKEN}`,
-//             },
-//           }
-//         );
-//         // console.log(res.data);
-//         setMetaData(res.data);
-//       } catch (err) {
-//         console.error(err);
-//       }
-//     };
-
-//     getMetaApi();
-//     getReviewApi();
-//   }, []);
-
-//   // const handleReviewData = (reviewData) => {
-//   //   axios.post('/reviews', reviewData)
-//   //     .then((results) => {
-//   //     })
-//   //     .catch((err) => {
-//   //       console.log('err on review POST', err);
-//   //     });
-//   // };
-
-//   const listSortChange = (event) => {
-//     setListSort(event.target.value);
-//   };
-
-//   const sortByStar = (event) => {
-//     console.log(event);
-//     if (starSort.indexOf(event.target.id) === -1) {
-//       setStarSort([...starSort, event.target.id]);
-//     } else {
-//       starSort.splice(starSort.indexOf(event.target.id), 1);
-//       setStarSort({starSort});
-//     }
-//   };
-
-//   const clearStarFilter = () => {
-//     setStarSort([]);
-//   };
-
-
-//   const handleReviewData = (reviewData) => {
-//     axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
-//       .then((results) => {
-//         console.log(results);
-//       })
-//       .catch((err) => {
-//         console.log('err on review POST', err);
-//       });
-//   };
-
-//   const handlePut = (review_id, type) => {
-//     axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/${type}`)
-//       .then((results) => {
-//         console.log(results);
-//       })
-//       .catch((err) => {
-//         console.log(err.data);
-//       });
-//   };
-
-
-//   return (
-// <div>
-//   {/* <h3>RATINGS & REVIEWS</h3> */}
-//   {/* {console.log('from Product from APP:', products)} */}
-//   {/* {console.log('from selectedProduct from APP:', selectedProduct.id)} */}
-//   {/* {console.log('from reviewList API:', reviewList)} */}
-//   {/* {console.log('from dummyData:', dummyDataReviews)} */}
-//   {/* {console.log('from metaDummyData:', metaDummy)} */}
-//   {/* {console.log('from metaData:', metaData)} */}
-//   {/* {console.log(listSort)} */}
-//   {/* {console.log(starSort)} */}
-
-
-//   <div>
-//         <div style={sortOptionsStyle}>
-//           {/* <SortOptions
-//             metaData={metaDummy}
-//             listSort={listSort}
-//             listSortChange={listSortChange}
-//           /> */}
-//         </div>
-//       </div>
-//       <div>
-//         <RatingBreakdown
-//           metaData={metaDummy}
-//           sortByStar={sortByStar}
-//           starSort={starSort}
-//           clearStarFilter={clearStarFilter}
-//         />
-
-//       </div>
-//       {/* <div style={productStyle}>
-//         <ProductBreakdown metaData={metaDummy} />
-//       </div> */}
-//       <div>
-//         {/* <WriteReview
-//           metaData={metaDummy}
-//           handleReviewData={handleReviewData}
-//         /> */}
-//       </div>
-//       <div style={productStyle}>
-//         {/* <ReviewList
-//           reviewList={dummyDataReviews}
-//           starSort={starSort}
-//           reviewEnd={reviewEnd}
-//           handlePut={handlePut}
-//         /> */}
-//       </div>
-//     </div>
-//   );
-// }
