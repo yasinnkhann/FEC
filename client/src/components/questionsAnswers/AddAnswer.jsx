@@ -7,7 +7,7 @@ import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
 import { TOKEN, cloudinaryInfo } from '../../config.js';
 
-export default function AddAnswer({ closeModal, question }) {
+export default function AddAnswer({ closeModal, question, collapsePanel }) {
   // CONTEXT
   const { productsContext } = useContext(AppContext);
   const [products, setProducts] = productsContext;
@@ -40,6 +40,11 @@ export default function AddAnswer({ closeModal, question }) {
 
   const handleChange = ({ target: { name, value } }) => {
     setAddAnsData({ ...addAnsData, hasChanged: true, [name]: value });
+  };
+
+  const handleCloseModal = () => {
+    closeModal();
+    collapsePanel();
   };
 
   const handleFileUpload = e => {
@@ -89,8 +94,9 @@ export default function AddAnswer({ closeModal, question }) {
           },
         }
       );
-      //console.log('RES: ', res);
+      console.log('SUBMIT RES: ', res);
       closeModal();
+      collapsePanel();
     } catch (err) {
       console.error(err);
       alert('Cannot upload files more than 5 files');
@@ -200,7 +206,7 @@ export default function AddAnswer({ closeModal, question }) {
           <br />
           <br />
           <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
-          <CloseBtn onClick={closeModal}>
+          <CloseBtn onClick={handleCloseModal}>
             <CloseIcon />
           </CloseBtn>
         </Content>

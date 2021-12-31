@@ -6,7 +6,6 @@ import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';
 import Search from './Search.jsx';
-import Accordion from './Accordion.jsx';
 
 export default function QuestionsAnswers() {
   // STATE
@@ -42,7 +41,7 @@ export default function QuestionsAnswers() {
           {
             params: {
               // product_id: 40347,
-              product_id: products[1010]?.id,
+              product_id: products[234]?.id,
               // page: 1,
               // count: 1,
             },
@@ -51,6 +50,7 @@ export default function QuestionsAnswers() {
             },
           }
         );
+        console.log('RESPONSE: ', res.data);
         setQuestionsData(res.data);
         setIsLoaded(true);
       } catch (err) {
@@ -80,7 +80,6 @@ export default function QuestionsAnswers() {
               questionsData={questionsData.results}
               filteredData={filteredQuestions}
             />
-            {/* <Accordion /> */}
           </QuestionsContext.Provider>
         </>
       )}
