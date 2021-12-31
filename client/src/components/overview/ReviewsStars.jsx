@@ -7,13 +7,13 @@ import Rating from '@material-ui/lab/Rating';
 const Reviews = styled.span `
   cursor: pointer;
   text-decoration: underline;
-  margin-left: 3rem;
+  /* margin-left: 3rem; */
 `;
 
 const Stars = styled.div `
   display: inline-block;
   font-family: Times;
-  margin-left: 4rem;
+  /* margin-left: 4rem; */
   padding-top: 1rem;
 `;
 
