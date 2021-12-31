@@ -1,5 +1,5 @@
 // Dependency imports
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -11,6 +11,7 @@ import AppContext from '../../AppContext.js';
 import ModalContext from './ModalContext.js';
 
 // Component imports
+import ActionButton from './ActionButton.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
 import Modal from './Modal.jsx';
@@ -24,7 +25,9 @@ export default function CarouselCard({ product }) {
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [imageUrl, setimageUrl] = useState('');
-  const [showModal, setShowModal] = useState(false);
+
+  // REF
+  const modal = useRef(null);
 
   // HOOKS
   useEffect(() => {
@@ -52,22 +55,15 @@ export default function CarouselCard({ product }) {
     setSelectedProduct(newSelectedProduct);
   };
 
-  const handleHover = () => {
-    setShowModal(!showModal);
-  };
-
   // JSX
   return (
-    <CardStyle
-      className="carousel-card"
-      onMouseEnter={() => setShowModal(true)}
-      onMouseLeave={() => setShowModal(false)}
-      onClick={() => handleClick(product)} >
-      <ModalContext.Provider value={{modalContext: [showModal, setShowModal]}}>
-        {/* {showModal ? <Modal product={product}/> : null} */}
-      </ModalContext.Provider>
-      <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
-      <ProductInfoStyle>
+    <CardStyle >
+      <ActionStyle onClick={() => modal.current.open()}>
+        <ActionButton name="open-modal" />
+      </ActionStyle>
+      <Modal key={product.id} ref={modal} product={product} />
+      <ProductInfoStyle onClick={() => handleClick(product)} >
+        <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
         <ProductInfo product={product} />
       </ProductInfoStyle>
     </CardStyle>
@@ -77,14 +73,22 @@ export default function CarouselCard({ product }) {
 const CardStyle = styled.div`
   width: 200px;
   height: 300px;
+  margin: 5px;
+  padding: 5px;
   border: 1px solid black;
   position: relative;
+  display: flex;
+  flex-direction: row;
 `;
 
 const ProductInfoStyle = styled.div`
   width: 200px;
-  height: 100px;
+  height: 100%;
   position: absolute;
   bottom: 0;
   overflow: auto;
+`;
+
+const ActionStyle = styled.a`
+  z-index: 1;
 `;

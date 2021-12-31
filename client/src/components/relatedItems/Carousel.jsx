@@ -53,9 +53,10 @@ export default function Carousel({ name, relatedProductIds }) {
       });
     }
 
+
+
     return () => {
 
-      console.log('useEffect return func!');
       resetVisibleProducts();
     };
   }, [relatedProductIds]);
@@ -63,7 +64,6 @@ export default function Carousel({ name, relatedProductIds }) {
   // Reset shown products when new item is selected
   useEffect(() => {
 
-    console.log('useEffect func!');
     return () => resetVisibleProducts();
   }, [selectedProduct]);
 
@@ -157,7 +157,7 @@ export default function Carousel({ name, relatedProductIds }) {
   // then the previous calculation is return, if not then we hard set the return value to 1
   const getMaxIndexBasedOnScreenSize = () => {
     const width = window.innerWidth;
-    const maxIndexBasedOnScreenSize = width % 200 > 0 ? Math.ceil(width / 200) : 1;
+    const maxIndexBasedOnScreenSize = width % 200 > 0 ? Math.floor(width / 200) : 1;
     return maxIndexBasedOnScreenSize;
   };
 
