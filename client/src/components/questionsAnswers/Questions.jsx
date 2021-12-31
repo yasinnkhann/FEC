@@ -67,7 +67,7 @@ export default function Questions({ questionsData, filteredData }) {
 
   const showMoreAnsweredQsCondition =
     (questionsData?.length > 4 && !useFilteredData) ||
-    (filteredData.length !== 0 && useFilteredData);
+    (questionsData?.length > 4 && filteredData.length !== 0 && useFilteredData);
 
   // METHODS
   const handleRemainingQs = remainingQs => {
@@ -123,7 +123,26 @@ const Container = styled.div`
   max-height: 100vh;
 `;
 
-const MoreAnsweredQsBtn = styled.button``;
+const MoreAnsweredQsBtn = styled.button`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 43%;
+	padding: 8px 12px;
+	border-radius 6px;
+	border: none;
+	background: #000;
+	color: #fff;
+	cursor: pointer;
+`;
 
-const CreateNewQBtn = styled.button``;
-
+const CreateNewQBtn = styled.button`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 43%;
+	padding: 8px 12px;
+	border-radius 6px;
+	border: none;
+	background: #000;
+	color: #fff;
+	cursor: pointer;
+`;

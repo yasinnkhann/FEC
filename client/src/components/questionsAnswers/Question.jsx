@@ -112,20 +112,25 @@ export default function Question({ questionObj }) {
             <a
               href=''
               onClick={e => increaseQuestionHelpfulCount(e, questionObj)}
+              style={{ color: 'green' }}
             >
               <u>Yes</u>
             </a>{' '}
-            ({questionObj.question_helpfulness}) |{' '}
+            ({questionObj.question_helpfulness})&nbsp;|&nbsp;
           </QuestionHelpfulSec>{' '}
           <QuestionReportedSec>
-            <a href='' onClick={e => handleQuestionsReported(e, questionObj)}>
+            <a
+              href=''
+              onClick={e => handleQuestionsReported(e, questionObj)}
+              style={{ color: 'red' }}
+            >
               <u>{questionObj.reported ? 'Reported' : 'Report'}</u>
             </a>
-            {' | '}
+            &nbsp;|&nbsp;
           </QuestionReportedSec>
           <AddAnswerSec>
             {' '}
-            <a href='' onClick={openAnsModal}>
+            <a href='' onClick={openAnsModal} style={{ color: 'dodgerblue' }}>
               {' '}
               <u>Add Answer</u>
             </a>
