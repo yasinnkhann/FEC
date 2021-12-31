@@ -2,12 +2,20 @@ import React, {useContext, useState} from 'react';
 import StylesContext from './StylesContext.js';
 import styled from 'styled-components';
 import { Photo } from '@material-ui/icons';
+import { TOKEN } from '../../config.js';
+import axios from 'axios';
+import CheckIcon from '@material-ui/icons/Check';
 
+const Checked = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+`;
 const StylePicsDiv = styled.div `
   display: flex;
   flex-wrap: wrap;
-  width: 295px;
-  border: 1px solid;
+  width: 260px;
+  justify-content: center;
 `;
 const StylePic = styled.img `
   height: 70px;
@@ -17,18 +25,19 @@ const StylePic = styled.img `
   object-fit: cover;
 `;
 const StyleName = styled.p `
-  font-weight: 100;
-  margin-left: 4rem;
+  /* font-weight: 100;
+  margin-left: 3.5rem; */
 `;
 const SelectedStyle = styled.h3 `
-  font-weight: 100;
-  margin-left: 4rem;
+  /* font-weight: 100;
+  margin-left: 4rem; */
 `;
 const Button = styled.button `
-  margin: 5px;
+  position: relative;
+  /* margin: 5px; */
 `;
 const Price = styled.h3`
-  margin-left: 5rem;
+  /* margin-left: 5rem; */
 `;
 const Sale = styled.p `
   color: red;
@@ -37,31 +46,28 @@ const OldPrice = styled.p `
   text-decoration: line-through;
 `;
 const Dropdown = styled.div `
-  display: flex;
-  flex-wrap: wrap;
-  width: 295px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  width: 260px;
   padding-top: 2rem;
 `;
+
 const QuantityContainer = styled.div ``;
 const SizeContainer = styled.div ``;
 const DropDownListContainer = styled.div``;
 const DropDownHeader = styled.button`
   padding: 1rem;
-  margin: 0.5rem;
+  /* margin: 0.5rem; */
   padding-left: 1rem;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
   font-weight: 500;
   font-size: 1rem;
+  width: 130px;
 `;
-const AddtoCart = styled.button `
-  padding: 1.5rem;
-  margin: 0.5rem;
-  padding-left: 2rem;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
-  font-weight: 500;
-  font-size: 1rem;
-  width: 188px;
-`;
+
 const DropdownList = styled.div `
   padding: 1rem;
   background: #ffffff;
@@ -80,6 +86,30 @@ const ListItem = styled.option`
   margin-bottom: 0.8em;
 `;
 
+const OutOfStock = styled.div `
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+  padding: 2rem;
+  color: red;
+  /* margin: 1rem;
+  margin-left: 2.5rem; */
+  justify-content: center;
+  border: 1px solid black;
+`;
+const AddtoCartButton = styled.button `
+  padding: 1.5rem;
+  grid-column: 1 / -1;
+  /* margin: 0.5rem; */
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+  font-size: 1rem;
+  width: 260px;
+`;
+const SelectASize = styled.div `
+  font-size: 1rem;
+`;
+
 export default function StyleSelector() {
   const {stylesDataContent, currentStyleContent} = useContext(StylesContext);
   const [stylesData, setstylesData] = stylesDataContent;
@@ -88,17 +118,19 @@ export default function StyleSelector() {
   const [isSizeOpen, setIsSizeOpen] = useState(false);
   const [isQuantOpen, setIsQuantOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [quantityOptions, setQuantityOptions] = useState(1);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [quantityOptions, setQuantityOptions] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
 
   const sizes = () => {
-    var sizeArray = [];
+    const sizeArray = [];
     Object.keys(currentStyle.skus).forEach((key => {
-      sizeArray.push(key);
+      currentStyle.skus[key].quantity ? sizeArray.push(key) : null;
     }));
     return sizeArray;
   };
-  //const stylesList = sizes();
+
+  const stylesList = sizes();
   const sizeQuantity = () => {
     var obj = {};
     Object.values(currentStyle.skus).forEach((value => {
@@ -110,6 +142,7 @@ export default function StyleSelector() {
     }));
     return obj;
   };
+  console.log(results);
 
   const onPhotoClick = (value) => {
     setCurrentStyle(value);
@@ -117,8 +150,7 @@ export default function StyleSelector() {
     setSelectedSize(null);
   };
 
-  console.log('QUANTITY obj: ', sizeQuantity());
-  //console.log('skus: ', currentStyle.skus);
+  console.log(currentStyle.skus);
 
   const uniqueSizes = () => {
     return Array.from(new Set(sizes().map((sku => currentStyle.skus[sku].size))));
@@ -134,10 +166,19 @@ export default function StyleSelector() {
     setSelectedSize(e.target.innerHTML);
     setQuantityOptions(quantobj[e.target.innerHTML]);
     setIsSizeOpen(false);
+    setShowMessage(false);
   };
+
   const onQuantityClicked = (e) => {
     setSelectedQuantity(parseInt(e.target.innerHTML));
     setIsQuantOpen(false);
+  };
+  const addToCartHandler = (e) => {
+    selectedSize ? addInCart() : badCartHandler();
+  };
+  const badCartHandler = () => {
+    setIsSizeOpen(true);
+    setShowMessage(true);
   };
 
   const quantityArr = () => {
@@ -154,9 +195,30 @@ export default function StyleSelector() {
     return quantityArray;
   };
 
+  const getSkuId = Object.keys(currentStyle.skus).filter((key) => {
+    return currentStyle.skus[key].size === selectedSize;
+  });
 
+  const addInCart = async (e) => {
+    try {
+      const body = {
+        sku_id: getSkuId[0],
+      };
+      const res = await axios.post(
+        'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart', body,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
+      );
+      console.log('res: ', res);
+    } catch (err) {
+      console.error(err);
+    }
+
+  };
   const quantityAmount = quantityOptions;
-  //console.log(quantityAmount);
 
   return (
     <div>
@@ -166,46 +228,75 @@ export default function StyleSelector() {
       <StylePicsDiv>
         {results.map((photo) => {
           return (
-            <Button onClick={() => onPhotoClick(photo)} key={photo.style_id}><StylePic src={photo.photos[0].thumbnail_url}></StylePic></Button>
+            <Button onClick={() => onPhotoClick(photo)} key={photo.style_id}><StylePic src={photo.photos[0].thumbnail_url}></StylePic>
+              {currentStyle.name === photo.name ? <Checked><CheckIcon/></Checked> : null}
+            </Button>
           );
         })}
       </StylePicsDiv>
-      <Dropdown>
-        <div>
-          <DropDownHeader onClick={togglingSize}>{!selectedSize ? 'Select A Size' : 'size: ' + selectedSize}</DropDownHeader>
-          {isSizeOpen && (
-            <DropDownListContainer>
-              <DropdownList>
-                {uniqueSizes().map(size => (
-                  <ListItem onClick={(e) => onSizeClicked(e)} key={Math.random()}>
-                    {size}
-                  </ListItem>
-                ))}
-              </DropdownList>
-            </DropDownListContainer>
-          )}
-        </div>
-        <div>
-          {selectedSize ?
-            <DropDownHeader onClick={togglingQuant}>{!selectedQuantity ? 'Select Quantity' : 'Quantity: ' + selectedQuantity}</DropDownHeader>
-            :
-            <DropDownHeader>-</DropDownHeader>
-          }
-          {isQuantOpen && (
-            <DropDownListContainer>
-              <DropdownList>
-                {quantityArr().map((num) => {
-                  return <ListItem onClick={(e) => onQuantityClicked(e)} key={Math.random()}>{num}</ListItem>;
-                })}
-              </DropdownList>
-            </DropDownListContainer>
-          )}
-        </div>
-        <AddtoCart>Add to Cart</AddtoCart>
-      </Dropdown>
-      {/* <div>
-        <img src={pinIcon}></img>
-      </div> */}
+      {stylesList.length ?
+        <Dropdown>
+          <div>
+            <>
+              {showMessage ? <SelectASize>Please Select a Size</SelectASize> : null}
+              <DropDownHeader onClick={togglingSize}>{!selectedSize ? 'Select A Size' : 'Size: ' + selectedSize}</DropDownHeader>
+              {isSizeOpen && (
+                <DropDownListContainer>
+                  <DropdownList>
+                    {uniqueSizes().map(size => (
+                      <ListItem onClick={(e) => onSizeClicked(e)} key={Math.random()}>
+                        {size}
+                      </ListItem>
+                    ))}
+                  </DropdownList>
+                </DropDownListContainer>
+              )}
+            </>
+          </div>
+          <div>
+            {selectedSize ?
+              <DropDownHeader onClick={togglingQuant}>{!selectedQuantity ? 'Quantity: 1' : 'Quantity: ' + selectedQuantity}</DropDownHeader>
+              :
+              <DropDownHeader>-</DropDownHeader>
+            }
+            {isQuantOpen && (
+              <DropDownListContainer>
+                <DropdownList>
+                  {quantityArr().map((num) => {
+                    return <ListItem onClick={(e) => onQuantityClicked(e)} key={Math.random()}>{num}</ListItem>;
+                  })}
+                </DropdownList>
+              </DropDownListContainer>
+            )}
+          </div>
+          <AddtoCartButton onClick={(e) => addToCartHandler(e)}>
+            Add to Cart
+          </AddtoCartButton>
+        </Dropdown>
+        : <OutOfStock>OUT OF STOCK</OutOfStock>}
     </div>
   );
 }
+
+// useEffect(() => {
+//   const getCart = async () => {
+//     try {
+//       const res = await axios.get(
+//         'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
+//         {
+//           headers: {
+//             Authorization: `${TOKEN}`,
+//           },
+//         }
+//       );
+//       const whatever = await Promise.all(res.data);
+//       console.log(whatever);
+//       console.log(res.data);
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
+//   getCart();
+// }, []);
+//console.log(new Promise(getCart()));
+
