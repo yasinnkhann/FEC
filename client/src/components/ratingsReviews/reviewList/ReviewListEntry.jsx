@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
-// import StarRating from '../../shared/starRating';
+
+const Stars = styled.div `
+  display: inline-block;
+  font-family: Times;
+  margin-left: 0rem;
+  padding-top: 1rem;
+`;
 
 const gridLayout = {
   display: 'grid',
@@ -82,9 +89,7 @@ const emptyDiv = {
 class ReviewListEntry extends React.Component {
   constructor(props) {
     super(props);
-
     this.handlePutEntry = this.handlePutEntry.bind(this);
-    this.averageRating = this.averageRating.bind(this);
   }
 
   handlePutEntry(e) {
@@ -101,29 +106,22 @@ class ReviewListEntry extends React.Component {
       });
   }
 
-  averageRating(obj) {
-    // console.log(obj);
-    let wholeTotal = 0;
-    let responseTotal = 0;
-    for (const star in obj) {
-      wholeTotal += (Number(obj[star]) * Number(star));
-      responseTotal += Number(obj[star]);
-    }
-    const result = wholeTotal / responseTotal;
-    if (isNaN((Math.round(result * 4) / 4).toFixed(1))) {
-      return 0;
-    }
-    return result;
-  }
-
   render() {
     const { review } = this.props;
     return (
       <div className="ratings-flexbox-container" style={gridLayout}>
-
         <div style={starLayout}>
           <div style={{ display: 'flex', zIndex: '-1', marginRight: 'auto' }}>
-            <StarRating averageRating={review.rating} height={18} width={15} />
+            {/* <StarRating averageRating={review.rating} height={18} width={15} /> */}
+            <Stars>
+              <Rating
+                name="read-only"
+                value={review.rating}
+                precision={0.25}
+                max={5}
+                size="small"
+                readOnly />
+            </Stars>
           </div>
         </div>
 
@@ -140,69 +138,50 @@ class ReviewListEntry extends React.Component {
               {new Date(review.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
             </div>
           </div>
-
         </div>
-
-        {
-          review.summary
-            ? (
-              <div style={reviewLayout}>
-                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                  {review.summary}
-                </div>
-              </div>
-            )
-            : <div style={emptyDiv} />
+        {review.summary ? (
+          <div style={reviewLayout}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              {review.summary}
+            </div>
+          </div>
+        ) : <div style={emptyDiv} />
         }
-
         <div style={bodyLayout}>
           <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
             {review.body}
           </div>
         </div>
-
-        {
-          review.response !== null
-            ? (
-              <div style={responseLayout}>
-                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                  <b>{`Response from seller: ${review.response}`}</b>
-                </div>
-              </div>
-            )
-            : <div style={emptyDiv} />
+        {review.response !== null ? (
+          <div style={responseLayout}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <b>{`Response from seller: ${review.response}`}</b>
+            </div>
+          </div>
+        ) : <div style={emptyDiv} />
         }
-
-        {
-          review.recommend === true
-            ? (
-              <div style={recommendLayout}>
-                <div style={{ display: 'flex' }}>
+        {review.recommend === true ? (
+          <div style={recommendLayout}>
+            <div style={{ display: 'flex' }}>
                 ✓ I recommend this product
-                </div>
-              </div>
-            )
-            : <div style={emptyDiv} />
+            </div>
+          </div>
+        ) : <div style={emptyDiv} />
         }
-
         <div style={helpfulnessLayout}>
           <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            {
-              review.photos.length > 0
-                ? (
+            { review.photos.length > 0 ? (
               // <div style={photoLayout}>
-                  <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                    <PhotosMap photos={review.photos} />
-                    {/* </div> */}
-                  </div>
-                )
-                : <div style={emptyDiv} />
+              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <PhotosMap photos={review.photos} />
+                {/* </div> */}
+              </div>
+            ) : <div style={emptyDiv} />
             }
             <div style={{
               display: 'flex', justifyContent: 'flex-end', float: 'right', marginLeft: 'auto', marginTop: 'auto',
             }}
-            >
-              Helpful?
+            > Helpful?
               <u onClick={this.handlePutEntry} aria-hidden="true" id="helpful" style={{ marginLeft: '4px', marginRight: '2px' }}>Yes</u>
               {`(${review.helpfulness}) | `}
               <u onClick={this.handlePutEntry} aria-hidden="true" id="report" style={{ marginLeft: '4px' }}>Report</u>
@@ -215,80 +194,3 @@ class ReviewListEntry extends React.Component {
 }
 
 export default ReviewListEntry;
-
-
-const StarRating = ({ averageRating, height, width }) => {
-  // console.log('from star rating:: ', { averageRating, height, width }); //{averageRating: 5, height: 18, width: 15}
-  let rating = averageRating || 0;
-  const stars = [];
-  while (stars.length < 5) {
-    if (rating > 1) {
-      stars.push(1);
-    } else if (rating > 0) {
-      const empty = Math.abs(0 - rating);
-      const quart = Math.abs(0.25 - rating);
-      const half = Math.abs(0.5 - rating);
-      const three = Math.abs(0.75 - rating);
-      const full = Math.abs(1 - rating);
-      const closest = Math.min(empty, quart, half, three, full);
-      switch (closest) {
-      case (empty):
-        stars.push(0);
-        break;
-      case quart:
-        stars.push(0.28);
-        break;
-      case half:
-        stars.push(0.5);
-        break;
-      case three:
-        stars.push(0.72);
-        break;
-      case full:
-        stars.push(1.0);
-        break;
-      default:
-        console.log('Hey there!!');
-        stars.push(0);
-        break;
-      }
-    } else {
-      stars.push(0);
-    }
-    rating -= 1;
-  }
-  // console.log(stars);
-
-  return (
-    <div>
-      {stars.map((item, i) => (
-        <div
-          style={{
-            height: `${height}px`,
-            width: `${width}px`,
-            display: 'inline-block',
-          }}
-          key={i.toString()}
-        >
-          <div style={{
-            position: 'relative',
-            display: 'inline-block',
-            height: `${height}px`,
-            backgroundColor: '#fff34e',
-            width: `${parseInt(item * width, 10)}px`,
-          }}
-          >
-            <img
-              style={{
-                height: `${height}px`,
-                width: `${width}px`,
-              }}
-              src="star.png"
-              alt="stars alt"
-            />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
