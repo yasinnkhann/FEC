@@ -152,6 +152,7 @@ export default function Answer({ questionObj }) {
         <AnswerBodyContainer>
           <AnswerBody>{answer?.body}</AnswerBody>
           <AnswerDetails>
+            <br />
             <span>
               by:{' '}
               {answer?.answerer_name === 'Seller' ? (
@@ -161,17 +162,17 @@ export default function Answer({ questionObj }) {
               )}
               , <Moment format='MMMM Do YYYY'>{answer?.date}</Moment> | Helpful?{' '}
               <a href=''>
-                <Yes onClick={e => increaseAnswerHelpfulCount(e, answer)}>
+                <YesSec onClick={e => increaseAnswerHelpfulCount(e, answer)}>
                   Yes
-                </Yes>
+                </YesSec>
               </a>{' '}
               ({answer?.helpfulness}) |{' '}
               <a href='' onClick={e => handleAnswerReported(e, answer)}>
-                <Report>
+                <ReportSec>
                   {answerReportedTracker[answer?.answer_id]
                     ? 'Reported'
                     : 'Report'}
-                </Report>
+                </ReportSec>
               </a>
             </span>
 
@@ -203,6 +204,7 @@ export default function Answer({ questionObj }) {
         <AnswerBodyContainer>
           <AnswerBody>{answer?.body}</AnswerBody>{' '}
           <AnswerDetails>
+            <br />
             <span>
               by:{' '}
               {answer?.answerer_name === 'Seller' ? (
@@ -212,17 +214,17 @@ export default function Answer({ questionObj }) {
               )}
               , <Moment format='MMMM Do YYYY'>{answer?.date}</Moment> | Helpful?{' '}
               <a href=''>
-                <Yes onClick={e => increaseAnswerHelpfulCount(e, answer)}>
+                <YesSec onClick={e => increaseAnswerHelpfulCount(e, answer)}>
                   Yes
-                </Yes>
+                </YesSec>
               </a>{' '}
               ({answer?.helpfulness}) |{' '}
               <a href='' onClick={e => handleAnswerReported(e, answer)}>
-                <Report>
+                <ReportSec>
                   {answerReportedTracker[answer?.answer_id]
                     ? 'Reported'
                     : 'Report'}
-                </Report>
+                </ReportSec>
               </a>
             </span>
 
@@ -289,11 +291,11 @@ const AnswerDetails = styled.div`
   font-size: 15px;
 `;
 
-const Yes = styled.span`
+const YesSec = styled.span`
   color: green;
 `;
 
-const Report = styled.span`
+const ReportSec = styled.span`
   color: red;
 `;
 
