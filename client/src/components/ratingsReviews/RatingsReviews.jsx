@@ -204,7 +204,7 @@ export default function RatingsReviews() {
             },
           }
         );
-        // console.log(res.data.results.length);
+        // console.log(res.data.results);
         setReviewList(res.data);
         setReviewReady(true);
 
@@ -348,8 +348,9 @@ export default function RatingsReviews() {
     <Fragment>
       {isLoaded ? (
         <div style = {mainDiv}>
-          {/* {console.log('from reviewList:', reviewList, 'from metaData:', metaData)} */}
-          {console.log('selectedProduct:: ', selectedProduct)}
+          {console.log('from reviewList:', reviewList)}
+          {console.log('from metaData:', metaData)}
+          {/* {console.log('selectedProduct:: ', selectedProduct)} */}
           {/* {console.log('review CacheData:: ', reviewCache)} */}
           {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
           {/* {console.log('listSort:: ', listSort)}  */}
@@ -379,11 +380,11 @@ export default function RatingsReviews() {
                     aria-hidden="true"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <WriteReview
+                    {/* <WriteReview
                       handleReviewData={handleReviewData}
                       productID={selectedProduct}
                       metaData={metaData}
-                    />
+                    /> */}
                     <br />
                   </div>
                 </div>
@@ -396,14 +397,14 @@ export default function RatingsReviews() {
                 />
               </div>
               <div style={reviewListStyle}>
-                <ReviewList
+                {/* <ReviewList
                   reviewCache={reviewCache}
                   reviewCacheState={reviewCacheState}
                   starSort={starSort}
                   reviewList={reviewList}
                   reviewEnd={reviewEnd}
                   handlePut={handlePut}
-                />
+                /> */}
               </div>
               <div style={reviewButtonsStyle}>
                 <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
