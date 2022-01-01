@@ -48,7 +48,7 @@ export default function ImageGallery() {
   }, [currentStyle]);
   //console.log(currentStyle);
   const renderPhoto = () => {
-    return currentStyle.photos.map((photo, index) => {
+    return currentStyle.photos.map ((photo, index) => {
       return <ThumbnailImage selected={currentStyle.photos[currentIndex].thumbnail_url === photo.thumbnail_url} src={photo.thumbnail_url} key={photo.thumbnail_url} onClick={() => setcurrentIndex(index)}></ThumbnailImage>;
     });
   };
