@@ -25,6 +25,8 @@ export default function CarouselCard({ product }) {
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [imageUrl, setimageUrl] = useState('');
+  const [styles, setStyles] = useState([]);
+  const [salePrice, setSalePrice] = useState(null);
 
   // REF
   const modal = useRef(null);
@@ -46,8 +48,9 @@ export default function CarouselCard({ product }) {
           Authorization: `${TOKEN}`,
         },
       })
-      .then(res => res.data.results[0].photos[0].thumbnail_url)
-      .then(url => setimageUrl(url));
+      .then(res => res?.data.results[0].photos[0].thumbnail_url)
+      .then(url => setimageUrl(url))
+      .catch(err => console.error(err));
   };
 
   // EVENT HANDLERS
@@ -61,7 +64,7 @@ export default function CarouselCard({ product }) {
       <ActionStyle onClick={() => modal.current.open()}>
         <ActionButton name="open-modal" />
       </ActionStyle>
-      <Modal key={product.id} ref={modal} product={product} />
+      <Modal key={`modal-${product.id}`} ref={modal} product={product} />
       <ProductInfoStyle onClick={() => handleClick(product)} >
         <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
         <ProductInfo product={product} />
