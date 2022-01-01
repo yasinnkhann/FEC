@@ -397,14 +397,14 @@ export default function RatingsReviews() {
                 />
               </div>
               <div style={reviewListStyle}>
-                {/* <ReviewList
+                <ReviewList
                   reviewCache={reviewCache}
                   reviewCacheState={reviewCacheState}
                   starSort={starSort}
                   reviewList={reviewList}
                   reviewEnd={reviewEnd}
                   handlePut={handlePut}
-                /> */}
+                />
               </div>
               <div style={reviewButtonsStyle}>
                 <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
