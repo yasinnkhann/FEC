@@ -2,6 +2,8 @@
 import React, { useState, useImperativeHandle, useCallback, useEffect, useContext, forwardRef } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { keyframes } from 'styled-components';
+import CheckIcon from '@material-ui/icons/Check';
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import _ from 'lodash';
 
 // Context imports
@@ -115,13 +117,13 @@ export const Modal = ({ product, fade = false }, ref) => {
     return (
       <ModalRow key={feature ? feature : null}>
         <td>
-          {typeof leftValue === 'boolean' ? 'checkmark' : !leftValue ? null : leftValue}
+          {typeof leftValue === 'boolean' ? <CheckIcon /> : !leftValue ? <NotInterestedIcon /> : leftValue}
         </td>
         <td>
           {feature}
         </td>
         <td>
-          {typeof rightValue === 'boolean' ? 'checkmark' : !rightValue ? null : rightValue}
+          {typeof rightValue === 'boolean' ? <CheckIcon /> : !rightValue ? <NotInterestedIcon /> : rightValue}
         </td>
       </ModalRow>
     );
