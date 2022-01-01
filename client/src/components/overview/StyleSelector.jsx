@@ -11,6 +11,7 @@ const Checked = styled.div`
   top: 5px;
   right: 5px;
 `;
+
 const StylePicsDiv = styled.div `
   display: flex;
   flex-wrap: wrap;
@@ -142,7 +143,7 @@ export default function StyleSelector() {
     }));
     return obj;
   };
-  console.log(results);
+  //console.log(results);
 
   const onPhotoClick = (value) => {
     setCurrentStyle(value);
@@ -150,7 +151,7 @@ export default function StyleSelector() {
     setSelectedSize(null);
   };
 
-  console.log(currentStyle.skus);
+  //console.log(currentStyle.skus);
 
   const uniqueSizes = () => {
     return Array.from(new Set(sizes().map((sku => currentStyle.skus[sku].size))));
