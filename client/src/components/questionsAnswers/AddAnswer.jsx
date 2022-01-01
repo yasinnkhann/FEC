@@ -7,7 +7,7 @@ import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
 import { TOKEN, cloudinaryInfo } from '../../config.js';
 
-export default function AddAnswer({ closeModal, question, collapsePanel }) {
+export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
   const { productsContext } = useContext(AppContext);
   const [products, setProducts] = productsContext;
@@ -44,7 +44,6 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
 
   const handleCloseModal = () => {
     closeModal();
-    collapsePanel();
   };
 
   const handleFileUpload = e => {
@@ -96,7 +95,6 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
       );
       console.log('SUBMIT RES: ', res);
       closeModal();
-      collapsePanel();
     } catch (err) {
       console.error(err);
       alert('Cannot upload files more than 5 files');
@@ -116,6 +114,12 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
             Your Answer<span style={{ color: 'red' }}>* </span>
           </label>
           <textarea
+            style={{
+              verticalAlign: 'top',
+              margin: '0px',
+              height: '83px',
+              width: '329px',
+            }}
             name='yourAnswer'
             value={addAnsData.yourAnswer}
             onChange={handleChange}
@@ -129,7 +133,6 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
             }
             onInput={e => e.target.setCustomValidity('')}
           ></textarea>
-          <br />
           <br />
           <label htmlFor='yourNickName'>
             What is your nickname<span style={{ color: 'red' }}>* </span>
@@ -150,9 +153,8 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
           />
           <br />
           <span>
-            - For privacy reasons, do not use your full name or email address.
+            For privacy reasons, do not use your full name or email address.
           </span>
-          <br />
           <br />
           <label htmlFor='yourEmail'>
             Your Email<span style={{ color: 'red' }}>* </span>
@@ -172,8 +174,7 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
             onInput={e => e.target.setCustomValidity('')}
           />
           <br />
-          <span>- For authentication reasons, you will not be emailed.</span>
-          <br />
+          <span>For authentication reasons, you will not be emailed.</span>
           <br />
           <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
           <br />
@@ -204,10 +205,9 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
             </>
           )}
           <br />
-          <br />
           <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
           <CloseBtn onClick={handleCloseModal}>
-            <CloseIcon />
+            <XIcon />
           </CloseBtn>
         </Content>
       </Overlay>
@@ -236,9 +236,19 @@ const Content = styled.form`
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.25);
   overflow-y: auto;
   position: relative;
-  padding-left: 35px;
-  padding-bottom: 35px;
   -webkit-overflow-scrolling: 'touch';
+  text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const XIcon = styled(CloseIcon)`
+  && {
+    color: red;
+    font-size: 2rem;
+  }
 `;
 
 const CloseBtn = styled.button`
@@ -250,4 +260,13 @@ const CloseBtn = styled.button`
   height: 3rem;
 `;
 
-const SubmitBtn = styled.button``;
+const SubmitBtn = styled.button`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+	padding: 8px 12px;
+	border-radius 6px;
+	border: none;
+	background: #000;
+	color: #fff;
+	cursor: pointer;
+`;
