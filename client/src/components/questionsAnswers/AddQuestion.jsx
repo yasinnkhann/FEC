@@ -10,7 +10,7 @@ export default function AddQuestion({ closeModal, question }) {
   // CONTEXT
   const { productsContext } = useContext(AppContext);
   const [products, setProducts] = productsContext;
-  const { questionsData } = useContext(QuestionsContext);
+  const { questionsData, setQuestionsData } = useContext(QuestionsContext);
 
   // STATE
   const [formData, setFormData] = useState({
@@ -109,7 +109,7 @@ export default function AddQuestion({ closeModal, question }) {
           />
           <br />
           <span>
-            - For privacy reasons, do not use your full name or email address.
+            For privacy reasons, do not use your full name or email address.
           </span>
           <br />
           <br />
@@ -131,7 +131,7 @@ export default function AddQuestion({ closeModal, question }) {
             onInput={e => e.target.setCustomValidity('')}
           />
           <br />
-          <span>- For authentication reasons, you will not be emailed.</span>
+          <span>For authentication reasons, you will not be emailed.</span>
           <br />
           <br />
           <SubmitBtn type='submit'>Submit Question</SubmitBtn>
@@ -165,13 +165,12 @@ const Content = styled.form`
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.25);
   overflow-y: auto;
   position: relative;
-  padding-left: 35px;
-  padding-bottom: 35px;
   -webkit-overflow-scrolling: 'touch';
   text-align: center;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  align-items: center;
 `;
 
 const XIcon = styled(CloseIcon)`

@@ -13,6 +13,7 @@ export default function Questions({ questionsData, filteredData }) {
   const [remainingQsCount, setRemainingQsCount] = useState(0);
   const [isRemainingQsBtnShown, setIsRemainingQsBtnShown] = useState(true);
   const [showQuestionModal, setShowQuestionModal] = useState(false);
+  const [initialRemainingQs, setInitialRemainingQs] = useState([]);
 
   // VARIABLES
   let initialQs, remainingQs;
@@ -79,17 +80,21 @@ export default function Questions({ questionsData, filteredData }) {
     // );
 
     let newEndPos = remainingQsCount + 2;
+    console.log('INITAL REMAING QS: ', initialRemainingQs);
+
     // if pos exists
-    if (remainingQsCopy.indexOf(newEndPos) !== -1) {
+    if (remainingQsCopy[newEndPos]) {
       const newRemainingQs = remainingQsCopy.slice(remainingQsCount, newEndPos);
       setRemainingQsCount(newEndPos);
-      setRemainingQsList(newRemainingQs);
+      setRemainingQsList(initialRemainingQs.concat(newRemainingQs));
+      setInitialRemainingQs(initialRemainingQs.concat(newRemainingQs));
       setIsRemainingQsBtnShown(true);
       // if pos does not exist
     } else {
       setRemainingQsCount(0);
-      setRemainingQsList(remainingQs);
+      setRemainingQsList(remainingQsCopy);
       setIsRemainingQsBtnShown(false);
+      setInitialRemainingQs([]);
     }
     return;
   };
@@ -97,17 +102,21 @@ export default function Questions({ questionsData, filteredData }) {
   return (
     <Container>
       {initialQs?.length > 0 && initialQs}
+
+      {remainingQsList?.length > 0 && showRemainingQsCondition
+        ? remainingQsList
+        : null}
+
       {showMoreAnsweredQsCondition && isRemainingQsBtnShown ? (
         <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>
           More Answered Questions
         </MoreAnsweredQsBtn>
       ) : null}
-      {remainingQsList?.length > 0 && showRemainingQsCondition
-        ? remainingQsList
-        : null}
+
       <CreateNewQBtn onClick={() => setShowQuestionModal(true)}>
         Submit a new question
       </CreateNewQBtn>
+
       {showQuestionModal && (
         <AddQuestion closeModal={() => setShowQuestionModal(false)} />
       )}

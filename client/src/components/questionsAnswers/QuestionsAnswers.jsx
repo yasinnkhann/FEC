@@ -43,7 +43,7 @@ export default function QuestionsAnswers() {
               // product_id: 40347,
               product_id: products[54]?.id,
               // page: 1,
-              // count: 1,
+              count: 20,
             },
             headers: {
               Authorization: `${TOKEN}`,

@@ -114,6 +114,7 @@ export default function AddAnswer({ closeModal, question }) {
             Your Answer<span style={{ color: 'red' }}>* </span>
           </label>
           <textarea
+            style={{ verticalAlign: 'top' }}
             name='yourAnswer'
             value={addAnsData.yourAnswer}
             onChange={handleChange}
@@ -148,7 +149,7 @@ export default function AddAnswer({ closeModal, question }) {
           />
           <br />
           <span>
-            - For privacy reasons, do not use your full name or email address.
+            For privacy reasons, do not use your full name or email address.
           </span>
           <br />
           <br />
@@ -170,7 +171,7 @@ export default function AddAnswer({ closeModal, question }) {
             onInput={e => e.target.setCustomValidity('')}
           />
           <br />
-          <span>- For authentication reasons, you will not be emailed.</span>
+          <span>For authentication reasons, you will not be emailed.</span>
           <br />
           <br />
           <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
@@ -205,7 +206,7 @@ export default function AddAnswer({ closeModal, question }) {
           <br />
           <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
           <CloseBtn onClick={handleCloseModal}>
-            <CloseIcon />
+            <XIcon />
           </CloseBtn>
         </Content>
       </Overlay>
@@ -234,9 +235,19 @@ const Content = styled.form`
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.25);
   overflow-y: auto;
   position: relative;
-  padding-left: 35px;
-  padding-bottom: 35px;
   -webkit-overflow-scrolling: 'touch';
+  text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const XIcon = styled(CloseIcon)`
+  && {
+    color: red;
+    font-size: 2rem;
+  }
 `;
 
 const CloseBtn = styled.button`
@@ -248,4 +259,13 @@ const CloseBtn = styled.button`
   height: 3rem;
 `;
 
-const SubmitBtn = styled.button``;
+const SubmitBtn = styled.button`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+	padding: 8px 12px;
+	border-radius 6px;
+	border: none;
+	background: #000;
+	color: #fff;
+	cursor: pointer;
+`;
