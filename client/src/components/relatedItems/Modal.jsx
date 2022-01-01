@@ -7,7 +7,7 @@ import _ from 'lodash';
 // Context imports
 import AppContext from '../../AppContext.js';
 import ModalContext from './ModalContext.js';
-import StylesContext from '../overview/StylesContext.js';
+
 // Component imports
 import ActionButton from './ActionButton.jsx';
 
@@ -19,12 +19,9 @@ export const Modal = ({ product, fade = false }, ref) => {
 
   // CONTEXT
   const {selectedProductContext} = useContext(AppContext);
-  const {stylesDataContent, currentStyleContent} = useContext(StylesContext);
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
-  const [currentStyle, setCurrentStyle] = currentStyleContent;
-  const [stylesData, setstylesData] = stylesDataContent;
   const [isOpen, setIsOpen] = useState(false);
 
   // HOOKS
@@ -70,29 +67,70 @@ export const Modal = ({ product, fade = false }, ref) => {
 
   const renderRows = (currentProductArray, categoryArray, compareProductArray) => {
     const tableArray = [currentProductArray, categoryArray, compareProductArray];
-    const len = {
-      length: Math.max(...[...tableArray.map(e => e.length), tableArray.length])
-    };
+    return getRows(tableArray);
+  };
+
+  const getRows = (arr) => {
+    const len = getMaxLengthOfCombinedArrays(arr);
     let comparisonTable = [];
 
-    for (let i = 0; i < len.length; i++) {
-      comparisonTable.push(renderRow(tableArray[0][i], tableArray[1][i], tableArray[2][i]));
+    for (let i = 0; i < len; i++) {
+      comparisonTable.push(renderRow(arr[0][i], arr[1][i], arr[2][i]));
     }
+
     return comparisonTable;
   };
 
   // Returns a row === | product | category | product |
   const renderRow = (leftProduct, category, rightProduct) => {
-    if (category === 'Features') {
-      leftProduct.forEach(product => console.log(product));
+    if (category === 'Name') {
+      return renderNameColumn(leftProduct, category, rightProduct);
+    } else if (category === 'Features') {
+      const combinedFeatures = [leftProduct, rightProduct];
+      const len = getMaxLengthOfCombinedArrays(combinedFeatures);
+      let leftValues = [];
+      let rightValues = [];
+      let features = [];
+
+      for (let i = 0; i < len; i++) {
+
+      }
+      return (
+        <ModalRow key={category ? category : null}>
+          <td>
+            <ul>
+              {leftProduct ? leftProduct.map(product => product ? <li key={product}>{product[1].value}</li> : <li></li>) : null}
+            </ul>
+          </td>
+          <td>
+            {/* {renderFeature()} */}
+          </td>
+          <td>
+            <ul>
+              {rightProduct ? rightProduct.map(product => product ? <li key={product}>{product[1].value}</li> : <li></li>) : null}
+            </ul>
+          </td>
+        </ModalRow>
+      );
+    } else {
+      return;
     }
+  };
+
+
+  const renderNameColumn = (leftProduct, category, rightProduct) => {
     return (
-      <tr>
-        <td>{leftProduct}</td>
-        <td>{category}</td>
-        <td>{rightProduct}</td>
-      </tr>
+      <ModalBoldRow key={category ? category : null}>
+        <td>{`${category}: ${leftProduct}`}</td>
+        <td>{null}</td>
+        <td>{`${category}: ${rightProduct}`}</td>
+      </ModalBoldRow>
     );
+  };
+
+  // Please don't yell at me
+  const getMaxLengthOfCombinedArrays = (arr) => {
+    return Math.max(...[...arr.map(e => e ? e.length : 0), arr.length]);
   };
 
   // HELPER FUNCTIONS: Formatting
@@ -145,18 +183,14 @@ export const Modal = ({ product, fade = false }, ref) => {
           <ModalBody className="modal-body">
             <table>
               <thead>
-                <tr>
-                  <td>Comparison</td>
-                </tr>
+                <ModalBoldRow>
+                  <ModalTitle><h2>Comparing</h2></ModalTitle>
+                </ModalBoldRow>
               </thead>
               <tbody>
                 {renderTable(product, selectedProduct)}
               </tbody>
             </table>
-            {/* ACTUAL INFO */}
-            {/* {renderDetails(product, 'product')}
-            {renderCategories(product, selectedProduct)}
-            {renderDetails(selectedProduct, 'selected-product')} */}
           </ModalBody>
         </ModalOverlay>
       </ModalStyle>
@@ -260,13 +294,22 @@ const CategoryRowItem = styled.tr`
 `;
 
 const ModalRow = styled.tr`
-  display: flex;
-  flex-direction: row;
+  color: black;
   margin: 0 auto;
   padding: 1px;
 `;
 
+const ModalBoldRow = styled.tr`
+  font-weight: bold;
+  color: black;
+  margin: 0 auto;
+  padding: 1px;
+`;
 
+const ModalTitle = styled.td`
+  text-align: center;
+  justify-content: center;
+`;
 
 // const mapProductValues = (listToMap, id) => {
 //   let mappedList = listToMap.map(currentValue => {
