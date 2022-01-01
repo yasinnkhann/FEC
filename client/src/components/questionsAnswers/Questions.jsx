@@ -138,6 +138,7 @@ const MoreAnsweredQsBtn = styled.button`
 	background: #000;
 	color: #fff;
 	cursor: pointer;
+  margin-left: 43%;
 `;
 
 const CreateNewQBtn = styled.button`
@@ -149,4 +150,5 @@ const CreateNewQBtn = styled.button`
 	background: #000;
 	color: #fff;
 	cursor: pointer;
+  margin-left: 44%;
 `;
