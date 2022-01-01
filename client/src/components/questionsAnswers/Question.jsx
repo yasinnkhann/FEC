@@ -17,7 +17,7 @@ export default function Question({ questionObj }) {
   ] = useState(false);
   const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [hasQuestionBeenReported, setHasQuestionBeenReported] = useState(false);
-  const [expand, setExpand] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // METHODS
   const increaseQuestionHelpfulCount = async (e, questionObj) => {
@@ -94,14 +94,14 @@ export default function Question({ questionObj }) {
 
   const openAnsModal = e => {
     e.preventDefault();
+    e.stopPropagation();
     setShowAnswerModal(true);
   };
 
   // VARIABLES
-
   const renderQ = () => {
     return (
-      <QuestionPortion onClick={() => setExpand(!expand)}>
+      <QuestionPortion onClick={() => setIsExpanded(!isExpanded)}>
         <QuestionLeftSide>
           <QuestionBodySec>Q: {questionObj.question_body}</QuestionBodySec>{' '}
         </QuestionLeftSide>
@@ -111,25 +111,30 @@ export default function Question({ questionObj }) {
             <a
               href=''
               onClick={e => increaseQuestionHelpfulCount(e, questionObj)}
+              style={{ color: 'green' }}
             >
               <u>Yes</u>
             </a>{' '}
-            ({questionObj.question_helpfulness}) |{' '}
+            ({questionObj.question_helpfulness})&nbsp;|&nbsp;
           </QuestionHelpfulSec>{' '}
           <QuestionReportedSec>
-            <a href='' onClick={e => handleQuestionsReported(e, questionObj)}>
+            <a
+              href=''
+              onClick={e => handleQuestionsReported(e, questionObj)}
+              style={{ color: 'red' }}
+            >
               <u>{questionObj.reported ? 'Reported' : 'Report'}</u>
             </a>
-            {' | '}
+            &nbsp;|&nbsp;
           </QuestionReportedSec>
           <AddAnswerSec>
             {' '}
-            <a href='' onClick={openAnsModal}>
+            <a href='' onClick={openAnsModal} style={{ color: 'dodgerblue' }}>
               {' '}
               <u>Add Answer</u>
             </a>
           </AddAnswerSec>
-          {(expand && (
+          {(isExpanded && (
             <svg
               style={{ transform: 'rotate(178deg)' }}
               stroke='currentColor'
@@ -161,21 +166,20 @@ export default function Question({ questionObj }) {
   };
 
   return (
-    <Container style={{ height: (expand && '100%') || '45px' }}>
+    <Container style={{ height: (isExpanded && '100%') || '45px' }}>
       {renderQ()}
-      {expand && (
+      {isExpanded && (
         <>
           <br />
           <hr />
           <Answer questionObj={questionObj} />
-          {showAnswerModal && (
-            <AddAnswer
-              closeModal={() => setShowAnswerModal(false)}
-              collapsePanel={() => setExpand(false)}
-              question={questionObj}
-            />
-          )}
         </>
+      )}
+      {showAnswerModal && (
+        <AddAnswer
+          closeModal={() => setShowAnswerModal(false)}
+          question={questionObj}
+        />
       )}
     </Container>
   );
@@ -188,6 +192,12 @@ const Container = styled.div`
   box-shadow: 1px 1px 10px #ccc;
   padding: 15px;
   border-radius: 10px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-around; */
+  /* align-content: flex-start; */
+  /* flex-wrap: wrap; */
+  min-width: 97%;
 `;
 
 const QuestionPortion = styled.div`
@@ -195,14 +205,16 @@ const QuestionPortion = styled.div`
   cursor: pointer;
 `;
 
-const QuestionLeftSide = styled.span`
+const QuestionLeftSide = styled.div`
   float: left;
 `;
 
-const QuestionRightSide = styled.span`
-  float: right;
+const QuestionRightSide = styled.div`
   display: flex;
-  align-items: center;
+  -webkit-align-content: stretch;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  align-items: flex-start;
 `;
 
 const QuestionBodySec = styled.span`
