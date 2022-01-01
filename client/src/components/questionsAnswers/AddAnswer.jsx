@@ -114,7 +114,12 @@ export default function AddAnswer({ closeModal, question }) {
             Your Answer<span style={{ color: 'red' }}>* </span>
           </label>
           <textarea
-            style={{ verticalAlign: 'top' }}
+            style={{
+              verticalAlign: 'top',
+              margin: '0px',
+              height: '83px',
+              width: '329px',
+            }}
             name='yourAnswer'
             value={addAnsData.yourAnswer}
             onChange={handleChange}
@@ -128,7 +133,6 @@ export default function AddAnswer({ closeModal, question }) {
             }
             onInput={e => e.target.setCustomValidity('')}
           ></textarea>
-          <br />
           <br />
           <label htmlFor='yourNickName'>
             What is your nickname<span style={{ color: 'red' }}>* </span>
@@ -152,7 +156,6 @@ export default function AddAnswer({ closeModal, question }) {
             For privacy reasons, do not use your full name or email address.
           </span>
           <br />
-          <br />
           <label htmlFor='yourEmail'>
             Your Email<span style={{ color: 'red' }}>* </span>
           </label>
@@ -172,7 +175,6 @@ export default function AddAnswer({ closeModal, question }) {
           />
           <br />
           <span>For authentication reasons, you will not be emailed.</span>
-          <br />
           <br />
           <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
           <br />
@@ -202,7 +204,6 @@ export default function AddAnswer({ closeModal, question }) {
                 ))}
             </>
           )}
-          <br />
           <br />
           <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
           <CloseBtn onClick={handleCloseModal}>
