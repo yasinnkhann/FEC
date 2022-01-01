@@ -61,62 +61,44 @@ export const Modal = ({ product, fade = false }, ref) => {
     const formattedCategoriesArray = mapCategories(categoriesArray);
 
     return (
-      renderRows(formattedCurrentProductArray, formattedCategoriesArray, formattedComparedProductArray)
+      filterArraysByFeature(formattedCurrentProductArray, formattedCategoriesArray, formattedComparedProductArray)
     );
   };
 
-  const renderRows = (currentProductArray, categoryArray, compareProductArray) => {
+  const filterArraysByFeature = (currentProductArray, categoryArray, compareProductArray) => {
     const tableArray = [currentProductArray, categoryArray, compareProductArray];
-    return getRows(tableArray);
-  };
-
-  const getRows = (arr) => {
-    const len = getMaxLengthOfCombinedArrays(arr);
+    const len = getMaxLengthOfCombinedArrays(tableArray);
     let comparisonTable = [];
+    console.log('TABLE ARRAY::', tableArray);
 
     for (let i = 0; i < len; i++) {
-      comparisonTable.push(renderRow(arr[0][i], arr[1][i], arr[2][i]));
+      comparisonTable.push(renderRows(tableArray[0][i], tableArray[1][i], tableArray[2][i]));
     }
 
     return comparisonTable;
   };
 
   // Returns a row === | product | category | product |
-  const renderRow = (leftProduct, category, rightProduct) => {
+  const renderRows = (leftProduct, category, rightProduct) => {
     if (category === 'Name') {
       return renderNameColumn(leftProduct, category, rightProduct);
     } else if (category === 'Features') {
-      const combinedFeatures = [leftProduct, rightProduct];
-      const len = getMaxLengthOfCombinedArrays(combinedFeatures);
-      let leftValues = [];
-      let rightValues = [];
-      let features = [];
+      const rightFeatures = getFeatures(rightProduct);
+      const leftFeatures = getFeatures(leftProduct);
+      const leftValues = getValues(leftProduct);
+      const rightValues = getValues(rightProduct);
+      const features = _.union(leftFeatures, rightFeatures);
 
-      for (let i = 0; i < len; i++) {
+      // console.log('RIGHT FEATURES::', rightFeatures);
+      // console.log('RIGHT VALUES::', rightValues);
+      // console.log('LEFT FEATURES::', leftFeatures);
+      // console.log('LEFT VALUES::', leftValues);
 
-      }
-      return (
-        <ModalRow key={category ? category : null}>
-          <td>
-            <ul>
-              {leftProduct ? leftProduct.map(product => product ? <li key={product}>{product[1].value}</li> : <li></li>) : null}
-            </ul>
-          </td>
-          <td>
-            {/* {renderFeature()} */}
-          </td>
-          <td>
-            <ul>
-              {rightProduct ? rightProduct.map(product => product ? <li key={product}>{product[1].value}</li> : <li></li>) : null}
-            </ul>
-          </td>
-        </ModalRow>
-      );
+      return getRows(leftProduct, features, rightProduct);
     } else {
       return;
     }
   };
-
 
   const renderNameColumn = (leftProduct, category, rightProduct) => {
     return (
@@ -128,9 +110,69 @@ export const Modal = ({ product, fade = false }, ref) => {
     );
   };
 
+  const renderRow = (leftValue, feature, rightValue) => {
+
+    return (
+      <ModalRow key={feature ? feature : null}>
+        <td>
+          {typeof leftValue === 'boolean' ? 'checkmark' : !leftValue ? null : leftValue}
+        </td>
+        <td>
+          {feature}
+        </td>
+        <td>
+          {typeof rightValue === 'boolean' ? 'checkmark' : !rightValue ? null : rightValue}
+        </td>
+      </ModalRow>
+    );
+  };
+
   // Please don't yell at me
   const getMaxLengthOfCombinedArrays = (arr) => {
     return Math.max(...[...arr.map(e => e ? e.length : 0), arr.length]);
+  };
+
+  const getFeatures = (featuresArray) => {
+    return featuresArray?.map(product => { return product[1].feature; });
+  };
+
+  const getValues = (valuesArray) => {
+    return valuesArray?.map(product => { return product[1].value; });
+  };
+
+  const getRows = (leftProduct, featuresArr, rightProduct) => {
+
+    return featuresArr.map((feature) => {
+      let left = null;
+      let right = null;
+      if (leftProduct && Array.isArray(leftProduct)) {
+        for (let i = 0; i < leftProduct.length; i++) {
+          let lProduct = leftProduct[i][1];
+          console.log('CURRENT LEFT INDEX::', lProduct);
+          if (lProduct.feature === feature) {
+            left = lProduct.value;
+          } else {
+            null;
+          }
+        }
+      }
+
+      console.log(feature);
+
+      if (rightProduct && Array.isArray(rightProduct)) {
+        for (let j = 0; j < rightProduct.length; j++) {
+          let rProduct = rightProduct[j][1];
+          console.log('CURRENT R INDEX::', rProduct);
+          if (rProduct.feature === feature) {
+            right = rProduct.value;
+          } else {
+            null;
+          }
+        }
+      }
+
+      return renderRow(left, feature, right);
+    });
   };
 
   // HELPER FUNCTIONS: Formatting
