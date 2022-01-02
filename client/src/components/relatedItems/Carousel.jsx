@@ -75,6 +75,13 @@ export default function Carousel({ name, relatedProductIds }) {
     setIsLoaded(true);
   }, [name]);
 
+  useEffect(() => {
+    if ((userOutfit.length + 1) * 200 < size.width) {
+      console.log('Width: ', size.width, 'Total width of user outfit cards: ', (userOutfit.length + 1) * 200 );
+    }
+
+  }, [userOutfit]);
+
   // API HANDLERS
   // Gets one product's info based on id
   const updateRelatedProducts = async (id) => {
@@ -194,10 +201,9 @@ export default function Carousel({ name, relatedProductIds }) {
     if (name === 'your-outfit') {
       let outfitList = [];
       outfitList = userOutfit?.map(outfitPiece =>
-        // console.log(outfitPiece)
         <Card key={outfitPiece.id} product={outfitPiece} name={outfitPiece.name} />
       );
-      console.log(userOutfit);
+
       outfitList.unshift(<Card key="add-to-outfit" name="add-button"/>);
 
       return (

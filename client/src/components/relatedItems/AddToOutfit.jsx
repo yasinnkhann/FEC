@@ -23,11 +23,12 @@ export default function AddToOutfit() {
     userOutfit.forEach(piece => {
       if (piece.id === productToAdd.id) {
         console.log('Same item!!', piece.id, productToAdd.id);
-        alert('Cannot add item already in outfit');
+        return alert('Cannot add item already in outfit');
       } else {
         console.log('Different items!', piece.id, productToAdd.id);
-        setUserOutfit(state => [...state, productToAdd]);
-        console.log(userOutfit);
+        let newOutfit = [...userOutfit];
+        newOutfit.push(productToAdd);
+        setUserOutfit([...new Set(newOutfit)]);
       }
     });
   };
