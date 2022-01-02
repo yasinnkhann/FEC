@@ -12,12 +12,13 @@ import ModalContext from './ModalContext.js';
 
 // Component imports
 import ActionButton from './ActionButton.jsx';
+import AddToOutfit from './AddToOutfit.jsx';
+import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
-import Modal from './Modal.jsx';
 
 // CARD
-export default function CarouselCard({ product }) {
+export default function CarouselCard({ product, name }) {
 
   // CONTEXT
   const {selectedProductContext} = useContext(AppContext);
@@ -33,7 +34,7 @@ export default function CarouselCard({ product }) {
 
   // HOOKS
   useEffect(() => {
-    getProductStyle(product.id);
+    if (product) { getProductStyle(product.id); }
   }, []);
 
   // API HANDLER
@@ -58,18 +59,35 @@ export default function CarouselCard({ product }) {
     setSelectedProduct(newSelectedProduct);
   };
 
+  // RENDER METHODS
+  const renderCard = (cardName) => {
+    if (cardName === 'add-button') {
+      return (
+        <CardStyle >
+          <ProductInfoStyle > {/* onClick={() => console.log('ADD BUTTON CLICKED')} */}
+            <AddToOutfit />
+          </ProductInfoStyle>
+        </CardStyle>
+      );
+    } else {
+      return (
+        <CardStyle >
+          <ActionStyle onClick={() => modal.current.open()}>
+            <ActionButton name="open-modal" />
+          </ActionStyle>
+          <Modal key={`modal-${product.id}`} ref={modal} product={product} />
+          <ProductInfoStyle onClick={() => handleClick(product)} >
+            <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
+            <ProductInfo product={product} />
+          </ProductInfoStyle>
+        </CardStyle>
+      );
+    }
+  };
+
   // JSX
   return (
-    <CardStyle >
-      <ActionStyle onClick={() => modal.current.open()}>
-        <ActionButton name="open-modal" />
-      </ActionStyle>
-      <Modal key={`modal-${product.id}`} ref={modal} product={product} />
-      <ProductInfoStyle onClick={() => handleClick(product)} >
-        <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
-        <ProductInfo product={product} />
-      </ProductInfoStyle>
-    </CardStyle>
+    renderCard(name)
   );
 }
 

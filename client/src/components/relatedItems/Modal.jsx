@@ -71,7 +71,6 @@ export const Modal = ({ product, fade = false }, ref) => {
     const tableArray = [currentProductArray, categoryArray, compareProductArray];
     const len = getMaxLengthOfCombinedArrays(tableArray);
     let comparisonTable = [];
-    console.log('TABLE ARRAY::', tableArray);
 
     for (let i = 0; i < len; i++) {
       comparisonTable.push(renderRows(tableArray[0][i], tableArray[1][i], tableArray[2][i]));
