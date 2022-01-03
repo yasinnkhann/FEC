@@ -10,6 +10,7 @@ import { TOKEN } from '../../config.js';
 
 // Context & Hooks imports
 import AppContext from '../../AppContext.js';
+import UserContext from './UserContext.js';
 import useWindowSize from './useWindowSize.js';
 
 // Component imports
@@ -22,10 +23,13 @@ import Card from './Card.jsx';
 
 // CAROUSEL
 export default function Carousel({ name, relatedProductIds }) {
-  const { selectedProductContext } = useContext(AppContext);
+  const {selectedProductContext} = useContext(AppContext);
+  const {userContext, outfitContext} = useContext(UserContext);
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
+  const [currentUser, setCurrentUser] = userContext;
+  const [userOutfit, setUserOutfit] = outfitContext;
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
@@ -39,7 +43,7 @@ export default function Carousel({ name, relatedProductIds }) {
   useEffect(() => {
     // if (relatedProducts[startIndex]) { console.log('CURRENT CARD :: ', relatedProducts[startIndex].data.name); }
     const newEndIndex = getMaxIndexBasedOnScreenSize();
-    setEndIndex(newEndIndex - 1);
+    setEndIndex(newEndIndex);
     changeVisibleProductsArray(startIndex, endIndex);
   }, [size]);
 
@@ -66,6 +70,17 @@ export default function Carousel({ name, relatedProductIds }) {
   useEffect(() => {
     setVisibleProducts(relatedProducts.slice(startIndex, endIndex));
   }, [startIndex]);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, [name]);
+
+  useEffect(() => {
+    if ((userOutfit.length + 1) * 200 < size.width) {
+      console.log('Width: ', size.width, 'Total width of user outfit cards: ', (userOutfit.length + 1) * 200 );
+    }
+
+  }, [userOutfit]);
 
   // API HANDLERS
   // Gets one product's info based on id
@@ -98,12 +113,9 @@ export default function Carousel({ name, relatedProductIds }) {
     } else {
       setStartIndex(startIndex - 1);
       setEndIndex(endIndex - 1);
-      // startIndex - 1 < 0 ? setStartIndex(0) : setStartIndex(startIndex - 1);
-      // startIndex - 1 < 0 ? setEndIndex(visibleProducts.length - 1) : setEndIndex(endIndex - 1);
     }
     const newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
     setVisibleProducts(newVisibleProducts);
-    // changeVisibleProductsArray(startIndex, endIndex);
   };
 
   // Click handler that adjusts items shown based on right arrow being clicked
@@ -145,7 +157,8 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Resets start and end index then changes shown products based on new indices
   const resetVisibleProducts = () => {
-    changeVisibleProductsArray(0, 5);
+    const currentMaxIndex = getMaxIndexBasedOnScreenSize();
+    changeVisibleProductsArray(0, currentMaxIndex);
   };
 
   // Divides width of inner window by width of a card and rounds up to the nearest integer
@@ -163,37 +176,63 @@ export default function Carousel({ name, relatedProductIds }) {
     setVisibleProducts(newVisibleProducts);
   };
 
+  const renderCarousel = (name) => {
+    if (isLoaded) {
+      return (
+        getCarousel(name)
+      );
+    } else {
+      return (<div>{`Loading. ${name}..`}</div>);
+    }
+  };
+
+  const getCarousel = (name) => {
+    if (name === 'related-items') {
+      if (visibleProducts.length >= 1) {
+        return (
+          visibleProducts.map(product =>
+            <Card key={product.data.id} product={product.data} name="related-item" />
+          )
+        );
+      } else {
+        return (<div>Loading...</div>);
+      }
+    }
+    if (name === 'your-outfit') {
+      let outfitList = [];
+      outfitList = userOutfit?.map(outfitPiece =>
+        <Card key={outfitPiece.id} product={outfitPiece} name={outfitPiece.name} />
+      );
+
+      outfitList.unshift(<Card key="add-to-outfit" name="add-button"/>);
+
+      return (
+        outfitList
+      );
+    }
+  };
+
   // JSX
   return (
-    <CarouselStyle className="carousel">
-      <div className="carousel-row" style={{ display: 'flex' }}>
-        {isAtBeginningIndex() ? null : (
-          <button className="carousel-left" onClick={(e) => scrollLeft(e)}>
+    <CarouselStyle className="carousel" >
+      <div className="carousel-row" style={{display: 'flex'}} >
+        {isAtBeginningIndex() ? <div style={{width: '40px'}}></div> :
+          <button className="carousel-left" onClick={(e) => scrollLeft(e)} >
             <LeftArrow>
               <ScrollArrow direction={'left'} />
             </LeftArrow>
-          </button>
-        )}
-        {isLoaded && visibleProducts.length >= 1 ? (
-          <div className="carousel-middle" style={{ display: 'flex' }}>
-            {name === 'related-items' ? (
-              visibleProducts.map((product) => (
-                <Card key={product.data.id} product={product.data} name="related-item" />
-              ))
-            ) : (
-              <h4>OUTFIT LIST</h4>
-            )}
+          </button>}
+        {
+          <div className="carousel-middle" style={{display: 'flex'}} >
+            {renderCarousel(name)}
           </div>
-        ) : (
-          <div>Loading...</div>
-        )}
-        {isAtFinalIndex() ? null : (
-          <button className="carousel-right" onClick={(e) => scrollRight(e)}>
+        }
+        {isAtFinalIndex() ? <div style={{width: '40px'}}></div> :
+          <button className="carousel-right" onClick={(e) => scrollRight(e)} >
             <RightArrow>
               <ScrollArrow direction={'right'} />
             </RightArrow>
-          </button>
-        )}
+          </button>}
       </div>
     </CarouselStyle>
   );

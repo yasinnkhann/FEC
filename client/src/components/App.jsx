@@ -48,7 +48,7 @@ export default function App() {
               selectedProductContext: [selectedProduct, setSelectedProduct],
             }}
           >
-            <Overview />
+            {/* <Overview /> */}
             <RelatedItems />
             <QuestionsAnswers />
             <RatingsReviews />
