@@ -52,7 +52,7 @@ export default function Carousel({ name, relatedProductIds }) {
     if (relatedProductIds !== undefined) {
       setRelatedProducts([]);
       setVisibleProducts([]);
-      relatedProductIds.forEach(id => {
+      relatedProductIds.forEach((id) => {
         updateRelatedProducts(id);
       });
     }
@@ -89,25 +89,21 @@ export default function Carousel({ name, relatedProductIds }) {
   // API HANDLERS
   // Gets one product's info based on id
   const updateRelatedProducts = async (id) => {
-    await axios.get(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`,
-      {
+    await axios
+      .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
         params: {
-          product_id: id
+          product_id: id,
         },
         headers: {
           Authorization: `${TOKEN}`,
         },
-      }
-    )
-      .then(productData => {
-        setRelatedProducts(state => [...state, productData]);
-        visibleProducts.length <= 5
-          ? setVisibleProducts(state => [...state, productData])
-          : null;
+      })
+      .then((productData) => {
+        setRelatedProducts((state) => [...state, productData]);
+        visibleProducts.length <= 5 ? setVisibleProducts((state) => [...state, productData]) : null;
       })
       .then(() => setIsLoaded(true))
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   // EVENT HANDLERS
@@ -145,7 +141,9 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Checks the last item of all products and last item of shown products and checks if they are the same
   const isAtFinalIndex = () => {
-    if (!relatedProducts[relatedProducts.length - 1] || !visibleProducts[visibleProducts.length - 1]) { return; }
+    if (!relatedProducts[relatedProducts.length - 1] || !visibleProducts[visibleProducts.length - 1]) {
+      return;
+    }
     const finalRelatedItem = relatedProducts[relatedProducts.length - 1].data.id;
     const finalVisibleItem = visibleProducts[visibleProducts.length - 1].data.id;
     return finalVisibleItem === finalRelatedItem;
@@ -153,7 +151,9 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Checks the first item of all products and first item of shown products and checks if they are the same
   const isAtBeginningIndex = () => {
-    if (!relatedProducts[0] || !visibleProducts[0]) { return; }
+    if (!relatedProducts[0] || !visibleProducts[0]) {
+      return;
+    }
     const firstRelatedItem = relatedProducts[0].data.id;
     const firstVisibleItem = visibleProducts[0].data.id;
     return firstVisibleItem === firstRelatedItem;
@@ -218,6 +218,7 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // JSX
   return (
+<<<<<<< HEAD
     <CarouselStyle className="carousel" >
       <div className="carousel-row" style={{display: 'flex'}} >
         {isAtBeginningIndex() ? <div style={{width: '40px'}}></div> :
@@ -237,11 +238,41 @@ export default function Carousel({ name, relatedProductIds }) {
               <ScrollArrow direction={'right'} />
             </RightArrow>
           </button>}
+=======
+    <CarouselStyle className="carousel">
+      <div className="carousel-row" style={{ display: 'flex' }}>
+        {isAtBeginningIndex() ? null : (
+          <button className="carousel-left" onClick={(e) => scrollLeft(e)}>
+            <LeftArrow>
+              <ScrollArrow direction={'left'} />
+            </LeftArrow>
+          </button>
+        )}
+        {isLoaded && visibleProducts.length >= 1 ? (
+          <div className="carousel-middle" style={{ display: 'flex' }}>
+            {name === 'related-items' ? (
+              visibleProducts.map((product) => (
+                <Card key={product.data.id} product={product.data} name="related-item" />
+              ))
+            ) : (
+              <h4>OUTFIT LIST</h4>
+            )}
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
+        {isAtFinalIndex() ? null : (
+          <button className="carousel-right" onClick={(e) => scrollRight(e)}>
+            <RightArrow>
+              <ScrollArrow direction={'right'} />
+            </RightArrow>
+          </button>
+        )}
+>>>>>>> main
       </div>
     </CarouselStyle>
   );
 }
-
 
 // STYLES
 const CarouselStyle = styled.div`
@@ -249,8 +280,14 @@ const CarouselStyle = styled.div`
   align-items: flex-start;
 `;
 
+<<<<<<< HEAD
 const LeftArrow = styled.div`
 `;
 
 const RightArrow = styled.div`
 `;
+=======
+const LeftArrow = styled.div``;
+
+const RightArrow = styled.div``;
+>>>>>>> main

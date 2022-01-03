@@ -20,9 +20,8 @@ const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
 
 // RELATED ITEMS
 export default function RelatedItems() {
-
   // CONTEXT
-  const {productsContext, selectedProductContext} = useContext(AppContext);
+  const { productsContext, selectedProductContext } = useContext(AppContext);
 
   // STATE
 
@@ -58,6 +57,7 @@ export default function RelatedItems() {
   // JSX
   if (isLoaded && relatedProductIds.length >= 1) {
     return (
+<<<<<<< HEAD
       <UserContext.Provider value={{
         userContext: [currentUser, setCurrentUser],
         outfitContext: [userOutfit, setUserOutfit],
@@ -69,10 +69,18 @@ export default function RelatedItems() {
           <Carousel name="your-outfit" />
         </div>
       </UserContext.Provider>
+=======
+      <div className="related-items-and-comparison">
+        <h3>RELATED ITEMS</h3>
+        <Carousel name="related-items" relatedProductIds={relatedProductIds} />
+        <h3>YOUR OUTFIT</h3>
+        <Carousel name="your-outfit" />
+      </div>
+>>>>>>> main
     );
   } else {
     return (
-      <div className="related-items-and-comparison" >
+      <div className="related-items-and-comparison">
         <h3>RELATED ITEMS</h3>
         <h2>Loading...</h2>
         <h3>YOUR OUTFIT</h3>

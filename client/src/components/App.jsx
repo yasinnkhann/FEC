@@ -35,7 +35,6 @@ export default function App() {
         console.error(err);
       }
     };
-
     getApi();
   }, []);
 
@@ -49,10 +48,10 @@ export default function App() {
               selectedProductContext: [selectedProduct, setSelectedProduct],
             }}
           >
-            {/* <Overview /> */}
-            <RelatedItems />
-            {/* <QuestionsAnswers /> */}
-            {/* <RatingsReviews /> */}
+            <Overview />
+            {/* <RelatedItems />
+            <QuestionsAnswers />
+            <RatingsReviews /> */}
           </AppContext.Provider>
         </>
       ) : (

@@ -7,11 +7,8 @@ import StylesContext from '../overview/StylesContext.js';
 
 // PRODUCT PREVIEW IMAGES
 export default function ProductPreviewImages({ imageUrl, productName }) {
-
   // JSX
-  return (
-    <Image src={imageUrl} alt={productName} />
-  );
+  return <Image src={imageUrl} alt={productName} />;
 }
 
 const Image = styled.img`
