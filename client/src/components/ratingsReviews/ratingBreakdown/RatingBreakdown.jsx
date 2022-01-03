@@ -70,7 +70,8 @@ const averageRating = (obj) => {
   if (isNaN((Math.round(result * 4) / 4).toFixed(1))) {
     return 0;
   }
-  return result;
+  // console.log(Number(result.toFixed(1)));
+  return Number(result.toFixed(1));
 };
 
 const recommendedAverage = (obj) => {

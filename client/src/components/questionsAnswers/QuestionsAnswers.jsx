@@ -36,18 +36,20 @@ export default function QuestionsAnswers() {
   useEffect(() => {
     const getQs = async () => {
       try {
-        const res = await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', {
-          params: {
-            // product_id: 40347,
-            product_id: products[234]?.id,
-            // page: 1,
-            // count: 1,
-          },
-          headers: {
-            Authorization: `${TOKEN}`,
-          },
-        });
-        console.log('RESPONSE: ', res.data);
+        const res = await axios.get(
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
+          {
+            params: {
+              // product_id: 40347,
+              product_id: products[54]?.id,
+              // page: 1,
+              count: 20,
+            },
+            headers: {
+              Authorization: `${TOKEN}`,
+            },
+          }
+        );
         setQuestionsData(res.data);
         setIsLoaded(true);
       } catch (err) {
@@ -84,5 +86,3 @@ export default function QuestionsAnswers() {
 }
 
 const QATitle = styled.h3``;
-
-const CreateNewQBtn = styled.button``;

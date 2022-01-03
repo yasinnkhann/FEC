@@ -13,6 +13,7 @@ export default function Questions({ questionsData, filteredData }) {
   const [remainingQsCount, setRemainingQsCount] = useState(0);
   const [isRemainingQsBtnShown, setIsRemainingQsBtnShown] = useState(true);
   const [showQuestionModal, setShowQuestionModal] = useState(false);
+  const [initialRemainingQs, setInitialRemainingQs] = useState([]);
 
   // VARIABLES
   let initialQs, remainingQs;
@@ -41,7 +42,8 @@ export default function Questions({ questionsData, filteredData }) {
     (questionsData.length !== 0 && !useFilteredData) || (filteredData.length !== 0 && useFilteredData);
 
   const showMoreAnsweredQsCondition =
-    (questionsData?.length > 4 && !useFilteredData) || (filteredData.length !== 0 && useFilteredData);
+    (questionsData?.length > 4 && !useFilteredData) ||
+    (questionsData?.length > 4 && filteredData.length !== 0 && useFilteredData);
 
   // METHODS
   const handleRemainingQs = (remainingQs) => {
@@ -53,17 +55,21 @@ export default function Questions({ questionsData, filteredData }) {
     // );
 
     let newEndPos = remainingQsCount + 2;
+    console.log('INITAL REMAING QS: ', initialRemainingQs);
+
     // if pos exists
-    if (remainingQsCopy.indexOf(newEndPos) !== -1) {
+    if (remainingQsCopy[newEndPos]) {
       const newRemainingQs = remainingQsCopy.slice(remainingQsCount, newEndPos);
       setRemainingQsCount(newEndPos);
-      setRemainingQsList(newRemainingQs);
+      setRemainingQsList(initialRemainingQs.concat(newRemainingQs));
+      setInitialRemainingQs(initialRemainingQs.concat(newRemainingQs));
       setIsRemainingQsBtnShown(true);
       // if pos does not exist
     } else {
       setRemainingQsCount(0);
-      setRemainingQsList(remainingQs);
+      setRemainingQsList(remainingQsCopy);
       setIsRemainingQsBtnShown(false);
+      setInitialRemainingQs([]);
     }
     return;
   };
@@ -71,12 +77,22 @@ export default function Questions({ questionsData, filteredData }) {
   return (
     <Container>
       {initialQs?.length > 0 && initialQs}
+
+      {remainingQsList?.length > 0 && showRemainingQsCondition
+        ? remainingQsList
+        : null}
+
       {showMoreAnsweredQsCondition && isRemainingQsBtnShown ? (
         <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>More Answered Questions</MoreAnsweredQsBtn>
       ) : null}
-      {remainingQsList?.length > 0 && showRemainingQsCondition ? remainingQsList : null}
-      <CreateNewQBtn onClick={() => setShowQuestionModal(true)}>Submit a new question</CreateNewQBtn>
-      {showQuestionModal && <AddQuestion closeModal={() => setShowQuestionModal(false)} />}
+
+      <SubmitNewQBtn onClick={() => setShowQuestionModal(true)}>
+        Submit a new question
+      </SubmitNewQBtn>
+
+      {showQuestionModal && (
+        <AddQuestion closeModal={() => setShowQuestionModal(false)} />
+      )}
       {/* {console.log('INITIAL QS: ', initialQs)}
       {console.log('REMAINING QS: ', remainingQs)}
       {console.log('FILTERED DATA: ', filteredData)} */}
@@ -87,8 +103,34 @@ export default function Questions({ questionsData, filteredData }) {
 
 const Container = styled.div`
   max-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: space-between;
+  text-align: left;
 `;
 
-const MoreAnsweredQsBtn = styled.button``;
+const MoreAnsweredQsBtn = styled.button`
+  margin-top: 1rem;
+	padding: 8px 12px;
+	border-radius 6px;
+	border: none;
+	background: #000;
+	color: #fff;
+	cursor: pointer;
+  margin-left: 43%;
+`;
 
-const CreateNewQBtn = styled.button``;
+const SubmitNewQBtn = styled.button`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+	padding: 8px 12px;
+	border-radius 6px;
+	border: none;
+	background: #000;
+	color: #fff;
+	cursor: pointer;
+  margin-left: 44%;
+`;

@@ -203,7 +203,7 @@ export default function RatingsReviews() {
             },
           }
         );
-        // console.log(res.data.results.length);
+        // console.log(res.data.results);
         setReviewList(res.data);
         setReviewReady(true);
 
@@ -235,6 +235,15 @@ export default function RatingsReviews() {
 
     getMetaApi();
     getReviewApi();
+
+    { /* <script src="https://kit.fontawesome.com/1f15c8017d.js" crossorigin="anonymous"></script> */ }
+    const script = document.createElement('script');
+    script.src = 'https://kit.fontawesome.com/1f15c8017d.js';
+    script.crossorigin = 'anonymous';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => { document.body.removeChild(script); };
+
   }, []);
 
   const listSortChange = (event) => {
@@ -316,8 +325,9 @@ export default function RatingsReviews() {
   return (
     <Fragment>
       {isLoaded ? (
-        <div style={mainDiv}>
-          {/* {console.log('from reviewList:', reviewList, 'from metaData:', metaData)} */}
+        <div style = {mainDiv}>
+          {console.log('from reviewList:', reviewList)}
+          {console.log('from metaData:', metaData)}
           {/* {console.log('selectedProduct:: ', selectedProduct)} */}
           {/* {console.log('review CacheData:: ', reviewCache)} */}
           {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
@@ -333,7 +343,9 @@ export default function RatingsReviews() {
                   clearStarFilter={clearStarFilter}
                 />
               </div>
-              <div style={productStyle}>{/* <ProductBreakdown metaData={metaData} /> */}</div>
+              <div style={productStyle}>
+                <ProductBreakdown metaData={metaData} />
+              </div>
               {writeReviewModal && (
                 <div style={modalStyle} aria-hidden="true" role="button" onClick={exitWriteReviewClick}>
                   <div style={innerModalStyle} aria-hidden="true" onClick={(e) => e.stopPropagation()}>
@@ -350,15 +362,14 @@ export default function RatingsReviews() {
                 <SortOptions metaData={metaData} listSort={listSort} listSortChange={listSortChange} />
               </div>
               <div style={reviewListStyle}>
-                {/* <div style={{display: 'flex',}}> */}
-                {/* <ReviewList
+                <ReviewList
                   reviewCache={reviewCache}
                   reviewCacheState={reviewCacheState}
                   starSort={starSort}
                   reviewList={reviewList}
                   reviewEnd={reviewEnd}
                   handlePut={handlePut}
-                /> */}
+                />
               </div>
               <div style={reviewButtonsStyle}>
                 <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
