@@ -9,7 +9,7 @@ const gridLayout = {
 };
 
 const ReviewList = ({ reviewList, reviewEnd, handlePut, starSort, reviewCacheState, reviewCache }) => {
-  console.log(reviewList);
+  // console.log(reviewList);
   return (
     <div>
       {starSort.length === 0 && (
