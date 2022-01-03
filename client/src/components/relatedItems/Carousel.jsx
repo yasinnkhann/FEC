@@ -69,10 +69,14 @@ export default function Carousel({ name, relatedProductIds }) {
 
   useEffect(() => {
     setVisibleProducts(relatedProducts.slice(startIndex, endIndex));
+
+    return () => setVisibleProducts(relatedProducts.slice(startIndex - 1, endIndex - 1));
   }, [startIndex]);
 
   useEffect(() => {
     setIsLoaded(true);
+
+    return () => setIsLoaded(false);
   }, [name]);
 
   useEffect(() => {
@@ -172,7 +176,7 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Takes a start and end index and sets the shown products to the result of slicing all products with index params
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
-    const newVisibleProducts = relatedProducts.slice(newStartIndex, newEndIndex);
+    const newVisibleProducts = relatedProducts.slice(newStartIndex, newEndIndex - 1);
     setVisibleProducts(newVisibleProducts);
   };
 
