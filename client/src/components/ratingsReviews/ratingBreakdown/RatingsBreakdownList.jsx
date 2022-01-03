@@ -5,18 +5,15 @@ import RatingsBreakdownListEntry from './RatingsBreakdownListEntry.jsx';
 export default function RatingsBreakdownList({ metaData, sortByStar }) {
   return (
     <div style={gridLayout}>
-      {
-        ([5, 4, 3, 2, 1])
-          .map((rating) => (
-            <RatingsBreakdownListEntry
-              rating={rating}
-              ratings={metaData.ratings}
-              totalRating={metaData.ratings[rating] || 0}
-              sortByStar={sortByStar}
-              key={rating}
-            />
-          ))
-      }
+      {[5, 4, 3, 2, 1].map((rating) => (
+        <RatingsBreakdownListEntry
+          rating={rating}
+          ratings={metaData.ratings}
+          totalRating={metaData.ratings[rating] || 0}
+          sortByStar={sortByStar}
+          key={rating}
+        />
+      ))}
     </div>
   );
 }
