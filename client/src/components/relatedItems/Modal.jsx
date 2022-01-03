@@ -296,8 +296,6 @@ const CategoryRowItem = styled.tr`
   padding: 5px;
   max-width: 150px;
 `;
-<<<<<<< HEAD
-=======
 
 const ModalRow = styled.tr`
   color: black;
@@ -345,4 +343,3 @@ const ModalTitle = styled.td`
 //   });
 //   return mappedCategories;
 // };
->>>>>>> 7fe18248cadcc7c5e921efed9a1c972c932dc56e
