@@ -15,20 +15,24 @@ const modalElement = document.getElementById('modal-root');
 
 // MODAL
 export const Modal = ({ product, fade = false }, ref) => {
-
-
   // CONTEXT
-  const {selectedProductContext} = useContext(AppContext);
+  const { selectedProductContext } = useContext(AppContext);
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [isOpen, setIsOpen] = useState(false);
 
   // HOOKS
-  useImperativeHandle(ref, () => ({
-    open: () => { setIsOpen(true); },
-    close
-  }), [close]);
+  useImperativeHandle(
+    ref,
+    () => ({
+      open: () => {
+        setIsOpen(true);
+      },
+      close,
+    }),
+    [close]
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -176,8 +180,8 @@ export const Modal = ({ product, fade = false }, ref) => {
     // Show or hide depending on click
     isOpen ? (
       <ModalStyle className={`modal ${fade ? 'modal-fade' : ''}`}>
-        <ModalOverlay onClick={close} >
-          <ModalClose onClick={close} >
+        <ModalOverlay onClick={close}>
+          <ModalClose onClick={close}>
             <ActionButton name="close-modal" />
           </ModalClose>
           <ModalBody className="modal-body">

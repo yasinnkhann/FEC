@@ -25,13 +25,11 @@ export default function AddAnswer({ closeModal, question }) {
   const [isPostReqSubmitted, setIsPostReqSubmitted] = useState(false);
 
   // VARIABLES
-  const specifiedProduct = products.filter(
-    product => Number(product.id) === Number(questionsData.product_id)
-  );
+  const specifiedProduct = products.filter((product) => Number(product.id) === Number(questionsData.product_id));
 
   // METHODS
   useEffect(() => {
-    const close = e => {
+    const close = (e) => {
       if (e.keyCode === 27) {
         closeModal();
       }
@@ -48,12 +46,12 @@ export default function AddAnswer({ closeModal, question }) {
     closeModal();
   };
 
-  const handleFileUpload = e => {
+  const handleFileUpload = (e) => {
     setNumOfImages(e.target.files.length);
     setImages(e.target.files);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (images.length > 5) {
       alert('Cannot upload files more than 5 files');

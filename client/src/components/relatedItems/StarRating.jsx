@@ -18,21 +18,19 @@ export default function StarRating({ product }) {
   }, []);
 
   const getReviewMetaData = async (id) => {
-    await axios.get(
-      'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta',
-      {
+    await axios
+      .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
         params: {
-          product_id: id
+          product_id: id,
         },
         headers: {
           Authorization: `${TOKEN}`,
         },
-      }
-    )
-      .then(res => res.data.ratings)
-      .then(ratings => getAverageRating(ratings))
-      .then(avgRating => setAverageRating(avgRating))
-      .catch(err => console.log(err));
+      })
+      .then((res) => res.data.ratings)
+      .then((ratings) => getAverageRating(ratings))
+      .then((avgRating) => setAverageRating(avgRating))
+      .catch((err) => console.log(err));
   };
 
   const getAverageRating = (ratings) => {
@@ -49,13 +47,7 @@ export default function StarRating({ product }) {
   // JSX
   return (
     <Stars className="star-rating">
-      <Rating
-        name="read-only"
-        value={averageRating}
-        precision={0.25}
-        max={5}
-        size="small"
-        readOnly />
+      <Rating name="read-only" value={averageRating} precision={0.25} max={5} size="small" readOnly />
     </Stars>
   );
 }
