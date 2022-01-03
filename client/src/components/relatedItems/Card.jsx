@@ -111,4 +111,6 @@ const ProductInfoStyle = styled.div`
 
 const ActionStyle = styled.a`
   z-index: 1;
+  max-height: 35px;
+  max-width: 35px;
 `;

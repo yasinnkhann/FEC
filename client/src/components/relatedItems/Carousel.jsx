@@ -34,6 +34,7 @@ export default function Carousel({ name, relatedProductIds }) {
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(5);
   const [isLoaded, setIsLoaded] = useState(false);
   const size = useWindowSize();
 
@@ -45,6 +46,8 @@ export default function Carousel({ name, relatedProductIds }) {
     const newEndIndex = getMaxIndexBasedOnScreenSize();
     setEndIndex(newEndIndex);
     changeVisibleProductsArray(startIndex, endIndex);
+
+    return () => resetVisibleProducts();
   }, [size]);
 
   // Populates relatedProducts state to render each item
@@ -57,13 +60,12 @@ export default function Carousel({ name, relatedProductIds }) {
       });
     }
 
-    return () => {
-      resetVisibleProducts();
-    };
+    return () => resetVisibleProducts();
   }, [relatedProductIds]);
 
   // Reset shown products when new item is selected
   useEffect(() => {
+    resetVisibleProducts();
     return () => resetVisibleProducts();
   }, [selectedProduct]);
 
@@ -75,16 +77,14 @@ export default function Carousel({ name, relatedProductIds }) {
 
   useEffect(() => {
     setIsLoaded(true);
+    setStartIndex(0);
+    setEndIndex(maxIndex);
 
-    return () => setIsLoaded(false);
+    return () => {
+      resetVisibleProducts();
+      setIsLoaded(false);
+    };
   }, [name]);
-
-  useEffect(() => {
-    if ((userOutfit.length + 1) * 200 < size.width) {
-      console.log('Width: ', size.width, 'Total width of user outfit cards: ', (userOutfit.length + 1) * 200 );
-    }
-
-  }, [userOutfit]);
 
   // API HANDLERS
   // Gets one product's info based on id
@@ -100,7 +100,7 @@ export default function Carousel({ name, relatedProductIds }) {
       })
       .then((productData) => {
         setRelatedProducts((state) => [...state, productData]);
-        visibleProducts.length <= 5 ? setVisibleProducts((state) => [...state, productData]) : null;
+        visibleProducts.length > 5 ? null : setVisibleProducts((state) => [...state, productData]);
       })
       .then(() => setIsLoaded(true))
       .catch((err) => console.log(err));
