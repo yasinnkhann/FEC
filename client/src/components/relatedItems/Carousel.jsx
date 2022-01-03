@@ -218,7 +218,6 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // JSX
   return (
-<<<<<<< HEAD
     <CarouselStyle className="carousel" >
       <div className="carousel-row" style={{display: 'flex'}} >
         {isAtBeginningIndex() ? <div style={{width: '40px'}}></div> :
@@ -238,37 +237,6 @@ export default function Carousel({ name, relatedProductIds }) {
               <ScrollArrow direction={'right'} />
             </RightArrow>
           </button>}
-=======
-    <CarouselStyle className="carousel">
-      <div className="carousel-row" style={{ display: 'flex' }}>
-        {isAtBeginningIndex() ? null : (
-          <button className="carousel-left" onClick={(e) => scrollLeft(e)}>
-            <LeftArrow>
-              <ScrollArrow direction={'left'} />
-            </LeftArrow>
-          </button>
-        )}
-        {isLoaded && visibleProducts.length >= 1 ? (
-          <div className="carousel-middle" style={{ display: 'flex' }}>
-            {name === 'related-items' ? (
-              visibleProducts.map((product) => (
-                <Card key={product.data.id} product={product.data} name="related-item" />
-              ))
-            ) : (
-              <h4>OUTFIT LIST</h4>
-            )}
-          </div>
-        ) : (
-          <div>Loading...</div>
-        )}
-        {isAtFinalIndex() ? null : (
-          <button className="carousel-right" onClick={(e) => scrollRight(e)}>
-            <RightArrow>
-              <ScrollArrow direction={'right'} />
-            </RightArrow>
-          </button>
-        )}
->>>>>>> main
       </div>
     </CarouselStyle>
   );
@@ -280,14 +248,6 @@ const CarouselStyle = styled.div`
   align-items: flex-start;
 `;
 
-<<<<<<< HEAD
-const LeftArrow = styled.div`
-`;
-
-const RightArrow = styled.div`
-`;
-=======
 const LeftArrow = styled.div``;
 
 const RightArrow = styled.div``;
->>>>>>> main

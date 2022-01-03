@@ -86,20 +86,7 @@ export default function CarouselCard({ product, name }) {
 
   // JSX
   return (
-<<<<<<< HEAD
     renderCard(name)
-=======
-    <CardStyle>
-      <ActionStyle onClick={() => modal.current.open()}>
-        <ActionButton name="open-modal" />
-      </ActionStyle>
-      <Modal key={`modal-${product.id}`} ref={modal} product={product} />
-      <ProductInfoStyle onClick={() => handleClick(product)} >
-        <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
-        <ProductInfo product={product} />
-      </ProductInfoStyle>
-    </CardStyle>
->>>>>>> main
   );
 }
 
