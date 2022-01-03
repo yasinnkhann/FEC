@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
-const Name = styled.h1 `
+const Name = styled.h1`
   margin-bottom: 0.5rem;
   /* margin-left: 1rem; */
 `;
@@ -11,12 +10,11 @@ const Category = styled.h3`
   font-weight: 100;
   /* margin-left: 4rem; */
 `;
-const Description = styled.p `
+const Description = styled.p`
   padding: 0.5rem;
 `;
 
-
-export default function ProductDetail({product}) {
+export default function ProductDetail({ product }) {
   return (
     <div>
       <Category>{product?.category}</Category>

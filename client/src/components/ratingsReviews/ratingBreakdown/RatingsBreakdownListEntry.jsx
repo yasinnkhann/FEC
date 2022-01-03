@@ -31,27 +31,28 @@ const starPercentage = (obj, key) => {
   if (isNaN((Number(obj[key]) / total).toFixed(2))) {
     return 0;
   }
-  return ((Number(obj[key]) / total).toFixed(2) * 100);
+  return (Number(obj[key]) / total).toFixed(2) * 100;
 };
 
-const RatingsBreakdownListEntry = ({
-  rating, ratings, totalRating, sortByStar
-}) => (
+const RatingsBreakdownListEntry = ({ rating, ratings, totalRating, sortByStar }) => (
   <div id={rating} aria-hidden="true" className="starBar" style={starBarFlex} onClick={sortByStar}>
     <u id={rating} style={starFont}>
       {`${rating} stars`}
     </u>
 
     <div id={rating} style={starBar}>
-      <div style={{
-        background: '#333baacc',
-        height: '100%',
-        borderRadius: 'inherit',
-        width: `${starPercentage(ratings, rating)}%`,
-      }}
+      <div
+        style={{
+          background: '#333baacc',
+          height: '100%',
+          borderRadius: 'inherit',
+          width: `${starPercentage(ratings, rating)}%`,
+        }}
       />
     </div>
-    <div id={rating} style={starFont}>{totalRating}</div>
+    <div id={rating} style={starFont}>
+      {totalRating}
+    </div>
   </div>
 );
 

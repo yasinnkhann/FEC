@@ -7,7 +7,7 @@ export default function Search(props) {
   const [searchQuery, setSearchQuery] = useState('');
 
   // METHODS
-  const handleChangeProxy = e => {
+  const handleChangeProxy = (e) => {
     setSearchQuery(e.target.value);
     props.handleChange(searchQuery);
   };
@@ -15,9 +15,9 @@ export default function Search(props) {
   return (
     <Container>
       <SearchBar
-        type='text'
-        placeholder='Have a question? Search for answers…'
-        name='searchQuery'
+        type="text"
+        placeholder="Have a question? Search for answers…"
+        name="searchQuery"
         value={searchQuery}
         onChange={handleChangeProxy}
       />

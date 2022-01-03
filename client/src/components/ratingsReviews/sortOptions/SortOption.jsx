@@ -39,7 +39,7 @@ class SortOptions extends React.Component {
     // console.log(metaData);
     // console.log(this.props.listSort);
     return (
-      <div style={{fontWeight: 'bold', }}>
+      <div style={{ fontWeight: 'bold' }}>
         {`${this.totalReviews(metaData.ratings)} reviews, sorted by most`}
         <select style={optionsBar} onChange={listSortChange}>
           <option value="1">Relevant</option>
