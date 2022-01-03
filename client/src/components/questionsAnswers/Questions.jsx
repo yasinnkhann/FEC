@@ -21,82 +21,48 @@ export default function Questions({ questionsData, filteredData }) {
   if (!useFilteredData) {
     initialQs = questionsData
       ?.slice(0, 4)
-      .map(question => (
-        <Question key={question.question_id} questionObj={question} />
-      ))
-      .sort(
-        (a, b) =>
-          b.props.questionObj.question_helpfulness -
-          a.props.questionObj.question_helpfulness
-      );
+      .map((question) => <Question key={question.question_id} questionObj={question} />)
+      .sort((a, b) => b.props.questionObj.question_helpfulness - a.props.questionObj.question_helpfulness);
     remainingQs = questionsData
       ?.slice(4)
-      .map(question => (
-        <Question key={question.question_id} questionObj={question} />
-      ))
-      .sort(
-        (a, b) =>
-          b.props.questionObj.question_helpfulness -
-          a.props.questionObj.question_helpfulness
-      );
+      .map((question) => <Question key={question.question_id} questionObj={question} />)
+      .sort((a, b) => b.props.questionObj.question_helpfulness - a.props.questionObj.question_helpfulness);
   } else {
     initialQs = filteredData
       ?.slice(0, 4)
-      .map(question => (
-        <Question key={question.question_id} questionObj={question} />
-      ))
-      .sort(
-        (a, b) =>
-          b.props.questionObj.question_helpfulness -
-          a.props.questionObj.question_helpfulness
-      );
+      .map((question) => <Question key={question.question_id} questionObj={question} />)
+      .sort((a, b) => b.props.questionObj.question_helpfulness - a.props.questionObj.question_helpfulness);
     remainingQs = filteredData
       ?.slice(4)
-      .map(question => (
-        <Question key={question.question_id} questionObj={question} />
-      ))
-      .sort(
-        (a, b) =>
-          b.props.questionObj.question_helpfulness -
-          a.props.questionObj.question_helpfulness
-      );
+      .map((question) => <Question key={question.question_id} questionObj={question} />)
+      .sort((a, b) => b.props.questionObj.question_helpfulness - a.props.questionObj.question_helpfulness);
   }
 
   const showRemainingQsCondition =
-    (questionsData.length !== 0 && !useFilteredData) ||
-    (filteredData.length !== 0 && useFilteredData);
+    (questionsData.length !== 0 && !useFilteredData) || (filteredData.length !== 0 && useFilteredData);
 
   const showMoreAnsweredQsCondition =
     (questionsData?.length > 4 && !useFilteredData) ||
     (questionsData?.length > 4 && filteredData.length !== 0 && useFilteredData);
 
   // METHODS
-  const handleRemainingQs = remainingQs => {
+  const handleRemainingQs = (remainingQs) => {
     const remainingQsCopy = [...remainingQs];
-    // console.log('remainingQsCopy: ', remainingQsCopy);
-    // console.log(
-    //   'remainingQs: ',
-    //   remainingQsCopy[0]?.props?.questionObj?.answers
-    // );
 
     let newEndPos = remainingQsCount + 2;
-    console.log('INITAL REMAING QS: ', initialRemainingQs);
 
-    // if pos exists
     if (remainingQsCopy[newEndPos]) {
       const newRemainingQs = remainingQsCopy.slice(remainingQsCount, newEndPos);
       setRemainingQsCount(newEndPos);
       setRemainingQsList(initialRemainingQs.concat(newRemainingQs));
       setInitialRemainingQs(initialRemainingQs.concat(newRemainingQs));
       setIsRemainingQsBtnShown(true);
-      // if pos does not exist
     } else {
       setRemainingQsCount(0);
       setRemainingQsList(remainingQsCopy);
       setIsRemainingQsBtnShown(false);
       setInitialRemainingQs([]);
     }
-    return;
   };
 
   return (
@@ -108,9 +74,7 @@ export default function Questions({ questionsData, filteredData }) {
         : null}
 
       {showMoreAnsweredQsCondition && isRemainingQsBtnShown ? (
-        <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>
-          More Answered Questions
-        </MoreAnsweredQsBtn>
+        <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>More Answered Questions</MoreAnsweredQsBtn>
       ) : null}
 
       <SubmitNewQBtn onClick={() => setShowQuestionModal(true)}>
@@ -129,14 +93,20 @@ export default function Questions({ questionsData, filteredData }) {
 }
 
 const Container = styled.div`
-  max-height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: center;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: space-between;
-  text-align: left;
+  height: calc(100vh - 115px);
+  overflow-y: auto;
+  padding: 0rem 1rem;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 10px;
+  }
 `;
 
 const MoreAnsweredQsBtn = styled.button`

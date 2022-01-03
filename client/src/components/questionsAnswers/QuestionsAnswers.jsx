@@ -20,13 +20,13 @@ export default function QuestionsAnswers() {
   const [products, setProducts] = productsContext;
 
   // METHODS
-  const handleSearchQuery = query => {
+  const handleSearchQuery = (query) => {
     setUseFilteredData(true);
     if (query.length < 2) {
       setFilteredQuestions(questionsData.results);
     } else {
       const questionsCopy = [...questionsData.results];
-      const questionsFiltered = questionsCopy.filter(question =>
+      const questionsFiltered = questionsCopy.filter((question) =>
         question.question_body.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredQuestions(questionsFiltered);
@@ -41,7 +41,7 @@ export default function QuestionsAnswers() {
           {
             params: {
               // product_id: 40347,
-              product_id: products[54]?.id,
+              product_id: products[995]?.id,
               // page: 1,
               count: 20,
             },
@@ -61,9 +61,7 @@ export default function QuestionsAnswers() {
   }, []);
 
   return (
-    <div className='qaWidget'>
-      <QATitle>QUESTIONS &#38; ANSWERS</QATitle>
-
+    <QAWidget>
       {isLoaded && (
         <>
           <QuestionsContext.Provider
@@ -74,18 +72,19 @@ export default function QuestionsAnswers() {
               setUseFilteredData,
             }}
           >
+            <h3>QUESTIONS &#38; ANSWERS</h3>
             <Search handleChange={handleSearchQuery} />
-            <Questions
-              questionsData={questionsData.results}
-              filteredData={filteredQuestions}
-            />
+            <Questions questionsData={questionsData.results} filteredData={filteredQuestions} />
           </QuestionsContext.Provider>
         </>
       )}
       {/* {console.log('PRODUCTS FROM QA: ', products)} */}
       {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
-    </div>
+    </QAWidget>
   );
 }
 
-const QATitle = styled.h3``;
+const QAWidget = styled.div`
+  /* overflow-y: scroll; */
+  // max-height: 100vh;
+`;

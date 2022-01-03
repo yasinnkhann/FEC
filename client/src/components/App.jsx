@@ -35,7 +35,6 @@ export default function App() {
         console.error(err);
       }
     };
-
     getApi();
   }, []);
 
@@ -51,17 +50,23 @@ export default function App() {
           >
             {/* <Overview /> */}
             <RelatedItems />
-            {/* <QuestionsAnswers /> */}
-            {/* <RatingsReviews /> */}
+            <QuestionsAnswers />
+            <RatingsReviews />
           </AppContext.Provider>
         </>
       ) : (
         <Loader
           type='Oval'
-          color='green'
+          color='blue'
           height={160}
           width={160}
           arialLabel='loading-indicator'
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
         />
       )}
     </Fragment>

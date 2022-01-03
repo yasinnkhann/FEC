@@ -15,16 +15,16 @@ const imgStyle = {
 const modalStyle = {
   display: 'flex',
   backdropFilter: 'blur(8px) contrast(70%)',
-  backgroundColor: 'rgb(0,0,0)', /* Fallback color */
+  backgroundColor: 'rgb(0,0,0)' /* Fallback color */,
   backgroundColor: 'rgba(0,0,0,0.4)',
   zIndex: '150',
-  width: '100%', /* Full width */
-  height: '100%', /* Full height */
-  position: 'fixed', /* Fix position on the top-left corner */
+  width: '100%' /* Full width */,
+  height: '100%' /* Full height */,
+  position: 'fixed' /* Fix position on the top-left corner */,
   top: '0',
   left: '0',
   justifyContent: 'center',
-  overflow: 'hidden', /* Enable scroll if needed */
+  overflow: 'hidden' /* Enable scroll if needed */,
   margin: 'auto',
 };
 
@@ -50,11 +50,25 @@ class PhotoMapEntry extends React.Component {
     return (
       <div>
         {expand === true && (
-          <div style={modalStyle} aria-hidden="true" onClick={() => { this.setState({ expand: false }); }}>
+          <div
+            style={modalStyle}
+            aria-hidden="true"
+            onClick={() => {
+              this.setState({ expand: false });
+            }}
+          >
             <img src={url} alt="" style={expandedImg} />
           </div>
         )}
-        <img src={url} alt="" aria-hidden="true" style={imgStyle} onClick={() => { this.setState({ expand: true }); }} />
+        <img
+          src={url}
+          alt=""
+          aria-hidden="true"
+          style={imgStyle}
+          onClick={() => {
+            this.setState({ expand: true });
+          }}
+        />
       </div>
     );
   }

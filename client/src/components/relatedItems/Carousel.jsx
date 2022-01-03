@@ -52,7 +52,7 @@ export default function Carousel({ name, relatedProductIds }) {
     if (relatedProductIds !== undefined) {
       setRelatedProducts([]);
       setVisibleProducts([]);
-      relatedProductIds.forEach(id => {
+      relatedProductIds.forEach((id) => {
         updateRelatedProducts(id);
       });
     }
@@ -85,25 +85,21 @@ export default function Carousel({ name, relatedProductIds }) {
   // API HANDLERS
   // Gets one product's info based on id
   const updateRelatedProducts = async (id) => {
-    await axios.get(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`,
-      {
+    await axios
+      .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
         params: {
-          product_id: id
+          product_id: id,
         },
         headers: {
           Authorization: `${TOKEN}`,
         },
-      }
-    )
-      .then(productData => {
-        setRelatedProducts(state => [...state, productData]);
-        visibleProducts.length <= 5
-          ? setVisibleProducts(state => [...state, productData])
-          : null;
+      })
+      .then((productData) => {
+        setRelatedProducts((state) => [...state, productData]);
+        visibleProducts.length <= 5 ? setVisibleProducts((state) => [...state, productData]) : null;
       })
       .then(() => setIsLoaded(true))
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   // EVENT HANDLERS
@@ -141,7 +137,9 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Checks the last item of all products and last item of shown products and checks if they are the same
   const isAtFinalIndex = () => {
-    if (!relatedProducts[relatedProducts.length - 1] || !visibleProducts[visibleProducts.length - 1]) { return; }
+    if (!relatedProducts[relatedProducts.length - 1] || !visibleProducts[visibleProducts.length - 1]) {
+      return;
+    }
     const finalRelatedItem = relatedProducts[relatedProducts.length - 1].data.id;
     const finalVisibleItem = visibleProducts[visibleProducts.length - 1].data.id;
     return finalVisibleItem === finalRelatedItem;
@@ -149,7 +147,9 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Checks the first item of all products and first item of shown products and checks if they are the same
   const isAtBeginningIndex = () => {
-    if (!relatedProducts[0] || !visibleProducts[0]) { return; }
+    if (!relatedProducts[0] || !visibleProducts[0]) {
+      return;
+    }
     const firstRelatedItem = relatedProducts[0].data.id;
     const firstVisibleItem = visibleProducts[0].data.id;
     return firstVisibleItem === firstRelatedItem;
@@ -238,15 +238,12 @@ export default function Carousel({ name, relatedProductIds }) {
   );
 }
 
-
 // STYLES
 const CarouselStyle = styled.div`
   display: flex;
   align-items: flex-start;
 `;
 
-const LeftArrow = styled.div`
-`;
+const LeftArrow = styled.div``;
 
-const RightArrow = styled.div`
-`;
+const RightArrow = styled.div``;
