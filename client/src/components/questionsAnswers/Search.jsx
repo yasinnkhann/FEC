@@ -27,11 +27,12 @@ export default function Search(props) {
 }
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   min-width: 100px;
-  position: sticky;
   top: 0;
   z-index: 100;
+  padding-bottom: 10px;
 `;
 
 const SearchBar = styled.input`
@@ -45,6 +46,11 @@ const SearchBar = styled.input`
 `;
 
 const MagnifyGlassIcon = styled(SearchIcon)`
+  position: absolute;
+  right: 0.5rem;
+  top: 36%;
+  transform: translateY(-50%);
+
   && {
     color: black;
   }
