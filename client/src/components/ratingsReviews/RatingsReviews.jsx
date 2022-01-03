@@ -40,7 +40,7 @@ const mainDiv = {
   marginTop: '20px',
   marginLeft: 'auto',
   marginRight: 'auto',
-  marginBottom: 'auto',
+  marginBottom: '30px',
 
   fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
