@@ -48,30 +48,21 @@ export default function Questions({ questionsData, filteredData }) {
   // METHODS
   const handleRemainingQs = (remainingQs) => {
     const remainingQsCopy = [...remainingQs];
-    // console.log('remainingQsCopy: ', remainingQsCopy);
-    // console.log(
-    //   'remainingQs: ',
-    //   remainingQsCopy[0]?.props?.questionObj?.answers
-    // );
 
     let newEndPos = remainingQsCount + 2;
-    console.log('INITAL REMAING QS: ', initialRemainingQs);
 
-    // if pos exists
     if (remainingQsCopy[newEndPos]) {
       const newRemainingQs = remainingQsCopy.slice(remainingQsCount, newEndPos);
       setRemainingQsCount(newEndPos);
       setRemainingQsList(initialRemainingQs.concat(newRemainingQs));
       setInitialRemainingQs(initialRemainingQs.concat(newRemainingQs));
       setIsRemainingQsBtnShown(true);
-      // if pos does not exist
     } else {
       setRemainingQsCount(0);
       setRemainingQsList(remainingQsCopy);
       setIsRemainingQsBtnShown(false);
       setInitialRemainingQs([]);
     }
-    return;
   };
 
   return (
@@ -102,14 +93,20 @@ export default function Questions({ questionsData, filteredData }) {
 }
 
 const Container = styled.div`
-  max-height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: center;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: space-between;
-  text-align: left;
+  height: calc(100vh - 115px);
+  overflow-y: auto;
+  padding: 0rem 1rem;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 10px;
+  }
 `;
 
 const MoreAnsweredQsBtn = styled.button`
