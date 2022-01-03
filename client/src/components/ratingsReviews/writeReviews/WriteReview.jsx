@@ -352,7 +352,7 @@ class WriteReview extends React.Component {
               name="email"
               value={email}
               onChange={this.onInputChange}
-              placeholder="william@gmail.com"
+              placeholder="georgeWashington@gmail.com"
             />
             <br />
           </div>

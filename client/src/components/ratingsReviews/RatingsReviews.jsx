@@ -40,7 +40,7 @@ const mainDiv = {
   marginTop: '20px',
   marginLeft: 'auto',
   marginRight: 'auto',
-  marginBottom: '30px',
+  marginBottom: 'auto',
 
   fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
@@ -193,7 +193,7 @@ export default function RatingsReviews() {
     setTimeout(() => {
       setLoaded(true);
     }, 700);
-
+    // get review api data
     const getReviewApi = async () => {
       try {
         const res = await axios.get(
@@ -216,7 +216,7 @@ export default function RatingsReviews() {
         console.error(err);
       }
     };
-
+    //get meta data
     const getMetaApi = async () => {
       try {
         const res = await axios.get(
@@ -237,7 +237,7 @@ export default function RatingsReviews() {
     getMetaApi();
     getReviewApi();
 
-    { /* <script src="https://kit.fontawesome.com/1f15c8017d.js" crossorigin="anonymous"></script> */ }
+    // append font awesome to index.html
     const script = document.createElement('script');
     script.src = 'https://kit.fontawesome.com/1f15c8017d.js';
     script.crossorigin = 'anonymous';
@@ -306,7 +306,7 @@ export default function RatingsReviews() {
     return (
       <div style={noReviewsGrid}>
         <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
-          Let be the first to add review to this product!
+          No review for this product Be the first to add one!
         </div>
         <button
           className="addReview"
@@ -348,8 +348,8 @@ export default function RatingsReviews() {
     <Fragment>
       {isLoaded ? (
         <div style = {mainDiv}>
-          {console.log('from reviewList:', reviewList)}
-          {console.log('from metaData:', metaData)}
+          {/* {console.log('from reviewList:', reviewList)} */}
+          {/* {console.log('from metaData:', metaData)} */}
           {/* {console.log('selectedProduct:: ', selectedProduct)} */}
           {/* {console.log('review CacheData:: ', reviewCache)} */}
           {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
@@ -380,11 +380,11 @@ export default function RatingsReviews() {
                     aria-hidden="true"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {/* <WriteReview
+                    <WriteReview
                       handleReviewData={handleReviewData}
                       productID={selectedProduct}
                       metaData={metaData}
-                    /> */}
+                    />
                     <br />
                   </div>
                 </div>
