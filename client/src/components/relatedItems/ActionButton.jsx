@@ -8,11 +8,6 @@ import ModalContext from './ModalContext.js';
 
 // ACTION BUTTON
 export default function ActionButton({ name }) {
-
   // JSX
-  return (
-    <span className="action-button">
-      {name === 'open-modal' ? <StarsIcon /> : <CloseIcon />}
-    </span>
-  );
+  return <span className="action-button">{name === 'open-modal' ? <StarsIcon /> : <CloseIcon />}</span>;
 }

@@ -35,7 +35,6 @@ export default function App() {
         console.error(err);
       }
     };
-
     getApi();
   }, []);
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
 
-const Stars = styled.div `
+const Stars = styled.div`
   display: inline-block;
   font-family: Times;
   margin-left: 0rem;
@@ -93,10 +93,11 @@ class ReviewListEntry extends React.Component {
   }
 
   handlePutEntry(e) {
-    axios.put('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
-      review_id: this.props.review.review_id,
-      type: e.target.id,
-    })
+    axios
+      .put('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
+        review_id: this.props.review.review_id,
+        type: e.target.id,
+      })
       .then((results) => {
         alert('Your request has been received!');
       })
@@ -114,23 +115,14 @@ class ReviewListEntry extends React.Component {
           <div style={{ display: 'flex', zIndex: '-1', marginRight: 'auto' }}>
             {/* <StarRating averageRating={review.rating} height={18} width={15} /> */}
             <Stars>
-              <Rating
-                name="read-only"
-                value={review.rating}
-                precision={0.25}
-                max={5}
-                size="small"
-                readOnly />
+              <Rating name="read-only" value={review.rating} precision={0.25} max={5} size="small" readOnly />
             </Stars>
           </div>
         </div>
 
         <div style={{ display: 'flex', marginLeft: 'auto' }}>
           <div style={nameLayout}>
-            <div style={{ display: 'flex', marginLeft: 'auto' }}>
-              {review.reviewer_name}
-              ,
-            </div>
+            <div style={{ display: 'flex', marginLeft: 'auto' }}>{review.reviewer_name},</div>
           </div>
 
           <div style={dateLayout}>
@@ -141,16 +133,13 @@ class ReviewListEntry extends React.Component {
         </div>
         {review.summary ? (
           <div style={reviewLayout}>
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              {review.summary}
-            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>{review.summary}</div>
           </div>
-        ) : <div style={emptyDiv} />
-        }
+        ) : (
+          <div style={emptyDiv} />
+        )}
         <div style={bodyLayout}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            {review.body}
-          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>{review.body}</div>
         </div>
         {review.response !== null ? (
           <div style={responseLayout}>
@@ -158,33 +147,50 @@ class ReviewListEntry extends React.Component {
               <b>{`Response from seller: ${review.response}`}</b>
             </div>
           </div>
-        ) : <div style={emptyDiv} />
-        }
+        ) : (
+          <div style={emptyDiv} />
+        )}
         {review.recommend === true ? (
           <div style={recommendLayout}>
-            <div style={{ display: 'flex' }}>
-                ✓ I recommend this product
-            </div>
+            <div style={{ display: 'flex' }}>✓ I recommend this product</div>
           </div>
-        ) : <div style={emptyDiv} />
-        }
+        ) : (
+          <div style={emptyDiv} />
+        )}
         <div style={helpfulnessLayout}>
           <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            { review.photos.length > 0 ? (
+            {review.photos.length > 0 ? (
               // <div style={photoLayout}>
               <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <PhotosMap photos={review.photos} />
                 {/* </div> */}
               </div>
-            ) : <div style={emptyDiv} />
-            }
-            <div style={{
-              display: 'flex', justifyContent: 'flex-end', float: 'right', marginLeft: 'auto', marginTop: 'auto',
-            }}
-            > Helpful?
-              <u onClick={this.handlePutEntry} aria-hidden="true" id="helpful" style={{ marginLeft: '4px', marginRight: '2px' }}>Yes</u>
+            ) : (
+              <div style={emptyDiv} />
+            )}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                float: 'right',
+                marginLeft: 'auto',
+                marginTop: 'auto',
+              }}
+            >
+              {' '}
+              Helpful?
+              <u
+                onClick={this.handlePutEntry}
+                aria-hidden="true"
+                id="helpful"
+                style={{ marginLeft: '4px', marginRight: '2px' }}
+              >
+                Yes
+              </u>
               {`(${review.helpfulness}) | `}
-              <u onClick={this.handlePutEntry} aria-hidden="true" id="report" style={{ marginLeft: '4px' }}>Report</u>
+              <u onClick={this.handlePutEntry} aria-hidden="true" id="report" style={{ marginLeft: '4px' }}>
+                Report
+              </u>
             </div>
           </div>
         </div>
