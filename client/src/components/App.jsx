@@ -57,10 +57,16 @@ export default function App() {
       ) : (
         <Loader
           type='Oval'
-          color='green'
+          color='blue'
           height={160}
           width={160}
           arialLabel='loading-indicator'
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
         />
       )}
     </Fragment>
