@@ -12,7 +12,7 @@ const starStyle = {
   fontSize: '10px',
   border: 'none',
   boxShadow: '2px 2px 4px gold',
-  cursor: 'pointer',
+  cursor: 'pointer'
 };
 
 const StarFilterEntry = (props) => (
