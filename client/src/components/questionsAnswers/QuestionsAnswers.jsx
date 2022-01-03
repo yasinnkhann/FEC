@@ -19,6 +19,8 @@ export default function QuestionsAnswers() {
 
   const [products, setProducts] = productsContext;
 
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
+
   // METHODS
   const handleSearchQuery = (query) => {
     setUseFilteredData(true);
@@ -34,16 +36,17 @@ export default function QuestionsAnswers() {
   };
 
   useEffect(() => {
+    console.log('Selected Product: ', selectedProduct);
     const getQs = async () => {
       try {
         const res = await axios.get(
           'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
           {
             params: {
-              // product_id: 40347,
-              product_id: products[995]?.id,
+              product_id: selectedProduct?.id,
+              // product_id: products[995]?.id,
               // page: 1,
-              count: 20,
+              // count: 20,
             },
             headers: {
               Authorization: `${TOKEN}`,

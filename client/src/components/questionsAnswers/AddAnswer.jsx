@@ -10,9 +10,10 @@ import Loader from 'react-loader-spinner';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
-  const { productsContext } = useContext(AppContext);
+  const { productsContext, selectedProductContext } = useContext(AppContext);
+  const { questionsData, setQuestionsData } = useContext(QuestionsContext);
   const [products, setProducts] = productsContext;
-  const { questionsData } = useContext(QuestionsContext);
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
 
   // STATE
   const [numOfImages, setNumOfImages] = useState(0);
@@ -25,11 +26,13 @@ export default function AddAnswer({ closeModal, question }) {
   const [isPostReqSubmitted, setIsPostReqSubmitted] = useState(false);
 
   // VARIABLES
-  const specifiedProduct = products.filter((product) => Number(product.id) === Number(questionsData.product_id));
+  // const specifiedProduct = products.filter(
+  //   product => Number(product.id) === Number(questionsData.product_id)
+  // );
 
   // METHODS
   useEffect(() => {
-    const close = (e) => {
+    const close = e => {
       if (e.keyCode === 27) {
         closeModal();
       }
@@ -46,12 +49,12 @@ export default function AddAnswer({ closeModal, question }) {
     closeModal();
   };
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = e => {
     setNumOfImages(e.target.files.length);
     setImages(e.target.files);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     if (images.length > 5) {
       alert('Cannot upload files more than 5 files');
@@ -111,8 +114,11 @@ export default function AddAnswer({ closeModal, question }) {
         <UpperContent>
           <Content onSubmit={handleSubmit}>
             <h2>Submit your Answer</h2>
-            <h4>
+            {/* <h4>
               {specifiedProduct[0].name}: {question.question_body}
+            </h4> */}
+            <h4>
+              {selectedProduct.name}: {question.question_body}
             </h4>
             <label htmlFor='yourAnswer'>
               Your Answer<span style={{ color: 'red' }}>* </span>

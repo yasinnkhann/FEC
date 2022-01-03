@@ -8,9 +8,10 @@ import { TOKEN } from '../../config.js';
 
 export default function AddQuestion({ closeModal, question }) {
   // CONTEXT
-  const { productsContext } = useContext(AppContext);
-  const [products, setProducts] = productsContext;
+  const { productsContext, selectedProductContext } = useContext(AppContext);
   const { questionsData, setQuestionsData } = useContext(QuestionsContext);
+  const [products, setProducts] = productsContext;
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
 
   // STATE
   const [formData, setFormData] = useState({
@@ -20,11 +21,13 @@ export default function AddQuestion({ closeModal, question }) {
   });
 
   // VARIABLES
-  const specifiedProduct = products.filter((product) => Number(product.id) === Number(questionsData.product_id));
+  // const specifiedProduct = products.filter(
+  //   product => Number(product.id) === Number(questionsData.product_id)
+  // );
 
   // METHODS
   useEffect(() => {
-    const close = (e) => {
+    const close = e => {
       if (e.keyCode === 27) {
         closeModal();
       }
@@ -37,7 +40,7 @@ export default function AddQuestion({ closeModal, question }) {
     setFormData({ ...formData, hasChanged: true, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       const body = {
@@ -46,11 +49,15 @@ export default function AddQuestion({ closeModal, question }) {
         email: formData.yourEmail,
         product_id: Number(questionsData.product_id),
       };
-      const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', body, {
-        headers: {
-          Authorization: `${TOKEN}`,
-        },
-      });
+      const res = await axios.post(
+        'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
+        body,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
+      );
       console.log('ADD Q POST RES: ', res);
     } catch (err) {
       console.error(err);
@@ -64,7 +71,9 @@ export default function AddQuestion({ closeModal, question }) {
         <UpperContent>
           <Content onSubmit={handleSubmit}>
             <h2>Ask Your Question</h2>
-            <h4>About the {specifiedProduct[0].name}</h4>
+            {/* <h4>About the {specifiedProduct[0].name}</h4> */}
+            <h4>About the {selectedProduct.name}</h4>
+
             <label htmlFor='yourQuestion'>
               Your Question<span style={{ color: 'red' }}>* </span>
             </label>
