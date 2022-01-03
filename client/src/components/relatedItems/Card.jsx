@@ -18,9 +18,8 @@ import Modal from './Modal.jsx';
 
 // CARD
 export default function CarouselCard({ product }) {
-
   // CONTEXT
-  const {selectedProductContext} = useContext(AppContext);
+  const { selectedProductContext } = useContext(AppContext);
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
@@ -36,18 +35,17 @@ export default function CarouselCard({ product }) {
 
   // API HANDLER
   const getProductStyle = async (id) => {
-    await axios.get(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`,
-      {
+    await axios
+      .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
         params: {
-          product_id: id
+          product_id: id,
         },
         headers: {
           Authorization: `${TOKEN}`,
         },
       })
-      .then(res => res.data.results[0].photos[0].thumbnail_url)
-      .then(url => setimageUrl(url));
+      .then((res) => res.data.results[0].photos[0].thumbnail_url)
+      .then((url) => setimageUrl(url));
   };
 
   // EVENT HANDLERS
@@ -57,12 +55,12 @@ export default function CarouselCard({ product }) {
 
   // JSX
   return (
-    <CardStyle >
+    <CardStyle>
       <ActionStyle onClick={() => modal.current.open()}>
         <ActionButton name="open-modal" />
       </ActionStyle>
       <Modal key={product.id} ref={modal} product={product} />
-      <ProductInfoStyle onClick={() => handleClick(product)} >
+      <ProductInfoStyle onClick={() => handleClick(product)}>
         <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
         <ProductInfo product={product} />
       </ProductInfoStyle>

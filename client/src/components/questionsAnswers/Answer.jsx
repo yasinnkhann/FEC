@@ -63,10 +63,7 @@ export default function Answer({ questionObj }) {
       for (let i = 0; i < questionsDataCopy.length; i++) {
         let question = questionsDataCopy[i];
         for (let key in question) {
-          if (
-            question[key] === questionObj.question_id &&
-            !trackerCopy.hasOwnProperty([keyId])
-          ) {
+          if (question[key] === questionObj.question_id && !trackerCopy.hasOwnProperty([keyId])) {
             answerObj.helpfulness = incrementedCount;
             trackerCopy[keyId] = 'Incremented';
           }
@@ -103,10 +100,7 @@ export default function Answer({ questionObj }) {
       for (let i = 0; i < questionsDataCopy.length; i++) {
         let question = questionsDataCopy[i];
         for (let key in question) {
-          if (
-            question[key] === questionObj.question_id &&
-            !trackerCopy.hasOwnProperty([keyId])
-          ) {
+          if (question[key] === questionObj.question_id && !trackerCopy.hasOwnProperty([keyId])) {
             trackerCopy[keyId] = 'Reported';
           }
         }
@@ -121,7 +115,7 @@ export default function Answer({ questionObj }) {
     }
   };
 
-  const handleSeeMoreAnswers = e => {
+  const handleSeeMoreAnswers = (e) => {
     e.preventDefault();
     if (showRemainderAnswers) {
       setShowRemainderAnswers(false);
@@ -131,13 +125,11 @@ export default function Answer({ questionObj }) {
   };
 
   // VARIABLES
-  const sellerAnswers = answers?.results?.filter(
-    answer => answer.answerer_name === 'Seller'
-  );
+  const sellerAnswers = answers?.results?.filter((answer) => answer.answerer_name === 'Seller');
 
   const orderedAnswers = answers?.results
     ?.sort((a, b) => b.helpfulness - a.helpfulness)
-    ?.filter(answer => answer.answerer_name !== 'Seller');
+    ?.filter((answer) => answer.answerer_name !== 'Seller');
 
   const finalAnswers = sellerAnswers?.concat(orderedAnswers);
 
@@ -145,7 +137,7 @@ export default function Answer({ questionObj }) {
 
   const remainingFinalAnswers = finalAnswers?.slice(2);
 
-  const initialMappedAnswers = initialFinalAnswers?.map(answer => (
+  const initialMappedAnswers = initialFinalAnswers?.map((answer) => (
     <AnswerPortion key={answer?.answer_id}>
       <AnswerHeader>
         <strong>A:</strong>
@@ -154,24 +146,14 @@ export default function Answer({ questionObj }) {
           <AnswerDetails>
             <span>
               by:{' '}
-              {answer?.answerer_name === 'Seller' ? (
-                <strong>{answer?.answerer_name}</strong>
-              ) : (
-                answer?.answerer_name
-              )}
-              , <Moment format='MMMM Do YYYY'>{answer?.date}</Moment> | Helpful?{' '}
-              <a href=''>
-                <Yes onClick={e => increaseAnswerHelpfulCount(e, answer)}>
-                  Yes
-                </Yes>
+              {answer?.answerer_name === 'Seller' ? <strong>{answer?.answerer_name}</strong> : answer?.answerer_name},{' '}
+              <Moment format="MMMM Do YYYY">{answer?.date}</Moment> | Helpful?{' '}
+              <a href="">
+                <Yes onClick={(e) => increaseAnswerHelpfulCount(e, answer)}>Yes</Yes>
               </a>{' '}
               ({answer?.helpfulness}) |{' '}
-              <a href='' onClick={e => handleAnswerReported(e, answer)}>
-                <Report>
-                  {answerReportedTracker[answer?.answer_id]
-                    ? 'Reported'
-                    : 'Report'}
-                </Report>
+              <a href="" onClick={(e) => handleAnswerReported(e, answer)}>
+                <Report>{answerReportedTracker[answer?.answer_id] ? 'Reported' : 'Report'}</Report>
               </a>
             </span>
 
@@ -179,13 +161,7 @@ export default function Answer({ questionObj }) {
               <PhotoContainer>
                 <Photos>
                   {answer?.photos?.map((photoSrc, idx) => (
-                    <img
-                      key={idx}
-                      src={photoSrc.url}
-                      width='200'
-                      height='200'
-                      loading='lazy'
-                    />
+                    <img key={idx} src={photoSrc.url} width="200" height="200" loading="lazy" />
                   ))}
                 </Photos>
               </PhotoContainer>
@@ -196,7 +172,7 @@ export default function Answer({ questionObj }) {
     </AnswerPortion>
   ));
 
-  const remainingMappedAnswers = remainingFinalAnswers?.map(answer => (
+  const remainingMappedAnswers = remainingFinalAnswers?.map((answer) => (
     <AnswerPortion key={answer?.answer_id}>
       <AnswerHeader>
         <strong>A:</strong>
@@ -205,24 +181,14 @@ export default function Answer({ questionObj }) {
           <AnswerDetails>
             <span>
               by:{' '}
-              {answer?.answerer_name === 'Seller' ? (
-                <strong>{answer?.answerer_name}</strong>
-              ) : (
-                answer?.answerer_name
-              )}
-              , <Moment format='MMMM Do YYYY'>{answer?.date}</Moment> | Helpful?{' '}
-              <a href=''>
-                <Yes onClick={e => increaseAnswerHelpfulCount(e, answer)}>
-                  Yes
-                </Yes>
+              {answer?.answerer_name === 'Seller' ? <strong>{answer?.answerer_name}</strong> : answer?.answerer_name},{' '}
+              <Moment format="MMMM Do YYYY">{answer?.date}</Moment> | Helpful?{' '}
+              <a href="">
+                <Yes onClick={(e) => increaseAnswerHelpfulCount(e, answer)}>Yes</Yes>
               </a>{' '}
               ({answer?.helpfulness}) |{' '}
-              <a href='' onClick={e => handleAnswerReported(e, answer)}>
-                <Report>
-                  {answerReportedTracker[answer?.answer_id]
-                    ? 'Reported'
-                    : 'Report'}
-                </Report>
+              <a href="" onClick={(e) => handleAnswerReported(e, answer)}>
+                <Report>{answerReportedTracker[answer?.answer_id] ? 'Reported' : 'Report'}</Report>
               </a>
             </span>
 
@@ -230,13 +196,7 @@ export default function Answer({ questionObj }) {
               <PhotoContainer>
                 <Photos>
                   {answer?.photos?.map((photoSrc, idx) => (
-                    <img
-                      key={idx}
-                      src={photoSrc.url}
-                      width='200'
-                      height='200'
-                      loading='lazy'
-                    />
+                    <img key={idx} src={photoSrc.url} width="200" height="200" loading="lazy" />
                   ))}
                 </Photos>
               </PhotoContainer>
@@ -255,10 +215,8 @@ export default function Answer({ questionObj }) {
       {console.log('ANSWERS: ', answers)}
       {remainingFinalAnswers?.length > 0 && (
         <span>
-          <a href='' onClick={handleSeeMoreAnswers}>
-            <CollapseBtn>
-              {showRemainderAnswers ? 'Collapse answers' : 'See more answers'}
-            </CollapseBtn>
+          <a href="" onClick={handleSeeMoreAnswers}>
+            <CollapseBtn>{showRemainderAnswers ? 'Collapse answers' : 'See more answers'}</CollapseBtn>
           </a>
         </span>
       )}

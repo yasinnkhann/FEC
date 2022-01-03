@@ -13,20 +13,24 @@ const modalElement = document.getElementById('modal-root');
 
 // MODAL
 export const Modal = ({ product, fade = false }, ref) => {
-
-
   // CONTEXT
-  const {selectedProductContext} = useContext(AppContext);
+  const { selectedProductContext } = useContext(AppContext);
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [isOpen, setIsOpen] = useState(false);
 
   // HOOKS
-  useImperativeHandle(ref, () => ({
-    open: () => { setIsOpen(true); },
-    close
-  }), [close]);
+  useImperativeHandle(
+    ref,
+    () => ({
+      open: () => {
+        setIsOpen(true);
+      },
+      close,
+    }),
+    [close]
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -46,27 +50,25 @@ export const Modal = ({ product, fade = false }, ref) => {
   };
 
   // Triggers close on escape keydown or click
-  const handleEscape = useCallback(e => {
-    if (e.keyCode === 27) {close(); }
-  }, [close]);
+  const handleEscape = useCallback(
+    (e) => {
+      if (e.keyCode === 27) {
+        close();
+      }
+    },
+    [close]
+  );
 
   const renderCategories = (currentProduct, selectedProduct) => {
-
     let currentProductArray = Object.entries(currentProduct);
     let selectedProductArray = Object.entries(selectedProduct);
 
     return (
       <ul className="categories">
-        {
-          currentProductArray.map(product => {
-            let category = formatWord(product[0]);
-            return (
-              <CategoryListItem key={currentProduct.id}>
-                {category}
-              </CategoryListItem>
-            );
-          })
-        }
+        {currentProductArray.map((product) => {
+          let category = formatWord(product[0]);
+          return <CategoryListItem key={currentProduct.id}>{category}</CategoryListItem>;
+        })}
       </ul>
     );
   };
@@ -94,12 +96,11 @@ export const Modal = ({ product, fade = false }, ref) => {
 
   // JSX
   return createPortal(
-
     // Show or hide depending on click
     isOpen ? (
       <ModalStyle className={`modal ${fade ? 'modal-fade' : ''}`}>
-        <ModalOverlay onClick={close} >
-          <ModalClose onClick={close} >
+        <ModalOverlay onClick={close}>
+          <ModalClose onClick={close}>
             <ActionButton name="close-modal" />
           </ModalClose>
           <ModalBody className="modal-body">

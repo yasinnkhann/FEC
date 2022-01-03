@@ -189,7 +189,6 @@ export default function RatingsReviews() {
   const [reviewCacheState, setReviewCacheState] = useState(0);
 
   useEffect(() => {
-
     setTimeout(() => {
       setLoaded(true);
     }, 700);
@@ -247,7 +246,7 @@ export default function RatingsReviews() {
       setStarSort([...starSort, event.target.id]);
     } else {
       starSort.splice(starSort.indexOf(event.target.id), 1);
-      setStarSort({starSort});
+      setStarSort({ starSort });
     }
   };
 
@@ -256,18 +255,18 @@ export default function RatingsReviews() {
   };
 
   const handleReviewData = (reviewData) => {
-    axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
-      .then((results) => {
-      })
+    axios
+      .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
+      .then((results) => {})
       .catch((err) => {
         console.log('err on review POST', err);
       });
   };
 
   const handlePut = (review_id, type) => {
-    axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/${type}`)
-      .then((results) => {
-      })
+    axios
+      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/${type}`)
+      .then((results) => {})
       .catch((err) => {
         console.log(err.data);
       });
@@ -279,7 +278,7 @@ export default function RatingsReviews() {
       setHideMoreReviews(true);
     }
     if (newEnd === reviewList.results.length - 1 || newEnd === reviewList.results.length) {
-      setReviewList(reviewCache[reviewCacheState].results.slice(0, (newEnd + 20)));
+      setReviewList(reviewCache[reviewCacheState].results.slice(0, newEnd + 20));
       setReviewEnd(newEnd);
     } else {
       setReviewEnd(newEnd);
@@ -299,38 +298,17 @@ export default function RatingsReviews() {
         <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
           Let be the first to add review to this product!
         </div>
-        <button
-          className="addReview"
-          type="button"
-          onClick={writeReviewClick}
-          style={addReviewBtnStyle}
-        >
+        <button className="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
           ADD A REVIEW +
         </button>
-        {
-          writeReviewModal
-        && (
-          <div
-            style={modalStyle}
-            aria-hidden="true"
-            role="button"
-            onClick={exitWriteReviewClick}
-          >
-            <div
-              style={innerModalStyle}
-              aria-hidden="true"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <WriteReview
-                handleReviewData={handleReviewData}
-                productID={selectedProduct}
-                metaData={metaData}
-              />
+        {writeReviewModal && (
+          <div style={modalStyle} aria-hidden="true" role="button" onClick={exitWriteReviewClick}>
+            <div style={innerModalStyle} aria-hidden="true" onClick={(e) => e.stopPropagation()}>
+              <WriteReview handleReviewData={handleReviewData} productID={selectedProduct} metaData={metaData} />
               <br />
             </div>
           </div>
-        )
-        }
+        )}
       </div>
     );
   }
@@ -338,7 +316,7 @@ export default function RatingsReviews() {
   return (
     <Fragment>
       {isLoaded ? (
-        <div style = {mainDiv}>
+        <div style={mainDiv}>
           {/* {console.log('from reviewList:', reviewList, 'from metaData:', metaData)} */}
           {/* {console.log('selectedProduct:: ', selectedProduct)} */}
           {/* {console.log('review CacheData:: ', reviewCache)} */}
@@ -355,21 +333,10 @@ export default function RatingsReviews() {
                   clearStarFilter={clearStarFilter}
                 />
               </div>
-              <div style={productStyle}>
-                {/* <ProductBreakdown metaData={metaData} /> */}
-              </div>
+              <div style={productStyle}>{/* <ProductBreakdown metaData={metaData} /> */}</div>
               {writeReviewModal && (
-                <div
-                  style={modalStyle}
-                  aria-hidden="true"
-                  role="button"
-                  onClick={exitWriteReviewClick}
-                >
-                  <div
-                    style={innerModalStyle}
-                    aria-hidden="true"
-                    onClick={(e) => e.stopPropagation()}
-                  >
+                <div style={modalStyle} aria-hidden="true" role="button" onClick={exitWriteReviewClick}>
+                  <div style={innerModalStyle} aria-hidden="true" onClick={(e) => e.stopPropagation()}>
                     {/* <WriteReview
                       handleReviewData={handleReviewData}
                       productID={selectedProduct}
@@ -380,14 +347,9 @@ export default function RatingsReviews() {
                 </div>
               )}
               <div style={sortOptionsStyle}>
-                <SortOptions
-                  metaData={metaData}
-                  listSort={listSort}
-                  listSortChange={listSortChange}
-                />
+                <SortOptions metaData={metaData} listSort={listSort} listSortChange={listSortChange} />
               </div>
               <div style={reviewListStyle}>
-
                 {/* <div style={{display: 'flex',}}> */}
                 {/* <ReviewList
                   reviewCache={reviewCache}
@@ -401,37 +363,21 @@ export default function RatingsReviews() {
               <div style={reviewButtonsStyle}>
                 <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
                   {reviewList.results.length > 2 && hideMoreReviews === false && (
-                    <button
-                      className="moreReviews"
-                      type="button"
-                      style={moreReviewsBtn}
-                      onClick={moreReviewsClick}
-                    >
-                   MORE REVIEWS
+                    <button className="moreReviews" type="button" style={moreReviewsBtn} onClick={moreReviewsClick}>
+                      MORE REVIEWS
                     </button>
                   )}
-                  <button
-                    id="addReview"
-                    type="button"
-                    onClick={writeReviewClick}
-                    style={addReviewBtnStyle}
-                  >
-                  ADD A REVIEW +
+                  <button id="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
+                    ADD A REVIEW +
                   </button>
                 </div>
               </div>
-
             </div>
-          )
-          }
+          )}
         </div>
-      ) : <Loader
-        type='Oval'
-        color='green'
-        height={160}
-        width={160}
-        arialLabel='loading-indicator'
-      />}
+      ) : (
+        <Loader type="Oval" color="green" height={160} width={160} arialLabel="loading-indicator" />
+      )}
     </Fragment>
   );
 }

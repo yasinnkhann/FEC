@@ -11,10 +11,7 @@ export default function Question({ questionObj }) {
   const { questionsData, setQuestionsData } = useContext(QuestionsContext);
 
   // STATE
-  const [
-    hasQuestionHelpfulCountIncremented,
-    setHasQuestionHelpfulCountIncremented,
-  ] = useState(false);
+  const [hasQuestionHelpfulCountIncremented, setHasQuestionHelpfulCountIncremented] = useState(false);
   const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [hasQuestionBeenReported, setHasQuestionBeenReported] = useState(false);
   const [expand, setExpand] = useState(false);
@@ -41,10 +38,7 @@ export default function Question({ questionObj }) {
       for (let i = 0; i < questionsDataCopy.length; i++) {
         let question = questionsDataCopy[i];
         for (let key in question) {
-          if (
-            question[key] === questionObj.question_id &&
-            !hasQuestionHelpfulCountIncremented
-          ) {
+          if (question[key] === questionObj.question_id && !hasQuestionHelpfulCountIncremented) {
             question.question_helpfulness = incrementedCount;
             setHasQuestionHelpfulCountIncremented(true);
           }
@@ -76,9 +70,7 @@ export default function Question({ questionObj }) {
       console.log('Q REPORTED PUT RES: ', res);
 
       const questionsDataCopy = [...questionsData.results];
-      const idx = questionsDataCopy.findIndex(
-        question => question.question_id === questionObj.question_id
-      );
+      const idx = questionsDataCopy.findIndex((question) => question.question_id === questionObj.question_id);
       if (!hasQuestionBeenReported) {
         questionsDataCopy[idx].reported = true;
         setQuestionsData({
@@ -92,7 +84,7 @@ export default function Question({ questionObj }) {
     }
   };
 
-  const openAnsModal = e => {
+  const openAnsModal = (e) => {
     e.preventDefault();
     setShowAnswerModal(true);
   };
@@ -108,23 +100,20 @@ export default function Question({ questionObj }) {
         <QuestionRightSide>
           <QuestionHelpfulSec>
             Helpful?{' '}
-            <a
-              href=''
-              onClick={e => increaseQuestionHelpfulCount(e, questionObj)}
-            >
+            <a href="" onClick={(e) => increaseQuestionHelpfulCount(e, questionObj)}>
               <u>Yes</u>
             </a>{' '}
             ({questionObj.question_helpfulness}) |{' '}
           </QuestionHelpfulSec>{' '}
           <QuestionReportedSec>
-            <a href='' onClick={e => handleQuestionsReported(e, questionObj)}>
+            <a href="" onClick={(e) => handleQuestionsReported(e, questionObj)}>
               <u>{questionObj.reported ? 'Reported' : 'Report'}</u>
             </a>
             {' | '}
           </QuestionReportedSec>
           <AddAnswerSec>
             {' '}
-            <a href='' onClick={openAnsModal}>
+            <a href="" onClick={openAnsModal}>
               {' '}
               <u>Add Answer</u>
             </a>
@@ -132,27 +121,27 @@ export default function Question({ questionObj }) {
           {(expand && (
             <svg
               style={{ transform: 'rotate(178deg)' }}
-              stroke='currentColor'
-              fill='currentColor'
-              strokeWidth='0'
-              viewBox='0 0 512 512'
-              height='2rem'
-              width='2rem'
-              xmlns='http://www.w3.org/2000/svg'
+              stroke="currentColor"
+              fill="currentColor"
+              strokeWidth="0"
+              viewBox="0 0 512 512"
+              height="2rem"
+              width="2rem"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path d='M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z'></path>
+              <path d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"></path>
             </svg>
           )) || (
             <svg
-              stroke='currentColor'
-              fill='currentColor'
-              strokeWidth='0'
-              viewBox='0 0 512 512'
-              height='2rem'
-              width='2rem'
-              xmlns='http://www.w3.org/2000/svg'
+              stroke="currentColor"
+              fill="currentColor"
+              strokeWidth="0"
+              viewBox="0 0 512 512"
+              height="2rem"
+              width="2rem"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path d='M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z'></path>
+              <path d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"></path>
             </svg>
           )}
         </QuestionRightSide>

@@ -35,7 +35,6 @@ export default function App() {
         console.error(err);
       }
     };
-
     getApi();
   }, []);
 
@@ -50,9 +49,9 @@ export default function App() {
             }}
           >
             <Overview />
-            {/* <RelatedItems />
+            <RelatedItems />
             <QuestionsAnswers />
-            <RatingsReviews /> */}
+            <RatingsReviews />
           </AppContext.Provider>
         </>
       ) : (

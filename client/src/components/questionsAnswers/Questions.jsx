@@ -20,57 +20,31 @@ export default function Questions({ questionsData, filteredData }) {
   if (!useFilteredData) {
     initialQs = questionsData
       ?.slice(0, 4)
-      .map(question => (
-        <Question key={question.question_id} questionObj={question} />
-      ))
-      .sort(
-        (a, b) =>
-          b.props.questionObj.question_helpfulness -
-          a.props.questionObj.question_helpfulness
-      );
+      .map((question) => <Question key={question.question_id} questionObj={question} />)
+      .sort((a, b) => b.props.questionObj.question_helpfulness - a.props.questionObj.question_helpfulness);
     remainingQs = questionsData
       ?.slice(4)
-      .map(question => (
-        <Question key={question.question_id} questionObj={question} />
-      ))
-      .sort(
-        (a, b) =>
-          b.props.questionObj.question_helpfulness -
-          a.props.questionObj.question_helpfulness
-      );
+      .map((question) => <Question key={question.question_id} questionObj={question} />)
+      .sort((a, b) => b.props.questionObj.question_helpfulness - a.props.questionObj.question_helpfulness);
   } else {
     initialQs = filteredData
       ?.slice(0, 4)
-      .map(question => (
-        <Question key={question.question_id} questionObj={question} />
-      ))
-      .sort(
-        (a, b) =>
-          b.props.questionObj.question_helpfulness -
-          a.props.questionObj.question_helpfulness
-      );
+      .map((question) => <Question key={question.question_id} questionObj={question} />)
+      .sort((a, b) => b.props.questionObj.question_helpfulness - a.props.questionObj.question_helpfulness);
     remainingQs = filteredData
       ?.slice(4)
-      .map(question => (
-        <Question key={question.question_id} questionObj={question} />
-      ))
-      .sort(
-        (a, b) =>
-          b.props.questionObj.question_helpfulness -
-          a.props.questionObj.question_helpfulness
-      );
+      .map((question) => <Question key={question.question_id} questionObj={question} />)
+      .sort((a, b) => b.props.questionObj.question_helpfulness - a.props.questionObj.question_helpfulness);
   }
 
   const showRemainingQsCondition =
-    (questionsData.length !== 0 && !useFilteredData) ||
-    (filteredData.length !== 0 && useFilteredData);
+    (questionsData.length !== 0 && !useFilteredData) || (filteredData.length !== 0 && useFilteredData);
 
   const showMoreAnsweredQsCondition =
-    (questionsData?.length > 4 && !useFilteredData) ||
-    (filteredData.length !== 0 && useFilteredData);
+    (questionsData?.length > 4 && !useFilteredData) || (filteredData.length !== 0 && useFilteredData);
 
   // METHODS
-  const handleRemainingQs = remainingQs => {
+  const handleRemainingQs = (remainingQs) => {
     const remainingQsCopy = [...remainingQs];
     // console.log('remainingQsCopy: ', remainingQsCopy);
     // console.log(
@@ -98,19 +72,11 @@ export default function Questions({ questionsData, filteredData }) {
     <Container>
       {initialQs?.length > 0 && initialQs}
       {showMoreAnsweredQsCondition && isRemainingQsBtnShown ? (
-        <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>
-          More Answered Questions
-        </MoreAnsweredQsBtn>
+        <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>More Answered Questions</MoreAnsweredQsBtn>
       ) : null}
-      {remainingQsList?.length > 0 && showRemainingQsCondition
-        ? remainingQsList
-        : null}
-      <CreateNewQBtn onClick={() => setShowQuestionModal(true)}>
-        Submit a new question
-      </CreateNewQBtn>
-      {showQuestionModal && (
-        <AddQuestion closeModal={() => setShowQuestionModal(false)} />
-      )}
+      {remainingQsList?.length > 0 && showRemainingQsCondition ? remainingQsList : null}
+      <CreateNewQBtn onClick={() => setShowQuestionModal(true)}>Submit a new question</CreateNewQBtn>
+      {showQuestionModal && <AddQuestion closeModal={() => setShowQuestionModal(false)} />}
       {/* {console.log('INITIAL QS: ', initialQs)}
       {console.log('REMAINING QS: ', remainingQs)}
       {console.log('FILTERED DATA: ', filteredData)} */}
@@ -126,4 +92,3 @@ const Container = styled.div`
 const MoreAnsweredQsBtn = styled.button``;
 
 const CreateNewQBtn = styled.button``;
-

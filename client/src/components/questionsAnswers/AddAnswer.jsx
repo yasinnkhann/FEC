@@ -23,13 +23,11 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
   });
 
   // VARIABLES
-  const specifiedProduct = products.filter(
-    product => Number(product.id) === Number(questionsData.product_id)
-  );
+  const specifiedProduct = products.filter((product) => Number(product.id) === Number(questionsData.product_id));
 
   // METHODS
   useEffect(() => {
-    const close = e => {
+    const close = (e) => {
       if (e.keyCode === 27) {
         closeModal();
       }
@@ -47,12 +45,12 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
     collapsePanel();
   };
 
-  const handleFileUpload = e => {
+  const handleFileUpload = (e) => {
     setNumOfImages(e.target.files.length);
     setImages(e.target.files);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (images.length > 5) {
       alert('Cannot upload files more than 5 files');
@@ -112,87 +110,72 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
           <h4>
             {specifiedProduct[0].name}: {question.question_body}
           </h4>
-          <label htmlFor='yourAnswer'>
+          <label htmlFor="yourAnswer">
             Your Answer<span style={{ color: 'red' }}>* </span>
           </label>
           <textarea
-            name='yourAnswer'
+            name="yourAnswer"
             value={addAnsData.yourAnswer}
             onChange={handleChange}
-            id='yourAnswer'
-            cols='45'
-            rows='10'
-            maxLength='1000'
+            id="yourAnswer"
+            cols="45"
+            rows="10"
+            maxLength="1000"
             required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid answer')
-            }
-            onInput={e => e.target.setCustomValidity('')}
+            onInvalid={(e) => e.target.setCustomValidity('You must enter a valid answer')}
+            onInput={(e) => e.target.setCustomValidity('')}
           ></textarea>
           <br />
           <br />
-          <label htmlFor='yourNickName'>
+          <label htmlFor="yourNickName">
             What is your nickname<span style={{ color: 'red' }}>* </span>
           </label>
           <input
-            name='yourNickName'
+            name="yourNickName"
             value={addAnsData.yourNickName}
             onChange={handleChange}
-            type='text'
-            id='yourNickName'
-            maxLength='60'
-            placeholder='Example: jack543!'
+            type="text"
+            id="yourNickName"
+            maxLength="60"
+            placeholder="Example: jack543!"
             required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid nickname')
-            }
-            onInput={e => e.target.setCustomValidity('')}
+            onInvalid={(e) => e.target.setCustomValidity('You must enter a valid nickname')}
+            onInput={(e) => e.target.setCustomValidity('')}
           />
           <br />
-          <span>
-            - For privacy reasons, do not use your full name or email address.
-          </span>
+          <span>- For privacy reasons, do not use your full name or email address.</span>
           <br />
           <br />
-          <label htmlFor='yourEmail'>
+          <label htmlFor="yourEmail">
             Your Email<span style={{ color: 'red' }}>* </span>
           </label>
           <input
-            name='yourEmail'
+            name="yourEmail"
             value={addAnsData.yourEmail}
             onChange={handleChange}
-            type='email'
-            id='yourEmail'
-            maxLength='60'
-            placeholder='Example: jack@email.com'
+            type="email"
+            id="yourEmail"
+            maxLength="60"
+            placeholder="Example: jack@email.com"
             required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid email address')
-            }
-            onInput={e => e.target.setCustomValidity('')}
+            onInvalid={(e) => e.target.setCustomValidity('You must enter a valid email address')}
+            onInput={(e) => e.target.setCustomValidity('')}
           />
           <br />
           <span>- For authentication reasons, you will not be emailed.</span>
           <br />
           <br />
-          <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
+          <label htmlFor="uploadInput">Upload Photos: (Max: 5) </label>
           <br />
           {numOfImages <= 5 && (
             <>
-              <input
-                type='file'
-                id='uploadInput'
-                name='images'
-                multiple
-                accept='image/*'
-                onChange={handleFileUpload}
-              />
+              <input type="file" id="uploadInput" name="images" multiple accept="image/*" onChange={handleFileUpload} />
               {images &&
-                [...images].map(thumbnail => (
+                [...images].map((thumbnail) => (
                   <img
                     key={uuidv4()}
                     src={URL.createObjectURL(thumbnail)}
-                    alt='uploaded photo'
+                    alt="uploaded photo"
                     style={{
                       height: '45px',
                       width: '45px',
@@ -205,7 +188,7 @@ export default function AddAnswer({ closeModal, question, collapsePanel }) {
           )}
           <br />
           <br />
-          <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
+          <SubmitBtn type="submit">Submit Answer</SubmitBtn>
           <CloseBtn onClick={handleCloseModal}>
             <CloseIcon />
           </CloseBtn>

@@ -20,13 +20,13 @@ export default function QuestionsAnswers() {
   const [products, setProducts] = productsContext;
 
   // METHODS
-  const handleSearchQuery = query => {
+  const handleSearchQuery = (query) => {
     setUseFilteredData(true);
     if (query.length < 2) {
       setFilteredQuestions(questionsData.results);
     } else {
       const questionsCopy = [...questionsData.results];
-      const questionsFiltered = questionsCopy.filter(question =>
+      const questionsFiltered = questionsCopy.filter((question) =>
         question.question_body.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredQuestions(questionsFiltered);
@@ -36,20 +36,17 @@ export default function QuestionsAnswers() {
   useEffect(() => {
     const getQs = async () => {
       try {
-        const res = await axios.get(
-          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
-          {
-            params: {
-              // product_id: 40347,
-              product_id: products[234]?.id,
-              // page: 1,
-              // count: 1,
-            },
-            headers: {
-              Authorization: `${TOKEN}`,
-            },
-          }
-        );
+        const res = await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', {
+          params: {
+            // product_id: 40347,
+            product_id: products[234]?.id,
+            // page: 1,
+            // count: 1,
+          },
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        });
         console.log('RESPONSE: ', res.data);
         setQuestionsData(res.data);
         setIsLoaded(true);
@@ -62,7 +59,7 @@ export default function QuestionsAnswers() {
   }, []);
 
   return (
-    <div className='qaWidget'>
+    <div className="qaWidget">
       <QATitle>QUESTIONS &#38; ANSWERS</QATitle>
 
       {isLoaded && (
@@ -76,10 +73,7 @@ export default function QuestionsAnswers() {
             }}
           >
             <Search handleChange={handleSearchQuery} />
-            <Questions
-              questionsData={questionsData.results}
-              filteredData={filteredQuestions}
-            />
+            <Questions questionsData={questionsData.results} filteredData={filteredQuestions} />
           </QuestionsContext.Provider>
         </>
       )}

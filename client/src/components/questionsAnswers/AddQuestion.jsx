@@ -20,13 +20,11 @@ export default function AddQuestion({ closeModal, question }) {
   });
 
   // VARIABLES
-  const specifiedProduct = products.filter(
-    product => Number(product.id) === Number(questionsData.product_id)
-  );
+  const specifiedProduct = products.filter((product) => Number(product.id) === Number(questionsData.product_id));
 
   // METHODS
   useEffect(() => {
-    const close = e => {
+    const close = (e) => {
       if (e.keyCode === 27) {
         closeModal();
       }
@@ -39,7 +37,7 @@ export default function AddQuestion({ closeModal, question }) {
     setFormData({ ...formData, hasChanged: true, [name]: value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const body = {
@@ -48,15 +46,11 @@ export default function AddQuestion({ closeModal, question }) {
         email: formData.yourEmail,
         product_id: Number(questionsData.product_id),
       };
-      const res = await axios.post(
-        'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
-        body,
-        {
-          headers: {
-            Authorization: `${TOKEN}`,
-          },
-        }
-      );
+      const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', body, {
+        headers: {
+          Authorization: `${TOKEN}`,
+        },
+      });
       console.log('ADD Q POST RES: ', res);
     } catch (err) {
       console.error(err);
@@ -70,70 +64,62 @@ export default function AddQuestion({ closeModal, question }) {
         <Content onSubmit={handleSubmit}>
           <h2>Ask Your Question</h2>
           <h4>About the {specifiedProduct[0].name}</h4>
-          <label htmlFor='yourQuestion'>
+          <label htmlFor="yourQuestion">
             Your Question<span style={{ color: 'red' }}>* </span>
           </label>
           <textarea
-            name='yourQuestion'
+            name="yourQuestion"
             value={formData.yourQuestion}
             onChange={handleChange}
-            id='yourQuestion'
-            cols='45'
-            rows='10'
-            maxLength='1000'
+            id="yourQuestion"
+            cols="45"
+            rows="10"
+            maxLength="1000"
             required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid question')
-            }
-            onInput={e => e.target.setCustomValidity('')}
+            onInvalid={(e) => e.target.setCustomValidity('You must enter a valid question')}
+            onInput={(e) => e.target.setCustomValidity('')}
           ></textarea>
           <br />
           <br />
-          <label htmlFor='yourNickName'>
+          <label htmlFor="yourNickName">
             What is your nickname<span style={{ color: 'red' }}>* </span>
           </label>
           <input
-            name='yourNickName'
+            name="yourNickName"
             value={formData.yourNickName}
             onChange={handleChange}
-            type='text'
-            id='yourNickName'
-            maxLength='60'
-            placeholder='Example: jackson11!'
+            type="text"
+            id="yourNickName"
+            maxLength="60"
+            placeholder="Example: jackson11!"
             required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid nickname')
-            }
-            onInput={e => e.target.setCustomValidity('')}
+            onInvalid={(e) => e.target.setCustomValidity('You must enter a valid nickname')}
+            onInput={(e) => e.target.setCustomValidity('')}
           />
           <br />
-          <span>
-            - For privacy reasons, do not use your full name or email address.
-          </span>
+          <span>- For privacy reasons, do not use your full name or email address.</span>
           <br />
           <br />
-          <label htmlFor='yourEmail'>
+          <label htmlFor="yourEmail">
             Your Email<span style={{ color: 'red' }}>* </span>
           </label>
           <input
-            name='yourEmail'
+            name="yourEmail"
             value={formData.yourEmail}
             onChange={handleChange}
-            type='email'
-            id='yourEmail'
-            maxLength='60'
-            placeholder='Example: jack@email.com'
+            type="email"
+            id="yourEmail"
+            maxLength="60"
+            placeholder="Example: jack@email.com"
             required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid email address')
-            }
-            onInput={e => e.target.setCustomValidity('')}
+            onInvalid={(e) => e.target.setCustomValidity('You must enter a valid email address')}
+            onInput={(e) => e.target.setCustomValidity('')}
           />
           <br />
           <span>- For authentication reasons, you will not be emailed.</span>
           <br />
           <br />
-          <SubmitBtn type='submit'>Submit Question</SubmitBtn>
+          <SubmitBtn type="submit">Submit Question</SubmitBtn>
           <CloseBtn onClick={closeModal}>
             <CloseIcon />
           </CloseBtn>
