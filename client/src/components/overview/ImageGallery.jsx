@@ -151,7 +151,6 @@ export default function ImageGallery() {
   const getpage = (newindex) => {
     const min = currentPage * 7;
     const max = (currentPage * 7) + 7 || 7;
-    console.log(min, max, currentPage);
     if (newindex >= max) {
       setcurrentPage(currentPage + 1);
     }

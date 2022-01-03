@@ -72,7 +72,6 @@ export default function Overview() {
           },
         });
         setstylesData(res.data);
-        console.log(res.data);
         setCurrentStyle(res.data.results[0]);
         setLoadingStatusStyles(true);
       } catch (err) {
