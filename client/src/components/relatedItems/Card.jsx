@@ -72,8 +72,8 @@ export default function CarouselCard({ product }) {
 }
 
 const CardStyle = styled.div`
-  width: 200px;
-  height: 300px;
+  width: 210px;
+  height: 310px;
   margin: 5px;
   padding: 5px;
   border: 1px solid black;
@@ -92,4 +92,6 @@ const ProductInfoStyle = styled.div`
 
 const ActionStyle = styled.a`
   z-index: 1;
+  width: 35px;
+  height: 35px;
 `;
