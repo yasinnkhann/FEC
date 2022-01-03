@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import StylesContext from './StylesContext';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {ArrowUpward} from '@material-ui/icons';
@@ -66,6 +65,50 @@ const ThumbnailImage = styled.img`
   object-fit: cover;
 `;
 
+// const ExpandedImageContainer = styled.img `
+// width: 600px;
+// background-repeat: no-repeat;
+// background-position: ${(props) => (props.selected ? handleMouseMove() : '0% 0%')};
+
+// &&:hover {
+//   opacity: 0;
+// }
+// `;
+
+// const ExpandedImage = styled.img `
+//   display: block;
+//   width: 100%;
+//   pointer-events: none;
+// `;
+// const ExpandedContainer = styled.div `
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100vh;
+//   width: 100vw;
+// `;
+
+// class Zoom extends Component {
+//   state = {
+//     backgroundImage: `url(${src})`,
+//     backgroundPosition: '0% 0%'
+//   }
+
+//   handleMouseMove = e => {
+//     const { left, top, width, height } = e.target.getBoundingClientRect()
+//     const x = (e.pageX - left) / width * 100
+//     const y = (e.pageY - top) / height * 100
+//     this.setState({ backgroundPosition: `${x}% ${y}%` })
+//   }
+
+//   render = () =>
+//     <figure onMouseMove={this.handleMouseMove} style={this.state}>
+//       <img src={src} />
+//     </figure>
+// }
+
+// ReactDOM.render(<Zoom />, document.getElementById('root'))
+
 export default function ImageGallery() {
   const { stylesDataContent, currentStyleContent } = useContext(StylesContext);
   const [stylesData, setstylesData] = stylesDataContent;
@@ -97,9 +140,13 @@ export default function ImageGallery() {
     const end = (currentPage + 1) * numberOfItemsToShow;
     return currentStyle.photos.slice(start, end);
   };
+  // const handleMouseMove = (e) => {
+  //   const { left, top, width, height } = e.target.getBoundingClientRect();
+  //   const x = (e.pageX - left) / width * 100;
+  //   const y = (e.pageY - top) / height * 100;
+  //   setbackgroundPosition(`${x}% ${y}%`);
+  // };
 
-  const numberOfItemsToShow = 7;
-  let currpage = 0;
 
   const getpage = (newindex) => {
     const min = currentPage * 7;
@@ -134,6 +181,8 @@ export default function ImageGallery() {
       {currentIndex < currentStyle.photos.length - 1 &&
       <Right onClick={() => getpage(currentIndex + 1)}><ChevronRightIcon/></Right>
       }
+      {/* <ExpandedImageContainer ></ExpandedImageContainer> */}
+      {/* onClick={(e) => handleMouseMove(e)} selected={backgroundPostion} */}
       <MainImage src={currentStyle.photos[currentIndex].url}></MainImage>
     </MainImgContainer>
   );

@@ -35,13 +35,12 @@ export default function Overview() {
   const [products, setProducts] = productsContext;
   const { selectedProductContext } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
-  // const selectedProduct = products.slice(0, 1);
   const [reviewsData, setreviewsData] = useState([]);
   const [loadingStatusReviews, setLoadingStatusReviews] = useState(false);
   const [loadingStatusStyles, setLoadingStatusStyles] = useState(false);
   const [stylesData, setstylesData] = useState([]);
   const [currentStyle, setCurrentStyle] = useState([]);
-  console.log(selectedProduct);
+
   useEffect(() => {
     const getReviews = async () => {
       try {
@@ -60,7 +59,7 @@ export default function Overview() {
       }
     };
     getReviews();
-  }, []);
+  }, [selectedProduct]);
   useEffect(() => {
     const getStyles = async () => {
       try {
@@ -81,7 +80,7 @@ export default function Overview() {
       }
     };
     getStyles();
-  }, []);
+  }, [selectedProduct]);
   return (
     <div>
       <Grid>

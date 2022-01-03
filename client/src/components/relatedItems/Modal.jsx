@@ -52,20 +52,6 @@ export const Modal = ({ product, fade = false }, ref) => {
   };
 
   // Triggers close on escape keydown or click
-<<<<<<< HEAD
-  const handleEscape = useCallback(
-    (e) => {
-      if (e.keyCode === 27) {
-        close();
-      }
-    },
-    [close]
-  );
-
-  const renderCategories = (currentProduct, selectedProduct) => {
-    let currentProductArray = Object.entries(currentProduct);
-    let selectedProductArray = Object.entries(selectedProduct);
-=======
   const handleEscape = useCallback(e => {
     if (e.keyCode === 27) { close(); }
   }, [close]);
@@ -135,24 +121,14 @@ export const Modal = ({ product, fade = false }, ref) => {
     }
   };
 
->>>>>>> 7fe18248cadcc7c5e921efed9a1c972c932dc56e
 
   const renderNameColumn = (leftProduct, category, rightProduct) => {
     return (
-<<<<<<< HEAD
-      <ul className="categories">
-        {currentProductArray.map((product) => {
-          let category = formatWord(product[0]);
-          return <CategoryListItem key={currentProduct.id}>{category}</CategoryListItem>;
-        })}
-      </ul>
-=======
       <ModalBoldRow key={category ? category : null}>
         <td>{`${category}: ${leftProduct}`}</td>
         <td>{null}</td>
         <td>{`${category}: ${rightProduct}`}</td>
       </ModalBoldRow>
->>>>>>> 7fe18248cadcc7c5e921efed9a1c972c932dc56e
     );
   };
 

@@ -177,6 +177,7 @@ export default function StyleSelector() {
   const addToCartHandler = (e) => {
     selectedSize ? addInCart() : badCartHandler();
   };
+
   const badCartHandler = () => {
     setIsSizeOpen(true);
     setShowMessage(true);
