@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
 import { TOKEN, cloudinaryInfo } from '../../config.js';
+import Loader from 'react-loader-spinner';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
@@ -21,6 +22,7 @@ export default function AddAnswer({ closeModal, question }) {
     yourNickName: '',
     yourEmail: '',
   });
+  const [isPostReqSubmitted, setIsPostReqSubmitted] = useState(false);
 
   // VARIABLES
   const specifiedProduct = products.filter(
@@ -60,6 +62,7 @@ export default function AddAnswer({ closeModal, question }) {
       return;
     }
     const photoUrls = [];
+    setIsPostReqSubmitted(true);
 
     for (let i = 0; i < images.length; i++) {
       const formData = new FormData();
@@ -93,6 +96,8 @@ export default function AddAnswer({ closeModal, question }) {
           },
         }
       );
+      setIsPostReqSubmitted(false);
+
       console.log('SUBMIT RES: ', res);
       closeModal();
     } catch (err) {
@@ -105,111 +110,138 @@ export default function AddAnswer({ closeModal, question }) {
   return (
     <Fragment>
       <Overlay>
-        <Content onSubmit={handleSubmit}>
-          <h2>Submit your Answer</h2>
-          <h4>
-            {specifiedProduct[0].name}: {question.question_body}
-          </h4>
-          <label htmlFor='yourAnswer'>
-            Your Answer<span style={{ color: 'red' }}>* </span>
-          </label>
-          <textarea
-            style={{
-              verticalAlign: 'top',
-              margin: '0px',
-              height: '83px',
-              width: '329px',
-            }}
-            name='yourAnswer'
-            value={addAnsData.yourAnswer}
-            onChange={handleChange}
-            id='yourAnswer'
-            cols='45'
-            rows='10'
-            maxLength='1000'
-            required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid answer')
-            }
-            onInput={e => e.target.setCustomValidity('')}
-          ></textarea>
-          <br />
-          <label htmlFor='yourNickName'>
-            What is your nickname<span style={{ color: 'red' }}>* </span>
-          </label>
-          <input
-            name='yourNickName'
-            value={addAnsData.yourNickName}
-            onChange={handleChange}
-            type='text'
-            id='yourNickName'
-            maxLength='60'
-            placeholder='Example: jack543!'
-            required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid nickname')
-            }
-            onInput={e => e.target.setCustomValidity('')}
-          />
-          <br />
-          <span>
-            For privacy reasons, do not use your full name or email address.
-          </span>
-          <br />
-          <label htmlFor='yourEmail'>
-            Your Email<span style={{ color: 'red' }}>* </span>
-          </label>
-          <input
-            name='yourEmail'
-            value={addAnsData.yourEmail}
-            onChange={handleChange}
-            type='email'
-            id='yourEmail'
-            maxLength='60'
-            placeholder='Example: jack@email.com'
-            required
-            onInvalid={e =>
-              e.target.setCustomValidity('You must enter a valid email address')
-            }
-            onInput={e => e.target.setCustomValidity('')}
-          />
-          <br />
-          <span>For authentication reasons, you will not be emailed.</span>
-          <br />
-          <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
-          <br />
-          {numOfImages <= 5 && (
-            <>
-              <input
-                type='file'
-                id='uploadInput'
-                name='images'
-                multiple
-                accept='image/*'
-                onChange={handleFileUpload}
+        <UpperContent>
+          <Content onSubmit={handleSubmit}>
+            <h2>Submit your Answer</h2>
+            <h4>
+              {specifiedProduct[0].name}: {question.question_body}
+            </h4>
+            <label htmlFor='yourAnswer'>
+              Your Answer<span style={{ color: 'red' }}>* </span>
+            </label>
+            <br />
+            <textarea
+              style={{
+                verticalAlign: 'top',
+                margin: '0px',
+                resize: 'none',
+              }}
+              name='yourAnswer'
+              value={addAnsData.yourAnswer}
+              onChange={handleChange}
+              id='yourAnswer'
+              cols='45'
+              rows='6'
+              maxLength='1000'
+              required
+              onInvalid={e =>
+                e.target.setCustomValidity('You must enter a valid answer')
+              }
+              onInput={e => e.target.setCustomValidity('')}
+            ></textarea>
+            <br />
+            <br />
+            <label htmlFor='yourNickName'>
+              What is your nickname<span style={{ color: 'red' }}>* </span>
+            </label>
+            <br />
+            <input
+              name='yourNickName'
+              value={addAnsData.yourNickName}
+              onChange={handleChange}
+              type='text'
+              id='yourNickName'
+              maxLength='60'
+              placeholder='Example: jack543!'
+              required
+              onInvalid={e =>
+                e.target.setCustomValidity('You must enter a valid nickname')
+              }
+              onInput={e => e.target.setCustomValidity('')}
+            />
+            <br />
+            <br />
+            <span>
+              For privacy reasons, do not use your full name or email address.
+            </span>
+            <br />
+            <label htmlFor='yourEmail'>
+              Your Email<span style={{ color: 'red' }}>* </span>
+            </label>
+            <br />
+            <input
+              name='yourEmail'
+              value={addAnsData.yourEmail}
+              onChange={handleChange}
+              type='email'
+              id='yourEmail'
+              maxLength='60'
+              placeholder='Example: jack@email.com'
+              required
+              onInvalid={e =>
+                e.target.setCustomValidity(
+                  'You must enter a valid email address'
+                )
+              }
+              onInput={e => e.target.setCustomValidity('')}
+            />
+            <br />
+            <span>For authentication reasons, you will not be emailed.</span>
+            <br />
+            <br />
+            <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
+            <br />
+            {numOfImages <= 5 && (
+              <>
+                <input
+                  type='file'
+                  id='uploadInput'
+                  name='images'
+                  multiple
+                  accept='image/*'
+                  onChange={handleFileUpload}
+                />
+                {images && (
+                  <ImagesContainer>
+                    {[...images].map(thumbnail => (
+                      <img
+                        key={uuidv4()}
+                        src={URL.createObjectURL(thumbnail)}
+                        alt='uploaded photo'
+                        style={{
+                          height: '50px',
+                          width: '50px',
+                          border: '1px solid #000',
+                          margin: '5px',
+                        }}
+                      />
+                    ))}
+                  </ImagesContainer>
+                )}
+              </>
+            )}
+            <br />
+            <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
+            <CloseBtn onClick={handleCloseModal}>
+              <XIcon />
+            </CloseBtn>
+            {isPostReqSubmitted && (
+              <Loader
+                type='Oval'
+                color='blue'
+                height={100}
+                width={100}
+                arialLabel='loading-indicator'
+                style={{
+                  position: 'fixed',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                }}
               />
-              {images &&
-                [...images].map(thumbnail => (
-                  <img
-                    key={uuidv4()}
-                    src={URL.createObjectURL(thumbnail)}
-                    alt='uploaded photo'
-                    style={{
-                      height: '45px',
-                      width: '45px',
-                      border: '1px solid #000',
-                      margin: '5px',
-                    }}
-                  />
-                ))}
-            </>
-          )}
-          <br />
-          <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
-          <CloseBtn onClick={handleCloseModal}>
-            <XIcon />
-          </CloseBtn>
-        </Content>
+            )}
+          </Content>
+        </UpperContent>
       </Overlay>
     </Fragment>
   );
@@ -226,23 +258,60 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
 `;
 
 const Content = styled.form`
+  padding: 0.2rem 1.2rem;
+`;
+
+const UpperContent = styled.div`
   background: white;
-  width: 50rem;
+  width: 40rem;
   max-width: calc(100vw - 2rem);
   max-height: calc(100vh - 2rem);
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.25);
-  overflow-y: auto;
   position: relative;
-  -webkit-overflow-scrolling: 'touch';
-  text-align: center;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  align-items: center;
+  border-radius: 6px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 10px;
+  }
+
+  input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 98.5%;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid #000;
+    padding: 0px 8px;
+  }
+
+  input[type='file'] {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    border: none;
+    padding: 0px 0px;
+  }
+
+  textarea {
+    width: 100%;
+  }
 `;
+
+const ImagesContainer = styled.div``;
 
 const XIcon = styled(CloseIcon)`
   && {
@@ -253,11 +322,13 @@ const XIcon = styled(CloseIcon)`
 
 const CloseBtn = styled.button`
   cursor: pointer;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: 0rem;
+  right: 0rem;
   position: absolute;
   width: 3rem;
   height: 3rem;
+  background: transparent;
+  border: none;
 `;
 
 const SubmitBtn = styled.button`

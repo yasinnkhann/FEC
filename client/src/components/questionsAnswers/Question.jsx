@@ -166,7 +166,7 @@ export default function Question({ questionObj }) {
   };
 
   return (
-    <Container style={{ height: (isExpanded && '100%') || '45px' }}>
+    <Container style={{ maxHeight: (isExpanded && '400px') || '45px' }}>
       {renderQ()}
       {isExpanded && (
         <>

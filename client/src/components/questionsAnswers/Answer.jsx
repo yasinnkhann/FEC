@@ -268,7 +268,21 @@ export default function Answer({ questionObj }) {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  max-height: 320px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 10px;
+  }
+`;
 
 const AnswerBodyContainer = styled.div`
   margin: 0px 0px 0px 10px;
