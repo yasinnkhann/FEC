@@ -103,7 +103,7 @@ class ReviewListEntry extends React.Component {
       })
       .catch((err) => {
         console.log(err);
-        alert("There's been an issue with your request");
+        alert('There\'s been an issue with your request');
       });
   }
 

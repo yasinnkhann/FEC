@@ -19,7 +19,6 @@ import ProductInfo from './ProductInfo.jsx';
 
 // CARD
 export default function CarouselCard({ product, name }) {
-
   // CONTEXT
   const { selectedProductContext } = useContext(AppContext);
 
@@ -111,6 +110,11 @@ const ProductInfoStyle = styled.div`
 
 const ActionStyle = styled.a`
   z-index: 1;
+<<<<<<< HEAD
   max-height: 35px;
   max-width: 35px;
+=======
+  width: 35px;
+  height: 35px;
+>>>>>>> main
 `;
