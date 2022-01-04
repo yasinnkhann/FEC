@@ -12,12 +12,14 @@ import ModalContext from './ModalContext.js';
 
 // Component imports
 import ActionButton from './ActionButton.jsx';
+import AddToOutfit from './AddToOutfit.jsx';
+import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
-import Modal from './Modal.jsx';
 
 // CARD
-export default function CarouselCard({ product }) {
+export default function CarouselCard({ product, name }) {
+
   // CONTEXT
   const { selectedProductContext } = useContext(AppContext);
 
@@ -32,7 +34,7 @@ export default function CarouselCard({ product }) {
 
   // HOOKS
   useEffect(() => {
-    getProductStyle(product.id);
+    if (product) { getProductStyle(product.id); }
   }, []);
 
   // API HANDLER
@@ -56,24 +58,41 @@ export default function CarouselCard({ product }) {
     setSelectedProduct(newSelectedProduct);
   };
 
+  // RENDER METHODS
+  const renderCard = (cardName) => {
+    if (cardName === 'add-button') {
+      return (
+        <CardStyle >
+          <ProductInfoStyle > {/* onClick={() => console.log('ADD BUTTON CLICKED')} */}
+            <AddToOutfit />
+          </ProductInfoStyle>
+        </CardStyle>
+      );
+    } else {
+      return (
+        <CardStyle >
+          <ActionStyle onClick={() => modal.current.open()}>
+            <ActionButton name="open-modal" />
+          </ActionStyle>
+          <Modal key={`modal-${product.id}`} ref={modal} product={product} />
+          <ProductInfoStyle onClick={() => handleClick(product)} >
+            <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
+            <ProductInfo product={product} />
+          </ProductInfoStyle>
+        </CardStyle>
+      );
+    }
+  };
+
   // JSX
   return (
-    <CardStyle>
-      <ActionStyle onClick={() => modal.current.open()}>
-        <ActionButton name="open-modal" />
-      </ActionStyle>
-      <Modal key={`modal-${product.id}`} ref={modal} product={product} />
-      <ProductInfoStyle onClick={() => handleClick(product)} >
-        <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
-        <ProductInfo product={product} />
-      </ProductInfoStyle>
-    </CardStyle>
+    renderCard(name)
   );
 }
 
 const CardStyle = styled.div`
-  width: 200px;
-  height: 300px;
+  width: 210px;
+  height: 310px;
   margin: 5px;
   padding: 5px;
   border: 1px solid black;
@@ -92,4 +111,6 @@ const ProductInfoStyle = styled.div`
 
 const ActionStyle = styled.a`
   z-index: 1;
+  max-height: 35px;
+  max-width: 35px;
 `;

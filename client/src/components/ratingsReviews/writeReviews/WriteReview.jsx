@@ -206,7 +206,7 @@ class WriteReview extends React.Component {
       email.length > 60 ||
       email.length === 0
     ) {
-      alert("Please make sure email is in proper format ex. 'hello@hello.com");
+      alert('Please make sure email is in proper format ex. \'hello@hello.com');
       e.preventDefault();
       return false;
     }
@@ -461,7 +461,7 @@ class WriteReview extends React.Component {
               name="email"
               value={email}
               onChange={this.onInputChange}
-              placeholder="william@gmail.com"
+              placeholder="georgeWashington@gmail.com"
             />
             <br />
           </div>
