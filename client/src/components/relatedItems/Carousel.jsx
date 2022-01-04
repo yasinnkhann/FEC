@@ -33,78 +33,72 @@ export default function Carousel({ name, relatedProductIds }) {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(4);
+  const [endIndex, setEndIndex] = useState(3);
   const [isLoaded, setIsLoaded] = useState(false);
   const size = useWindowSize();
 
   // HOOKS & INITILIZATION
+  // Populates relatedProducts state to render each item
+  useEffect(() => {
+    console.log('[selectedProduct, relatedProductIds]');
+    let clearId = setTimeout(() => {
+
+      setRelatedProducts([]);
+      setVisibleProducts([]);
+
+      // API HANDLERS
+      // Gets one product's info based on id
+      const updateRelatedProducts = async (id) => {
+        await axios
+          .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
+            params: {
+              product_id: id,
+            },
+            headers: {
+              Authorization: `${TOKEN}`,
+            },
+          })
+          .then((productData) => {
+            setRelatedProducts(state => [...state, productData]);
+          })
+          .catch((err) => console.log(err));
+      };
+
+      if (relatedProductIds !== undefined) {
+        relatedProductIds.forEach((id) => {
+          updateRelatedProducts(id);
+        });
+      }
+      setIsLoaded(true);
+    }, 300);
+
+
+    return () => clearTimeout(clearId);
+  }, [selectedProduct, relatedProductIds]);
 
   // Changes number of items shown based on window size
   useEffect(() => {
+    console.log('[size, relatedProducts]');
     // if (relatedProducts[startIndex]) { console.log('CURRENT CARD :: ', relatedProducts[startIndex].data.name); }
-    const newEndIndex = getMaxIndexBasedOnScreenSize();
-    setEndIndex(newEndIndex);
-    changeVisibleProductsArray(startIndex, endIndex);
+    let clearId = setTimeout(() => {
+      const newEndIndex = getMaxIndexBasedOnScreenSize();
+      if (newEndIndex < 3) {
+        setEndIndex(newEndIndex);
+      }
+      let newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
+      setVisibleProducts(newVisibleProducts);
+    }, 100);
 
-    return () => resetVisibleProducts();
-  }, [size]);
-
-  // Populates relatedProducts state to render each item
-  useEffect(() => {
-    if (relatedProductIds !== undefined) {
-      setRelatedProducts([]);
-      setVisibleProducts([]);
-      relatedProductIds.forEach((id) => {
-        updateRelatedProducts(id);
-      });
-    }
-
-    return () => resetVisibleProducts();
-  }, [relatedProductIds]);
-
-  // Reset shown products when new item is selected
-  useEffect(() => {
-    resetVisibleProducts();
-    return () => resetVisibleProducts();
-  }, [selectedProduct]);
+    return () => clearTimeout(clearId);
+  }, [size, relatedProducts]);
 
   useEffect(() => {
-    setVisibleProducts(relatedProducts.slice(startIndex, endIndex));
+    let clearId = setTimeout(() => {
+      setVisibleProducts(relatedProducts.slice(startIndex, endIndex));
+    }, 250);
 
-    return () => setVisibleProducts(relatedProducts.slice(startIndex - 1, endIndex - 1));
+    return () => clearTimeout(clearId);
   }, [startIndex]);
-
-  useEffect(() => {
-    setIsLoaded(true);
-    setStartIndex(0);
-    setEndIndex(maxIndex);
-
-    return () => {
-      resetVisibleProducts();
-      setIsLoaded(false);
-    };
-  }, [name]);
-
-  // API HANDLERS
-  // Gets one product's info based on id
-  const updateRelatedProducts = async (id) => {
-    await axios
-      .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
-        params: {
-          product_id: id,
-        },
-        headers: {
-          Authorization: `${TOKEN}`,
-        },
-      })
-      .then((productData) => {
-        setRelatedProducts((state) => Array.from(new Set(state).add(productData)));
-        visibleProducts.length > 5 ? null : setVisibleProducts((state) => Array.from(new Set(state).add(productData)));
-      })
-      .then(() => setIsLoaded(true))
-      .catch((err) => console.log(err));
-  };
 
   // EVENT HANDLERS
   // Click handler that adjusts items shown based on left arrow being clicked
@@ -134,7 +128,7 @@ export default function Carousel({ name, relatedProductIds }) {
       setEndIndex(endIndex + 1);
     }
 
-    changeVisibleProductsArray(startIndex, endIndex);
+    setVisibleProducts(relatedProducts.slice(startIndex, endIndex));
   };
 
   // HELPER FUNCTIONS
@@ -161,9 +155,7 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Resets start and end index then changes shown products based on new indices
   const resetVisibleProducts = () => {
-    const currentMaxIndex = getMaxIndexBasedOnScreenSize();
-
-    changeVisibleProductsArray(0, currentMaxIndex > maxIndex ? maxIndex : currentMaxIndex);
+    changeVisibleProductsArray(0, endIndex);
   };
 
   // Divides width of inner window by width of a card and rounds up to the nearest integer
@@ -177,7 +169,7 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Takes a start and end index and sets the shown products to the result of slicing all products with index params
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
-    const newRelatedProducts = relatedProducts.slice(newStartIndex, newEndIndex - 1);
+    const newRelatedProducts = relatedProducts.slice(newStartIndex, newEndIndex);
     setVisibleProducts(newRelatedProducts);
   };
 
@@ -193,7 +185,7 @@ export default function Carousel({ name, relatedProductIds }) {
 
   const getCarousel = (name) => {
     if (name === 'related-items') {
-      if (visibleProducts.length >= 1) {
+      if (visibleProducts && visibleProducts.length >= 1) {
         return (
           visibleProducts.map(product =>
             <Card key={product.data.id} product={product.data} name="related-item" />
@@ -221,8 +213,9 @@ export default function Carousel({ name, relatedProductIds }) {
   return (
     <CarouselStyle className="carousel" >
       <div className="carousel-row" style={{display: 'flex'}} >
-        {isAtBeginningIndex() ? <div style={{width: '40px'}}></div> :
-          <button className="carousel-left" onClick={(e) => scrollLeft(e)} >
+        {relatedProducts[0]?.data.id === visibleProducts[0]?.data.id
+          ? <div style={{width: '40px'}}></div>
+          : <button className="carousel-left" onClick={(e) => scrollLeft(e)} >
             <LeftArrow>
               <ScrollArrow direction={'left'} />
             </LeftArrow>
@@ -232,12 +225,15 @@ export default function Carousel({ name, relatedProductIds }) {
             {renderCarousel(name)}
           </div>
         }
-        {isAtFinalIndex() ? <div style={{width: '40px'}}></div> :
-          <button className="carousel-right" onClick={(e) => scrollRight(e)} >
-            <RightArrow>
-              <ScrollArrow direction={'right'} />
-            </RightArrow>
-          </button>}
+        {relatedProducts[relatedProducts.length - 1]?.data.id === visibleProducts[visibleProducts.length - 1]?.data.id
+          ? <div style={{width: '40px'}}></div>
+          : visibleProducts.length === relatedProducts.length
+            ? <div style={{width: '40px'}}></div>
+            : <button className="carousel-right" onClick={(e) => scrollRight(e)} >
+              <RightArrow>
+                <ScrollArrow direction={'right'} />
+              </RightArrow>
+            </button>}
       </div>
     </CarouselStyle>
   );
