@@ -30,8 +30,8 @@ export default function Carousel({ name, relatedProductIds }) {
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [currentUser, setCurrentUser] = userContext;
   const [userOutfit, setUserOutfit] = outfitContext;
-  const [relatedProducts, setRelatedProducts] = useState(() => new Set());
-  const [visibleProducts, setVisibleProducts] = useState(() => new Set());
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [visibleProducts, setVisibleProducts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(5);
@@ -53,8 +53,8 @@ export default function Carousel({ name, relatedProductIds }) {
   // Populates relatedProducts state to render each item
   useEffect(() => {
     if (relatedProductIds !== undefined) {
-      // setRelatedProducts([]); // testing Set DS as state, not needed if it works
-      // setVisibleProducts([]);
+      setRelatedProducts([]);
+      setVisibleProducts([]);
       relatedProductIds.forEach((id) => {
         updateRelatedProducts(id);
       });
@@ -99,8 +99,8 @@ export default function Carousel({ name, relatedProductIds }) {
         },
       })
       .then((productData) => {
-        setRelatedProducts((state) => new Set(state).add(productData));
-        visibleProducts.length > 5 ? null : setVisibleProducts((state) => new Set(state).add(productData));
+        setRelatedProducts((state) => Array.from(new Set(state).add(productData)));
+        visibleProducts.length > 5 ? null : setVisibleProducts((state) => Array.from(new Set(state).add(productData)));
       })
       .then(() => setIsLoaded(true))
       .catch((err) => console.log(err));
