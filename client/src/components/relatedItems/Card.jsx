@@ -27,31 +27,44 @@ export default function CarouselCard({ product, name }) {
   const [imageUrl, setimageUrl] = useState('');
   const [styles, setStyles] = useState([]);
   const [salePrice, setSalePrice] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   // REF
   const modal = useRef(null);
 
   // HOOKS
   useEffect(() => {
-    if (product) { getProductStyle(product.id); }
+    let clearId = setTimeout(() => {
+
+      // API HANDLER
+      const getProductStyle = async (id) => {
+        await axios
+          .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
+            params: {
+              product_id: id,
+            },
+            headers: {
+              Authorization: `${TOKEN}`,
+            },
+          })
+          .then(res => {
+            if (res?.data.results[0].salePrice) {
+              setSalePrice(res.data.results[0].salePrice);
+            }
+            return res?.data.results[0].photos[0].thumbnail_url;
+          })
+          // .then(res => res?.data.results[0].photos[0].thumbnail_url)
+          .then(url => setimageUrl(url))
+          .catch(err => console.error(err));
+      };
+
+      if (product) { getProductStyle(product.id); }
+    }, 100);
+
+    return () => clearTimeout(clearId);
   }, []);
 
-  // API HANDLER
-  const getProductStyle = async (id) => {
-    await axios
-      .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
-        params: {
-          product_id: id,
-        },
-        headers: {
-          Authorization: `${TOKEN}`,
-        },
-      })
-      .then(res => console.log(res))
-      .then(res => res?.data.results[0].photos[0].thumbnail_url)
-      .then(url => setimageUrl(url))
-      .catch(err => console.error(err));
-  };
+
 
   // EVENT HANDLERS
   const handleClick = (newSelectedProduct) => {
