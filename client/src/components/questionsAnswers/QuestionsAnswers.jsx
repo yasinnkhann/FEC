@@ -22,13 +22,13 @@ export default function QuestionsAnswers() {
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
 
   // METHODS
-  const handleSearchQuery = (query) => {
+  const handleSearchQuery = query => {
     setUseFilteredData(true);
     if (query.length < 2) {
       setFilteredQuestions(questionsData.results);
     } else {
       const questionsCopy = [...questionsData.results];
-      const questionsFiltered = questionsCopy.filter((question) =>
+      const questionsFiltered = questionsCopy.filter(question =>
         question.question_body.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredQuestions(questionsFiltered);
@@ -36,7 +36,6 @@ export default function QuestionsAnswers() {
   };
 
   useEffect(() => {
-    console.log('Selected Product: ', selectedProduct);
     const getQs = async () => {
       try {
         const res = await axios.get(
@@ -61,7 +60,7 @@ export default function QuestionsAnswers() {
     };
 
     getQs();
-  }, []);
+  }, [selectedProduct]);
 
   return (
     <QAWidget>
@@ -77,7 +76,10 @@ export default function QuestionsAnswers() {
           >
             <h3>QUESTIONS &#38; ANSWERS</h3>
             <Search handleChange={handleSearchQuery} />
-            <Questions questionsData={questionsData.results} filteredData={filteredQuestions} />
+            <Questions
+              questionsData={questionsData.results}
+              filteredData={filteredQuestions}
+            />
           </QuestionsContext.Provider>
         </>
       )}
