@@ -14,6 +14,9 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(products[0]); // For selecting the current product to be shown
 
   useEffect(() => {
+    document.body.addEventListener('click', e => {
+      console.log('EVENT: ', e);
+    });
     const getApi = async () => {
       try {
         const res = await axios.get(
