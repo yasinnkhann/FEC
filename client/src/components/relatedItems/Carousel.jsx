@@ -34,7 +34,7 @@ export default function Carousel({ name, relatedProductIds }) {
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(5);
+  const [maxIndex, setMaxIndex] = useState(4);
   const [isLoaded, setIsLoaded] = useState(false);
   const size = useWindowSize();
 
