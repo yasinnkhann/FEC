@@ -70,11 +70,11 @@ export default function Carousel({ name, relatedProductIds }) {
         });
       }
       setIsLoaded(true);
-    }, 300);
+    }, 400);
 
 
     return () => clearTimeout(clearId);
-  }, [selectedProduct, relatedProductIds]);
+  }, [relatedProductIds]);
 
   // Changes number of items shown based on window size
   useEffect(() => {

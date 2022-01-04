@@ -87,36 +87,38 @@ export default function Overview() {
     getStyles();
   }, [selectedProduct]);
   return (
-    <Layout>
-      <Grid>
-        <StylesContext.Provider
-          value={{
-            stylesDataContent: [stylesData, setstylesData],
-            currentStyleContent: [currentStyle, setCurrentStyle],
-          }}
-        >
-          {loadingStatusStyles && <ImageGallery />}
-        </StylesContext.Provider>
-        <Container>
-          <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
-            {loadingStatusReviews && <ReviewsStars />}
-          </ReviewsContext.Provider>
-          <ProductDetail product={selectedProduct} />
+    <div className="overview" >
+      <Layout >
+        <Grid>
           <StylesContext.Provider
             value={{
               stylesDataContent: [stylesData, setstylesData],
               currentStyleContent: [currentStyle, setCurrentStyle],
             }}
           >
-            {loadingStatusStyles && <StyleSelector />}
+            {loadingStatusStyles && <ImageGallery />}
           </StylesContext.Provider>
-          <Icons />
-        </Container>
-      </Grid>
-      <InfoBox>
-        <Slogan>{selectedProduct.slogan}</Slogan>
-        <Description>{selectedProduct.description}</Description>
-      </InfoBox>
-    </Layout>
+          <Container>
+            <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
+              {loadingStatusReviews && <ReviewsStars />}
+            </ReviewsContext.Provider>
+            <ProductDetail product={selectedProduct} />
+            <StylesContext.Provider
+              value={{
+                stylesDataContent: [stylesData, setstylesData],
+                currentStyleContent: [currentStyle, setCurrentStyle],
+              }}
+            >
+              {loadingStatusStyles && <StyleSelector />}
+            </StylesContext.Provider>
+            <Icons />
+          </Container>
+        </Grid>
+        <InfoBox>
+          <Slogan>{selectedProduct.slogan}</Slogan>
+          <Description>{selectedProduct.description}</Description>
+        </InfoBox>
+      </Layout>
+    </div>
   );
 }
