@@ -19,14 +19,16 @@ export default function QuestionsAnswers() {
 
   const [products, setProducts] = productsContext;
 
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
+
   // METHODS
-  const handleSearchQuery = (query) => {
+  const handleSearchQuery = query => {
     setUseFilteredData(true);
     if (query.length < 2) {
       setFilteredQuestions(questionsData.results);
     } else {
       const questionsCopy = [...questionsData.results];
-      const questionsFiltered = questionsCopy.filter((question) =>
+      const questionsFiltered = questionsCopy.filter(question =>
         question.question_body.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredQuestions(questionsFiltered);
@@ -40,10 +42,10 @@ export default function QuestionsAnswers() {
           'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
           {
             params: {
-              // product_id: 40347,
-              product_id: products[995]?.id,
+              product_id: selectedProduct?.id,
+              // product_id: products[995]?.id,
               // page: 1,
-              count: 20,
+              // count: 20,
             },
             headers: {
               Authorization: `${TOKEN}`,
@@ -58,7 +60,7 @@ export default function QuestionsAnswers() {
     };
 
     getQs();
-  }, []);
+  }, [selectedProduct]);
 
   return (
     <QAWidget>
@@ -74,7 +76,10 @@ export default function QuestionsAnswers() {
           >
             <h3>QUESTIONS &#38; ANSWERS</h3>
             <Search handleChange={handleSearchQuery} />
-            <Questions questionsData={questionsData.results} filteredData={filteredQuestions} />
+            <Questions
+              questionsData={questionsData.results}
+              filteredData={filteredQuestions}
+            />
           </QuestionsContext.Provider>
         </>
       )}
