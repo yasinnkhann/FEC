@@ -83,8 +83,8 @@ export default function QuestionsAnswers() {
           </QuestionsContext.Provider>
         </>
       )}
-      {/* {console.log('PRODUCTS FROM QA: ', products)} */}
-      {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
+      {/* {console.log('PRODUCTS FROM QA: ', products)}
+      {console.log('QUESTIONS DATA: ', questionsData)} */}
     </QAWidget>
   );
 }

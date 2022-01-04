@@ -189,7 +189,6 @@ export default function Answer({ questionObj }) {
                     />
                   ))} */}
                   {answer?.photos?.map(photo => {
-                    console.log('PHOTO URL: ', photo.url);
                     const imageElem = photo.url.startsWith('https') ? (
                       <img
                         key={photo.id}
@@ -250,7 +249,6 @@ export default function Answer({ questionObj }) {
               <PhotoContainer>
                 <Photos>
                   {answer?.photos?.map(photo => {
-                    console.log('PHOTO URL: ', photo.url);
                     const imageElem = photo.url.startsWith('https') ? (
                       <img
                         key={photo.id}
