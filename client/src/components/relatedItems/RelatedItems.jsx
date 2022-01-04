@@ -33,26 +33,32 @@ export default function RelatedItems() {
 
   // HOOKS
   useEffect(() => {
-    getRelatedProductIds();
+    let clearId = setTimeout(() => {
+      // API HANDLER
+      const getRelatedProductIds = async () => {
+        try {
+          const res = await axios.get(
+            `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${selectedProduct.id}/related`,
+            {
+              headers: {
+                Authorization: `${TOKEN}`,
+              },
+            }
+          );
+          setIsLoaded(true);
+
+          let noDupedIds = Array.from(new Set(res.data));
+          setRelatedProductIds(noDupedIds);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      getRelatedProductIds();
+    }, 200);
+
+    return () => clearTimeout(clearId);
   }, [selectedProduct]);
 
-  // API HANDLER
-  const getRelatedProductIds = async () => {
-    try {
-      const res = await axios.get(
-        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${selectedProduct.id}/related`,
-        {
-          headers: {
-            Authorization: `${TOKEN}`,
-          },
-        }
-      );
-      setIsLoaded(true);
-      setRelatedProductIds(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   // JSX
   if (isLoaded && relatedProductIds.length >= 1) {
