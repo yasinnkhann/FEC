@@ -3,3 +3,4 @@ yarn.lock
 client/dist/bundle.js
 client/src/config.js
 *.excalidraw
+.DS_Store
