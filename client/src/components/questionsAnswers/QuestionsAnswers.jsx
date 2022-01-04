@@ -45,7 +45,7 @@ export default function QuestionsAnswers() {
               product_id: selectedProduct?.id,
               // product_id: products[345]?.id,
               // page: 1,
-              // count: 20,
+              count: 10,
             },
             headers: {
               Authorization: `${TOKEN}`,

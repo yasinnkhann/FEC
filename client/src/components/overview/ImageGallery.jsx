@@ -4,8 +4,8 @@ import StylesContext from './StylesContext';
 import ExpandedView from './ExpandedView.jsx';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {ArrowUpward} from '@material-ui/icons';
-import {ArrowDownward} from '@material-ui/icons';
+import { ArrowUpward } from '@material-ui/icons';
+import { ArrowDownward } from '@material-ui/icons';
 
 const MainImgContainer = styled.div`
   position: relative;
@@ -47,20 +47,20 @@ const Up = styled.button`
   transform: translateX(-50%);
   margin-bottom: 1rem;
 `;
-const Left = styled.button `
-z-index: 1;
-left: 90px;
-position: absolute;
-top: 50%;
+const Left = styled.button`
+  z-index: 1;
+  left: 90px;
+  position: absolute;
+  top: 50%;
 `;
-const Right = styled.button `
-right: 1rem;
-z-index: 1;
-position: absolute;
-top: 50%;
+const Right = styled.button`
+  right: 1rem;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
 `;
 const ThumbnailImage = styled.img`
-  border: ${(props) => (props.selected ? '3px solid black' : null)};
+  border: ${props => (props.selected ? '3px solid black' : null)};
   width: 100%;
   height: 50px;
   object-fit: cover;
@@ -125,13 +125,21 @@ export default function ImageGallery() {
 
   const renderPhoto = () => {
     return getItemsForPage(currentPage).map((photo, index) => {
-      const imageRendered = photo.thumbnail_url[0] === 'h' ? photo.thumbnail_url : photo.url;
+      const imageRendered =
+        photo.thumbnail_url[0] === 'h' ? photo.thumbnail_url : photo.url;
       return (
         <ThumbnailImage
-          selected={currentStyle.photos[currentIndex].thumbnail_url === photo.thumbnail_url}
+          selected={
+            currentStyle.photos[currentIndex].thumbnail_url ===
+            photo.thumbnail_url
+          }
           src={imageRendered}
           key={photo.thumbnail_url}
-          onClick={() => currentPage === 0 ? setcurrentIndex(index) : setcurrentIndex(7 * currentPage + index)}
+          onClick={() =>
+            currentPage === 0
+              ? setcurrentIndex(index)
+              : setcurrentIndex(7 * currentPage + index)
+          }
         ></ThumbnailImage>
       );
     });
@@ -150,17 +158,15 @@ export default function ImageGallery() {
   //   setbackgroundPosition(`${x}% ${y}%`);
   // };
 
-
-  const getpage = (newindex) => {
+  const getpage = newindex => {
     const min = currentPage * 7;
-    const max = (currentPage * 7) + 7 || 7;
+    const max = currentPage * 7 + 7 || 7;
     if (newindex >= max) {
       setcurrentPage(currentPage + 1);
     }
 
     if (newindex < min) {
       setcurrentPage(currentPage - 1);
-
     }
     setcurrentIndex(newindex);
   };
@@ -171,26 +177,37 @@ export default function ImageGallery() {
   return (
     <MainImgContainer>
       <ThumbnailContainer>
-        {currentPage !== 0 &&
-        <Up onClick={() => setcurrentPage(currentPage - 1)}><ArrowUpward/></Up>
-        }
+        {currentPage !== 0 && (
+          <Up onClick={() => setcurrentPage(currentPage - 1)}>
+            <ArrowUpward />
+          </Up>
+        )}
         {renderPhoto()}
-        {getItemsForPage().length === 7 &&
-        <Down onClick={() => setcurrentPage(currentPage + 1)}><ArrowDownward/></Down>
-        }
+        {getItemsForPage().length === 7 && (
+          <Down onClick={() => setcurrentPage(currentPage + 1)}>
+            <ArrowDownward />
+          </Down>
+        )}
       </ThumbnailContainer>
 
-      {currentIndex > 0 &&
-      <Left onClick={() => getpage(currentIndex - 1)}><ChevronLeftIcon size="large"/></Left>
-      }
-      {currentIndex < currentStyle.photos.length - 1 &&
-      <Right onClick={() => getpage(currentIndex + 1)}><ChevronRightIcon/></Right>
-      }
-      <MainImage src={currentStyle.photos[currentIndex].url} onClick={() => setmodalOpen(true)}></MainImage>
+      {currentIndex > 0 && (
+        <Left onClick={() => getpage(currentIndex - 1)}>
+          <ChevronLeftIcon size='large' />
+        </Left>
+      )}
+      {currentIndex < currentStyle.photos.length - 1 && (
+        <Right onClick={() => getpage(currentIndex + 1)}>
+          <ChevronRightIcon />
+        </Right>
+      )}
+      <MainImage
+        src={currentStyle.photos[currentIndex].url}
+        onClick={() => setmodalOpen(true)}
+      ></MainImage>
       <ExpandedView
-        open = {modalOpen}
-        close = {() => setmodalOpen(false)}
-        photo = {currentStyle.photos[currentIndex].url}
+        open={modalOpen}
+        close={() => setmodalOpen(false)}
+        photo={currentStyle.photos[currentIndex].url}
       />
     </MainImgContainer>
   );
