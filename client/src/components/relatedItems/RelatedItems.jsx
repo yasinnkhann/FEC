@@ -54,7 +54,7 @@ export default function RelatedItems() {
         }
       };
       getRelatedProductIds();
-    }, 200);
+    }, 2000);
 
     return () => clearTimeout(clearId);
   }, [selectedProduct]);
