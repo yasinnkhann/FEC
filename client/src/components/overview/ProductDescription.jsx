@@ -1,18 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Slogan = styled.h3`
-  margin-left: 6.5rem;
-`;
-const Description = styled.p`
-  margin-left: 2rem;
+const Slogan = styled.h3``;
+const Description = styled.p``;
+const InfoBox = styled.div `
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 500px;
+  margin-left: 10rem;
+  padding-bottom: 2rem;
 `;
 
 export default function ProductDescription({ product }) {
   return (
-    <div>
+    <InfoBox>
       <Slogan>{product?.slogan}</Slogan>
       <Description>{product?.description}</Description>
-    </div>
+    </InfoBox>
   );
 }

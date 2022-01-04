@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import StylesContext from './StylesContext';
+import ExpandedView from './ExpandedView.jsx';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {ArrowUpward} from '@material-ui/icons';
@@ -115,6 +116,7 @@ export default function ImageGallery() {
   const [currentStyle, setCurrentStyle] = currentStyleContent;
   const [currentPage, setcurrentPage] = useState(0);
   const [currentIndex, setcurrentIndex] = useState(0);
+  const [modalOpen, setmodalOpen] = useState(false);
 
   useEffect(() => {
     setcurrentIndex(0);
@@ -123,10 +125,11 @@ export default function ImageGallery() {
 
   const renderPhoto = () => {
     return getItemsForPage(currentPage).map((photo, index) => {
+      const imageRendered = photo.thumbnail_url[0] === 'h' ? photo.thumbnail_url : photo.url;
       return (
         <ThumbnailImage
           selected={currentStyle.photos[currentIndex].thumbnail_url === photo.thumbnail_url}
-          src={photo.thumbnail_url}
+          src={imageRendered}
           key={photo.thumbnail_url}
           onClick={() => currentPage === 0 ? setcurrentIndex(index) : setcurrentIndex(7 * currentPage + index)}
         ></ThumbnailImage>
@@ -151,7 +154,6 @@ export default function ImageGallery() {
   const getpage = (newindex) => {
     const min = currentPage * 7;
     const max = (currentPage * 7) + 7 || 7;
-    console.log(min, max, currentPage);
     if (newindex >= max) {
       setcurrentPage(currentPage + 1);
     }
@@ -163,6 +165,9 @@ export default function ImageGallery() {
     setcurrentIndex(newindex);
   };
 
+  // const renderModal = () => {
+
+  // };
   return (
     <MainImgContainer>
       <ThumbnailContainer>
@@ -181,9 +186,12 @@ export default function ImageGallery() {
       {currentIndex < currentStyle.photos.length - 1 &&
       <Right onClick={() => getpage(currentIndex + 1)}><ChevronRightIcon/></Right>
       }
-      {/* <ExpandedImageContainer ></ExpandedImageContainer> */}
-      {/* onClick={(e) => handleMouseMove(e)} selected={backgroundPostion} */}
-      <MainImage src={currentStyle.photos[currentIndex].url}></MainImage>
+      <MainImage src={currentStyle.photos[currentIndex].url} onClick={() => setmodalOpen(true)}></MainImage>
+      <ExpandedView
+        open = {modalOpen}
+        close = {() => setmodalOpen(false)}
+        photo = {currentStyle.photos[currentIndex].url}
+      />
     </MainImgContainer>
   );
 }
