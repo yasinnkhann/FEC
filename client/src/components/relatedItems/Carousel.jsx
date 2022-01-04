@@ -30,8 +30,8 @@ export default function Carousel({ name, relatedProductIds }) {
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [currentUser, setCurrentUser] = userContext;
   const [userOutfit, setUserOutfit] = outfitContext;
-  const [relatedProducts, setRelatedProducts] = useState([]);
-  const [visibleProducts, setVisibleProducts] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState(() => new Set());
+  const [visibleProducts, setVisibleProducts] = useState(() => new Set());
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(5);
@@ -53,8 +53,8 @@ export default function Carousel({ name, relatedProductIds }) {
   // Populates relatedProducts state to render each item
   useEffect(() => {
     if (relatedProductIds !== undefined) {
-      setRelatedProducts([]);
-      setVisibleProducts([]);
+      // setRelatedProducts([]); // testing Set DS as state, not needed if it works
+      // setVisibleProducts([]);
       relatedProductIds.forEach((id) => {
         updateRelatedProducts(id);
       });
@@ -99,8 +99,8 @@ export default function Carousel({ name, relatedProductIds }) {
         },
       })
       .then((productData) => {
-        setRelatedProducts((state) => [...state, productData]);
-        visibleProducts.length > 5 ? null : setVisibleProducts((state) => [...state, productData]);
+        setRelatedProducts((state) => new Set(state).add(productData));
+        visibleProducts.length > 5 ? null : setVisibleProducts((state) => new Set(state).add(productData));
       })
       .then(() => setIsLoaded(true))
       .catch((err) => console.log(err));
@@ -162,7 +162,8 @@ export default function Carousel({ name, relatedProductIds }) {
   // Resets start and end index then changes shown products based on new indices
   const resetVisibleProducts = () => {
     const currentMaxIndex = getMaxIndexBasedOnScreenSize();
-    changeVisibleProductsArray(0, currentMaxIndex);
+
+    changeVisibleProductsArray(0, currentMaxIndex > maxIndex ? maxIndex : currentMaxIndex);
   };
 
   // Divides width of inner window by width of a card and rounds up to the nearest integer
@@ -176,8 +177,8 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Takes a start and end index and sets the shown products to the result of slicing all products with index params
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
-    const newVisibleProducts = relatedProducts.slice(newStartIndex, newEndIndex - 1);
-    setVisibleProducts(newVisibleProducts);
+    const newRelatedProducts = relatedProducts.slice(newStartIndex, newEndIndex - 1);
+    setVisibleProducts(newRelatedProducts);
   };
 
   const renderCarousel = (name) => {
