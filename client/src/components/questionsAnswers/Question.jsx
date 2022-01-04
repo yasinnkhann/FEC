@@ -184,11 +184,6 @@ const Container = styled.div`
   box-shadow: 1px 1px 10px #ccc;
   padding: 15px;
   border-radius: 10px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: space-around; */
-  /* align-content: flex-start; */
-  /* flex-wrap: wrap; */
   min-width: 97%;
 `;
 

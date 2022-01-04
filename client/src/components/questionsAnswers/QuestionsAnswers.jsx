@@ -43,7 +43,7 @@ export default function QuestionsAnswers() {
           {
             params: {
               product_id: selectedProduct?.id,
-              // product_id: products[995]?.id,
+              // product_id: products[345]?.id,
               // page: 1,
               // count: 20,
             },
@@ -89,7 +89,4 @@ export default function QuestionsAnswers() {
   );
 }
 
-const QAWidget = styled.div`
-  /* overflow-y: scroll; */
-  // max-height: 100vh;
-`;
+const QAWidget = styled.div``;
