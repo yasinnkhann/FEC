@@ -13,14 +13,13 @@ import StylesContext from './StylesContext.js';
 import Icons from './Icons.jsx';
 
 const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 60% 40%;
-  grid-column-gap: 0.5rem;
-  grid-row-gap: 0.5rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
 `;
-
+const Layout = styled.div `
+  max-width: 1200px;
+  margin: 0 auto;
+`;
 const Container = styled.div`
   grid-column-start: 2;
   grid-column-end: 3;
@@ -28,6 +27,13 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
+`;
+const Slogan = styled.h3``;
+const Description = styled.p``;
+const InfoBox = styled.div `
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
 export default function Overview() {
@@ -81,7 +87,7 @@ export default function Overview() {
     getStyles();
   }, [selectedProduct]);
   return (
-    <div>
+    <Layout>
       <Grid>
         <StylesContext.Provider
           value={{
@@ -107,7 +113,10 @@ export default function Overview() {
           <Icons />
         </Container>
       </Grid>
-      <ProductDescription product={selectedProduct} />
-    </div>
+      <InfoBox>
+        <Slogan>{selectedProduct.slogan}</Slogan>
+        <Description>{selectedProduct.description}</Description>
+      </InfoBox>
+    </Layout>
   );
 }
