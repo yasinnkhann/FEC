@@ -12,26 +12,33 @@ export default function StarRating({ product }) {
   const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
-    if (product !== undefined) {
-      getReviewMetaData(product.id);
-    }
+
+    let clearId = setTimeout(() => {
+      const getReviewMetaData = async (id) => {
+        await axios
+          .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
+            params: {
+              product_id: id,
+            },
+            headers: {
+              Authorization: `${TOKEN}`,
+            },
+          })
+          .then((res) => res.data.ratings)
+          .then((ratings) => getAverageRating(ratings))
+          .then((avgRating) => setAverageRating(avgRating))
+          .catch((err) => console.log(err));
+      };
+
+      if (product !== undefined) {
+        getReviewMetaData(product.id);
+      }
+    }, 500);
+
+    return () => clearTimeout(clearId);
   }, []);
 
-  const getReviewMetaData = async (id) => {
-    await axios
-      .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
-        params: {
-          product_id: id,
-        },
-        headers: {
-          Authorization: `${TOKEN}`,
-        },
-      })
-      .then((res) => res.data.ratings)
-      .then((ratings) => getAverageRating(ratings))
-      .then((avgRating) => setAverageRating(avgRating))
-      .catch((err) => console.log(err));
-  };
+
 
   const getAverageRating = (ratings) => {
     const ratingsArr = [...Object.values(ratings)];
