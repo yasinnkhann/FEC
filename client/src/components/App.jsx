@@ -15,7 +15,7 @@ export default function App() {
 
   useEffect(() => {
     document.body.addEventListener('click', e => {
-      console.log('EVENT: ', e);
+      // console.log('EVENT: ', e);
     });
     const getApi = async () => {
       try {

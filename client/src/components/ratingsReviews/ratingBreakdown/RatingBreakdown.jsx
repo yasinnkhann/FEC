@@ -70,7 +70,6 @@ const averageRating = (obj) => {
   if (isNaN((Math.round(result * 4) / 4).toFixed(1))) {
     return 0;
   }
-  // console.log(Number(result.toFixed(1)));
   return Number(result.toFixed(1));
 };
 
@@ -103,7 +102,6 @@ const RatingBreakdown = (props) => {
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          {/* <StarRating averageRating={averageRating(ratings)} height={36} width={31} /> */}
           <Stars>
             <Rating name="read-only" value={averageRating(ratings)} precision={0.25} max={5} size="large" readOnly />
           </Stars>

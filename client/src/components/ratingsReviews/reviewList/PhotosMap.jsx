@@ -1,14 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 import PhotoMapEntry from './PhotoMapEntry.jsx';
 
-const imgContainer = {
-  display: 'flex',
-};
+// const imgContainer = {
+//   display: 'flex',
+// };
 
 const PhotosMap = ({ photos }) => (
   <div>
-    <div style={imgContainer}>
+    <div style={{display: 'flex'}}>
       {photos.map((photo) => (
         <PhotoMapEntry photo={photo} key={photo.id} />
       ))}
