@@ -14,31 +14,36 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(products[0]); // For selecting the current product to be shown
 
   useEffect(() => {
-    // document.body.addEventListener('click', e => {
-    //   console.log('EVENT: ', e);
-    // });
-    const getApi = async () => {
-      try {
-        const res = await axios.get(
-          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
-          {
-            params: {
-              // page: 1,
-              count: 2000,
-            },
-            headers: {
-              Authorization: `${TOKEN}`,
-            },
-          }
-        );
-        setProducts(res.data);
-        setSelectedProduct(res.data[0]);
-        setIsLoaded(true);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    getApi();
+    document.body.addEventListener('click', e => {
+      console.log('EVENT: ', e);
+    });
+
+    let clearId = setTimeout(() => {
+      const getApi = async () => {
+        try {
+          const res = await axios.get(
+            'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
+            {
+              params: {
+                // page: 1,
+                count: 2000,
+              },
+              headers: {
+                Authorization: `${TOKEN}`,
+              },
+            }
+          );
+          setProducts(res.data);
+          setSelectedProduct(res.data[0]);
+          setIsLoaded(true);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      getApi();
+    }, 100);
+
+    return () => clearTimeout(clearId);
   }, []);
 
   return (
