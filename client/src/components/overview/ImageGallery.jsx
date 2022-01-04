@@ -125,7 +125,7 @@ export default function ImageGallery() {
 
   const renderPhoto = () => {
     return getItemsForPage(currentPage).map((photo, index) => {
-      const imageRendered = photo.thumbnail_url[0] === 'h' ? photo.thumbnail_url : photo.url;
+      const imageRendered = photo.thumbnail_url ? photo.thumbnail_url[0] === 'h' ? photo.thumbnail_url : photo.url : null;
       return (
         <ThumbnailImage
           selected={currentStyle.photos[currentIndex].thumbnail_url === photo.thumbnail_url}

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import AppContext from '../../AppContext.js';
 import styled from 'styled-components';
 import ProductDetail from './ProductDetail.jsx';
-import ProductDescription from './ProductDescription.jsx';
 import ImageGallery from './ImageGallery.jsx';
 import { TOKEN } from '../../config.js';
 import axios from 'axios';
