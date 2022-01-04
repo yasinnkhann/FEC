@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import Loader from 'react-loader-spinner';
+// import Loader from 'react-loader-spinner';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -40,7 +40,7 @@ const mainDiv = {
   marginTop: '20px',
   marginLeft: 'auto',
   marginRight: 'auto',
-  marginBottom: 'auto',
+  marginBottom: '30px',
 
   fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
@@ -244,7 +244,7 @@ export default function RatingsReviews() {
     document.body.appendChild(script);
     return () => { document.body.removeChild(script); };
 
-  }, []);
+  }, [selectedProduct]);
 
   const listSortChange = (event) => {
     setListSort(event.target.value);
@@ -395,20 +395,8 @@ export default function RatingsReviews() {
             </div>
           )}
         </div>
-      ) : (
-        <Loader
-          type='Oval'
-          color='blue'
-          height={160}
-          width={160}
-          arialLabel='loading-indicator'
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }} />
-      )}
+      ) : <p> Loading...</p>
+      }
     </Fragment>
   );
 }
