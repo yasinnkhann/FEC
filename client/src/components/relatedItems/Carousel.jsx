@@ -34,6 +34,7 @@ export default function Carousel({ name, relatedProductIds }) {
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(4);
   const [isLoaded, setIsLoaded] = useState(false);
   const size = useWindowSize();
 
@@ -45,6 +46,8 @@ export default function Carousel({ name, relatedProductIds }) {
     const newEndIndex = getMaxIndexBasedOnScreenSize();
     setEndIndex(newEndIndex);
     changeVisibleProductsArray(startIndex, endIndex);
+
+    return () => resetVisibleProducts();
   }, [size]);
 
   // Populates relatedProducts state to render each item
@@ -57,30 +60,31 @@ export default function Carousel({ name, relatedProductIds }) {
       });
     }
 
-    return () => {
-      resetVisibleProducts();
-    };
+    return () => resetVisibleProducts();
   }, [relatedProductIds]);
 
   // Reset shown products when new item is selected
   useEffect(() => {
+    resetVisibleProducts();
     return () => resetVisibleProducts();
   }, [selectedProduct]);
 
   useEffect(() => {
     setVisibleProducts(relatedProducts.slice(startIndex, endIndex));
+
+    return () => setVisibleProducts(relatedProducts.slice(startIndex - 1, endIndex - 1));
   }, [startIndex]);
 
   useEffect(() => {
     setIsLoaded(true);
+    setStartIndex(0);
+    setEndIndex(maxIndex);
+
+    return () => {
+      resetVisibleProducts();
+      setIsLoaded(false);
+    };
   }, [name]);
-
-  useEffect(() => {
-    if ((userOutfit.length + 1) * 200 < size.width) {
-      console.log('Width: ', size.width, 'Total width of user outfit cards: ', (userOutfit.length + 1) * 200 );
-    }
-
-  }, [userOutfit]);
 
   // API HANDLERS
   // Gets one product's info based on id
@@ -95,8 +99,8 @@ export default function Carousel({ name, relatedProductIds }) {
         },
       })
       .then((productData) => {
-        setRelatedProducts((state) => [...state, productData]);
-        visibleProducts.length <= 5 ? setVisibleProducts((state) => [...state, productData]) : null;
+        setRelatedProducts((state) => Array.from(new Set(state).add(productData)));
+        visibleProducts.length > 5 ? null : setVisibleProducts((state) => Array.from(new Set(state).add(productData)));
       })
       .then(() => setIsLoaded(true))
       .catch((err) => console.log(err));
@@ -158,7 +162,8 @@ export default function Carousel({ name, relatedProductIds }) {
   // Resets start and end index then changes shown products based on new indices
   const resetVisibleProducts = () => {
     const currentMaxIndex = getMaxIndexBasedOnScreenSize();
-    changeVisibleProductsArray(0, currentMaxIndex);
+
+    changeVisibleProductsArray(0, currentMaxIndex > maxIndex ? maxIndex : currentMaxIndex);
   };
 
   // Divides width of inner window by width of a card and rounds up to the nearest integer
@@ -172,8 +177,8 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // Takes a start and end index and sets the shown products to the result of slicing all products with index params
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
-    const newVisibleProducts = relatedProducts.slice(newStartIndex, newEndIndex);
-    setVisibleProducts(newVisibleProducts);
+    const newRelatedProducts = relatedProducts.slice(newStartIndex, newEndIndex - 1);
+    setVisibleProducts(newRelatedProducts);
   };
 
   const renderCarousel = (name) => {
