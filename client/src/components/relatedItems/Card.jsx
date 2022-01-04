@@ -19,7 +19,6 @@ import ProductInfo from './ProductInfo.jsx';
 
 // CARD
 export default function CarouselCard({ product, name }) {
-
   // CONTEXT
   const { selectedProductContext } = useContext(AppContext);
 
@@ -48,6 +47,7 @@ export default function CarouselCard({ product, name }) {
           Authorization: `${TOKEN}`,
         },
       })
+      .then(res => console.log(res))
       .then(res => res?.data.results[0].photos[0].thumbnail_url)
       .then(url => setimageUrl(url))
       .catch(err => console.error(err));
