@@ -6,7 +6,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import styled from 'styled-components';
 
 const ShareIconDiv = styled.div`
-  /* padding-left: 2rem; */
+  margin: 1rem;
 `;
 
 const FBIcon = styled.button`
