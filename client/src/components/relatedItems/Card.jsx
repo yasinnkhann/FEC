@@ -110,16 +110,6 @@ const ProductInfoStyle = styled.div`
 
 const ActionStyle = styled.a`
   z-index: 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
   max-height: 35px;
   max-width: 35px;
-=======
-  width: 35px;
-  height: 35px;
->>>>>>> main
-=======
-  max-height: 35px;
-  max-width: 35px;
->>>>>>> main
 `;
