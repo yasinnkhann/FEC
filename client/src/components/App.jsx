@@ -45,7 +45,8 @@ export default function App() {
 
 
   document.body.addEventListener('click', e => {
-
+    e.stopPropagation();
+    e.stopImmediatePropagation();
     const element = e.srcElement.localName;
     const widgetData = e.path.slice(-6);
     const widget = widgetData[0].className;

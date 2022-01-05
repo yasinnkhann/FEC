@@ -109,6 +109,7 @@ const CardStyle = styled.div`
   margin: 5px;
   padding: 5px;
   border: 1px solid black;
+  border-radius: 12px;
   position: relative;
   display: flex;
   flex-direction: row;
