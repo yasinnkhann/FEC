@@ -7,7 +7,15 @@ import RelatedItems from './relatedItems/RelatedItems.jsx';
 import { TOKEN } from '../config.js';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
+import styled from 'styled-components';
+import {createGlobalStyle} from 'styled-components';
 
+const GlobalStyles = createGlobalStyle `
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans');
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+`;
 export default function App() {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -77,6 +85,7 @@ export default function App() {
 
   return (
     <Fragment>
+      <GlobalStyles/>
       {isLoaded ? (
         <>
           <AppContext.Provider
