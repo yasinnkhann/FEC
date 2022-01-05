@@ -4,17 +4,19 @@ const axios = require('axios');
 
 module.exports = {
   addToCart: async function(req, res) {
-    const { sku_id } = req.query;
+    const { id } = req.query;
+    const body = { sku_id: id };
     try {
-      const response = await axios.post(
+      await axios.post(
         `${URL}/cart`,
-        sku_id,
+        body,
         {
           headers: {
             Authorization: `${TOKEN}`,
           },
         },
       );
+      res.status(201).json('CREATED');
     } catch (err) {
       console.error(err);
     }

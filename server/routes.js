@@ -20,7 +20,7 @@ router.put('/reviews/report', controller.reviews.markReported);
 
 // Cart
 router.get('/cart', controller.cart.getCart);
-router.post('/cart', controller.cart.addToCart);
+router.post('/cart/addToCart', controller.cart.addToCart);
 
 // Interations
 // router.post('/interactions', controller.interactions.get);
