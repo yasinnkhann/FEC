@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
+import { TOKEN } from '../../../config.js';
 
 const Stars = styled.div`
   display: inline-block;
@@ -89,17 +90,47 @@ const emptyDiv = {
 class ReviewListEntry extends React.Component {
   constructor(props) {
     super(props);
-    this.handlePutEntry = this.handlePutEntry.bind(this);
+    // this.handlePutEntry = this.handlePutEntry.bind(this);
+    this.handlePutEntryHelpful = this.handlePutEntryHelpful.bind(this);
+    this.handlePutEntryReported = this.handlePutEntryReported.bind(this);
+
   }
 
-  handlePutEntry(e) {
+  handlePutEntryHelpful(e) {
+    const body = {};
+    const review_id = this.props.review.review_id;
     axios
-      .put('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
-        review_id: this.props.review.review_id,
-        type: e.target.id,
-      })
+      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/helpful`, body,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          }
+        }
+      )
       .then((results) => {
-        alert('Your request has been received!');
+        // console.log(results);
+        alert('Helpful feedback has been received!');
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('There\'s been an issue with your request');
+      });
+  }
+
+  handlePutEntryReported(e) {
+    const body = {};
+    const review_id = this.props.review.review_id;
+    axios
+      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/report`, body,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          }
+        }
+      )
+      .then((results) => {
+        // console.log(results);
+        alert('Report request has been received!');
       })
       .catch((err) => {
         console.log(err);
@@ -108,12 +139,12 @@ class ReviewListEntry extends React.Component {
   }
 
   render() {
+    // console.log(this.props.review);
     const { review } = this.props;
     return (
       <div className="ratings-flexbox-container" style={gridLayout}>
         <div style={starLayout}>
           <div style={{ display: 'flex', zIndex: '-1', marginRight: 'auto' }}>
-            {/* <StarRating averageRating={review.rating} height={18} width={15} /> */}
             <Stars>
               <Rating name="read-only" value={review.rating} precision={0.25} max={5} size="small" readOnly />
             </Stars>
@@ -160,10 +191,8 @@ class ReviewListEntry extends React.Component {
         <div style={helpfulnessLayout}>
           <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
             {review.photos.length > 0 ? (
-              // <div style={photoLayout}>
               <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <PhotosMap photos={review.photos} />
-                {/* </div> */}
               </div>
             ) : (
               <div style={emptyDiv} />
@@ -180,7 +209,7 @@ class ReviewListEntry extends React.Component {
               {' '}
               Helpful?
               <u
-                onClick={this.handlePutEntry}
+                onClick={this.handlePutEntryHelpful}
                 aria-hidden="true"
                 id="helpful"
                 style={{ marginLeft: '4px', marginRight: '2px' }}
@@ -188,7 +217,11 @@ class ReviewListEntry extends React.Component {
                 Yes
               </u>
               {`(${review.helpfulness}) | `}
-              <u onClick={this.handlePutEntry} aria-hidden="true" id="report" style={{ marginLeft: '4px' }}>
+              <u
+                onClick={this.handlePutEntryReported}
+                aria-hidden="true"
+                id="report"
+                style={{ marginLeft: '4px' }}>
                 Report
               </u>
             </div>
