@@ -1,12 +1,44 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import StylesContext from './StylesContext';
-import ExpandedView from './ExpandedView.jsx';
+//import ExpandedView from './ExpandedView.jsx';
+import AppContext from '../../AppContext';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {ArrowUpward} from '@material-ui/icons';
 import {ArrowDownward} from '@material-ui/icons';
+import {PortalWithState} from 'react-portal';
 
+const ModalContainer = styled.div `
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  max-height: 1000px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+`;
+
+const ModalBody = styled.section `
+  background-color: rgb(220, 245, 253);
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+`;
+const ModalImg = styled.img `
+  width: 1000px;
+  height: 1000px;
+`;
+// background-position: ${(props) => (props.position)};
 const MainImgContainer = styled.div`
   position: relative;
   grid-column-start: 1;
@@ -47,95 +79,153 @@ const Up = styled.button`
   transform: translateX(-50%);
   margin-bottom: 1rem;
 `;
-const Left = styled.button `
-z-index: 1;
+const Left = styled.button`
+  z-index: 1;
+  left: 90px;
+  position: absolute;
+  top: 50%;
+`;
+const Right = styled.button`
+  right: 1rem;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+`;
+const LeftExpand = styled.button `
+z-index: 3;
 left: 90px;
-position: absolute;
 top: 50%;
 `;
-const Right = styled.button `
-right: 1rem;
-z-index: 1;
-position: absolute;
+const RightExpand = styled.button `
+right: 3rem;
+z-index: 3;
 top: 50%;
 `;
 const ThumbnailImage = styled.img`
-  border: ${(props) => (props.selected ? '3px solid black' : null)};
+  border: ${props => (props.selected ? '3px solid black' : null)};
   width: 100%;
   height: 50px;
   object-fit: cover;
 `;
+const ThumbnailExpandedImage = styled.img`
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 1px solid;
+  object-fit: cover;
+`;
+const ThumbnailExpandedContainer = styled.div`
+  z-index: 1;
+  bottom: 0;
+  max-height: 420px;
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  border-top-right-radius:  10px;
+  border-top-left-radius: 10px;
+`;
 
-// const ExpandedImageContainer = styled.img `
-// width: 600px;
-// background-repeat: no-repeat;
-// background-position: ${(props) => (props.selected ? handleMouseMove() : '0% 0%')};
-
-// &&:hover {
-//   opacity: 0;
-// }
-// `;
-
-// const ExpandedImage = styled.img `
-//   display: block;
-//   width: 100%;
-//   pointer-events: none;
-// `;
-// const ExpandedContainer = styled.div `
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100vh;
-//   width: 100vw;
-// `;
-
-// class Zoom extends Component {
-//   state = {
-//     backgroundImage: `url(${src})`,
-//     backgroundPosition: '0% 0%'
-//   }
-
-//   handleMouseMove = e => {
-//     const { left, top, width, height } = e.target.getBoundingClientRect()
-//     const x = (e.pageX - left) / width * 100
-//     const y = (e.pageY - top) / height * 100
-//     this.setState({ backgroundPosition: `${x}% ${y}%` })
-//   }
-
-//   render = () =>
-//     <figure onMouseMove={this.handleMouseMove} style={this.state}>
-//       <img src={src} />
-//     </figure>
-// }
-
-// ReactDOM.render(<Zoom />, document.getElementById('root'))
 
 export default function ImageGallery() {
   const { stylesDataContent, currentStyleContent } = useContext(StylesContext);
   const [stylesData, setstylesData] = stylesDataContent;
   const [currentStyle, setCurrentStyle] = currentStyleContent;
-  const [currentPage, setcurrentPage] = useState(0);
-  const [currentIndex, setcurrentIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [modalOpen, setmodalOpen] = useState(false);
+  const { selectedProductContext } = useContext(AppContext);
+  const [selectedProduct, setSelectedProduct] = selectedProductContext;
 
   useEffect(() => {
-    setcurrentIndex(0);
-    setcurrentPage(0);
-  }, [currentStyle]);
+    setCurrentIndex(0);
+    setCurrentPage(0);
+  }, [currentStyle, selectedProduct]);
+
+  useEffect(() => {
+    const mainEl = document.querySelector('main');
+
+    if (modalOpen) {
+      if (mainEl) {
+        mainEl.style.filter = 'blur(3px)';
+      }
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+      if (mainEl) {
+        mainEl.style.filter = 'none';
+      }
+    };
+  }, [modalOpen]);
 
   const renderPhoto = () => {
-    return getItemsForPage(currentPage)?.map((photo, index) => {
-      const imageRendered = photo?.thumbnail_url[0] === 'h' ? photo?.thumbnail_url : photo?.url;
+    return getItemsForPage(currentPage).map((photo, index) => {
+      const imageRendered = photo?.thumbnail_url ? photo?.thumbnail_url[0] === 'h' ? photo?.thumbnail_url : photo?.url : null;
+      console.log('FROM RENDER PHOTO: ', currentIndex);
       return (
         <ThumbnailImage
           selected={currentStyle.photos[currentIndex].thumbnail_url === photo?.thumbnail_url}
           src={imageRendered}
-          key={photo?.thumbnail_url}
-          onClick={() => currentPage === 0 ? setcurrentIndex(index) : setcurrentIndex(7 * currentPage + index)}
+          key={photo.thumbnail_url}
+          onClick={() => currentPage === 0 ? setCurrentIndex(index) : setCurrentIndex(7 * currentPage + index)}
         ></ThumbnailImage>
       );
     });
   };
+  console.log(currentStyle);
+  const renderExpandedPhotos = () => {
+    return currentStyle.photos.map((photo, index) => {
+      const imageExpandRendered = photo?.thumbnail_url ? photo?.thumbnail_url[0] === 'h' ? photo?.thumbnail_url : photo?.url : null;
+      return (
+        <ThumbnailExpandedImage
+          onClick={() => setCurrentIndex(index)}
+          src={imageExpandRendered}
+          key={photo.thumbnail_url}
+        ></ThumbnailExpandedImage>
+      );
+    });
+  };
+
+  const renderPortal = ({ portal }) => {
+    return portal(
+      <div>
+        <ModalContainer onClick={(e) => {
+          setmodalOpen(false);
+          console.log('I am container bitch');
+        }}>
+          <ModalBody
+            // onMouseMove={() => console.log('I am body')}
+            onClick = {(e) => {
+              e.stopPropagation();
+              console.log('I am body');
+            }}>
+            <ModalImg
+              // onMouseMove={() => console.log('I am image')}
+              src={currentStyle.photos[currentIndex].url}
+            ></ModalImg>
+            <ThumbnailExpandedContainer>
+              <LeftExpand onClick={(e) => {
+                e.stopPropagation();
+                { currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : null; }
+              }}><ChevronLeftIcon/>
+              </LeftExpand>
+              {renderExpandedPhotos()}
+              <RightExpand onClick={(e) => {
+                { currentIndex < currentStyle.photos.length - 1 ? setCurrentIndex(currentIndex + 1) : null; }
+              }}><ChevronRightIcon/></RightExpand>
+            </ThumbnailExpandedContainer>
+          </ModalBody>
+        </ModalContainer>
+      </div>
+    );
+  };
+
+
 
   const getItemsForPage = () => {
     const numberOfItemsToShow = 7;
@@ -143,26 +233,20 @@ export default function ImageGallery() {
     const end = (currentPage + 1) * numberOfItemsToShow;
     return currentStyle.photos.slice(start, end);
   };
-  // const handleMouseMove = (e) => {
-  //   const { left, top, width, height } = e.target.getBoundingClientRect();
-  //   const x = (e.pageX - left) / width * 100;
-  //   const y = (e.pageY - top) / height * 100;
-  //   setbackgroundPosition(`${x}% ${y}%`);
-  // };
 
 
-  const getpage = (newindex) => {
+  const getpage = newindex => {
     const min = currentPage * 7;
-    const max = (currentPage * 7) + 7 || 7;
+    const max = currentPage * 7 + 7 || 7;
     if (newindex >= max) {
-      setcurrentPage(currentPage + 1);
+      setCurrentPage(currentPage + 1);
     }
 
     if (newindex < min) {
-      setcurrentPage(currentPage - 1);
+      setCurrentPage(currentPage - 1);
 
     }
-    setcurrentIndex(newindex);
+    setCurrentIndex(newindex);
   };
 
   // const renderModal = () => {
@@ -172,11 +256,11 @@ export default function ImageGallery() {
     <MainImgContainer>
       <ThumbnailContainer>
         {currentPage !== 0 &&
-        <Up onClick={() => setcurrentPage(currentPage - 1)}><ArrowUpward/></Up>
+        <Up onClick={() => setCurrentPage(currentPage - 1)}><ArrowUpward/></Up>
         }
         {renderPhoto()}
         {getItemsForPage().length === 7 &&
-        <Down onClick={() => setcurrentPage(currentPage + 1)}><ArrowDownward/></Down>
+        <Down onClick={() => setCurrentPage(currentPage + 1)}><ArrowDownward/></Down>
         }
       </ThumbnailContainer>
 
@@ -187,11 +271,34 @@ export default function ImageGallery() {
       <Right onClick={() => getpage(currentIndex + 1)}><ChevronRightIcon/></Right>
       }
       <MainImage src={currentStyle.photos[currentIndex].url} onClick={() => setmodalOpen(true)}></MainImage>
-      <ExpandedView
-        open = {modalOpen}
-        close = {() => setmodalOpen(false)}
-        photo = {currentStyle.photos[currentIndex].url}
-      />
+      {modalOpen ? (
+        <PortalWithState defaultOpen closeOnEsc onClose={close}>
+          {renderPortal}
+        </PortalWithState>
+      ) : null}
     </MainImgContainer>
   );
 }
+
+
+
+
+
+
+// const renderExpandedThumbs = () => {
+//   currentStyle.photos.map((photo) => {
+//     return (
+//       <ExpandedThumb>{photo.thumbnail_url}</ExpandedThumb>
+//     );
+//   });
+// };
+
+// if (open) {
+//   return (
+//     <PortalWithState defaultOpen closeOnEsc onClose={close}>
+//       {renderPortal}
+//     </PortalWithState>
+//   );
+// } else {
+//   return null;
+// }

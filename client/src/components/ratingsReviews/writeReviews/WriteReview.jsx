@@ -233,6 +233,7 @@ class WriteReview extends React.Component {
     const { name } = this.state;
     const { email } = this.state;
     const { metaData } = this.props;
+    console.log(this.props);
     return (
       <div>
         <form onSubmit={this.HandleReviewData} id="reviewForm" style={gridLayout}>
@@ -409,7 +410,7 @@ class WriteReview extends React.Component {
               style={innerNameStyle}
               value={name}
               onChange={this.onInputChange}
-              placeholder="Example: jackson11!"
+              placeholder="Example: jacky101!"
             />
             <br />
           </div>
