@@ -1,12 +1,13 @@
 // Dependency imports
 import React from 'react';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import styled from 'styled-components';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
 // SCROLL ARROWS
 const ScrollArrow = ({ direction }) => {
   // JSX
-  return <div>{direction === 'left' ? <ChevronLeftIcon /> : <ChevronRightIcon />}</div>;
+  return <span>{direction === 'left' ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}</span>;
 };
 
 export default ScrollArrow;

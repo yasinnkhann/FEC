@@ -303,7 +303,7 @@ export default function RatingsReviews() {
 
   if (noReviews) {
     return (
-      <div style={noReviewsGrid}>
+      <div className="ratings-and-reviews" style={noReviewsGrid}>
         <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
           No review for this product Be the first to add one!
         </div>

@@ -207,11 +207,11 @@ export default function Carousel({ name, relatedProductIds }) {
       <div className="carousel-row" style={{display: 'flex'}} >
         {relatedProducts[0]?.data.id === visibleProducts[0]?.data.id
           ? <div style={{width: '40px'}}></div>
-          : <button className="carousel-left" onClick={(e) => scrollLeft(e)} >
+          : <BaseArrow className="carousel-left" onClick={(e) => scrollLeft(e)} >
             <LeftArrow>
               <ScrollArrow direction={'left'} />
             </LeftArrow>
-          </button>}
+          </BaseArrow>}
         {
           <div className="carousel-middle" style={{display: 'flex'}} >
             {renderCarousel(name)}
@@ -221,11 +221,11 @@ export default function Carousel({ name, relatedProductIds }) {
           ? <div style={{width: '40px'}}></div>
           : visibleProducts.length === relatedProducts.length
             ? <div style={{width: '40px'}}></div>
-            : <button className="carousel-right" onClick={(e) => scrollRight(e)} >
+            : <BaseArrow className="carousel-right" onClick={(e) => scrollRight(e)} >
               <RightArrow>
                 <ScrollArrow direction={'right'} />
               </RightArrow>
-            </button>}
+            </BaseArrow>}
       </div>
     </CarouselStyle>
   );
@@ -236,6 +236,16 @@ const CarouselStyle = styled.div`
   display: flex;
   align-items: flex-start;
   scroll-behavior: smooth;
+`;
+
+const BaseArrow = styled.span`
+  border: 2px solid rgba(0, 0, 0, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
 `;
 
 const LeftArrow = styled.div``;
