@@ -61,6 +61,7 @@ export default function StarRating({ product }) {
 
 const Stars = styled.div`
   display: inline-block;
+
   font-family: Times;
   margin-left: 4rem;
   padding-top: 1rem;
