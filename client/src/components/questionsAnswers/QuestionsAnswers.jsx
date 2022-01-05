@@ -63,7 +63,7 @@ export default function QuestionsAnswers() {
   }, [selectedProduct]);
 
   return (
-    <QAWidget>
+    <div className='questions-and-answers'>
       {isLoaded && (
         <>
           <QuestionsContext.Provider
@@ -83,10 +83,8 @@ export default function QuestionsAnswers() {
           </QuestionsContext.Provider>
         </>
       )}
-      {/* {console.log('PRODUCTS FROM QA: ', products)}
-      {console.log('QUESTIONS DATA: ', questionsData)} */}
-    </QAWidget>
+      {/* {console.log('PRODUCTS FROM QA: ', products)} */}
+      {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
+    </div>
   );
 }
-
-const QAWidget = styled.div``;

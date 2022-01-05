@@ -59,7 +59,7 @@ export default function CarouselCard({ product, name }) {
       };
 
       if (product) { getProductStyle(product.id); }
-    }, 100);
+    }, 200);
 
     return () => clearTimeout(clearId);
   }, []);

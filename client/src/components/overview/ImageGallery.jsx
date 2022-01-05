@@ -125,21 +125,13 @@ export default function ImageGallery() {
 
   const renderPhoto = () => {
     return getItemsForPage(currentPage).map((photo, index) => {
-      const imageRendered =
-        photo.thumbnail_url[0] === 'h' ? photo.thumbnail_url : photo.url;
+      const imageRendered = photo?.thumbnail_url[0] === 'h' ? photo?.thumbnail_url : photo?.url;
       return (
         <ThumbnailImage
-          selected={
-            currentStyle.photos[currentIndex].thumbnail_url ===
-            photo.thumbnail_url
-          }
+          selected={currentStyle.photos[currentIndex].thumbnail_url === photo?.thumbnail_url}
           src={imageRendered}
-          key={photo.thumbnail_url}
-          onClick={() =>
-            currentPage === 0
-              ? setcurrentIndex(index)
-              : setcurrentIndex(7 * currentPage + index)
-          }
+          key={photo?.thumbnail_url}
+          onClick={() => currentPage === 0 ? setcurrentIndex(index) : setcurrentIndex(7 * currentPage + index)}
         ></ThumbnailImage>
       );
     });
