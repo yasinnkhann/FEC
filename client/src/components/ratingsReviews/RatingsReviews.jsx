@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-// import Loader from 'react-loader-spinner';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -12,7 +11,6 @@ import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
 
-// import './ratingsReviewsStyles.css';
 // import metaDummy from './metaDummy.jsx';
 // import dummyDataReviews from './dummyDataReviews.jsx';
 
