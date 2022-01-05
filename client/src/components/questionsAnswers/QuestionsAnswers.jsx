@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import { TOKEN } from '../../config.js';
 import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
@@ -13,6 +12,7 @@ export default function QuestionsAnswers() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [useFilteredData, setUseFilteredData] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // CONTEXT
   const { productsContext, selectedProductContext } = useContext(AppContext);
@@ -23,6 +23,7 @@ export default function QuestionsAnswers() {
 
   // METHODS
   const handleSearchQuery = query => {
+    setSearchQuery(query);
     setUseFilteredData(true);
     if (query.length < 2) {
       setFilteredQuestions(questionsData.results);
@@ -45,7 +46,7 @@ export default function QuestionsAnswers() {
               product_id: selectedProduct?.id,
               // product_id: products[345]?.id,
               // page: 1,
-              count: 100,
+              count: 20,
             },
             headers: {
               Authorization: `${TOKEN}`,
@@ -79,6 +80,7 @@ export default function QuestionsAnswers() {
             <Questions
               questionsData={questionsData.results}
               filteredData={filteredQuestions}
+              searchQuery={searchQuery}
             />
           </QuestionsContext.Provider>
         </>

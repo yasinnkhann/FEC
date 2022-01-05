@@ -4,7 +4,11 @@ import QuestionsContext from './QuestionsContext.js';
 import Question from './Question.jsx';
 import AddQuestion from './AddQuestion.jsx';
 
-export default function Questions({ questionsData, filteredData }) {
+export default function Questions({
+  questionsData,
+  filteredData,
+  searchQuery,
+}) {
   // CONTEXT
   const { useFilteredData, setUseFilteredData } = useContext(QuestionsContext);
 
@@ -63,15 +67,18 @@ export default function Questions({ questionsData, filteredData }) {
   }
 
   const showRemainingQsCondition =
-    (questionsData.length !== 0 && !useFilteredData) ||
-    (filteredData.length !== 0 && useFilteredData);
+    (!useFilteredData && remainingQsList?.length > 0) ||
+    (useFilteredData &&
+      remainingQsList?.length > 0 &&
+      filteredData.length === questionsData.length &&
+      searchQuery.length === 0);
 
-  const showMoreAnsweredQsCondition =
+  const moreAnsweredQsBtnCondition =
     (questionsData?.length > 4 && !useFilteredData) ||
     (questionsData?.length > 4 && filteredData.length !== 0 && useFilteredData);
 
   // METHODS
-  const handleRemainingQs = remainingQs => {
+  const handleRemainingQs = () => {
     const remainingQsCopy = [...remainingQs];
 
     let newEndPos = remainingQsCount + 2;
@@ -94,12 +101,10 @@ export default function Questions({ questionsData, filteredData }) {
     <Container>
       {initialQs?.length > 0 && initialQs}
 
-      {remainingQsList?.length > 0 && showRemainingQsCondition
-        ? remainingQsList
-        : null}
+      {showRemainingQsCondition ? remainingQsList : null}
 
-      {showMoreAnsweredQsCondition && isRemainingQsBtnShown ? (
-        <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>
+      {moreAnsweredQsBtnCondition && isRemainingQsBtnShown ? (
+        <MoreAnsweredQsBtn onClick={() => handleRemainingQs()}>
           More Answered Questions
         </MoreAnsweredQsBtn>
       ) : null}
@@ -120,7 +125,6 @@ export default function Questions({ questionsData, filteredData }) {
 }
 
 const Container = styled.div`
-  /* height: calc(100vh - 115px); */
   overflow-y: auto;
   padding: 0rem 1rem;
 
@@ -165,7 +169,11 @@ const SubmitNewQBtn = styled.button`
 // import Question from './Question.jsx';
 // import AddQuestion from './AddQuestion.jsx';
 
-// export default function Questions({ questionsData, filteredData }) {
+// export default function Questions({
+//   questionsData,
+//   filteredData,
+//   searchQuery,
+// }) {
 //   // CONTEXT
 //   const { useFilteredData, setUseFilteredData } = useContext(QuestionsContext);
 
@@ -224,15 +232,18 @@ const SubmitNewQBtn = styled.button`
 //   }
 
 //   const showRemainingQsCondition =
-//     (questionsData.length !== 0 && !useFilteredData) ||
-//     (filteredData.length !== 0 && useFilteredData);
+//     (!useFilteredData && remainingQsList?.length > 0) ||
+//     (useFilteredData &&
+//       remainingQsList?.length > 0 &&
+//       filteredData.length === questionsData.length &&
+//       searchQuery.length === 0);
 
-//   const showMoreAnsweredQsCondition =
+//   const moreAnsweredQsBtnCondition =
 //     (questionsData?.length > 4 && !useFilteredData) ||
 //     (questionsData?.length > 4 && filteredData.length !== 0 && useFilteredData);
 
 //   // METHODS
-//   const handleRemainingQs = remainingQs => {
+//   const handleRemainingQs = () => {
 //     const remainingQsCopy = [...remainingQs];
 
 //     let newEndPos = remainingQsCount + 2;
@@ -255,12 +266,10 @@ const SubmitNewQBtn = styled.button`
 //     <Container>
 //       {initialQs?.length > 0 && initialQs}
 
-//       {remainingQsList?.length > 0 && showRemainingQsCondition
-//         ? remainingQsList
-//         : null}
+//       {showRemainingQsCondition ? remainingQsList : null}
 
-//       {showMoreAnsweredQsCondition && isRemainingQsBtnShown ? (
-//         <MoreAnsweredQsBtn onClick={() => handleRemainingQs(remainingQs)}>
+//       {moreAnsweredQsBtnCondition && isRemainingQsBtnShown ? (
+//         <MoreAnsweredQsBtn onClick={() => handleRemainingQs()}>
 //           More Answered Questions
 //         </MoreAnsweredQsBtn>
 //       ) : null}
@@ -281,7 +290,6 @@ const SubmitNewQBtn = styled.button`
 // }
 
 // const Container = styled.div`
-//   /* height: calc(100vh - 115px); */
 //   overflow-y: auto;
 //   padding: 0rem 1rem;
 

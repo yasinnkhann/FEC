@@ -1,25 +1,18 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
 export default function Search(props) {
-  // STATE
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // METHODS
-  const handleChangeProxy = e => {
-    setSearchQuery(e.target.value);
-    props.handleChange(searchQuery);
-  };
+  // REFS
+  const searchRef = useRef(null);
 
   return (
     <Container>
       <SearchBar
         type='text'
+        ref={searchRef}
         placeholder='Have a question? Search for answers…'
-        name='searchQuery'
-        value={searchQuery}
-        onChange={handleChangeProxy}
+        onChange={() => props.handleChange(searchRef.current.value)}
       />
       <MagnifyGlassIcon />
     </Container>

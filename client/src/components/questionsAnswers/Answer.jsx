@@ -179,15 +179,6 @@ export default function Answer({ questionObj }) {
             {answer?.photos.length > 0 && (
               <PhotoContainer>
                 <Photos>
-                  {/* {answer?.photos?.map(photoSrc => (
-                    <img
-                      key={uuidv4()}
-                      src={photoSrc.url}
-                      width='200'
-                      height='200'
-                      loading='lazy'
-                    />
-                  ))} */}
                   {answer?.photos?.map(photo => {
                     const imageElem = photo.url.startsWith('https') ? (
                       <img
