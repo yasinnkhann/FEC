@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-// import Loader from 'react-loader-spinner';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -12,7 +11,6 @@ import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
 
-// import './ratingsReviewsStyles.css';
 // import metaDummy from './metaDummy.jsx';
 // import dummyDataReviews from './dummyDataReviews.jsx';
 
@@ -191,7 +189,7 @@ export default function RatingsReviews() {
   useEffect(() => {
     setTimeout(() => {
       setLoaded(true);
-    }, 700);
+    }, 400);
     // get review api data
     const getReviewApi = async () => {
       try {
@@ -263,23 +261,53 @@ export default function RatingsReviews() {
     setStarSort([]);
   };
 
-  const handleReviewData = (reviewData) => {
-    axios
-      .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
-      .then((results) => {})
-      .catch((err) => {
-        console.log('err on review POST', err);
-      });
+  const handleReviewData = async (e) => {
+    try {
+      const body = {
+        // product_id: selectedProduct,
+        // rating: reviewList.results.rating,
+        // summary: reviewList.results.summary,
+        // body: reviewList.results.body,
+        // recommend: reviewList.results.recommend,
+        // name: reviewList.results.reviewer_name,
+        // email: '',
+        // photos: [],
+        // characteristics: metaData.characteristics
+
+      };
+      const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
+        body,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          }
+        }
+      );
+      console.log('Add Review POST Res:: ', res);
+    } catch (err) {
+      console.log('err on review POST:: ', err);
+    }
   };
 
-  const handlePut = (review_id, type) => {
-    axios
-      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/${type}`)
-      .then((results) => {})
-      .catch((err) => {
-        console.log(err.data);
-      });
-  };
+  // const handleReviewData = (reviewData) => {
+  //   axios
+  //     .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
+  //     .then((results) => {
+  //       console.log(results);
+  //     })
+  //     .catch((err) => {
+  //       console.log('err on review POST', err);
+  //     });
+  // };
+
+  // const handlePut = (review_id, type) => {
+  //   axios
+  //     .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/${type}`)
+  //     .then((results) => {})
+  //     .catch((err) => {
+  //       console.log(err.data);
+  //     });
+  // };
 
   const moreReviewsClick = () => {
     const newEnd = reviewEnd + 2;
@@ -303,7 +331,7 @@ export default function RatingsReviews() {
 
   if (noReviews) {
     return (
-      <div style={noReviewsGrid}>
+      <div className="ratings-and-reviews" style={noReviewsGrid}>
         <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
           No review for this product Be the first to add one!
         </div>
@@ -377,7 +405,7 @@ export default function RatingsReviews() {
                   starSort={starSort}
                   reviewList={reviewList}
                   reviewEnd={reviewEnd}
-                  handlePut={handlePut}
+                  // handlePut={handlePut}
                 />
               </div>
               <div style={reviewButtonsStyle}>
@@ -395,7 +423,7 @@ export default function RatingsReviews() {
             </div>
           )}
         </div>
-      ) : <p> Loading...</p>
+      ) : <p> Ratings & Reviews: Loading...</p>
       }
     </Fragment>
   );
