@@ -79,17 +79,17 @@ const Up = styled.button`
   transform: translateX(-50%);
   margin-bottom: 1rem;
 `;
-const Left = styled.button `
-z-index: 1;
-left: 90px;
-position: absolute;
-top: 50%;
+const Left = styled.button`
+  z-index: 1;
+  left: 90px;
+  position: absolute;
+  top: 50%;
 `;
-const Right = styled.button `
-right: 1rem;
-z-index: 1;
-position: absolute;
-top: 50%;
+const Right = styled.button`
+  right: 1rem;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
 `;
 const LeftExpand = styled.button `
 z-index: 3;
@@ -102,7 +102,7 @@ z-index: 3;
 top: 50%;
 `;
 const ThumbnailImage = styled.img`
-  border: ${(props) => (props.selected ? '3px solid black' : null)};
+  border: ${props => (props.selected ? '3px solid black' : null)};
   width: 100%;
   height: 50px;
   object-fit: cover;
@@ -235,10 +235,9 @@ export default function ImageGallery() {
   };
 
 
-
-  const getpage = (newindex) => {
+  const getpage = newindex => {
     const min = currentPage * 7;
-    const max = (currentPage * 7) + 7 || 7;
+    const max = currentPage * 7 + 7 || 7;
     if (newindex >= max) {
       setCurrentPage(currentPage + 1);
     }
@@ -277,12 +276,6 @@ export default function ImageGallery() {
           {renderPortal}
         </PortalWithState>
       ) : null}
-      {/* <ExpandedView
-        open = {modalOpen}
-        close = {() => setmodalOpen(false)}
-        photo = {currentStyle.photos[currentIndex].url}
-        currentStyle = {currentStyle}
-      /> */}
     </MainImgContainer>
   );
 }
