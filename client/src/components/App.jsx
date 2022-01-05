@@ -14,9 +14,6 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(products[0]); // For selecting the current product to be shown
 
   useEffect(() => {
-    document.body.addEventListener('click', e => {
-      console.log('EVENT: ', e);
-    });
 
     let clearId = setTimeout(() => {
       const getApi = async () => {
@@ -26,7 +23,7 @@ export default function App() {
             {
               params: {
                 // page: 1,
-                count: 2000,
+                count: 200,
               },
               headers: {
                 Authorization: `${TOKEN}`,
@@ -41,10 +38,44 @@ export default function App() {
         }
       };
       getApi();
-    }, 100);
+    }, 1000);
 
     return () => clearTimeout(clearId);
   }, []);
+
+
+  document.body.addEventListener('click', e => {
+
+    const element = e.srcElement.localName;
+    const widgetData = e.path.slice(-6);
+    const widget = widgetData[0].className;
+    const date = new Date().toISOString();
+
+    const sendClickData = async () => {
+      try {
+        const body = {
+          element: element,
+          widget: widget,
+          time: date
+        };
+        const res = await axios.post(
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/interactions',
+          body,
+          {
+            headers: {
+              Authorization: `${TOKEN}`,
+            },
+          }
+        );
+        console.log(res);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    sendClickData();
+  });
+
 
   return (
     <Fragment>

@@ -33,7 +33,7 @@ export default function Carousel({ name, relatedProductIds }) {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(3);
+  const [endIndex, setEndIndex] = useState(4);
   const [isLoaded, setIsLoaded] = useState(false);
   const size = useWindowSize();
 
@@ -70,11 +70,11 @@ export default function Carousel({ name, relatedProductIds }) {
         });
       }
       setIsLoaded(true);
-    }, 300);
+    }, 400);
 
 
     return () => clearTimeout(clearId);
-  }, [selectedProduct, relatedProductIds]);
+  }, [relatedProductIds]);
 
   // Changes number of items shown based on window size
   useEffect(() => {
