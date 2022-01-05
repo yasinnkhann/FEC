@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import Moment from 'react-moment';
@@ -63,7 +63,10 @@ export default function Answer({ questionObj }) {
       for (let i = 0; i < questionsDataCopy.length; i++) {
         let question = questionsDataCopy[i];
         for (let key in question) {
-          if (question[key] === questionObj.question_id && !trackerCopy.hasOwnProperty([keyId])) {
+          if (
+            question[key] === questionObj.question_id &&
+            !trackerCopy.hasOwnProperty([keyId])
+          ) {
             answerObj.helpfulness = incrementedCount;
             trackerCopy[keyId] = 'Incremented';
           }
@@ -100,7 +103,10 @@ export default function Answer({ questionObj }) {
       for (let i = 0; i < questionsDataCopy.length; i++) {
         let question = questionsDataCopy[i];
         for (let key in question) {
-          if (question[key] === questionObj.question_id && !trackerCopy.hasOwnProperty([keyId])) {
+          if (
+            question[key] === questionObj.question_id &&
+            !trackerCopy.hasOwnProperty([keyId])
+          ) {
             trackerCopy[keyId] = 'Reported';
           }
         }
@@ -115,7 +121,7 @@ export default function Answer({ questionObj }) {
     }
   };
 
-  const handleSeeMoreAnswers = (e) => {
+  const handleSeeMoreAnswers = e => {
     e.preventDefault();
     if (showRemainderAnswers) {
       setShowRemainderAnswers(false);
@@ -125,11 +131,13 @@ export default function Answer({ questionObj }) {
   };
 
   // VARIABLES
-  const sellerAnswers = answers?.results?.filter((answer) => answer.answerer_name === 'Seller');
+  const sellerAnswers = answers?.results?.filter(
+    answer => answer.answerer_name === 'Seller'
+  );
 
   const orderedAnswers = answers?.results
     ?.sort((a, b) => b.helpfulness - a.helpfulness)
-    ?.filter((answer) => answer.answerer_name !== 'Seller');
+    ?.filter(answer => answer.answerer_name !== 'Seller');
 
   const finalAnswers = sellerAnswers?.concat(orderedAnswers);
 
@@ -137,7 +145,7 @@ export default function Answer({ questionObj }) {
 
   const remainingFinalAnswers = finalAnswers?.slice(2);
 
-  const initialMappedAnswers = initialFinalAnswers?.map((answer) => (
+  const initialMappedAnswers = initialFinalAnswers?.map(answer => (
     <AnswerPortion key={answer?.answer_id}>
       <AnswerHeader>
         <strong>A:</strong>
@@ -171,9 +179,23 @@ export default function Answer({ questionObj }) {
             {answer?.photos.length > 0 && (
               <PhotoContainer>
                 <Photos>
-                  {answer?.photos?.map((photoSrc, idx) => (
-                    <img key={idx} src={photoSrc.url} width="200" height="200" loading="lazy" />
-                  ))}
+                  {answer?.photos?.map(photo => {
+                    const imageElem = photo.url.startsWith('https') ? (
+                      <img
+                        key={photo.id}
+                        src={photo.url}
+                        width='200'
+                        height='200'
+                        loading='lazy'
+                      />
+                    ) : (
+                      <Fragment key={photo.url}>
+                        <i>Image failed to load. </i>
+                        <br />
+                      </Fragment>
+                    );
+                    return imageElem;
+                  })}
                 </Photos>
               </PhotoContainer>
             )}
@@ -183,7 +205,7 @@ export default function Answer({ questionObj }) {
     </AnswerPortion>
   ));
 
-  const remainingMappedAnswers = remainingFinalAnswers?.map((answer) => (
+  const remainingMappedAnswers = remainingFinalAnswers?.map(answer => (
     <AnswerPortion key={answer?.answer_id}>
       <AnswerHeader>
         <strong>A:</strong>
@@ -217,9 +239,23 @@ export default function Answer({ questionObj }) {
             {answer?.photos.length > 0 && (
               <PhotoContainer>
                 <Photos>
-                  {answer?.photos?.map((photoSrc, idx) => (
-                    <img key={idx} src={photoSrc.url} width="200" height="200" loading="lazy" />
-                  ))}
+                  {answer?.photos?.map(photo => {
+                    const imageElem = photo.url.startsWith('https') ? (
+                      <img
+                        key={photo.id}
+                        src={photo.url}
+                        width='200'
+                        height='200'
+                        loading='lazy'
+                      />
+                    ) : (
+                      <Fragment key={photo.url}>
+                        <i>Image failed to load. </i>
+                        <br />
+                      </Fragment>
+                    );
+                    return imageElem;
+                  })}
                 </Photos>
               </PhotoContainer>
             )}
@@ -234,11 +270,13 @@ export default function Answer({ questionObj }) {
       {initialMappedAnswers}
       {showRemainderAnswers && remainingMappedAnswers}
       <hr style={{ border: '1px solid #000', borderColor: 'black' }} />
-      {console.log('ANSWERS: ', answers)}
+      {/* {console.log('ANSWERS: ', answers)} */}
       {remainingFinalAnswers?.length > 0 && (
         <span>
-          <a href="" onClick={handleSeeMoreAnswers}>
-            <CollapseBtn>{showRemainderAnswers ? 'Collapse answers' : 'See more answers'}</CollapseBtn>
+          <a href='' onClick={handleSeeMoreAnswers}>
+            <CollapseBtn>
+              {showRemainderAnswers ? 'Collapse answers' : 'See more answers'}
+            </CollapseBtn>
           </a>
         </span>
       )}
