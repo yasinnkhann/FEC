@@ -1,5 +1,4 @@
 import React from 'react';
-// import styled from 'styled-components';
 import RatingsBreakdownListEntry from './RatingsBreakdownListEntry.jsx';
 
 export default function RatingsBreakdownList({ metaData, sortByStar }) {
