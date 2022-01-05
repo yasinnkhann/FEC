@@ -263,16 +263,44 @@ export default function RatingsReviews() {
     setStarSort([]);
   };
 
-  const handleReviewData = (reviewData) => {
-    axios
-      .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
-      .then((results) => {
-        console.log(results);
-      })
-      .catch((err) => {
-        console.log('err on review POST', err);
-      });
+  const handleReviewData = async (e) => {
+    try {
+      const body = {
+        // product_id: selectedProduct,
+        // rating: reviewList.results.rating,
+        // summary: reviewList.results.summary,
+        // body: reviewList.results.body,
+        // recommend: reviewList.results.recommend,
+        // name: reviewList.results.reviewer_name,
+        // email: '',
+        // photos: [],
+        // characteristics: metaData.characteristics
+
+      };
+      const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
+        body,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          }
+        }
+      );
+      console.log('Add Review POST Res:: ', res);
+    } catch (err) {
+      console.log('err on review POST:: ', err);
+    }
   };
+
+  // const handleReviewData = (reviewData) => {
+  //   axios
+  //     .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
+  //     .then((results) => {
+  //       console.log(results);
+  //     })
+  //     .catch((err) => {
+  //       console.log('err on review POST', err);
+  //     });
+  // };
 
   // const handlePut = (review_id, type) => {
   //   axios
