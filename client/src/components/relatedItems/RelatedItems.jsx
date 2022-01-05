@@ -54,30 +54,34 @@ export default function RelatedItems() {
         }
       };
       getRelatedProductIds();
-    }, 200);
+    }, 2000);
 
     return () => clearTimeout(clearId);
   }, [selectedProduct]);
 
-
   // JSX
   if (isLoaded && relatedProductIds.length >= 1) {
     return (
-      <UserContext.Provider value={{
-        userContext: [currentUser, setCurrentUser],
-        outfitContext: [userOutfit, setUserOutfit],
-      }}>
-        <div className="related-items-and-comparison" >
+      <UserContext.Provider
+        value={{
+          userContext: [currentUser, setCurrentUser],
+          outfitContext: [userOutfit, setUserOutfit],
+        }}
+      >
+        <div className='related-items-and-comparison'>
           <h3>RELATED ITEMS</h3>
-          <Carousel name="related-items" relatedProductIds={relatedProductIds} />
+          <Carousel
+            name='related-items'
+            relatedProductIds={relatedProductIds}
+          />
           <h3>YOUR OUTFIT</h3>
-          <Carousel name="your-outfit" />
+          <Carousel name='your-outfit' />
         </div>
       </UserContext.Provider>
     );
   } else {
     return (
-      <div className="related-items-and-comparison">
+      <div className='related-items-and-comparison'>
         <h3>RELATED ITEMS</h3>
         <h2>Loading...</h2>
         <h3>YOUR OUTFIT</h3>

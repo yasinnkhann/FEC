@@ -279,7 +279,7 @@ export default function Answer({ questionObj }) {
       {initialMappedAnswers}
       {showRemainderAnswers && remainingMappedAnswers}
       <hr style={{ border: '1px solid #000', borderColor: 'black' }} />
-      {console.log('ANSWERS: ', answers)}
+      {/* {console.log('ANSWERS: ', answers)} */}
       {remainingFinalAnswers?.length > 0 && (
         <span>
           <a href='' onClick={handleSeeMoreAnswers}>
