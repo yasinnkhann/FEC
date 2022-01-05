@@ -4,7 +4,7 @@ import Overview from './overview/Overview.jsx';
 import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
 import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
-import { TOKEN } from '../config.js';
+// import { TOKEN } from '../config.js';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
@@ -25,11 +25,18 @@ export default function App() {
     let clearId = setTimeout(() => {
       const getApi = async () => {
         try {
+
+          // DO NOT REMOVE -> WILL BE OUR NEW MAIN API CALL
+          // const res = await axios.get(
+          //   'http://localhost:3000/api/products'
+          // );
+
+          // LEAVING FOR NOW SO AS TO NOT BREAK EVERYTHING LOL
           const res = await axios.get(
             'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
             {
               params: {
-                // page: 1,
+                page: 1,
                 count: 200,
               },
               headers: {
@@ -37,6 +44,7 @@ export default function App() {
               },
             }
           );
+
           setProducts(res.data);
           setSelectedProduct(res.data[0]);
           setIsLoaded(true);
@@ -66,13 +74,8 @@ export default function App() {
           time: date,
         };
         const res = await axios.post(
-          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/interactions',
-          body,
-          {
-            headers: {
-              Authorization: `${TOKEN}`,
-            },
-          }
+          'https://127.0.0.1:3000/interactions',
+          body
         );
         // console.log(res);
       } catch (err) {
@@ -94,10 +97,10 @@ export default function App() {
               selectedProductContext: [selectedProduct, setSelectedProduct],
             }}
           >
-            <Overview />
+            {/* <Overview />
             <RelatedItems />
             <QuestionsAnswers />
-            <RatingsReviews />
+            <RatingsReviews /> */}
           </AppContext.Provider>
         </>
       ) : (

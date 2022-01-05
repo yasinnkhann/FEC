@@ -38,8 +38,12 @@ export default function RelatedItems() {
       const getRelatedProductIds = async () => {
         try {
           const res = await axios.get(
-            `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${selectedProduct.id}/related`,
+            'http://localhost:3000/products/related',
+            // `${URL}products/${selectedProduct.id}/related`,
             {
+              params: {
+                product_id: selectedProduct.id
+              },
               headers: {
                 Authorization: `${TOKEN}`,
               },

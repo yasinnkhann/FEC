@@ -2,6 +2,7 @@ node_modules
 yarn.lock
 client/dist/bundle.js
 client/src/config.js
+server/controllers/config.js
 *.excalidraw
 .DS_Store
 package-lock.json
