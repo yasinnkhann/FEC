@@ -8,6 +8,8 @@ const ModalContainer = styled.div `
   align-items: center;
   width: 100%;
   height: 100%;
+  max-height: 1000px;
+  max-width: 1000px;
   position: absolute;
   top: 0;
   left: 0;
@@ -99,13 +101,13 @@ export default function CompareModal({ photo, open, close }) {
     };
   }, [open]);
 
-  const handleImageClick = (e) => {
-    const { left, top, width, height } = e.target.getBoundingClientRect();
-    const x = (e.pageX - left) / width * 100;
-    const y = (e.pageY - top) / height * 100;
-    console.log(x, y);
-    setbackground(`${x}% ${y}%`);
-  };
+  // const handleImageClick = (e) => {
+  //   const { left, top, width, height } = e.target.getBoundingClientRect();
+  //   const x = (e.pageX - left) / width * 100;
+  //   const y = (e.pageY - top) / height * 100;
+  //   console.log(x, y);
+  //   setbackground(`${x}% ${y}%`);
+  // };
 
 
 
@@ -113,12 +115,12 @@ export default function CompareModal({ photo, open, close }) {
   const renderPortal = ({ portal }) => {
     return portal(
       <div>
-        <ModalContainer>
+        <ModalContainer onClick={close}>
           <ModalBody>
             <ModalImg
               src={photo}
-              position={background}
-              onClick={(e) => handleImageClick(e)}
+              // position={background}
+              // onClick={(e) => handleImageClick(e)}
             ></ModalImg>
           </ModalBody>
         </ModalContainer>
