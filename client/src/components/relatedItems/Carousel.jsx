@@ -28,19 +28,17 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
-  const [currentUser, setCurrentUser] = userContext;
   const [userOutfit, setUserOutfit] = outfitContext;
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(3);
+  const [endIndex, setEndIndex] = useState(4);
   const [isLoaded, setIsLoaded] = useState(false);
   const size = useWindowSize();
 
   // HOOKS & INITILIZATION
   // Populates relatedProducts state to render each item
   useEffect(() => {
-    console.log('[selectedProduct, relatedProductIds]');
     let clearId = setTimeout(() => {
 
       setRelatedProducts([]);
@@ -70,15 +68,14 @@ export default function Carousel({ name, relatedProductIds }) {
         });
       }
       setIsLoaded(true);
-    }, 300);
+    }, 400);
 
 
     return () => clearTimeout(clearId);
-  }, [selectedProduct, relatedProductIds]);
+  }, [relatedProductIds]);
 
   // Changes number of items shown based on window size
   useEffect(() => {
-    console.log('[size, relatedProducts]');
     // if (relatedProducts[startIndex]) { console.log('CURRENT CARD :: ', relatedProducts[startIndex].data.name); }
     let clearId = setTimeout(() => {
       const newEndIndex = getMaxIndexBasedOnScreenSize();
@@ -87,15 +84,15 @@ export default function Carousel({ name, relatedProductIds }) {
       }
       let newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
       setVisibleProducts(newVisibleProducts);
-    }, 100);
+    }, 500);
 
     return () => clearTimeout(clearId);
   }, [size, relatedProducts]);
 
   useEffect(() => {
     let clearId = setTimeout(() => {
-      setVisibleProducts(relatedProducts.slice(startIndex, endIndex));
-    }, 250);
+      changeVisibleProductsArray(startIndex, endIndex);
+    }, 500);
 
     return () => clearTimeout(clearId);
   }, [startIndex]);
@@ -151,11 +148,6 @@ export default function Carousel({ name, relatedProductIds }) {
     const firstRelatedItem = relatedProducts[0].data.id;
     const firstVisibleItem = visibleProducts[0].data.id;
     return firstVisibleItem === firstRelatedItem;
-  };
-
-  // Resets start and end index then changes shown products based on new indices
-  const resetVisibleProducts = () => {
-    changeVisibleProductsArray(0, endIndex);
   };
 
   // Divides width of inner window by width of a card and rounds up to the nearest integer
@@ -243,6 +235,7 @@ export default function Carousel({ name, relatedProductIds }) {
 const CarouselStyle = styled.div`
   display: flex;
   align-items: flex-start;
+  scroll-behavior: smooth;
 `;
 
 const LeftArrow = styled.div``;

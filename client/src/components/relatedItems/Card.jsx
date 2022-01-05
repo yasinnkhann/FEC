@@ -59,7 +59,7 @@ export default function CarouselCard({ product, name }) {
       };
 
       if (product) { getProductStyle(product.id); }
-    }, 100);
+    }, 200);
 
     return () => clearTimeout(clearId);
   }, []);
@@ -109,6 +109,7 @@ const CardStyle = styled.div`
   margin: 5px;
   padding: 5px;
   border: 1px solid black;
+  border-radius: 12px;
   position: relative;
   display: flex;
   flex-direction: row;

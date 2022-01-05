@@ -325,7 +325,7 @@ export default function RatingsReviews() {
   return (
     <Fragment>
       {isLoaded ? (
-        <div style = {mainDiv}>
+        <div className="ratings-and-reviews" style = {mainDiv}>
           {/* {console.log('from reviewList:', reviewList)} */}
           {/* {console.log('from metaData:', metaData)} */}
           {/* {console.log('selectedProduct:: ', selectedProduct)} */}

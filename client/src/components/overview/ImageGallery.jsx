@@ -169,7 +169,7 @@ export default function ImageGallery() {
       console.log('FROM RENDER PHOTO: ', currentIndex);
       return (
         <ThumbnailImage
-          selected={currentStyle.photos[currentIndex].thumbnail_url === photo.thumbnail_url}
+          selected={currentStyle.photos[currentIndex].thumbnail_url === photo?.thumbnail_url}
           src={imageRendered}
           key={photo.thumbnail_url}
           onClick={() => currentPage === 0 ? setCurrentIndex(index) : setCurrentIndex(7 * currentPage + index)}
