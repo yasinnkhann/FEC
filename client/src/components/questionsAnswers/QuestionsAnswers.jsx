@@ -5,6 +5,7 @@ import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';
 import Search from './Search.jsx';
+import styled from 'styled-components';
 
 const serverURL = 'http://localhost:3000/api';
 
@@ -77,7 +78,7 @@ export default function QuestionsAnswers() {
               setUseFilteredData,
             }}
           >
-            <h3>QUESTIONS &#38; ANSWERS</h3>
+            <QandAHeader>Questions &#38; Answers</QandAHeader>
             <Search handleChange={handleSearchQuery} />
             <Questions
               questionsData={questionsData.results}
@@ -92,3 +93,10 @@ export default function QuestionsAnswers() {
     </div>
   );
 }
+
+const QandAHeader = styled.h3 `
+   font-size: xx-large;
+   text-align: center;
+   padding-bottom: 1rem;
+   font-family: 'Lobster Two', cursive;
+`;

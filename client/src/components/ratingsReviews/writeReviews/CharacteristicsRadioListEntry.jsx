@@ -21,7 +21,7 @@ const descriptionFlex = {
 const CharacteristicsRadioListEntry = ({ characteristicID, characteristic, characteristicsRadioClick }) => (
   <div>
     <div style={containerStyle}>
-      <b style={{ color: 'red' }}> * </b>
+      <b style={{ color: '#38062B' }}> * </b>
       {`${characteristic}`}
     </div>
     <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>

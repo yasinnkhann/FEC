@@ -18,7 +18,7 @@ const gridLayout = {
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gridTemplatRows: 'repeat(6, 1fr)',
-  borderBottom: '1px solid grey',
+  borderBottom: '1px solid #B1A9AC',
   paddingTop: '10px',
   paddingBottom: '8px',
 };
@@ -33,7 +33,7 @@ const nameLayout = {
   textAlign: 'right',
   gridRow: '1',
   gridColumn: '2',
-  color: 'grey',
+  color: '#B1A9AC',
   fontSize: '13px',
 };
 
@@ -42,7 +42,7 @@ const dateLayout = {
   textAlign: 'center',
   gridRow: '1',
   gridColumn: '3',
-  color: 'grey',
+  color: '#B1A9AC',
   fontSize: '13px',
 };
 
@@ -62,7 +62,7 @@ const bodyLayout = {
 
 const recommendLayout = {
   padding: '5px',
-  color: 'grey',
+  color: '#B1A9AC',
   fontSize: '12px',
   gridRow: '4',
   gridColumn: '1/-1',
@@ -78,7 +78,7 @@ const responseLayout = {
 
 const helpfulnessLayout = {
   padding: '5px',
-  color: 'grey',
+  color: '#B1A9AC',
   fontSize: '11px',
   gridRowEnd: '7',
   gridColumnEnd: 'span 3',

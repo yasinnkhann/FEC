@@ -7,9 +7,14 @@ import Rating from '@material-ui/lab/Rating';
 const Reviews = styled.span`
   cursor: pointer;
   text-decoration: underline;
+  color: #38062B;
+  font-style: italic;
   /* margin-left: 3rem; */
 `;
-
+//silver #adadad
+//blue #849a9a
+//dark #072636
+//red #3c0225
 const Stars = styled.div`
   display: inline-block;
   font-family: Times;
@@ -53,7 +58,7 @@ export default function ReviewsStars() {
           </Reviews>
           <div>
             <Stars>
-              <Rating name="read-only" value={average()} precision={0.25} max={5} size="small" readOnly />
+              <Rating name="read-only" value={average()} precision={0.25} max={5} size="large" readOnly />
             </Stars>
           </div>
         </>

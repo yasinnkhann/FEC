@@ -109,19 +109,18 @@ export default function CarouselCard({ product, name }) {
 }
 
 const CardStyle = styled.div`
-  width: 210px;
+  width: 208px;
   height: 310px;
   margin: 5px;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 12px;
+  background-color: #B1A9AC;
+  border: 0.25rem solid #38062B;
   position: relative;
   display: flex;
   flex-direction: row;
 `;
 
 const ProductInfoStyle = styled.div`
-  width: 200px;
+  width: 300px;
   height: 100%;
   position: absolute;
   bottom: 0;
@@ -133,3 +132,6 @@ const ActionStyle = styled.a`
   max-height: 35px;
   max-width: 35px;
 `;
+//light = #FDF0D5
+//burgundy = #38062B
+//silver = #B1A9AC

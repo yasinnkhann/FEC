@@ -25,13 +25,15 @@ export default function ProductInfo({ product, styles, salePrice }) {
     <Fragment>
       {product !== null ? (
         <InfoCardStyle className="product-info">
-          <Info>{product.name}</Info>
-          <SalePrice>{product.sale_price ? `Sale price! $${price}` : null}</SalePrice>
-          <Price>{`Price: $${price}`}</Price>
-          <Info>{`Category: ${product.category}`}</Info>
-          <Info>
+          <InfoCategory>{`Category: ${product.category}`}</InfoCategory>
+          <InfoProductName>{product.name}</InfoProductName>
+          {hasSalePrice ?
+            <SalePrice>{'$' + price}</SalePrice>
+            :
+            <Price>{'$' + price}</Price>}
+          <StarContainer>
             <StarRating product={product} />
-          </Info>
+          </StarContainer>
         </InfoCardStyle>
       ) : (
         <h3>This will be an outfit</h3>
@@ -39,13 +41,22 @@ export default function ProductInfo({ product, styles, salePrice }) {
     </Fragment>
   );
 }
-
-const Info = styled.h4`
+const StarContainer = styled.div`
+  padding: 1rem;
   margin: 0px;
 `;
+const InfoCategory = styled.h4`
+  font-style: italic;
+  padding-left: 1rem;
+  font-size: small;
+`;
+const InfoProductName = styled.h4`
+  padding-left: 1rem;
+`;
+
 
 const Price = styled.h4`
-  margin: 0px;
+  padding-left: 1rem;
   ${({ hasSalePrice }) =>
     hasSalePrice &&
     `
@@ -60,5 +71,10 @@ const SalePrice = styled.h4`
 const InfoCardStyle = styled.div`
   width: 200px;
   height: 100px;
-  margin: 0px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 `;
+//light = #FDF0D5
+//burgundy = #38062B
+//silver = #B1A9AC
