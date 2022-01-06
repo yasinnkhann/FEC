@@ -1,12 +1,12 @@
 Will update with Documentation
 
-*API REFERENCE*
+**API REFERENCE**
 
 |Base URL |
 |`http://localhost:3000/api`|
 
 **Products**
->Products represent all products available to Project Catwalk
+Products represent all products available to Project Catwalk
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |GET|`/products`|`page`: int, `count`: int| N/A |
@@ -15,7 +15,7 @@ Will update with Documentation
 |GET|`/products/product`|`product_id`: int| N/A |
 
 **Reviews**
->Reviews are particular to a given product
+Reviews are particular to a given product
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |GET|`/reviews`|`count`: int, `product_id`: int| N/A |
@@ -26,7 +26,7 @@ Will update with Documentation
 
 
 **Questions and Answers**
->Questions related to a given product
+Questions related to a given product
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |`PUT`|`/qa/question/helpful`|`question_id`: int|`empty object` {}|
@@ -39,14 +39,14 @@ Will update with Documentation
 |`GET`|`/qa/question/answers`|`question_id`: int|N/A|
 
 **Cart**
->Ability to add to cart and get current cart
+Ability to add to cart and get current cart
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |POST|`/cart/addToCart`|N/A|{ sku_id: int }|
 |GET|`/cart`|N/A|N/A|
 
 **Interactions**
->Track click data
+Track click data
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |POST|`/interactions`|N/A|{ element: string, widget: string, time: string }|
