@@ -2,8 +2,9 @@ Will update with Documentation
 
 **API REFERENCE**
 
-|Base URL |
-|`http://localhost:3000/api`|
+| Base URL |
+|----------|
+|`http://localhost:3000/api`||
 
 **Products**
 Products represent all products available to Project Catwalk
