@@ -189,6 +189,7 @@ class WriteReview extends React.Component {
     const { metaData } = this.props;
     const { handleReviewData } = this.props;
 
+
     if (rating === null || recommend === null) {
       alert('Please fill out all required (*) fields');
       e.preventDefault();
@@ -233,7 +234,8 @@ class WriteReview extends React.Component {
     const { name } = this.state;
     const { email } = this.state;
     const { metaData } = this.props;
-    console.log(this.props);
+    // console.log('props:: ', this.props);
+    console.log('state:: ', this.state);
     return (
       <div>
         <form onSubmit={this.HandleReviewData} id="reviewForm" style={gridLayout}>

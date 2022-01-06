@@ -248,31 +248,18 @@ export default function RatingsReviews() {
     setStarSort([]);
   };
 
-  const handleReviewData = async (e) => {
+  const handleReviewData = async (reviewData) => {
     try {
-      const body = {
-        'product_id': selectedProduct.id,
-        'rating': 2,
-        'summary': 'RFP 57 Sleekslinky team 6  HD KB YK EH are awesome!!',
-        'body': 'RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team.',
-        'recommend': true,
-        'name': 'HDCooler',
-        'email': 'sfewfewffefef9@gmail.com',
-        'photos': ['https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.55-PM.png', 'https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.49-PM.png', 'https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.31-PM.png'],
-        'characteristics': {'133344': 5}
-      };
+      // console.log(reviewData);
       const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
-        body,
+        reviewData,
         {
-          // params: {
-          //   product_id: selectedProduct.id,
-          // },
           headers: {
             Authorization: `${TOKEN}`,
           }
         }
       );
-      console.log('Add Review POST Res:: ', res);
+      console.log('Add Review POST Success!! :: ', res);
     } catch (err) {
       console.log('err on review POST:: ', err);
     }
@@ -307,7 +294,7 @@ export default function RatingsReviews() {
         {writeReviewModal && (
           <div style={modalStyle} aria-hidden="true" role="button" onClick={exitWriteReviewClick}>
             <div style={innerModalStyle} aria-hidden="true" onClick={(e) => e.stopPropagation()}>
-              <WriteReview handleReviewData={handleReviewData} productID={selectedProduct} metaData={metaData} />
+              <WriteReview handleReviewData={handleReviewData} productID={selectedProduct.id} metaData={metaData} />
               <br />
             </div>
           </div>
@@ -347,7 +334,7 @@ export default function RatingsReviews() {
                   >
                     <WriteReview
                       handleReviewData={handleReviewData}
-                      productID={selectedProduct}
+                      productID={selectedProduct.id}
                       metaData={metaData}
                     />
                     <br />
