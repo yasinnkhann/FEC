@@ -1,10 +1,6 @@
 import React from 'react';
 import PhotoMapEntry from './PhotoMapEntry.jsx';
 
-// const imgContainer = {
-//   display: 'flex',
-// };
-
 const PhotosMap = ({ photos }) => (
   <div>
     <div style={{display: 'flex'}}>

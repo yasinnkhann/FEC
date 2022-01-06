@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components'; // need this for Stars
 import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
@@ -95,7 +95,6 @@ class ReviewListEntry extends React.Component {
     // this.handlePutEntry = this.handlePutEntry.bind(this);
     this.handlePutEntryHelpful = this.handlePutEntryHelpful.bind(this);
     this.handlePutEntryReported = this.handlePutEntryReported.bind(this);
-
   }
 
   handlePutEntryHelpful(e) {
@@ -113,8 +112,7 @@ class ReviewListEntry extends React.Component {
         }
       )
       .then((results) => {
-        // console.log(results);
-        alert('Helpful feedback has been received!');
+        alert('Helpful feedback received!');
       })
       .catch((err) => {
         console.log(err);
@@ -137,8 +135,7 @@ class ReviewListEntry extends React.Component {
         }
       )
       .then((results) => {
-        // console.log(results);
-        alert('Report request has been received!');
+        alert('Reported!');
       })
       .catch((err) => {
         console.log(err);
@@ -147,7 +144,6 @@ class ReviewListEntry extends React.Component {
   }
 
   render() {
-    // console.log(this.props.review);
     const { review } = this.props;
     return (
       <div className="ratings-flexbox-container" style={gridLayout}>
