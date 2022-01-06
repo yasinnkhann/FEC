@@ -1,6 +1,6 @@
 import React from 'react';
 import ActionButton from '../ActionButton';
-import {render, fireEvent, act} from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import 'regenerator-runtime/runtime';
 
 describe('Action Button', () => {
@@ -12,9 +12,8 @@ describe('Action Button', () => {
   });
 
   it('displays an x icon when name is not \'open-modal\'', () => {
-    const { getByTestId } = render(<ActionButton name='close-moda' />);
+    const { getByTestId } = render(<ActionButton name='close-modal' />);
     const input = getByTestId('closeIcon');
-    console.log(input.__reactFiber$qt2p8aep63);
     expect(input.type).toBe('svg');
     expect(input.elementType).toBe('svg');
   });

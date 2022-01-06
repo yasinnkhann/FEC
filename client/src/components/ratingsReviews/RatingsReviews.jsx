@@ -209,7 +209,7 @@ export default function RatingsReviews() {
   useEffect(() => {
     setTimeout(() => {
       setLoaded(true);
-    }, 400);
+    }, 450);
     // get review api data
     const getReviewApi = async () => {
       try {

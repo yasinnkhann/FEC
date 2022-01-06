@@ -29,7 +29,6 @@ export default function App() {
       const getApi = async () => {
         try {
 
-          // DO NOT REMOVE -> WILL BE OUR NEW MAIN API CALL
           const res = await axios.get(
             `${URL}/products`
           );
@@ -42,7 +41,7 @@ export default function App() {
         }
       };
       getApi();
-    }, 1000);
+    }, 400);
 
     return () => clearTimeout(clearId);
   }, []);

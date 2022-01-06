@@ -35,8 +35,6 @@ export default function CarouselCard({ product, name }) {
 
   // HOOKS
   useEffect(() => {
-    let clearId = setTimeout(() => {
-
       // API HANDLER
       const getProductStyle = async (id) => {
         await axios
@@ -58,15 +56,11 @@ export default function CarouselCard({ product, name }) {
             }
             return res?.data.results[0].photos[0].thumbnail_url;
           })
-          // .then(res => res?.data.results[0].photos[0].thumbnail_url)
           .then(url => setimageUrl(url))
           .catch(err => console.error(err));
       };
 
       if (product) { getProductStyle(product.id); }
-    }, 200);
-
-    return () => clearTimeout(clearId);
   }, []);
 
 
@@ -81,7 +75,7 @@ export default function CarouselCard({ product, name }) {
     if (cardName === 'add-button') {
       return (
         <CardStyle >
-          <ProductInfoStyle > {/* onClick={() => console.log('ADD BUTTON CLICKED')} */}
+          <ProductInfoStyle >
             <AddToOutfit />
           </ProductInfoStyle>
         </CardStyle>
@@ -120,7 +114,8 @@ const CardStyle = styled.div`
 `;
 
 const ProductInfoStyle = styled.div`
-  width: 300px;
+  width: 210px;
+  max-width: 210px;
   height: 100%;
   position: absolute;
   bottom: 0;
@@ -128,10 +123,7 @@ const ProductInfoStyle = styled.div`
 `;
 
 const ActionStyle = styled.a`
-  z-index: 1;
+  z-index: 2;
   max-height: 35px;
   max-width: 35px;
 `;
-//light = #FDF0D5
-//burgundy = #38062B
-//silver = #B1A9AC

@@ -31,9 +31,7 @@ export default function ProductInfo({ product, styles, salePrice }) {
             <SalePrice>{'$' + price}</SalePrice>
             :
             <Price>{'$' + price}</Price>}
-          <StarContainer>
             <StarRating product={product} />
-          </StarContainer>
         </InfoCardStyle>
       ) : (
         <h3>This will be an outfit</h3>
@@ -43,19 +41,22 @@ export default function ProductInfo({ product, styles, salePrice }) {
 }
 const StarContainer = styled.div`
   padding: 1rem;
-  margin: 0px;
+  margin: 0 auto;
 `;
 const InfoCategory = styled.h4`
   font-style: italic;
   padding-left: 1rem;
   font-size: small;
+  margin: 0 auto;
 `;
 const InfoProductName = styled.h4`
   padding-left: 1rem;
+  margin: 0 auto;
 `;
 
 
 const Price = styled.h4`
+  margin: 0 auto;
   padding-left: 1rem;
   ${({ hasSalePrice }) =>
     hasSalePrice &&
@@ -66,6 +67,7 @@ const Price = styled.h4`
 
 const SalePrice = styled.h4`
   color: red;
+  margin: 0 auto;
 `;
 
 const InfoCardStyle = styled.div`

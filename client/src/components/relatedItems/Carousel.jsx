@@ -4,11 +4,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import {
-  isAtFinalIndex,
-  isAtBeginningIndex,
-  getMaxIndexBasedOnScreenSize,
-} from './utils';
+import { isAtFinalIndex, isAtBeginningIndex, getMaxIndexBasedOnScreenSize } from './utils';
 
 // API imports
 import { TOKEN } from '../../config.js';
@@ -46,13 +42,10 @@ export default function Carousel({ name, relatedProductIds }) {
   // HOOKS & INITILIZATION
   // Populates relatedProducts state to render each item
   useEffect(() => {
-    let clearId = setTimeout(() => {
-
       setRelatedProducts([]);
       setVisibleProducts([]);
 
       // API HANDLERS
-      // Gets one product's info based on id
       const updateRelatedProducts = async (id) => {
         await axios
           .get(
@@ -66,7 +59,11 @@ export default function Carousel({ name, relatedProductIds }) {
             }
           )
           .then((productData) => {
-            setRelatedProducts(state => [...state, productData]);
+            if (productData.data.name === 'Bright Future Sunglasses') {
+              null;
+            } else {
+              setRelatedProducts(state => [...state, productData]);
+            }
           })
           .catch((err) => console.log(err));
       };
@@ -77,36 +74,22 @@ export default function Carousel({ name, relatedProductIds }) {
         });
       }
       setIsLoaded(true);
-    }, 400);
-
-
-    return () => clearTimeout(clearId);
   }, [relatedProductIds]);
 
   // Changes number of items shown based on window size
   useEffect(() => {
-    // if (relatedProducts[startIndex]) { console.log('CURRENT CARD :: ', relatedProducts[startIndex].data.name); }
-    let clearId = setTimeout(() => {
       const newEndIndex = getMaxIndexBasedOnScreenSize();
       if (newEndIndex < 3) {
         setEndIndex(newEndIndex);
       }
       let newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
       setVisibleProducts(newVisibleProducts);
-    }, 500);
-
-    return () => clearTimeout(clearId);
   }, [size, relatedProducts]);
 
   useEffect(() => {
-    let clearId = setTimeout(() => {
       changeVisibleProductsArray(startIndex, endIndex);
-    }, 500);
-
-    return () => clearTimeout(clearId);
   }, [startIndex]);
 
-  // Takes a start and end index and sets the shown products to the result of slicing all products with index params
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
     const newRelatedProducts = relatedProducts.slice(newStartIndex, newEndIndex);
     setVisibleProducts(newRelatedProducts);
@@ -235,6 +218,3 @@ const RightArrow = styled.div`
   background-color: #38062B;
   color: #FDF0D5;
 `;
-//light = #FDF0D5
-//burgundy = #38062B
-//silver = #B1A9AC

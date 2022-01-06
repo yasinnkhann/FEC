@@ -34,21 +34,16 @@ export default function RelatedItems() {
   const [userOutfit, setUserOutfit] = useState(dummyUser.outfit);
 
   // HOOKS
+  // API HANDLER
   useEffect(() => {
-    let clearId = setTimeout(() => {
-      // API HANDLER
       const getRelatedProductIds = async () => {
         try {
           const res = await axios.get(
             `${URL}/products/related`,
-            // `${URL}products/${selectedProduct.id}/related`,
             {
               params: {
                 product_id: selectedProduct.id
               },
-              // headers: {
-              //   Authorization: `${TOKEN}`,
-              // },
             }
           );
           setIsLoaded(true);
@@ -59,9 +54,7 @@ export default function RelatedItems() {
         }
       };
       getRelatedProductIds();
-    }, 800);
 
-    return () => clearTimeout(clearId);
   }, [selectedProduct]);
 
   // JSX
