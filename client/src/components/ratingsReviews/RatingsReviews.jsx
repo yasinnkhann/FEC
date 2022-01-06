@@ -46,7 +46,7 @@ const mainDiv = {
   marginRight: 'auto',
   marginBottom: '30px',
   color: '#fdf0d5',
-  fontFamily: 'Open Sans, sans-serif, Arial',
+  // fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
 };
 
