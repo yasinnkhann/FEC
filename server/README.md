@@ -1,11 +1,12 @@
 Will update with Documentation
 
-#API REFERENCE#
+*API REFERENCE*
 
-|Base URL |`http://localhost:3000/api`|
+|Base URL |
+|`http://localhost:3000/api`|
 
-##Products##
-Products represent all products available to Project Catwalk
+**Products**
+>Products represent all products available to Project Catwalk
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |GET|`/products`|`page`: int, `count`: int| N/A |
@@ -13,8 +14,8 @@ Products represent all products available to Project Catwalk
 |GET|`/products/styles`|`product_id`: int| N/A |
 |GET|`/products/product`|`product_id`: int| N/A |
 
-##Reviews##
-Reviews are particular to a given product
+**Reviews**
+>Reviews are particular to a given product
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |GET|`/reviews`|`count`: int, `product_id`: int| N/A |
@@ -24,7 +25,8 @@ Reviews are particular to a given product
 |PUT|`reviews/helpful`|`review_id`: int|empty object|
 
 
-##Questions and Answers##
+**Questions and Answers**
+>Questions related to a given product
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |`PUT`|`/qa/question/helpful`|`question_id`: int|`empty object` {}|
@@ -36,13 +38,15 @@ Reviews are particular to a given product
 |`GET`|`/qa/questions`|`product_id`: int, `count`: int|N/A|
 |`GET`|`/qa/question/answers`|`question_id`: int|N/A|
 
-##Cart##
+**Cart**
+>Ability to add to cart and get current cart
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |POST|`/cart/addToCart`|N/A|{ sku_id: int }|
 |GET|`/cart`|N/A|N/A|
 
-##Interactions##
+**Interactions**
+>Track click data
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
 |POST|`/interactions`|N/A|{ element: string, widget: string, time: string }|
