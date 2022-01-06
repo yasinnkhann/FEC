@@ -19,7 +19,7 @@ Reviews are particular to a given product
 |--------|----------|--------|------|
 |GET|`/reviews`|`count`: int, `product_id`: int| N/A |
 |GET|`/reviews/meta`|`count`: int, `product_id`: int| N/A |
-|POST|`/reviews`|`product_id`: int| `product_id`: int, `rating`: int, `summary`: string, `body`: string, `recommend`: boolean, `name`: string, `email`: string, `photos`: [string(s)], `characteristics`: {int: int}|
+|POST|`/reviews`|`product_id`: int| `product_id`: int, `rating`: int, `summary`: string, `body`: string, `recommend`: boolean, `name`: string, `email`: string, `photos`: [string or strings of photo urls], `characteristics`: {int: int}|
 |PUT|`reviews/report`|`review_id`: int|empty object|
 |PUT|`reviews/helpful`|`review_id`: int|empty object|
 
@@ -27,7 +27,14 @@ Reviews are particular to a given product
 ##Questions and Answers
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
-
+|`PUT`|`/qa/question/helpful`|`question_id`: int|`empty object` {}|
+|`PUT`|`/qa/answer/helpful`|`answer_id`: int|`empty object` {}|
+|`PUT`|`/qa/question/report`|`question_id`: int|`empty object` {}|
+|`PUT`|`/qa/answer/report`|`answer_id`: int|`empty object` {}|
+|`POST`|`/qa/answer`|`answer_id`: int|`body`: string, `name`: string, `email`: string (must be valid email), `photos`: [string or strings of photo urls]|
+|`POST`|`/qa/question`|`question_id`: int|`body`: string, `name`: string, `email`: string (must be valid email), `product_id`: int|
+|`GET`|`/qa/questions`|`product_id`: int, `count`: int|N/A|
+|`GET`|`/qa/question/answers`|`question_id`: int|N/A|
 
 ##Cart
 | Method | Endpoint | Params | Body |
