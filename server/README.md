@@ -32,7 +32,10 @@ Reviews are particular to a given product
 ##Cart
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
+|POST|`/cart/addToCart`|N/A|{ sku_id: int }|
+|GET|`/cart`|N/A|N/A|
 
 ##Interactions
 | Method | Endpoint | Params | Body |
 |--------|----------|--------|------|
+|POST|`/interactions`|N/A|{ element: string, widget: string, time: string }|
