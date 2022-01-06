@@ -12,6 +12,9 @@ import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
 
+// import metaDummy from './metaDummy.jsx';
+// import dummyDataReviews from './dummyDataReviews.jsx';
+const URL = 'http://localhost:3000/api';
 
 // const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
 // const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
@@ -200,18 +203,17 @@ export default function RatingsReviews() {
   useEffect(() => {
     setTimeout(() => {
       setLoaded(true);
-    }, 600);
+    }, 450);
     // get review api data
     const getReviewApi = async () => {
       try {
         const res = await axios.get(
-          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/',
+          `${URL}/reviews`,
           {
             params: {
               count: 1000,
-              product_id: selectedProduct.id
+              product_id: selectedProduct.id,
             },
-
             headers: {
               Authorization: `${TOKEN}`,
             },
@@ -233,13 +235,12 @@ export default function RatingsReviews() {
     const getMetaApi = async () => {
       try {
         const res = await axios.get(
-          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta',
+          `${URL}/reviews/meta`,
           {
             params: {
               count: 50,
-              product_id: selectedProduct.id
+              product_id: selectedProduct.id,
             },
-
             headers: {
               Authorization: `${TOKEN}`,
             },
@@ -284,12 +285,15 @@ export default function RatingsReviews() {
 
   const handleReviewData = async (reviewData) => {
     try {
-      // console.log(reviewData);
-      const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
+      const res = await axios.post(
+        `${URL}/reviews`,
         reviewData,
         {
+          params: {
+            product_id: selectedProduct.id
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           }
         }
       );

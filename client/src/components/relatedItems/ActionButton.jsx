@@ -9,7 +9,7 @@ import ModalContext from './ModalContext.js';
 // ACTION BUTTON
 export default function ActionButton({ name }) {
   // JSX
-  return <span className="action-button">{name === 'open-modal' ? <Symbol><StarsIcon /></Symbol> : <CloseIcon />}</span>;
+  return <span className="action-button">{name === 'open-modal' ? <Symbol><StarsIcon dataid-test="starsIcon" /></Symbol> : <CloseIcon dataid-test="closeIcon" />}</span>;
 }
 
 const Symbol = styled.div`

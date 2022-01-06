@@ -13,29 +13,26 @@ export default function StarRating({ product }) {
 
   useEffect(() => {
 
-    let clearId = setTimeout(() => {
-      const getReviewMetaData = async (id) => {
-        await axios
-          .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
-            params: {
-              product_id: id,
-            },
-            headers: {
-              Authorization: `${TOKEN}`,
-            },
-          })
-          .then((res) => res.data.ratings)
-          .then((ratings) => getAverageRating(ratings))
-          .then((avgRating) => setAverageRating(avgRating))
-          .catch((err) => console.log(err));
-      };
+    const getReviewMetaData = async (id) => {
+      await axios
+        .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
+          params: {
+            product_id: id,
+          },
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        })
+        .then((res) => res.data.ratings)
+        .then((ratings) => getAverageRating(ratings))
+        .then((avgRating) => setAverageRating(avgRating))
+        .catch((err) => console.log(err));
+    };
 
-      if (product !== undefined) {
-        getReviewMetaData(product.id);
-      }
-    }, 500);
+    if (product !== undefined) {
+      getReviewMetaData(product.id);
+    }
 
-    return () => clearTimeout(clearId);
   }, []);
 
 
@@ -59,7 +56,7 @@ export default function StarRating({ product }) {
   );
 }
 
-const Stars = styled.div`
+const Stars = styled.span`
   display: flex;
   font-family: Times;
   align-items: flex-start;

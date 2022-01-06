@@ -17,7 +17,8 @@ import dummyUser from './dummyUser.js';
 import styled from 'styled-components';
 
 // Variables
-const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
+// const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
+const URL = 'http://localhost:3000/api';
 
 // RELATED ITEMS
 export default function RelatedItems() {
@@ -33,21 +34,19 @@ export default function RelatedItems() {
   const [userOutfit, setUserOutfit] = useState(dummyUser.outfit);
 
   // HOOKS
+  // API HANDLER
   useEffect(() => {
-    let clearId = setTimeout(() => {
-      // API HANDLER
       const getRelatedProductIds = async () => {
         try {
           const res = await axios.get(
-            `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${selectedProduct.id}/related`,
+            `${URL}/products/related`,
             {
-              headers: {
-                Authorization: `${TOKEN}`,
+              params: {
+                product_id: selectedProduct.id
               },
             }
           );
           setIsLoaded(true);
-
           let noDupedIds = Array.from(new Set(res.data));
           setRelatedProductIds(noDupedIds);
         } catch (err) {
@@ -55,9 +54,7 @@ export default function RelatedItems() {
         }
       };
       getRelatedProductIds();
-    }, 800);
 
-    return () => clearTimeout(clearId);
   }, [selectedProduct]);
 
   // JSX

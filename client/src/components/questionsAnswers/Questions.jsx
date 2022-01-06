@@ -122,7 +122,7 @@ export default function Questions({
       {/* {console.log('INITIAL QS: ', initialQs)}
       {console.log('REMAINING QS: ', remainingQs)}
       {console.log('FILTERED DATA: ', filteredData)} */}
-      {console.log('QUESTIONS DATA: ', questionsData)}
+      {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
     </Container>
   );
 }

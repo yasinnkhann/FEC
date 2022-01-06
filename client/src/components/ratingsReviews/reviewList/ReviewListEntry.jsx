@@ -5,6 +5,8 @@ import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
 import { TOKEN } from '../../../config.js';
 
+const URL = 'http://localhost:3000/api';
+
 const Stars = styled.div`
   display: inline-block;
   font-family: Times;
@@ -99,10 +101,13 @@ class ReviewListEntry extends React.Component {
     const body = {};
     const review_id = this.props.review.review_id;
     axios
-      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/helpful`, body,
+      .put(`${URL}/reviews/helpful`, body,
         {
+          params: {
+            review_id: review_id,
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           }
         }
       )
@@ -119,10 +124,13 @@ class ReviewListEntry extends React.Component {
     const body = {};
     const review_id = this.props.review.review_id;
     axios
-      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/report`, body,
+      .put(`${URL}/reviews/report`, body,
         {
+          params: {
+            review_id: review_id,
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           }
         }
       )
