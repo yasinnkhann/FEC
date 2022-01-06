@@ -12,8 +12,7 @@ const Checked = styled.div`
   right: 5px;
   color: #38062B;
 `;
-//dark #1F0318
-//light #E5F2C9
+
 const StylePicsDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -30,12 +29,8 @@ const StylePic = styled.img`
 
 `;
 
-//silver #adadad
-//blue #849a9a
-//dark #072636
-//red #3c0225
 const StyleName = styled.h3`
-  font-style: italic;
+  font-family: 'Lobster Two';
 `;
 const SelectedStyle = styled.h3`
 
@@ -46,6 +41,7 @@ const Button = styled.button`
   border: 2px solid #38062B;
 `;
 const Price = styled.h3`
+  font-family: 'Fjalla One', sans-serif;
 `;
 const Sale = styled.p`
   color: red;
@@ -68,12 +64,11 @@ const SizeContainer = styled.div``;
 const DropDownListContainer = styled.div``;
 const DropDownHeader = styled.button`
   padding: 1rem;
-  /* margin: 0.5rem; */
   padding-left: 1rem;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
   font-weight: 500;
   font-size: 1rem;
-  color: #B1A9AC;
+  color: #FDF0D5;
   width: 130px;
   background-color: #38062B;
 `;
@@ -103,27 +98,20 @@ const OutOfStock = styled.div`
   padding: 2rem;
   background-color: #38062B;
   color: red;
-  /* margin: 1rem;
-  margin-left: 2.5rem; */
   justify-content: center;
   border: 1px solid black;
 `;
 const AddtoCartButton = styled.button`
   padding: 1.5rem;
   grid-column: 1 / -1;
-  /* margin: 0.5rem; */
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
   font-weight: 500;
   font-size: 1rem;
   width: 260px;
   color: #FDF0D5;
   background-color: #38062B;
-
 `;
-//silver #adadad
-//blue #849a9a
-//dark #072636
-//red #3c0225
+
 const SelectASize = styled.div`
   font-size: 1rem;
 `;
@@ -160,7 +148,6 @@ export default function StyleSelector() {
     });
     return obj;
   };
-  //console.log(results);
 
   const onPhotoClick = (value) => {
     setCurrentStyle(value);
@@ -168,12 +155,10 @@ export default function StyleSelector() {
     setSelectedSize(null);
   };
 
-  //console.log(currentStyle.skus);
 
   const uniqueSizes = () => {
     return Array.from(new Set(sizes().map((sku) => currentStyle.skus[sku].size)));
   };
-  //console.log('quantity ', currentStyle.skus);
 
   const togglingSize = () => setIsSizeOpen(!isSizeOpen);
   const togglingQuant = () => setIsQuantOpen(!isQuantOpen);
@@ -317,24 +302,3 @@ export default function StyleSelector() {
   );
 }
 
-// useEffect(() => {
-//   const getCart = async () => {
-//     try {
-//       const res = await axios.get(
-//         'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
-//         {
-//           headers: {
-//             Authorization: `${TOKEN}`,
-//           },
-//         }
-//       );
-//       const whatever = await Promise.all(res.data);
-//       console.log(whatever);
-//       console.log(res.data);
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
-//   getCart();
-// }, []);
-//console.log(new Promise(getCart()));

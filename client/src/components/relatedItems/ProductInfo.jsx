@@ -25,7 +25,8 @@ export default function ProductInfo({ product }) {
     <Fragment>
       {product !== null ? (
         <InfoCardStyle className="product-info">
-          <InfoCategory>{`Category: ${product.category}`}</InfoCategory>
+
+          <InfoCategory>Category: {product.category}</InfoCategory>
           <InfoProductName>{product.name}</InfoProductName>
           {hasSalePrice ?
             <SalePrice>{'$' + price}</SalePrice>
@@ -46,10 +47,11 @@ const StarContainer = styled.div`
   margin: 0px;
 `;
 const InfoCategory = styled.h4`
-  font-style: italic;
+  font-family: 'Questrial', sans-serif;
   padding-left: 1rem;
   font-size: small;
 `;
+
 const InfoProductName = styled.h4`
   padding-left: 1rem;
 `;
@@ -57,6 +59,7 @@ const InfoProductName = styled.h4`
 
 const Price = styled.h4`
   padding-left: 1rem;
+  font-family: 'Fjalla One', sans-serif;
   ${({ hasSalePrice }) =>
     hasSalePrice &&
     `

@@ -35,6 +35,9 @@ const ModalBody = styled.section `
 const ModalImg = styled.img `
   width: 1000px;
   height: 1000px;
+  background-position: center;
+  background-size: cover;
+  cursor: crosshair;
 `;
 
 const MainImgContainer = styled.div`
@@ -45,8 +48,7 @@ const MainImgContainer = styled.div`
   height: 650px;
   width: 600px;
 `;
-//dark #1F0318
-//light #E5F2C9
+
 const MainImage = styled.img`
  width: 100%;
  height: 100%;
@@ -75,7 +77,7 @@ const Down = styled.button`
   bottom: -35px;
   left: 50%;
   transform: translateX(-50%);
-  color: #B1A9AC;
+  color: #FDF0D5;
   background-color: #38062B;
 `;
 const Up = styled.button`
@@ -83,7 +85,7 @@ const Up = styled.button`
   left: 50%;
   top: -35px;
   transform: translateX(-50%);
-  color: #B1A9AC;
+  color: #FDF0D5;
   background-color: #38062B;
 `;
 const Left = styled.button`
@@ -91,7 +93,7 @@ const Left = styled.button`
   left: 90px;
   position: absolute;
   top: 50%;
-  color: #B1A9AC;
+  color: #FDF0D5;
   background-color: #38062B;
 `;
 const Right = styled.button`
@@ -99,13 +101,10 @@ const Right = styled.button`
   z-index: 1;
   position: absolute;
   top: 50%;
-  color: #B1A9AC;
+  color: #FDF0D5;
   background-color: #38062B;
 `;
-//silver #adadad
-//blue #849a9a
-//dark #072636
-//red #3c0225
+
 const LeftExpand = styled.button `
 z-index: 3;
 left: 90px;
@@ -135,11 +134,17 @@ const ThumbnailExpandedImage = styled.img`
   border: 2px solid #38062B;
 
 `;
+
+// width: 600px;
+// height: 338px;
+// background-position: center;
+// background-size: cover;
+// cursor: crosshair;
 const ThumbnailExpandedContainer = styled.div`
   z-index: 1;
   bottom: 0;
   max-height: 420px;
-  position: absolute;
+  position: relative;
   display: flex;
   flex-wrap: nowrap;
   gap: 20px;
@@ -150,7 +155,6 @@ const ThumbnailExpandedContainer = styled.div`
   border-top-left-radius: 10px;
 `;
 
-
 export default function ImageGallery() {
   const { stylesDataContent, currentStyleContent } = useContext(StylesContext);
   const [stylesData, setstylesData] = stylesDataContent;
@@ -160,6 +164,7 @@ export default function ImageGallery() {
   const [modalOpen, setmodalOpen] = useState(false);
   const { selectedProductContext } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
+  const [zoomMode, setZoomMode] = useState(false);
 
   useEffect(() => {
     setCurrentIndex(0);

@@ -7,6 +7,7 @@ const Name = styled.h1`
 const Category = styled.h3`
   text-transform: uppercase;
   font-weight: 100;
+  font-family: 'Questrial', sans-serif;
 `;
 
 export default function ProductDetail({ product }) {

@@ -60,7 +60,7 @@ const HeaderStyle = styled.h3 `
   text-align: 'center';
   padding-bottom: '1rem';
   font-family: 'Lobster Two', cursive;
-  color: black;
+  color: #B1A9AC;
 `;
 const HeaderDiv = styled.div `
   display: flex;
@@ -352,7 +352,7 @@ export default function RatingsReviews() {
     return (
       <div>
         <div className="ratings-and-reviews" style={noReviewsGrid}>
-          <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
+          <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1', color: '#B1A9AC' }}>
           No review for this product Be the first to add one!
           </div>
           <button className="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>

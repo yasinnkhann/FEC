@@ -32,7 +32,7 @@ const Container = styled.div`
 `;
 
 const Slogan = styled.h3`
-font-size: x-large;
+font-size: large;
 `;
 const Description = styled.p`
 font-style: italic;
