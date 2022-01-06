@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
 export default function Search({ handleChange }) {
-  // REFS
   const searchRef = useRef(null);
 
   return (
