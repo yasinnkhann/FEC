@@ -51,7 +51,6 @@ export default function RelatedItems() {
             }
           );
           setIsLoaded(true);
-          console.log(res);
           let noDupedIds = Array.from(new Set(res.data));
           setRelatedProductIds(noDupedIds);
         } catch (err) {
