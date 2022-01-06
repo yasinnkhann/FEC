@@ -9,14 +9,14 @@ import AppContext from '../../AppContext.js';
 import StarRating from './StarRating.jsx';
 
 // PRODUCT INFO
-export default function ProductInfo({ product }) {
+export default function ProductInfo({ product, styles, salePrice }) {
   // STATE
   const [price, setPrice] = useState(product.default_price);
   const [hasSalePrice, setHasSalePrice] = useState(false);
 
   useEffect(() => {
-    if (product.sale_price) {
-      setPrice(product.sale_price);
+    if (salePrice) {
+      setPrice(salePrice);
       setHasSalePrice(true);
     }
   }, []);

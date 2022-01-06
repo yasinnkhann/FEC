@@ -38,8 +38,8 @@ export default function RelatedItems() {
       const getRelatedProductIds = async () => {
         try {
           const res = await axios.get(
-            'http://localhost:3000/products/related',
-            // `${URL}products/${selectedProduct.id}/related`,
+            // 'http://localhost:3000/products/related',
+            `${URL}products/${selectedProduct.id}/related`,
             {
               params: {
                 product_id: selectedProduct.id

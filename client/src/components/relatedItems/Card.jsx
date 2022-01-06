@@ -27,7 +27,6 @@ export default function CarouselCard({ product, name }) {
   const [imageUrl, setimageUrl] = useState('');
   const [styles, setStyles] = useState([]);
   const [salePrice, setSalePrice] = useState(null);
-  const [isMounted, setIsMounted] = useState(false);
 
   // REF
   const modal = useRef(null);
@@ -48,6 +47,7 @@ export default function CarouselCard({ product, name }) {
             },
           })
           .then(res => {
+            setStyles(res.data);
             if (res?.data.results[0].salePrice) {
               setSalePrice(res.data.results[0].salePrice);
             }
@@ -90,7 +90,7 @@ export default function CarouselCard({ product, name }) {
           <Modal key={`modal-${product.id}`} ref={modal} product={product} />
           <ProductInfoStyle onClick={() => handleClick(product)} >
             <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
-            <ProductInfo product={product} />
+            <ProductInfo product={product} styles={styles} salePrice={salePrice} />
           </ProductInfoStyle>
         </CardStyle>
       );
