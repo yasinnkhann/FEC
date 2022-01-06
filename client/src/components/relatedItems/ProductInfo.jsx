@@ -9,14 +9,14 @@ import AppContext from '../../AppContext.js';
 import StarRating from './StarRating.jsx';
 
 // PRODUCT INFO
-export default function ProductInfo({ product }) {
+export default function ProductInfo({ product, styles, salePrice }) {
   // STATE
   const [price, setPrice] = useState(product.default_price);
   const [hasSalePrice, setHasSalePrice] = useState(false);
 
   useEffect(() => {
-    if (product.sale_price) {
-      setPrice(product.sale_price);
+    if (salePrice) {
+      setPrice(salePrice);
       setHasSalePrice(true);
     }
   }, []);
@@ -32,9 +32,7 @@ export default function ProductInfo({ product }) {
             <SalePrice>{'$' + price}</SalePrice>
             :
             <Price>{'$' + price}</Price>}
-          <StarContainer>
             <StarRating product={product} />
-          </StarContainer>
         </InfoCardStyle>
       ) : (
         <h3>This will be an outfit</h3>
@@ -44,20 +42,23 @@ export default function ProductInfo({ product }) {
 }
 const StarContainer = styled.div`
   padding: 1rem;
-  margin: 0px;
+  margin: 0 auto;
 `;
 const InfoCategory = styled.h4`
   font-family: 'Questrial', sans-serif;
   padding-left: 1rem;
   font-size: small;
+  margin: 0 auto;
 `;
 
 const InfoProductName = styled.h4`
   padding-left: 1rem;
+  margin: 0 auto;
 `;
 
 
 const Price = styled.h4`
+  margin: 0 auto;
   padding-left: 1rem;
   font-family: 'Fjalla One', sans-serif;
   ${({ hasSalePrice }) =>
@@ -69,6 +70,7 @@ const Price = styled.h4`
 
 const SalePrice = styled.h4`
   color: red;
+  margin: 0 auto;
 `;
 
 const InfoCardStyle = styled.div`
