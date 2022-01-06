@@ -4,8 +4,8 @@ const axios = require('axios');
 
 module.exports = {
   addToCart: async function(req, res) {
-    const { id } = req.query;
-    const body = { sku_id: id };
+    // const { id } = req.query;
+    const body = req.body;
     try {
       await axios.post(
         `${URL}/cart`,
