@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext, Fragment } from 'react';
+import React, { useState, useEffect, useContext, Fragment} from 'react';
+// import React, { useState, useEffect, useContext, Fragment, Suspense, lazy } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -10,6 +11,13 @@ import WriteReview from './writeReviews/WriteReview.jsx';
 import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
+
+
+// const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
+// const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
+// const RatingBreakdown = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
+// const ProductBreakdown = React.lazy(() => import('./productBreakdown/ProductBreakdown.jsx'));
+// const SortOptions = React.lazy(() => import('./sortOptions/SortOption.jsx'));
 
 const gridLayout = {
   display: 'grid',
