@@ -187,7 +187,8 @@ export default function Question({ questionObj }) {
 
 const Container = styled.div`
   font-family: 'Poppins', sans-serif;
-  background-color: white;
+  background-color: #fdf0d5;
+  color: #38062B;
   margin-top: 10px;
   box-shadow: 1px 1px 10px #ccc;
   padding: 15px;

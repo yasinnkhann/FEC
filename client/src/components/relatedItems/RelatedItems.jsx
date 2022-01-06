@@ -14,6 +14,7 @@ import Carousel from './Carousel.jsx';
 
 // Dummy data import
 import dummyUser from './dummyUser.js';
+import styled from 'styled-components';
 
 // Variables
 const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
@@ -69,12 +70,12 @@ export default function RelatedItems() {
         }}
       >
         <div className='related-items-and-comparison'>
-          <h3>RELATED ITEMS</h3>
+          <RelatedItemsHeader>Related Items</RelatedItemsHeader>
           <Carousel
             name='related-items'
             relatedProductIds={relatedProductIds}
           />
-          <h3>YOUR OUTFIT</h3>
+          <YourOutfitHeader>Your Outfit</YourOutfitHeader>
           <Carousel name='your-outfit' />
         </div>
       </UserContext.Provider>
@@ -90,3 +91,16 @@ export default function RelatedItems() {
     );
   }
 }
+const RelatedItemsHeader = styled.h3`
+   font-size: xx-large;
+   text-align: center;
+   padding-bottom: 1rem;
+   font-family: 'Lobster Two', cursive;
+`;
+
+const YourOutfitHeader = styled.h3`
+   font-size: x-large;
+   text-align: center;
+   padding-bottom: 1rem;
+   font-family: 'Lobster Two', cursive;
+`;

@@ -14,6 +14,8 @@ import Icons from './Icons.jsx';
 const Grid = styled.div`
   display: flex;
   justify-content: space-between;
+  max-height: 700px;
+  padding: 1rem;
 `;
 const Layout = styled.div `
   max-width: 1200px;
@@ -26,13 +28,21 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
+  padding: 1rem;
 `;
-const Slogan = styled.h3``;
-const Description = styled.p``;
+
+const Slogan = styled.h3`
+font-size: x-large;
+`;
+const Description = styled.p`
+font-style: italic;
+`;
+
 const InfoBox = styled.div `
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 1rem;
 `;
 
 export default function Overview() {

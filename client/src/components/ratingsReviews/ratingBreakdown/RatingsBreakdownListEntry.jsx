@@ -20,7 +20,7 @@ const starBarFlex = {
 
 const starFont = {
   fontSize: '12px',
-  color: 'grey',
+  color: '#fdf0d5',
 };
 
 const starPercentage = (obj, key) => {
