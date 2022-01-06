@@ -43,7 +43,6 @@ class ProductBreakdown extends React.Component {
 
   render() {
     const { characteristics } = this.props.metaData;
-    // console.log(this.props.metaData.characteristics);
     return (
       <div className="breakdown" id="route" style={gridLayout}>
         {characteristics.Comfort && (

@@ -11,9 +11,6 @@ import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
 
-// import metaDummy from './metaDummy.jsx';
-// import dummyDataReviews from './dummyDataReviews.jsx';
-
 const gridLayout = {
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
@@ -39,12 +36,8 @@ const mainDiv = {
   marginLeft: 'auto',
   marginRight: 'auto',
   marginBottom: '30px',
-
   fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
-  // overflowScrolling: 'touch',
-  // WebkitOverflowScrolling: 'touch',
-  // '::WebkitScrollbar': { display: 'none' },
 };
 
 const ratingGrid = {
@@ -170,14 +163,19 @@ export default function RatingsReviews() {
     const getReviewApi = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/?count=1000&product_id=${selectedProduct.id}`,
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/',
           {
+            params: {
+              count: 1000,
+              product_id: selectedProduct.id
+            },
+
             headers: {
               Authorization: `${TOKEN}`,
             },
           }
+
         );
-        // console.log(res.data.results);
         setReviewList(res.data);
         setReviewReady(true);
 
@@ -193,8 +191,13 @@ export default function RatingsReviews() {
     const getMetaApi = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/?count=50&product_id=${selectedProduct.id}`,
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta',
           {
+            params: {
+              count: 50,
+              product_id: selectedProduct.id
+            },
+
             headers: {
               Authorization: `${TOKEN}`,
             },
@@ -265,26 +268,6 @@ export default function RatingsReviews() {
     }
   };
 
-  // const handleReviewData = (reviewData) => {
-  //   axios
-  //     .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
-  //     .then((results) => {
-  //       console.log(results);
-  //     })
-  //     .catch((err) => {
-  //       console.log('err on review POST', err);
-  //     });
-  // };
-
-  // const handlePut = (review_id, type) => {
-  //   axios
-  //     .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/${type}`)
-  //     .then((results) => {})
-  //     .catch((err) => {
-  //       console.log(err.data);
-  //     });
-  // };
-
   const moreReviewsClick = () => {
     const newEnd = reviewEnd + 2;
     if (newEnd > reviewList.results.length) {
@@ -330,13 +313,6 @@ export default function RatingsReviews() {
     <Fragment>
       {isLoaded ? (
         <div className="ratings-and-reviews" style = {mainDiv}>
-          {/* {console.log('from reviewList:', reviewList)} */}
-          {/* {console.log('from metaData:', metaData)} */}
-          {/* {console.log('selectedProduct:: ', selectedProduct)} */}
-          {/* {console.log('review CacheData:: ', reviewCache)} */}
-          {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
-          {/* {console.log('listSort:: ', listSort)}  */}
-
           {reviewsReady === true && (
             <div style={gridLayout}>
               <div style={ratingGrid}>
@@ -381,7 +357,6 @@ export default function RatingsReviews() {
                   starSort={starSort}
                   reviewList={reviewList}
                   reviewEnd={reviewEnd}
-                  // handlePut={handlePut}
                 />
               </div>
               <div style={reviewButtonsStyle}>
@@ -399,7 +374,7 @@ export default function RatingsReviews() {
             </div>
           )}
         </div>
-      ) : <p> Ratings & Reviews: Loading...</p>
+      ) : <p> Loading...</p>
       }
     </Fragment>
   );

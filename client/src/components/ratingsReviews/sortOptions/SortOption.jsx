@@ -34,10 +34,6 @@ class SortOptions extends React.Component {
   render() {
     const { listSortChange } = this.props;
     const { metaData } = this.props;
-    // console.log('printing props from SortOptions:: ', this.props);
-    // console.log(listSortChange);
-    // console.log(metaData);
-    // console.log(this.props.listSort);
     return (
       <div style={{ fontWeight: 'bold' }}>
         {`${this.totalReviews(metaData.ratings)} reviews, sorted by most`}

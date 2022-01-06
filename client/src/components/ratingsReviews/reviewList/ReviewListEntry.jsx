@@ -107,7 +107,7 @@ class ReviewListEntry extends React.Component {
         }
       )
       .then((results) => {
-        alert('Helpful feedback has been received!');
+        alert('Helpful feedback received!');
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +127,7 @@ class ReviewListEntry extends React.Component {
         }
       )
       .then((results) => {
-        alert('Report request has been received!');
+        alert('Reported!');
       })
       .catch((err) => {
         console.log(err);
