@@ -4,7 +4,7 @@ import Overview from './overview/Overview.jsx';
 import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
 import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
-// import { TOKEN } from '../config.js';
+import { TOKEN } from '../config.js';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
@@ -97,10 +97,10 @@ export default function App() {
               selectedProductContext: [selectedProduct, setSelectedProduct],
             }}
           >
-            {/* <Overview />
+            <Overview />
             <RelatedItems />
             <QuestionsAnswers />
-            <RatingsReviews /> */}
+            <RatingsReviews />
           </AppContext.Provider>
         </>
       ) : (
