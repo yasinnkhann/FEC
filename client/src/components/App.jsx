@@ -9,6 +9,8 @@ import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
+const URL = 'http://localhost:3000/api';
+
 const Body = styled.div `
   font-family: 'Open Sans';
   font-style: normal;
@@ -26,18 +28,11 @@ export default function App() {
     let clearId = setTimeout(() => {
       const getApi = async () => {
         try {
+
           const res = await axios.get(
-            'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
-            {
-              params: {
-                // page: 1,
-                count: 200,
-              },
-              headers: {
-                Authorization: `${TOKEN}`,
-              },
-            }
+            `${URL}/products`
           );
+
           setProducts(res.data);
           setSelectedProduct(res.data[0]);
           setIsLoaded(true);
@@ -46,7 +41,7 @@ export default function App() {
         }
       };
       getApi();
-    }, 1000);
+    }, 400);
 
     return () => clearTimeout(clearId);
   }, []);
@@ -67,15 +62,14 @@ export default function App() {
           time: date,
         };
         const res = await axios.post(
-          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/interactions',
+          `${URL}/interactions`,
           body,
           {
             headers: {
-              Authorization: `${TOKEN}`,
-            },
-          }
+              'Content-Type': 'application/json'
+            }
+          },
         );
-        // console.log(res);
       } catch (err) {
         console.error(err);
       }

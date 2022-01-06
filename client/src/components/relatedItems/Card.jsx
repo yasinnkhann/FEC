@@ -17,6 +17,8 @@ import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
 
+const URL = 'http://localhost:3000/api';
+
 // CARD
 export default function CarouselCard({ product, name }) {
   // CONTEXT
@@ -27,41 +29,38 @@ export default function CarouselCard({ product, name }) {
   const [imageUrl, setimageUrl] = useState('');
   const [styles, setStyles] = useState([]);
   const [salePrice, setSalePrice] = useState(null);
-  const [isMounted, setIsMounted] = useState(false);
 
   // REF
   const modal = useRef(null);
 
   // HOOKS
   useEffect(() => {
-    let clearId = setTimeout(() => {
-
       // API HANDLER
       const getProductStyle = async (id) => {
         await axios
-          .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
-            params: {
-              product_id: id,
-            },
-            headers: {
-              Authorization: `${TOKEN}`,
-            },
-          })
+          .get(
+            `${URL}/products/styles`,
+            {
+              params: {
+                product_id: id,
+              },
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          )
           .then(res => {
+            setStyles(res.data);
             if (res?.data.results[0].salePrice) {
               setSalePrice(res.data.results[0].salePrice);
             }
             return res?.data.results[0].photos[0].thumbnail_url;
           })
-          // .then(res => res?.data.results[0].photos[0].thumbnail_url)
           .then(url => setimageUrl(url))
           .catch(err => console.error(err));
       };
 
       if (product) { getProductStyle(product.id); }
-    }, 200);
-
-    return () => clearTimeout(clearId);
   }, []);
 
 
@@ -76,7 +75,7 @@ export default function CarouselCard({ product, name }) {
     if (cardName === 'add-button') {
       return (
         <CardStyle >
-          <ProductInfoStyle > {/* onClick={() => console.log('ADD BUTTON CLICKED')} */}
+          <ProductInfoStyle >
             <AddToOutfit />
           </ProductInfoStyle>
         </CardStyle>
@@ -90,7 +89,7 @@ export default function CarouselCard({ product, name }) {
           <Modal key={`modal-${product.id}`} ref={modal} product={product} />
           <ProductInfoStyle onClick={() => handleClick(product)} >
             <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
-            <ProductInfo product={product} />
+            <ProductInfo product={product} styles={styles} salePrice={salePrice} />
           </ProductInfoStyle>
         </CardStyle>
       );
@@ -115,7 +114,8 @@ const CardStyle = styled.div`
 `;
 
 const ProductInfoStyle = styled.div`
-  width: 300px;
+  width: 210px;
+  max-width: 210px;
   height: 100%;
   position: absolute;
   bottom: 0;
@@ -123,10 +123,7 @@ const ProductInfoStyle = styled.div`
 `;
 
 const ActionStyle = styled.a`
-  z-index: 1;
+  z-index: 2;
   max-height: 35px;
   max-width: 35px;
 `;
-//light = #FDF0D5
-//burgundy = #38062B
-//silver = #B1A9AC

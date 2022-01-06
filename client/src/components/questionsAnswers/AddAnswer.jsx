@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { TOKEN, cloudinaryInfo } from '../../config.js';
 import Loader from 'react-loader-spinner';
 
+const serverURL = 'http://localhost:3000/api';
+
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
   const { productsContext, selectedProductContext } = useContext(AppContext);
@@ -89,11 +91,14 @@ export default function AddAnswer({ closeModal, question }) {
         photos: photoUrls,
       };
       const res = await axios.post(
-        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`,
+        `${serverURL}/qa/answer`,
         body,
         {
+          params: {
+            question_id: question.question_id,
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         }
       );
