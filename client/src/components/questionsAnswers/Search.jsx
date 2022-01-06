@@ -9,6 +9,7 @@ export default function Search({ handleChange }) {
     <Container>
       <SearchBar
         type='text'
+        color='#B1A9AC'
         ref={searchRef}
         placeholder='Have a question? Search for answers…'
         onChange={() => handleChange(searchRef.current.value)}
@@ -35,7 +36,10 @@ const SearchBar = styled.input`
   width: 100%;
   padding: 2px 23px 2px 30px;
   outline: 0;
-  background-color: #f5f5f5;
+  background-color: #B1A9AC;
+  ::placeholder{
+    color: #38062B;
+  }
 `;
 
 const MagnifyGlassIcon = styled(SearchIcon)`
@@ -45,6 +49,6 @@ const MagnifyGlassIcon = styled(SearchIcon)`
   transform: translateY(-50%);
 
   && {
-    color: black;
+    color: #38062B;
   }
 `;

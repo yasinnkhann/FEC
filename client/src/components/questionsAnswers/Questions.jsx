@@ -148,8 +148,8 @@ const MoreAnsweredQsBtn = styled.button`
 	padding: 8px 12px;
 	border-radius 6px;
 	border: none;
-	background: #000;
-	color: #fff;
+  background-color: #38062b;
+	color: #fdf0d5;
 	cursor: pointer;
   margin-left: 43%;
 `;
@@ -160,8 +160,8 @@ const SubmitNewQBtn = styled.button`
 	padding: 8px 12px;
 	border-radius 6px;
 	border: none;
-	background: #000;
-	color: #fff;
+	background-color: #fdf0d5;
+	color: #38062b;
 	cursor: pointer;
   margin-left: 44%;
 `;

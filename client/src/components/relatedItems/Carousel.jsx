@@ -213,7 +213,7 @@ export default function Carousel({ name, relatedProductIds }) {
             </LeftArrow>
           </button>}
         {
-          <div className="carousel-middle" style={{display: 'flex'}} >
+          <div className="carousel-middle" style={{display: 'flex', gap: '20px'}} >
             {renderCarousel(name)}
           </div>
         }
@@ -232,12 +232,23 @@ export default function Carousel({ name, relatedProductIds }) {
 }
 
 // STYLES
+
 const CarouselStyle = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-around;
   scroll-behavior: smooth;
 `;
 
-const LeftArrow = styled.div``;
+const LeftArrow = styled.div`
+  background-color: #38062B;
+  color: #FDF0D5;
+`;
 
-const RightArrow = styled.div``;
+const RightArrow = styled.div`
+  background-color: #38062B;
+  color: #FDF0D5;
+`;
+//light = #FDF0D5
+//burgundy = #38062B
+//silver = #B1A9AC

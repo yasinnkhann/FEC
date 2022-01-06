@@ -12,9 +12,10 @@ export default function ProductPreviewImages({ imageUrl, productName }) {
 }
 
 const Image = styled.img`
-  width: 200px;
+  width: 208px;
   height: 200px;
-  float: left;
-  object-fit: contain;
-  grid-row-end: span 2;
+  object-fit: cover;
 `;
+//light = #FDF0D5
+//burgundy = #38062B
+//silver = #B1A9AC
