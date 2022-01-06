@@ -5,3 +5,4 @@ client/src/config.js
 *.excalidraw
 .DS_Store
 package-lock.json
+coverage
