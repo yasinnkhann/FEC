@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { render, fireEvent, act } from '@testing-library/react';
-import Search from '../Search';
+import Answer from '../Answer';
 import React from 'react';
 import 'regenerator-runtime/runtime';
 
