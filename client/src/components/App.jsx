@@ -12,6 +12,8 @@ import styled from 'styled-components';
 const Body = styled.div `
   font-family: 'Open Sans';
   font-style: normal;
+  background: #38062b;
+  background: linear-gradient(0deg, rgba(56,6,43,1) 10%, rgba(177,169,172,1) 51%, rgba(253,240,213,1) 100%);
 `;
 
 

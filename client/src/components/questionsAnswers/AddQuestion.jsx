@@ -230,7 +230,7 @@ const SubmitBtn = styled.button`
 	padding: 8px 12px;
 	border-radius 6px;
 	border: none;
-	background: #000;
-	color: #fff;
+	background: #38062B;
+	color: #B1A9AC;
 	cursor: pointer;
 `;

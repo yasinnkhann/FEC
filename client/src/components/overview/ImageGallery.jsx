@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import StylesContext from './StylesContext';
-//import ExpandedView from './ExpandedView.jsx';
 import AppContext from '../../AppContext';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -37,7 +36,7 @@ const ModalImg = styled.img `
   width: 1000px;
   height: 1000px;
 `;
-// background-position: ${(props) => (props.position)};
+
 const MainImgContainer = styled.div`
   position: relative;
   padding: 1rem;

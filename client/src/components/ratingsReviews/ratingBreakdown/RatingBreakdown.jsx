@@ -106,7 +106,7 @@ const RatingBreakdown = (props) => {
         style={{
           gridColumn: '1',
           gridRow: '4',
-          color: 'grey',
+          color: '#B1A9AC',
           textAlign: 'center',
         }}
       >
@@ -130,7 +130,7 @@ const RatingBreakdown = (props) => {
                   ))}
               </div>
               <div style={clearStarFilterStyle} aria-hidden="true" onClick={clearStarFilter}>
-                <u style={{ color: 'grey', fontSize: '13px' }}>Clear Star Review Filter</u>
+                <u style={{ color: '#B1A9AC', fontSize: '13px' }}>Clear Star Review Filter</u>
               </div>
             </div>
           )}

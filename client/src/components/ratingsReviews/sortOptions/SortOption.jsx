@@ -4,12 +4,11 @@ import styled from 'styled-components';
 const optionsBar = {
   width: '95px',
   marginLeft: '5px',
-  border: '1px solid grey',
+  border: '1px solid #38062B',
   textAlign: 'center',
   cursor: 'pointer',
   position: 'relative',
   display: 'inline-block',
-  backgroundColor: '#f9f9f9',
   minWidth: '90px',
   boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '6px 8px',

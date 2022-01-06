@@ -49,6 +49,6 @@ const MagnifyGlassIcon = styled(SearchIcon)`
   transform: translateY(-50%);
 
   && {
-    color: black;
+    color: #38062B;
   }
 `;
