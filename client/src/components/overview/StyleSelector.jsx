@@ -10,35 +10,42 @@ const Checked = styled.div`
   position: absolute;
   top: 5px;
   right: 5px;
+  color: #38062B;
 `;
-
+//dark #1F0318
+//light #E5F2C9
 const StylePicsDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 260px;
   justify-content: center;
 `;
+
 const StylePic = styled.img`
   height: 70px;
   margin: 5px;
   width: 60px;
   border-radius: 50%;
   object-fit: cover;
+
 `;
-const StyleName = styled.p`
-  /* font-weight: 100;
-  margin-left: 3.5rem; */
+
+//silver #adadad
+//blue #849a9a
+//dark #072636
+//red #3c0225
+const StyleName = styled.h3`
+  font-style: italic;
 `;
 const SelectedStyle = styled.h3`
-  /* font-weight: 100;
-  margin-left: 4rem; */
+
 `;
 const Button = styled.button`
   position: relative;
-  /* margin: 5px; */
+  background-color: #B1A9AC;
+  border: 2px solid #38062B;
 `;
 const Price = styled.h3`
-  /* margin-left: 5rem; */
 `;
 const Sale = styled.p`
   color: red;
@@ -66,15 +73,17 @@ const DropDownHeader = styled.button`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
   font-weight: 500;
   font-size: 1rem;
+  color: #B1A9AC;
   width: 130px;
+  background-color: #38062B;
 `;
 
 const DropdownList = styled.div`
   padding: 1rem;
-  background: #ffffff;
-  border: 2px solid #e5e5e5;
+  background-color: #B1A9AC;
+  border: 2px solid #38062B;
   box-sizing: border-box;
-  font-size: 1rem;
+  font-size: large;
   font-weight: 500;
 `;
 const DropdownOption = styled.select`
@@ -92,6 +101,7 @@ const OutOfStock = styled.div`
   flex-wrap: wrap;
   width: 150px;
   padding: 2rem;
+  background-color: #38062B;
   color: red;
   /* margin: 1rem;
   margin-left: 2.5rem; */
@@ -106,7 +116,14 @@ const AddtoCartButton = styled.button`
   font-weight: 500;
   font-size: 1rem;
   width: 260px;
+  color: #FDF0D5;
+  background-color: #38062B;
+
 `;
+//silver #adadad
+//blue #849a9a
+//dark #072636
+//red #3c0225
 const SelectASize = styled.div`
   font-size: 1rem;
 `;
@@ -220,77 +237,79 @@ export default function StyleSelector() {
 
   return (
     <div>
-      <Price>
-        {currentStyle.sale_price ? (
-          <>
-            <Sale> {currentStyle.sale_price}</Sale>
-            <OldPrice>{currentStyle.original_price}</OldPrice>
-          </>
-        ) : (
-          currentStyle.original_price
-        )}
-      </Price>
-      <SelectedStyle>Selected Style: </SelectedStyle>
-      <StyleName key={currentStyle.style_id}>{currentStyle.name}</StyleName>
-      <StylePicsDiv>
-        {results.map((photo) => {
-          return (
-            <Button onClick={() => onPhotoClick(photo)} key={photo.style_id}>
-              <StylePic src={photo.photos[0].thumbnail_url}></StylePic>
-              {currentStyle.name === photo.name ? (
-                <Checked>
-                  <CheckIcon />
-                </Checked>
-              ) : null}
-            </Button>
-          );
-        })}
-      </StylePicsDiv>
       {stylesList.length ? (
-        <Dropdown>
-          <div>
-            <>
-              {showMessage ? <SelectASize>Please Select a Size</SelectASize> : null}
-              <DropDownHeader onClick={togglingSize}>
-                {!selectedSize ? 'Select A Size' : 'Size: ' + selectedSize}
-              </DropDownHeader>
-              {isSizeOpen && (
+        <>
+          <Price>
+            {currentStyle.sale_price ? (
+              <>
+                <Sale> {'$' + currentStyle.sale_price}</Sale>
+                <OldPrice>{'$' + currentStyle.original_price}</OldPrice>
+              </>
+            ) : (
+              '$' + currentStyle.original_price
+            )}
+          </Price>
+          <SelectedStyle>Selected Style: </SelectedStyle>
+          <StyleName key={currentStyle.style_id}>{currentStyle.name}</StyleName>
+          <StylePicsDiv>
+            {results.map((photo) => {
+              return (
+                <Button onClick={() => onPhotoClick(photo)} key={photo.style_id}>
+                  <StylePic src={photo.photos[0].thumbnail_url}></StylePic>
+                  {currentStyle.name === photo.name ? (
+                    <Checked>
+                      <CheckIcon />
+                    </Checked>
+                  ) : null}
+                </Button>
+              );
+            })}
+          </StylePicsDiv>
+          <Dropdown>
+            <div>
+              <>
+                {showMessage ? <SelectASize>Please Select a Size</SelectASize> : null}
+                <DropDownHeader onClick={togglingSize}>
+                  {!selectedSize ? 'Select A Size' : 'Size: ' + selectedSize}
+                </DropDownHeader>
+                {isSizeOpen && (
+                  <DropDownListContainer>
+                    <DropdownList>
+                      {uniqueSizes().map((size) => (
+                        <ListItem onClick={(e) => onSizeClicked(e)} key={Math.random()}>
+                          {size}
+                        </ListItem>
+                      ))}
+                    </DropdownList>
+                  </DropDownListContainer>
+                )}
+              </>
+            </div>
+            <div>
+              {selectedSize ? (
+                <DropDownHeader onClick={togglingQuant}>
+                  {!selectedQuantity ? 'Quantity: 1' : 'Quantity: ' + selectedQuantity}
+                </DropDownHeader>
+              ) : (
+                <DropDownHeader>-</DropDownHeader>
+              )}
+              {isQuantOpen && (
                 <DropDownListContainer>
                   <DropdownList>
-                    {uniqueSizes().map((size) => (
-                      <ListItem onClick={(e) => onSizeClicked(e)} key={Math.random()}>
-                        {size}
-                      </ListItem>
-                    ))}
+                    {quantityArr().map((num) => {
+                      return (
+                        <ListItem onClick={(e) => onQuantityClicked(e)} key={Math.random()}>
+                          {num}
+                        </ListItem>
+                      );
+                    })}
                   </DropdownList>
                 </DropDownListContainer>
               )}
-            </>
-          </div>
-          <div>
-            {selectedSize ? (
-              <DropDownHeader onClick={togglingQuant}>
-                {!selectedQuantity ? 'Quantity: 1' : 'Quantity: ' + selectedQuantity}
-              </DropDownHeader>
-            ) : (
-              <DropDownHeader>-</DropDownHeader>
-            )}
-            {isQuantOpen && (
-              <DropDownListContainer>
-                <DropdownList>
-                  {quantityArr().map((num) => {
-                    return (
-                      <ListItem onClick={(e) => onQuantityClicked(e)} key={Math.random()}>
-                        {num}
-                      </ListItem>
-                    );
-                  })}
-                </DropdownList>
-              </DropDownListContainer>
-            )}
-          </div>
-          <AddtoCartButton onClick={(e) => addToCartHandler(e)}>Add to Cart</AddtoCartButton>
-        </Dropdown>
+            </div>
+            <AddtoCartButton onClick={(e) => addToCartHandler(e)}>Add to Cart</AddtoCartButton>
+          </Dropdown>
+        </>
       ) : (
         <OutOfStock>OUT OF STOCK</OutOfStock>
       )}

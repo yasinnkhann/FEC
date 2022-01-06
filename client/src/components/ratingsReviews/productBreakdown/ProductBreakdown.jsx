@@ -17,6 +17,7 @@ const characteristicsBar = {
 const marginLeft = {
   marginLeft: 'auto',
   position: 'relative',
+  color: '#fdf0d5'
 };
 
 const marginCenter = {
@@ -54,8 +55,8 @@ class ProductBreakdown extends React.Component {
               width: '210px',
             }}
           >
-            <div style={{ fontSize: '13px', color: 'black' }}>Comfort</div>
-            <div style={{ display: 'flex', fontSize: '11px', color: 'grey' }}>
+            <div style={{ fontSize: '13px', color: '#fdf0d5' }}>Comfort</div>
+            <div style={{ display: 'flex', fontSize: '11px', color: '#B1A9AC' }}>
               <div style={{ marginRight }}> Uncomfortable </div>
               <div style={marginLeft}> Perfect </div>
             </div>
@@ -63,7 +64,7 @@ class ProductBreakdown extends React.Component {
               <span
                 className="fa fa-caret-up"
                 style={{
-                  color: 'black',
+                  color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${(this.characteristicStats(characteristics.Comfort.value) / 5) * 100 - 2}%`,
                 }}
@@ -80,8 +81,8 @@ class ProductBreakdown extends React.Component {
               width: '210px',
             }}
           >
-            <div style={{ display: 'flex', fontSize: '13px', color: 'black' }}>Fit</div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: 'grey' }}>
+            <div style={{ display: 'flex', fontSize: '13px', color: '#fdf0d5' }}>Fit</div>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: '#B1A9AC' }}>
               <div style={marginRight}> Runs tight </div>
               <div style={marginCenter}> Perfect </div>
               <div style={marginLeft}> Runs long </div>
@@ -90,7 +91,7 @@ class ProductBreakdown extends React.Component {
               <span
                 className="fa fa-caret-up"
                 style={{
-                  color: 'black',
+                  color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${(this.characteristicStats(characteristics.Fit.value) / 5) * 100 - 2}%`,
                 }}
@@ -107,8 +108,8 @@ class ProductBreakdown extends React.Component {
               width: '210px',
             }}
           >
-            <div style={{ fontSize: '13px', color: 'black' }}>Length</div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: 'grey' }}>
+            <div style={{ fontSize: '13px', color: '#fdf0d5' }}>Length</div>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: '#B1A9AC' }}>
               <div style={marginRight}> Runs short </div>
               <div style={marginCenter}> Perfect </div>
               <div style={marginLeft}>Runs long </div>
@@ -117,7 +118,7 @@ class ProductBreakdown extends React.Component {
               <span
                 className="fa fa-caret-up"
                 style={{
-                  color: 'black',
+                  color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${(this.characteristicStats(characteristics.Length.value) / 5) * 100 - 2}%`,
                 }}
@@ -134,8 +135,8 @@ class ProductBreakdown extends React.Component {
               width: '210px',
             }}
           >
-            <div style={{ fontSize: '13px', color: 'black' }}>Quality</div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: 'grey' }}>
+            <div style={{ fontSize: '13px', color: '#fdf0d5' }}>Quality</div>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: '#B1A9AC' }}>
               <div style={marginRight}> Poor </div>
               <div style={marginLeft}> Perfect </div>
             </div>
@@ -143,7 +144,7 @@ class ProductBreakdown extends React.Component {
               <span
                 className="fa fa-caret-up"
                 style={{
-                  color: 'black',
+                  color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${(this.characteristicStats(characteristics.Quality.value) / 5) * 100 - 2}%`,
                 }}
@@ -160,8 +161,8 @@ class ProductBreakdown extends React.Component {
               width: '210px',
             }}
           >
-            <div style={{ fontSize: '13px', color: 'black' }}>Size</div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: 'grey' }}>
+            <div style={{ fontSize: '13px', color: '#fdf0d5' }}>Size</div>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: '#B1A9AC' }}>
               <div style={marginRight}> Too small </div>
               <div style={marginCenter}> Perfect </div>
               <div style={marginLeft}> Too wide </div>
@@ -170,7 +171,7 @@ class ProductBreakdown extends React.Component {
               <span
                 className="fa fa-caret-up"
                 style={{
-                  color: 'black',
+                  color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${(this.characteristicStats(characteristics.Size.value) / 5) * 100 - 2}%`,
                 }}
@@ -187,8 +188,8 @@ class ProductBreakdown extends React.Component {
               width: '210px',
             }}
           >
-            <div style={{ fontSize: '13px', color: 'black' }}>Width</div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: 'grey' }}>
+            <div style={{ fontSize: '13px', color: '#fdf0d5' }}>Width</div>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '11px', color: '#b1a9ac' }}>
               <div style={marginRight}> Too narrow </div>
               <div style={marginCenter}> Perfect </div>
               <div style={marginLeft}> Too wide </div>
@@ -197,7 +198,7 @@ class ProductBreakdown extends React.Component {
               <span
                 className="fa fa-caret-up"
                 style={{
-                  color: 'black',
+                  color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${(this.characteristicStats(characteristics.Width.value) / 5) * 100 - 2}%`,
                 }}

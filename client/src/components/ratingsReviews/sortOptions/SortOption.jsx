@@ -4,19 +4,23 @@ import styled from 'styled-components';
 const optionsBar = {
   width: '95px',
   marginLeft: '5px',
-  border: '1px solid grey',
+  border: '1px solid #38062B',
   textAlign: 'center',
   cursor: 'pointer',
   position: 'relative',
   display: 'inline-block',
-  backgroundColor: '#f9f9f9',
   minWidth: '90px',
   boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '6px 8px',
   zIndex: '1',
   borderRadius: '16px',
+  backgroundColor: '#b1a9ac',
+  color: '#38062b'
 };
-
+const DropdownOptions = styled.option `
+  background-color: #b1a9ac;
+  color: #38062b;
+`;
 class SortOptions extends React.Component {
   constructor(props) {
     super(props);
@@ -35,13 +39,15 @@ class SortOptions extends React.Component {
     const { listSortChange } = this.props;
     const { metaData } = this.props;
     return (
-      <div style={{ fontWeight: 'bold' }}>
-        {`${this.totalReviews(metaData.ratings)} reviews, sorted by most`}
-        <select style={optionsBar} onChange={listSortChange}>
-          <option value="1">Relevant</option>
-          <option value="2">Helpful</option>
-          <option value="3">Newest</option>
-        </select>
+      <div>
+        <div style={{ fontWeight: 'bold' }}>
+          {`${this.totalReviews(metaData.ratings)} reviews, sorted by most`}
+          <select style={optionsBar} onChange={listSortChange}>
+            <DropdownOptions value="1">Relevant</DropdownOptions>
+            <DropdownOptions value="2">Helpful</DropdownOptions>
+            <DropdownOptions value="3">Newest</DropdownOptions>
+          </select>
+        </div>
       </div>
     );
   }

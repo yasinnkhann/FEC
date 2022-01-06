@@ -100,9 +100,9 @@ const emailStyle = {
 
 const submitStyle = {
   fontFamily: 'Open Sans',
-  backgroundColor: '#ddd',
+  backgroundColor: '#38062B',
   border: 'none',
-  color: 'black',
+  color: '#B1A9AC',
   padding: '10px 20px',
   textAlign: 'center',
   textDecoration: 'none',

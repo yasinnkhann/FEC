@@ -8,14 +8,15 @@ import { TOKEN } from '../config.js';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
-import {createGlobalStyle} from 'styled-components';
 
-const GlobalStyles = createGlobalStyle `
- @import url('https://fonts.googleapis.com/css2?family=Open+Sans');
-  body {
-    font-family: 'Open Sans', sans-serif;
-  }
+const Body = styled.div `
+  font-family: 'Open Sans';
+  font-style: normal;
+  background: #38062b;
+  background: linear-gradient(0deg, rgba(56,6,43,1) 10%, rgba(177,169,172,1) 51%, rgba(253,240,213,1) 100%);
 `;
+
+
 export default function App() {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -84,37 +85,38 @@ export default function App() {
   });
 
   return (
-    <Fragment>
-      <GlobalStyles/>
-      {isLoaded ? (
-        <>
-          <AppContext.Provider
-            value={{
-              productsContext: [products, setProducts],
-              selectedProductContext: [selectedProduct, setSelectedProduct],
+    <Body>
+      <Fragment>
+        {isLoaded ? (
+          <>
+            <AppContext.Provider
+              value={{
+                productsContext: [products, setProducts],
+                selectedProductContext: [selectedProduct, setSelectedProduct],
+              }}
+            >
+              <Overview />
+              <RelatedItems />
+              <QuestionsAnswers />
+              <RatingsReviews />
+            </AppContext.Provider>
+          </>
+        ) : (
+          <Loader
+            type='Oval'
+            color='#38062B'
+            height={160}
+            width={160}
+            arialLabel='loading-indicator'
+            style={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
             }}
-          >
-            <Overview />
-            <RelatedItems />
-            <QuestionsAnswers />
-            <RatingsReviews />
-          </AppContext.Provider>
-        </>
-      ) : (
-        <Loader
-          type='Oval'
-          color='blue'
-          height={160}
-          width={160}
-          arialLabel='loading-indicator'
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-      )}
-    </Fragment>
+          />
+        )}
+      </Fragment>
+    </Body>
   );
 }
