@@ -13,6 +13,7 @@ import SortOptions from './sortOptions/SortOption.jsx';
 
 // import metaDummy from './metaDummy.jsx';
 // import dummyDataReviews from './dummyDataReviews.jsx';
+const URL = 'http://localhost:3000/api';
 
 const gridLayout = {
   display: 'grid',
@@ -194,8 +195,12 @@ export default function RatingsReviews() {
     const getReviewApi = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/?count=1000&product_id=${selectedProduct.id}`,
+          `${URL}/reviews`,
           {
+            params: {
+              count: 1000,
+              product_id: selectedProduct.id,
+            },
             headers: {
               Authorization: `${TOKEN}`,
             },
@@ -217,8 +222,12 @@ export default function RatingsReviews() {
     const getMetaApi = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/?count=50&product_id=${selectedProduct.id}`,
+          `${URL}/reviews/meta`,
           {
+            params: {
+              count: 50,
+              product_id: selectedProduct.id,
+            },
             headers: {
               Authorization: `${TOKEN}`,
             },
@@ -273,13 +282,25 @@ export default function RatingsReviews() {
         // email: '',
         // photos: [],
         // characteristics: metaData.characteristics
-
+        'product_id': 40344,
+        'rating': 5,
+        'summary': 'RFP 57 Sleekslinky team 6  HD KB YK EH are awesome!!',
+        'body': 'RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team.',
+        'recommend': true,
+        'name': 'HDCooler',
+        'email': 'sfewfewffefef9@gmail.com',
+        'photos': ['https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.55-PM.png', 'https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.49-PM.png', 'https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.31-PM.png'],
+        'characteristics': {'133344': 5}
       };
-      const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
+      const res = await axios.post(
+        `${URL}/reviews`,
         body,
         {
+          params: {
+            product_id: selectedProduct.id
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           }
         }
       );

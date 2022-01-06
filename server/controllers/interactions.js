@@ -4,6 +4,7 @@ const axios = require('axios');
 
 module.exports = {
   logInteraction: async function(req, res) {
+
     const body = req.body;
     try {
       const response = await axios.post(
@@ -15,7 +16,6 @@ module.exports = {
           }
         }
       );
-      // const products = res.json(response);
       res.status(201).json('CREATED');
     } catch (err) {
       console.error(err);

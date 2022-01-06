@@ -53,7 +53,6 @@ module.exports = {
           },
         }
       );
-      console.log(response.data);
       res.status(200).json(response.data);
     } catch (err) {
       console.error(err);
@@ -72,6 +71,7 @@ module.exports = {
           },
         }
       );
+      res.status(200).json(response.data);
     } catch (err) {
       console.error(err);
     }

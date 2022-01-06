@@ -4,13 +4,13 @@ const axios = require('axios');
 
 module.exports = {
   getReviews: async function(req, res) {
-    const { product_id } = req.query;
+    const { product_id, count} = req.query;
     try {
       const response = await axios.get(
         `${URL}/reviews`, {
           params: {
             page: 1,
-            count: 1000,
+            count: count,
             product_id: product_id,
           },
           headers: {
