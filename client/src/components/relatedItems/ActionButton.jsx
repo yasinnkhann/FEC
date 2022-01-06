@@ -6,5 +6,11 @@ import StarsIcon from '@material-ui/icons/Stars';
 // ACTION BUTTON
 export default function ActionButton({ name }) {
   // JSX
-  return <span className="action-button">{name === 'open-modal' ? <StarsIcon /> : <CloseIcon />}</span>;
+  return <span className="action-button" >
+    {
+    name === 'open-modal'
+    ? <StarsIcon data-testid='starsIcon' />
+    : <CloseIcon data-testid='closeIcon' />
+    }
+    </span>;
 }
