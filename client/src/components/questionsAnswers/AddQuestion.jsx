@@ -6,6 +6,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
 import { TOKEN } from '../../config.js';
 
+const serverURL = 'http://localhost:3000/api';
+
 export default function AddQuestion({ closeModal, question }) {
   // CONTEXT
   const { productsContext, selectedProductContext } = useContext(AppContext);
@@ -50,11 +52,11 @@ export default function AddQuestion({ closeModal, question }) {
         product_id: Number(questionsData.product_id),
       };
       const res = await axios.post(
-        'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
+        `${serverURL}/qa/question`,
         body,
         {
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         }
       );

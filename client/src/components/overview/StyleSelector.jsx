@@ -6,6 +6,8 @@ import { TOKEN } from '../../config.js';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 
+const URL = 'http://localhost:3000/api'
+
 const Checked = styled.div`
   position: absolute;
   top: 5px;
@@ -223,9 +225,9 @@ export default function StyleSelector() {
       const body = {
         sku_id: getSkuId[0],
       };
-      const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart', body, {
+      const res = await axios.post(`${URL}/cart/addToCart`, body, {
         headers: {
-          Authorization: `${TOKEN}`,
+          'Content-Type': 'application/json',
         },
       });
       console.log('res: ', res);

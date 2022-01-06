@@ -5,6 +5,8 @@ import Moment from 'react-moment';
 import QuestionsContext from './QuestionsContext.js';
 import { TOKEN } from '../../config.js';
 
+const serverURL = 'http://localhost:3000/api';
+
 export default function Answer({ questionObj }) {
   // CONTEXT
   const { questionsData, setQuestionsData } = useContext(QuestionsContext);
@@ -22,14 +24,13 @@ export default function Answer({ questionObj }) {
     const getAnswers = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionObj.question_id}/answers`,
+          `${serverURL}/qa/question/answers`,
           {
-            // params: {
-            //   page: 1,
-            //   count: 1,
-            // },
+            params: {
+              question_id: questionObj.question_id
+            },
             headers: {
-              Authorization: `${TOKEN}`,
+              'Content-Type': 'application/json',
             },
           }
         );
@@ -46,11 +47,14 @@ export default function Answer({ questionObj }) {
     try {
       const body = {};
       const res = await axios.put(
-        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answerObj.answer_id}/helpful`,
+        `${serverURL}/qa/answer/helpful`,
         body,
         {
+          params: {
+            answer_id: answerObj.answer_id,
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -87,11 +91,14 @@ export default function Answer({ questionObj }) {
     try {
       const body = {};
       const res = await axios.put(
-        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answerObj.answer_id}/report`,
+        `${serverURL}/qa/answer/report`,
         body,
         {
+          params: {
+            answer_id: answerObj.answer_id,
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         }
       );
