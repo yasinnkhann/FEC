@@ -16,6 +16,7 @@ const recommendedAvgStyle = {
   display: 'flex',
   justifyContent: 'center',
   marginBottom: '10px',
+  color: '#FDF0D5'
 };
 
 const avgRatingSpacing = {
@@ -25,12 +26,7 @@ const avgRatingSpacing = {
   textAlign: 'center',
 };
 
-const headerStyle = {
-  gridRow: '1',
-  gridColumn: '1',
-  color: 'grey',
-  textAlign: 'center',
-};
+
 
 const clearStarFilterStyle = {
   display: 'flex',
@@ -91,8 +87,6 @@ const RatingBreakdown = (props) => {
   const { clearStarFilter } = props;
   return (
     <div style={gridLayout}>
-      <div style={headerStyle}>RATINGS & REVIEWS</div>
-
       <div style={avgRatingSpacing}>{averageRating(ratings).toFixed(1)}</div>
 
       <div

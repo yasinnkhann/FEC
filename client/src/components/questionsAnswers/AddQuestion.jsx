@@ -170,7 +170,8 @@ const Content = styled.form`
 `;
 
 const UpperContent = styled.div`
-  background: white;
+  background: #FDF0D5;
+  color: #38062B;
   width: 40rem;
   max-width: calc(100vw - 2rem);
   max-height: calc(100vh - 2rem);

@@ -19,6 +19,7 @@ const gridLayout = {
   gridTemplateColumns: 'repeat(3, 1fr)',
   gridTemplateRows: 'minmax(5, 1fr) 200px',
   gridGap: '10px',
+  color: '#fdf0d5'
 };
 
 const noReviewsGrid = {
@@ -39,7 +40,7 @@ const mainDiv = {
   marginLeft: 'auto',
   marginRight: 'auto',
   marginBottom: '30px',
-
+  color: '#fdf0d5',
   fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
   // overflowScrolling: 'touch',
@@ -53,6 +54,21 @@ const ratingGrid = {
   maxheight: '200px',
 };
 
+const HeaderStyle = styled.h3 `
+  text-align: 'center';
+  font-size: 'xx-large';
+  text-align: 'center';
+  padding-bottom: '1rem';
+  font-family: 'Lobster Two', cursive;
+  color: black;
+`;
+const HeaderDiv = styled.div `
+  display: flex;
+  align-content: space-between;
+  justify-content: space-around;
+  font-size: xx-large;
+`;
+
 const addReviewBtnStyle = {
   // border: '1px solid grey',
   // boxShadow: '2px 2px 4px grey',
@@ -63,7 +79,6 @@ const addReviewBtnStyle = {
   // maxWidth: '300px',
   // minWidth: '150px',
   // borderRadius: '16px',
-  backgroundColor: '#ddd',
   border: 'none',
   color: 'black',
   padding: '10px 20px',
@@ -75,6 +90,8 @@ const addReviewBtnStyle = {
   borderRadius: '16px',
   boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
+  backgroundColor: '#B1A9AC',
+  color: '#38062B'
 };
 
 // const noReviewsAddBtn = {
@@ -93,7 +110,6 @@ const moreReviewsBtn = {
   // boxShadow: '2px 2px 4px grey',
   // backgroundColor: 'white',
   // padding: '10px',
-  backgroundColor: '#ddd',
   border: 'none',
   color: 'black',
   padding: '10px 20px',
@@ -105,6 +121,8 @@ const moreReviewsBtn = {
   borderRadius: '16px',
   boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
+  backgroundColor: '#B1A9AC',
+  color: '#38062B'
 };
 
 const modalStyle = {
@@ -122,7 +140,8 @@ const modalStyle = {
 };
 
 const innerModalStyle = {
-  backgroundColor: 'white',
+  backgroundColor: '#fdf0d5',
+  color: '#38062b',
   width: '50%',
   minWidth: '580px',
   maxWidth: '100%',
@@ -331,104 +350,111 @@ export default function RatingsReviews() {
 
   if (noReviews) {
     return (
-      <div className="ratings-and-reviews" style={noReviewsGrid}>
-        <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
+      <div>
+        <div className="ratings-and-reviews" style={noReviewsGrid}>
+          <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
           No review for this product Be the first to add one!
-        </div>
-        <button className="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
-          ADD A REVIEW +
-        </button>
-        {writeReviewModal && (
-          <div style={modalStyle} aria-hidden="true" role="button" onClick={exitWriteReviewClick}>
-            <div style={innerModalStyle} aria-hidden="true" onClick={(e) => e.stopPropagation()}>
-              <WriteReview handleReviewData={handleReviewData} productID={selectedProduct} metaData={metaData} />
-              <br />
-            </div>
           </div>
-        )}
+          <button className="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
+          ADD A REVIEW +
+          </button>
+          {writeReviewModal && (
+            <div style={modalStyle} aria-hidden="true" role="button" onClick={exitWriteReviewClick}>
+              <div style={innerModalStyle} aria-hidden="true" onClick={(e) => e.stopPropagation()}>
+                <WriteReview handleReviewData={handleReviewData} productID={selectedProduct} metaData={metaData} />
+                <br />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
 
   return (
     <Fragment>
-      {isLoaded ? (
-        <div className="ratings-and-reviews" style = {mainDiv}>
-          {/* {console.log('from reviewList:', reviewList)} */}
-          {/* {console.log('from metaData:', metaData)} */}
-          {/* {console.log('selectedProduct:: ', selectedProduct)} */}
-          {/* {console.log('review CacheData:: ', reviewCache)} */}
-          {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
-          {/* {console.log('listSort:: ', listSort)}  */}
+      <div className="ratings-and-reviews">
+        <HeaderDiv><HeaderStyle>Ratings &#38; Reviews</HeaderStyle></HeaderDiv>
+        {isLoaded ? (
+          <>
+            <div style = {mainDiv}>
 
-          {reviewsReady === true && (
-            <div style={gridLayout}>
-              <div style={ratingGrid}>
-                <RatingBreakdown
-                  metaData={metaData}
-                  sortByStar={sortByStar}
-                  starSort={starSort}
-                  clearStarFilter={clearStarFilter}
-                />
-              </div>
-              <div style={productStyle}>
-                <ProductBreakdown metaData={metaData} />
-              </div>
-              {writeReviewModal && (
-                <div
-                  style={modalStyle}
-                  aria-hidden="true"
-                  role="button"
-                  onClick={exitWriteReviewClick}
-                >
-                  <div
-                    style={innerModalStyle}
-                    aria-hidden="true"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <WriteReview
-                      handleReviewData={handleReviewData}
-                      productID={selectedProduct}
+              {/* {console.log('from reviewList:', reviewList)} */}
+              {/* {console.log('from metaData:', metaData)} */}
+              {/* {console.log('selectedProduct:: ', selectedProduct)} */}
+              {/* {console.log('review CacheData:: ', reviewCache)} */}
+              {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
+              {/* {console.log('listSort:: ', listSort)}  */}
+
+              {reviewsReady === true && (
+                <div style={gridLayout}>
+                  <div style={ratingGrid}>
+                    <RatingBreakdown
                       metaData={metaData}
+                      sortByStar={sortByStar}
+                      starSort={starSort}
+                      clearStarFilter={clearStarFilter}
                     />
-                    <br />
+                  </div>
+                  <div style={productStyle}>
+                    <ProductBreakdown metaData={metaData} />
+                  </div>
+                  {writeReviewModal && (
+                    <div
+                      style={modalStyle}
+                      aria-hidden="true"
+                      role="button"
+                      onClick={exitWriteReviewClick}
+                    >
+                      <div
+                        style={innerModalStyle}
+                        aria-hidden="true"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <WriteReview
+                          handleReviewData={handleReviewData}
+                          productID={selectedProduct}
+                          metaData={metaData}
+                        />
+                        <br />
+                      </div>
+                    </div>
+                  )}
+                  <div style={sortOptionsStyle}>
+                    <SortOptions metaData={metaData} listSort={listSort} listSortChange={listSortChange} />
+                  </div>
+                  <div style={reviewListStyle}>
+                    <ReviewList
+                      reviewCache={reviewCache}
+                      reviewCacheState={reviewCacheState}
+                      starSort={starSort}
+                      reviewList={reviewList}
+                      reviewEnd={reviewEnd}
+                      // handlePut={handlePut}
+                    />
+                  </div>
+                  <div style={reviewButtonsStyle}>
+                    <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
+                      {reviewList.results.length > 2 && hideMoreReviews === false && (
+                        <button className="moreReviews" type="button" style={moreReviewsBtn} onClick={moreReviewsClick}>
+                      MORE REVIEWS
+                        </button>
+                      )}
+                      <button id="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
+                    ADD A REVIEW +
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
-              <div style={sortOptionsStyle}>
-                <SortOptions metaData={metaData} listSort={listSort} listSortChange={listSortChange} />
-              </div>
-              <div style={reviewListStyle}>
-                <ReviewList
-                  reviewCache={reviewCache}
-                  reviewCacheState={reviewCacheState}
-                  starSort={starSort}
-                  reviewList={reviewList}
-                  reviewEnd={reviewEnd}
-                  // handlePut={handlePut}
-                />
-              </div>
-              <div style={reviewButtonsStyle}>
-                <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
-                  {reviewList.results.length > 2 && hideMoreReviews === false && (
-                    <button className="moreReviews" type="button" style={moreReviewsBtn} onClick={moreReviewsClick}>
-                      MORE REVIEWS
-                    </button>
-                  )}
-                  <button id="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
-                    ADD A REVIEW +
-                  </button>
-                </div>
-              </div>
             </div>
-          )}
-        </div>
-      ) : <p> Ratings & Reviews: Loading...</p>
-      }
+
+          </>
+        ) : <p> Ratings &#38; Reviews: Loading...</p> }
+      </div>
     </Fragment>
   );
 }
-
 
 //
 // return (

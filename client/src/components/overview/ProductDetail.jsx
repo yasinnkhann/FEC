@@ -13,7 +13,10 @@ const Category = styled.h3`
 const Description = styled.p`
   padding: 0.5rem;
 `;
-
+//silver #adadad
+//blue #849a9a
+//dark #072636
+//red #3c0225
 export default function ProductDetail({ product }) {
   return (
     <div>

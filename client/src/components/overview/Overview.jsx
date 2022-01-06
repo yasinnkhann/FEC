@@ -14,6 +14,8 @@ import Icons from './Icons.jsx';
 const Grid = styled.div`
   display: flex;
   justify-content: space-between;
+  max-height: 700px;
+  padding: 1rem;
 `;
 const Layout = styled.div `
   max-width: 1200px;
@@ -26,15 +28,34 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
+  padding: 1rem;
+  /* background-color: #3C0225; */
 `;
-const Slogan = styled.h3``;
-const Description = styled.p``;
+//darkgreen #a3a380
+//olive #d6ce93
+//light #efebce
+//peach #d8a48f
+//darkerpeach #bb8588
+//dark #1F0318
+//light #E5F2C9
+const Slogan = styled.h3`
+font-size: x-large;
+`;
+const Description = styled.p`
+font-style: italic;
+`;
+
 const InfoBox = styled.div `
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  /* background-color: #3C0225; */
+  padding: 1rem;
 `;
-
+//red = #3C0225
+//silver = #ADADAD
+//lightblue #849A9A
+//darkblue #072636
 export default function Overview() {
   const { productsContext } = useContext(AppContext);
   const [products, setProducts] = productsContext;

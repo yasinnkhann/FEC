@@ -60,8 +60,9 @@ export default function StarRating({ product }) {
 }
 
 const Stars = styled.div`
-  display: inline-block;
+  display: flex;
   font-family: Times;
+  align-items: flex-start;
   margin-left: 4rem;
   padding-top: 1rem;
 `;
