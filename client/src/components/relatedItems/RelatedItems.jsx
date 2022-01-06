@@ -16,7 +16,8 @@ import Carousel from './Carousel.jsx';
 import dummyUser from './dummyUser.js';
 
 // Variables
-const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
+// const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
+const URL = 'http://localhost:3000/api';
 
 // RELATED ITEMS
 export default function RelatedItems() {
@@ -38,19 +39,19 @@ export default function RelatedItems() {
       const getRelatedProductIds = async () => {
         try {
           const res = await axios.get(
-            // 'http://localhost:3000/products/related',
-            `${URL}products/${selectedProduct.id}/related`,
+            `${URL}/products/related`,
+            // `${URL}products/${selectedProduct.id}/related`,
             {
               params: {
                 product_id: selectedProduct.id
               },
-              headers: {
-                Authorization: `${TOKEN}`,
-              },
+              // headers: {
+              //   Authorization: `${TOKEN}`,
+              // },
             }
           );
           setIsLoaded(true);
-
+          console.log(res);
           let noDupedIds = Array.from(new Set(res.data));
           setRelatedProductIds(noDupedIds);
         } catch (err) {

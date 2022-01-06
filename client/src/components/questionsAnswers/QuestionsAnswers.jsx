@@ -6,6 +6,8 @@ import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';
 import Search from './Search.jsx';
 
+const serverURL = 'http://localhost:3000/api';
+
 export default function QuestionsAnswers() {
   // STATE
   const [questionsData, setQuestionsData] = useState([]);
@@ -40,7 +42,7 @@ export default function QuestionsAnswers() {
     const getQs = async () => {
       try {
         const res = await axios.get(
-          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
+          `${serverURL}/qa/questions`,
           {
             params: {
               product_id: selectedProduct?.id,
@@ -49,7 +51,7 @@ export default function QuestionsAnswers() {
               count: 20,
             },
             headers: {
-              Authorization: `${TOKEN}`,
+              'Content-Type': 'application/json',
             },
           }
         );

@@ -17,6 +17,8 @@ import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
 
+const URL = 'http://localhost:3000/api';
+
 // CARD
 export default function CarouselCard({ product, name }) {
   // CONTEXT
@@ -38,14 +40,17 @@ export default function CarouselCard({ product, name }) {
       // API HANDLER
       const getProductStyle = async (id) => {
         await axios
-          .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
-            params: {
-              product_id: id,
-            },
-            headers: {
-              Authorization: `${TOKEN}`,
-            },
-          })
+          .get(
+            `${URL}/products/styles`,
+            {
+              params: {
+                product_id: id,
+              },
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          )
           .then(res => {
             setStyles(res.data);
             if (res?.data.results[0].salePrice) {

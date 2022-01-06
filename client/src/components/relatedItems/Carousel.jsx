@@ -17,6 +17,8 @@ import useWindowSize from './useWindowSize.js';
 import ScrollArrow from './ScrollArrows.jsx';
 import Card from './Card.jsx';
 
+const URL = 'http://localhost:3000/api';
+
 /**
  * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT
  */
@@ -48,14 +50,16 @@ export default function Carousel({ name, relatedProductIds }) {
       // Gets one product's info based on id
       const updateRelatedProducts = async (id) => {
         await axios
-          .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
-            params: {
-              product_id: id,
-            },
-            headers: {
-              Authorization: `${TOKEN}`,
-            },
-          })
+          .get(
+            `${URL}/products/product`, {
+              params: {
+                product_id: id,
+              },
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          )
           .then((productData) => {
             setRelatedProducts(state => [...state, productData]);
           })

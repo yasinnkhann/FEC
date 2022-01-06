@@ -11,6 +11,8 @@ import StyleSelector from './StyleSelector.jsx';
 import StylesContext from './StylesContext.js';
 import Icons from './Icons.jsx';
 
+const URL = 'http://localhost:3000/api';
+
 const Grid = styled.div`
   display: flex;
   justify-content: space-between;
@@ -49,12 +51,12 @@ export default function Overview() {
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const res = await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
+        const res = await axios.get(`${URL}/reviews/meta`, {
           params: {
             product_id: selectedProduct.id,
           },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         });
         setreviewsData(res.data);
@@ -68,12 +70,12 @@ export default function Overview() {
   useEffect(() => {
     const getStyles = async () => {
       try {
-        const res = await axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${selectedProduct.id}/styles`, {
+        const res = await axios.get(`${URL}/products/styles`, {
           params: {
             product_id: selectedProduct.id,
           },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         });
         setstylesData(res.data);

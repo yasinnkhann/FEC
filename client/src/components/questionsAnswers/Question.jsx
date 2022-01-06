@@ -6,6 +6,8 @@ import QuestionsContext from './QuestionsContext.js';
 import { TOKEN } from '../../config.js';
 import Answer from './Answer.jsx';
 
+const serverURL = 'http://localhost:3000/api';
+
 export default function Question({ questionObj }) {
   // CONTEXT
   const { questionsData, setQuestionsData } = useContext(QuestionsContext);
@@ -26,11 +28,14 @@ export default function Question({ questionObj }) {
     try {
       const body = {};
       const res = await axios.put(
-        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionObj.question_id}/helpful`,
+        `${serverURL}/qa/question/helpful`,
         body,
         {
+          params: {
+            question_id: questionObj.question_id,
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -65,11 +70,14 @@ export default function Question({ questionObj }) {
     const body = {};
     try {
       const res = await axios.put(
-        `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionObj.question_id}/report`,
+        `${serverURL}/qa/question/report`,
         body,
         {
+          params: {
+            question_id: questionObj.question_id,
+          },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         }
       );

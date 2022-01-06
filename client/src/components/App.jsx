@@ -10,6 +10,8 @@ import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import {createGlobalStyle} from 'styled-components';
 
+const URL = 'http://localhost:3000/api';
+
 const GlobalStyles = createGlobalStyle `
  @import url('https://fonts.googleapis.com/css2?family=Open+Sans');
   body {
@@ -27,22 +29,8 @@ export default function App() {
         try {
 
           // DO NOT REMOVE -> WILL BE OUR NEW MAIN API CALL
-          // const res = await axios.get(
-          //   'http://localhost:3000/api/products'
-          // );
-
-          // LEAVING FOR NOW SO AS TO NOT BREAK EVERYTHING LOL
           const res = await axios.get(
-            'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
-            {
-              params: {
-                page: 1,
-                count: 200,
-              },
-              headers: {
-                Authorization: `${TOKEN}`,
-              },
-            }
+            `${URL}/products`
           );
 
           setProducts(res.data);
@@ -74,10 +62,14 @@ export default function App() {
           time: date,
         };
         const res = await axios.post(
-          'https://127.0.0.1:3000/interactions',
-          body
+          `${URL}/interactions`,
+          body,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          },
         );
-        // console.log(res);
       } catch (err) {
         console.error(err);
       }

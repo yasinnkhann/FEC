@@ -42,8 +42,38 @@ module.exports = {
   },
   getProductStyles: async function(req, res) {
     const { product_id } = req.query;
-    // try {
-    //   const response = await axios.g
-    // }
+    try {
+      const response = await axios.get(
+        `${URL}/products/${product_id}/styles`, {
+          params: {
+            product_id: product_id,
+          },
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
+      );
+      res.status(200).json(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  getProductInfo: async function(req, res) {
+    const { product_id } = req.query;
+    try {
+      const response = await axios.get(
+        `${URL}/products/${product_id}`, {
+          params: {
+            product_id: product_id,
+          },
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
+      );
+      res.status(200).json(response.data);
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
