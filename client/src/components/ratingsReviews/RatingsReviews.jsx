@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext, Fragment } from 'react';
+import React, { useState, useEffect, useContext, Fragment} from 'react';
+// import React, { useState, useEffect, useContext, Fragment, Suspense, lazy } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -11,8 +12,12 @@ import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
 
-// import metaDummy from './metaDummy.jsx';
-// import dummyDataReviews from './dummyDataReviews.jsx';
+
+// const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
+// const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
+// const RatingBreakdown = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
+// const ProductBreakdown = React.lazy(() => import('./productBreakdown/ProductBreakdown.jsx'));
+// const SortOptions = React.lazy(() => import('./sortOptions/SortOption.jsx'));
 
 const gridLayout = {
   display: 'grid',
@@ -43,9 +48,6 @@ const mainDiv = {
   color: '#fdf0d5',
   fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
-  // overflowScrolling: 'touch',
-  // WebkitOverflowScrolling: 'touch',
-  // '::WebkitScrollbar': { display: 'none' },
 };
 
 const ratingGrid = {
@@ -93,16 +95,6 @@ const addReviewBtnStyle = {
   backgroundColor: '#B1A9AC',
   color: '#38062B'
 };
-
-// const noReviewsAddBtn = {
-//   border: '1px solid grey',
-//   boxShadow: '2px 2px 4px grey',
-//   backgroundColor: 'white',
-//   padding: '10px',
-//   width: '300px',
-//   margin: 'auto',
-//   gridRow: '2',
-// };
 
 const moreReviewsBtn = {
   // border: '1px solid grey',
@@ -208,19 +200,24 @@ export default function RatingsReviews() {
   useEffect(() => {
     setTimeout(() => {
       setLoaded(true);
-    }, 400);
+    }, 600);
     // get review api data
     const getReviewApi = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/?count=1000&product_id=${selectedProduct.id}`,
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/',
           {
+            params: {
+              count: 1000,
+              product_id: selectedProduct.id
+            },
+
             headers: {
               Authorization: `${TOKEN}`,
             },
           }
+
         );
-        // console.log(res.data.results);
         setReviewList(res.data);
         setReviewReady(true);
 
@@ -236,8 +233,13 @@ export default function RatingsReviews() {
     const getMetaApi = async () => {
       try {
         const res = await axios.get(
-          `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/?count=50&product_id=${selectedProduct.id}`,
+          'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta',
           {
+            params: {
+              count: 50,
+              product_id: selectedProduct.id
+            },
+
             headers: {
               Authorization: `${TOKEN}`,
             },
@@ -280,66 +282,32 @@ export default function RatingsReviews() {
     setStarSort([]);
   };
 
-  const handleReviewData = async (e) => {
+  const handleReviewData = async (reviewData) => {
     try {
-      const body = {
-        // product_id: selectedProduct,
-        // rating: reviewList.results.rating,
-        // summary: reviewList.results.summary,
-        // body: reviewList.results.body,
-        // recommend: reviewList.results.recommend,
-        // name: reviewList.results.reviewer_name,
-        // email: '',
-        // photos: [],
-        // characteristics: metaData.characteristics
-
-      };
+      // console.log(reviewData);
       const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
-        body,
+        reviewData,
         {
           headers: {
             Authorization: `${TOKEN}`,
           }
         }
       );
-      console.log('Add Review POST Res:: ', res);
+      console.log('Add Review POST Success!! :: ', res);
     } catch (err) {
       console.log('err on review POST:: ', err);
     }
   };
 
-  // const handleReviewData = (reviewData) => {
-  //   axios
-  //     .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', reviewData)
-  //     .then((results) => {
-  //       console.log(results);
-  //     })
-  //     .catch((err) => {
-  //       console.log('err on review POST', err);
-  //     });
-  // };
-
-  // const handlePut = (review_id, type) => {
-  //   axios
-  //     .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${review_id}/${type}`)
-  //     .then((results) => {})
-  //     .catch((err) => {
-  //       console.log(err.data);
-  //     });
-  // };
-
   const moreReviewsClick = () => {
     const newEnd = reviewEnd + 2;
-    if (newEnd > reviewList.results.length) {
+    if (newEnd > reviewList.results.length - 1) {
       setHideMoreReviews(true);
-    }
-    if (newEnd === reviewList.results.length - 1 || newEnd === reviewList.results.length) {
-      setReviewList(reviewCache[reviewCacheState].results.slice(0, newEnd + 20));
-      setReviewEnd(newEnd);
     } else {
       setReviewEnd(newEnd);
     }
   };
+
   const exitWriteReviewClick = () => {
     setWriteReviewModal(false);
   };
@@ -361,7 +329,7 @@ export default function RatingsReviews() {
           {writeReviewModal && (
             <div style={modalStyle} aria-hidden="true" role="button" onClick={exitWriteReviewClick}>
               <div style={innerModalStyle} aria-hidden="true" onClick={(e) => e.stopPropagation()}>
-                <WriteReview handleReviewData={handleReviewData} productID={selectedProduct} metaData={metaData} />
+                <WriteReview handleReviewData={handleReviewData} productID={selectedProduct.id} metaData={metaData} />
                 <br />
               </div>
             </div>
@@ -413,7 +381,7 @@ export default function RatingsReviews() {
                       >
                         <WriteReview
                           handleReviewData={handleReviewData}
-                          productID={selectedProduct}
+                          productID={selectedProduct.id}
                           metaData={metaData}
                         />
                         <br />

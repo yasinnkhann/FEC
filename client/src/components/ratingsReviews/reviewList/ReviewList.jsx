@@ -1,5 +1,4 @@
 import React from 'react';
-// import styled from 'styled-components';
 import ReviewListEntry from './ReviewListEntry.jsx';
 
 const gridLayout = {
@@ -9,7 +8,6 @@ const gridLayout = {
 };
 
 const ReviewList = ({ reviewList, reviewEnd, handlePut, starSort, reviewCacheState, reviewCache }) => {
-  // console.log(reviewList);
   return (
     <div>
       {starSort.length === 0 && (
