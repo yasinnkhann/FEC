@@ -243,20 +243,22 @@ export default function RatingsReviews() {
   const handleReviewData = async (e) => {
     try {
       const body = {
-        // product_id: selectedProduct,
-        // rating: reviewList.results.rating,
-        // summary: reviewList.results.summary,
-        // body: reviewList.results.body,
-        // recommend: reviewList.results.recommend,
-        // name: reviewList.results.reviewer_name,
-        // email: '',
-        // photos: [],
-        // characteristics: metaData.characteristics
-
+        'product_id': selectedProduct.id,
+        'rating': 2,
+        'summary': 'RFP 57 Sleekslinky team 6  HD KB YK EH are awesome!!',
+        'body': 'RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team. RFP 57 Sleekslinky team 6 is the best team.',
+        'recommend': true,
+        'name': 'HDCooler',
+        'email': 'sfewfewffefef9@gmail.com',
+        'photos': ['https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.55-PM.png', 'https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.49-PM.png', 'https://www.linkpicture.com/q/Screen-Shot-2021-12-31-at-4.37.31-PM.png'],
+        'characteristics': {'133344': 5}
       };
       const res = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
         body,
         {
+          // params: {
+          //   product_id: selectedProduct.id,
+          // },
           headers: {
             Authorization: `${TOKEN}`,
           }
@@ -270,16 +272,13 @@ export default function RatingsReviews() {
 
   const moreReviewsClick = () => {
     const newEnd = reviewEnd + 2;
-    if (newEnd > reviewList.results.length) {
+    if (newEnd > reviewList.results.length - 1) {
       setHideMoreReviews(true);
-    }
-    if (newEnd === reviewList.results.length - 1 || newEnd === reviewList.results.length) {
-      setReviewList(reviewCache[reviewCacheState].results.slice(0, newEnd + 20));
-      setReviewEnd(newEnd);
     } else {
       setReviewEnd(newEnd);
     }
   };
+
   const exitWriteReviewClick = () => {
     setWriteReviewModal(false);
   };
