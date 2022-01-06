@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
-export default function Search(props) {
+export default function Search({ handleChange }) {
   // REFS
   const searchRef = useRef(null);
 
@@ -12,7 +12,8 @@ export default function Search(props) {
         type='text'
         ref={searchRef}
         placeholder='Have a question? Search for answers…'
-        onChange={() => props.handleChange(searchRef.current.value)}
+        onChange={() => handleChange(searchRef.current.value)}
+        data-testid='searchBar'
       />
       <MagnifyGlassIcon />
     </Container>

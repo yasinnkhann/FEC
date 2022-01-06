@@ -7,7 +7,8 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "watch": "webpack --config ./webpack.config.js --mode development -w",
-    "test": "echo \"Error: no test specified\"",
+    "test": "jest --env=jsdom",
+    "coverage": "jest --coverage",
     "build": "webpack --mode production"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
     "lodash": "^4.17.21",
     "nodemon": "^2.0.15",
     "react-moment": "^1.1.1",
+    "regenerator-runtime": "^0.13.9",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.0"

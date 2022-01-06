@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1641423652031" clover="3.2.0">
+  <project timestamp="1641423652031" name="All files">
+    <metrics statements="6" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1" elements="8" coveredelements="6" complexity="0" loc="6" ncloc="6" packages="1" files="1" classes="1"/>
+    <file name="Search.jsx" path="/Users/YasinKhan/hr/FEC/client/src/components/questionsAnswers/Search.jsx">
+      <metrics statements="6" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="32" count="1" type="stmt"/>
+      <line num="42" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
