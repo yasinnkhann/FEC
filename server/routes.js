@@ -23,6 +23,6 @@ router.get('/cart', controller.cart.getCart);
 router.post('/cart/addToCart', controller.cart.addToCart);
 
 // Interations
-// router.post('/interactions', controller.interactions.get);
+router.post('/interactions', controller.interactions.logInteraction);
 
 module.exports = router;
