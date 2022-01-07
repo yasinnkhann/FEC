@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import StylesContext from './StylesContext.js';
 import styled from 'styled-components';
 import { Photo } from '@material-ui/icons';
-import { TOKEN } from '../../config.js';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 

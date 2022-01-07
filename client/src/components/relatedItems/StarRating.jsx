@@ -4,8 +4,7 @@ import Rating from '@material-ui/lab/Rating';
 import styled from 'styled-components';
 import axios from 'axios';
 
-// API imports
-import { TOKEN } from '../../config.js';
+const URL = 'http://localhost:3000/api'
 
 // STAR RATING
 export default function StarRating({ product }) {
@@ -15,12 +14,12 @@ export default function StarRating({ product }) {
 
     const getReviewMetaData = async (id) => {
       await axios
-        .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
+        .get(`${URL}/reviews/meta`, {
           params: {
             product_id: id,
           },
           headers: {
-            Authorization: `${TOKEN}`,
+            'Content-Type': 'application/json',
           },
         })
         .then((res) => res.data.ratings)
