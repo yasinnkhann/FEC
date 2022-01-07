@@ -3,7 +3,6 @@ import AppContext from '../../AppContext.js';
 import styled from 'styled-components';
 import ProductDetail from './ProductDetail.jsx';
 import ImageGallery from './ImageGallery.jsx';
-import { TOKEN } from '../../config.js';
 import axios from 'axios';
 import ReviewsContext from './ReviewsContext.js';
 import ReviewsStars from './ReviewsStars.jsx';

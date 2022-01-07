@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import AddAnswer from './AddAnswer.jsx';
 import QuestionsContext from './QuestionsContext.js';
-import { TOKEN } from '../../config.js';
 import Answer from './Answer.jsx';
 
 const serverURL = 'http://localhost:3000/api';

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
-import { TOKEN } from '../../config.js';
 
 const serverURL = 'http://localhost:3000/api';
 

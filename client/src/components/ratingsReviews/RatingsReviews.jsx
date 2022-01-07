@@ -4,7 +4,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import AppContext from '../../AppContext.js';
-import { TOKEN } from '../../config.js';
 
 import ReviewList from './reviewList/ReviewList.jsx';
 import WriteReview from './writeReviews/WriteReview.jsx';

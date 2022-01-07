@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { TOKEN } from '../../config.js';
 import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';

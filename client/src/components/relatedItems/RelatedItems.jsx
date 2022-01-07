@@ -6,9 +6,6 @@ import axios from 'axios';
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
 
-// API imports
-import { TOKEN } from '../../config.js';
-
 // Component imports
 import Carousel from './Carousel.jsx';
 
