@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { cloudinaryInfo } from '../../config.js';
 import Loader from 'react-loader-spinner';
 
-const serverURL = 'http://localhost:3000/api';
+const serverURL = 'http://34.223.4.224:80/api';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT

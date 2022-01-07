@@ -15,7 +15,7 @@ import styled from 'styled-components';
 
 // Variables
 // const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
-const URL = 'http://localhost:3000/api';
+const URL = 'http://34.223.4.224:80/api';
 
 // RELATED ITEMS
 export default function RelatedItems() {
@@ -28,7 +28,7 @@ export default function RelatedItems() {
   const [relatedProductIds, setRelatedProductIds] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(dummyUser.name);
-  const [userOutfit, setUserOutfit] = useState(dummyUser.outfit);
+  const [userOutfit, setUserOutfit] = useState([]);
 
   // HOOKS
   // API HANDLER

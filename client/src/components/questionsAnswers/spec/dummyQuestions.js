@@ -408,8 +408,13 @@ export const questions = [
             answerer_name: 'nope',
             helpfulness: 0,
             photos: [
+<<<<<<< HEAD:client/src/components/questionsAnswers/spec/dummyQuestions.js
               'blob:http://54.183.142.178:80/4e1b881f-b88f-4978-a72e-06d4fbebd436',
               'blob:http://54.183.142.178:80/4e582559-8cc0-4adc-8f04-10beef247395',
+=======
+              'blob:http://34.223.4.224:80/4e1b881f-b88f-4978-a72e-06d4fbebd436',
+              'blob:http://34.223.4.224:80/4e582559-8cc0-4adc-8f04-10beef247395',
+>>>>>>> main:client/src/components/questionsAnswers/dummyQuestions.js
             ],
           },
         },

@@ -6,7 +6,7 @@ import Questions from './Questions.jsx';
 import Search from './Search.jsx';
 import styled from 'styled-components';
 
-const serverURL = 'http://localhost:3000/api';
+const serverURL = 'http://34.223.4.224:80/api';
 
 export default function QuestionsAnswers() {
   // STATE
