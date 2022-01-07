@@ -215,6 +215,9 @@ export default function RatingsReviews() {
               count: 1000,
               product_id: selectedProduct.id,
             },
+            headers: {
+              'Content-Type': 'application/json',
+            },
           }
         );
         setReviewList(res.data);
@@ -237,6 +240,9 @@ export default function RatingsReviews() {
             params: {
               count: 50,
               product_id: selectedProduct.id,
+            },
+            headers: {
+              'Content-Type': 'application/json',
             },
           }
         );
@@ -422,7 +428,6 @@ export default function RatingsReviews() {
   );
 }
 
-//
 // return (
 //   <Fragment>
 //     {isLoaded ? (
