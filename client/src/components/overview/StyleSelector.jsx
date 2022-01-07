@@ -6,7 +6,7 @@ import { TOKEN } from '../../config.js';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 
-const URL = 'http://localhost:3000/api'
+const URL = 'http://localhost:3000/api';
 
 const Checked = styled.div`
   position: absolute;
@@ -33,6 +33,7 @@ const StylePic = styled.img`
 
 const StyleName = styled.h3`
   font-family: 'Lobster Two';
+  color: #38062B;
 `;
 const SelectedStyle = styled.h3`
 
