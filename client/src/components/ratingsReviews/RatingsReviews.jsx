@@ -96,7 +96,8 @@ const addReviewBtnStyle = {
   boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
   backgroundColor: '#B1A9AC',
-  color: '#38062B'
+  color: '#38062B',
+  marginBottom: '30px'
 };
 
 const moreReviewsBtn = {
@@ -117,7 +118,8 @@ const moreReviewsBtn = {
   boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
   backgroundColor: '#B1A9AC',
-  color: '#38062B'
+  color: '#38062B',
+  marginBottom: '30px'
 };
 
 const modalStyle = {
