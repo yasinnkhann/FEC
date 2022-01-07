@@ -215,7 +215,7 @@ export default function RatingsReviews() {
               product_id: selectedProduct.id,
             },
             headers: {
-              Authorization: `${TOKEN}`,
+              'Content-Type': 'application/json',
             },
           }
 
@@ -242,7 +242,7 @@ export default function RatingsReviews() {
               product_id: selectedProduct.id,
             },
             headers: {
-              Authorization: `${TOKEN}`,
+              'Content-Type': 'application/json',
             },
           }
         );
@@ -285,13 +285,8 @@ export default function RatingsReviews() {
 
   const handleReviewData = async (reviewData) => {
     try {
-      const res = await axios.post(
-        `${URL}/reviews`,
-        reviewData,
+      const res = await axios.post(`${URL}/reviews`, reviewData,
         {
-          params: {
-            product_id: selectedProduct.id
-          },
           headers: {
             'Content-Type': 'application/json',
           }

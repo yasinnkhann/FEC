@@ -7,3 +7,4 @@ server/controllers/config.js
 .DS_Store
 package-lock.json
 coverage
+FEC-Key.pem
