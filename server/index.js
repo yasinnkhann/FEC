@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 const URL = require('./controllers/url.js');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 
 app.use(express.json());

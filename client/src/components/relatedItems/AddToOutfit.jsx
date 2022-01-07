@@ -20,17 +20,21 @@ export default function AddToOutfit() {
   const [userOutfit, setUserOutfit] = outfitContext;
 
   const addToOutfit = (productToAdd) => {
-    userOutfit.forEach(piece => {
-      if (piece.id === productToAdd.id) {
-        console.log('Same item!!', piece.id, productToAdd.id);
-        return alert('Cannot add item already in outfit');
-      } else {
-        console.log('Different items!', piece.id, productToAdd.id);
-        let newOutfit = [...userOutfit];
-        newOutfit.push(productToAdd);
-        setUserOutfit([...new Set(newOutfit)]);
-      }
-    });
+    if (userOutfit.length === 0) {
+      setUserOutfit([productToAdd]);
+    } else {
+      userOutfit.forEach(piece => {
+        if (piece.id === productToAdd.id) {
+          console.log('Same item!!', piece.id, productToAdd.id);
+          return alert('Cannot add item already in outfit');
+        } else {
+          console.log('Different items!', piece.id, productToAdd.id);
+          let newOutfit = [...userOutfit];
+          newOutfit.push(productToAdd);
+          setUserOutfit([...new Set(newOutfit)]);
+        }
+      });
+    }
   };
 
   // JSX
