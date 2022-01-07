@@ -8,7 +8,7 @@ import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
-const URL = 'http://localhost:3000/api';
+const URL = 'http://34.223.4.224:3000/api';
 
 const Body = styled.div `
   font-family: 'Open Sans';

@@ -4,7 +4,7 @@ import Rating from '@material-ui/lab/Rating';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const URL = 'http://localhost:3000/api'
+const URL = 'http://34.223.4.224:3000/api'
 
 // STAR RATING
 export default function StarRating({ product }) {
