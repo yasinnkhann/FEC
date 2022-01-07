@@ -215,12 +215,9 @@ export default function RatingsReviews() {
               count: 1000,
               product_id: selectedProduct.id,
             },
-<<<<<<< HEAD
             headers: {
               'Content-Type': 'application/json',
             },
-=======
->>>>>>> 8d9e27b45c45e93845a7abf17cb82720a7224293
           }
         );
         setReviewList(res.data);
@@ -244,12 +241,9 @@ export default function RatingsReviews() {
               count: 50,
               product_id: selectedProduct.id,
             },
-<<<<<<< HEAD
             headers: {
               'Content-Type': 'application/json',
             },
-=======
->>>>>>> 8d9e27b45c45e93845a7abf17cb82720a7224293
           }
         );
         // console.log(res.data);
