@@ -37,6 +37,7 @@ font-size: large;
 `;
 const Description = styled.p`
 font-style: italic;
+max-width: 600px;
 `;
 
 const InfoBox = styled.div `
