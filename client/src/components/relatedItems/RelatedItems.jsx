@@ -28,7 +28,7 @@ export default function RelatedItems() {
   const [relatedProductIds, setRelatedProductIds] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(dummyUser.name);
-  const [userOutfit, setUserOutfit] = useState(dummyUser.outfit);
+  const [userOutfit, setUserOutfit] = useState([]);
 
   // HOOKS
   // API HANDLER
