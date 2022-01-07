@@ -14,8 +14,7 @@ import dummyUser from './dummyUser.js';
 import styled from 'styled-components';
 
 // Variables
-// const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
-const URL = 'http://34.223.4.224:80/api';
+import serverURL from '../../config.js';
 
 // RELATED ITEMS
 export default function RelatedItems() {
@@ -36,7 +35,7 @@ export default function RelatedItems() {
       const getRelatedProductIds = async () => {
         try {
           const res = await axios.get(
-            `${URL}/products/related`,
+            `${serverURL}/products/related`,
             {
               params: {
                 product_id: selectedProduct.id

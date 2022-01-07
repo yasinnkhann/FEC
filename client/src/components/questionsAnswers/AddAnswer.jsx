@@ -7,8 +7,7 @@ import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
 import { cloudinaryInfo } from '../../config.js';
 import Loader from 'react-loader-spinner';
-
-const serverURL = 'http://34.223.4.224:80/api';
+import serverURL from '../../config.js';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT

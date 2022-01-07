@@ -5,8 +5,7 @@ import QuestionsContext from './QuestionsContext.js';
 import Questions from './Questions.jsx';
 import Search from './Search.jsx';
 import styled from 'styled-components';
-
-const serverURL = 'http://34.223.4.224:80/api';
+import serverURL from '../../config.js';
 
 export default function QuestionsAnswers() {
   // STATE

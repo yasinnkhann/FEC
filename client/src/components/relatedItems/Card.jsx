@@ -13,8 +13,7 @@ import AddToOutfit from './AddToOutfit.jsx';
 import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
-
-const URL = 'http://34.223.4.224:80/api';
+import serverURL from '../../config.js';
 
 // CARD
 export default function CarouselCard({ product, name }) {
@@ -36,7 +35,7 @@ export default function CarouselCard({ product, name }) {
       const getProductStyle = async (id) => {
         await axios
           .get(
-            `${URL}/products/styles`,
+            `${serverURL}/products/styles`,
             {
               params: {
                 product_id: id,
