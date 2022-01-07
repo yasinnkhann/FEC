@@ -65,6 +65,9 @@ export default function CarouselCard({ product, name }) {
   // EVENT HANDLERS
   const handleClick = (newSelectedProduct) => {
     setSelectedProduct(newSelectedProduct);
+    document.body.style.cursor = 'wait';
+    window.scrollTo(0, 0);
+    document.body.style.cursor = 'default';
   };
 
   // RENDER METHODS
