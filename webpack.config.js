@@ -1,7 +1,7 @@
 var path = require('path');
 var SRC_DIR = path.join(__dirname, '/client/src');
 var DIST_DIR = path.join(__dirname, '/client/dist');
-var webpack = require('webpack');
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
@@ -9,7 +9,7 @@ module.exports = {
     filename: '[name].bundle.js',
     path: DIST_DIR,
   },
-  devtool: 'eval-source-map',
+  mode: 'production',
   module: {
     rules: [
       {
@@ -20,7 +20,7 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
             plugins: [
-              '@babel/plugin-syntax-dynamic-import',
+              ['@babel/plugin-syntax-dynamic-import'],
               [
                   '@babel/plugin-transform-runtime',
                 {
