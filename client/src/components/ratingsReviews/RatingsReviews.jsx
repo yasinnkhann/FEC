@@ -208,62 +208,12 @@ export default function RatingsReviews() {
     // get review api data
     const getReviewApi = async () => {
       try {
-<<<<<<< HEAD
-        const res = await axios.get(`${URL}/reviews`, {
-          params: {
-            count: 1000,
-            product_id: selectedProduct.id,
-          },
-          headers: {
-            Authorization: `${TOKEN}`,
-          },
-        });
-=======
-        const res = await axios.get(
-          `${URL}/reviews`,
-          {
-            params: {
-              count: 1000,
-              product_id: selectedProduct.id,
-            },
-          }
-        );
->>>>>>> main
-        setReviewList(res.data);
-        setReviewReady(true);
-
-        if (res.data.results.length === 0) {
-          setNoReviews(true);
-        }
-        reviewCache.push(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    //get meta data
-    const getMetaApi = async () => {
-      try {
-<<<<<<< HEAD
         const res = await axios.get(`${URL}/reviews/meta`, {
           params: {
             count: 50,
             product_id: selectedProduct.id,
           },
-          headers: {
-            Authorization: `${TOKEN}`,
-          },
         });
-=======
-        const res = await axios.get(
-          `${URL}/reviews/meta`,
-          {
-            params: {
-              count: 50,
-              product_id: selectedProduct.id,
-            },
-          }
-        );
->>>>>>> main
         // console.log(res.data);
         setMetaData(res.data);
       } catch (err) {
