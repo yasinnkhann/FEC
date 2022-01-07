@@ -8,7 +8,7 @@ import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
-const URL = 'http://34.223.4.224:80/api';
+import serverURL from '../config.js';
 
 const Body = styled.div `
   font-family: 'Open Sans';
@@ -29,7 +29,7 @@ export default function App() {
         try {
 
           const res = await axios.get(
-            `${URL}/products`
+            `${serverURL}/products`
           );
 
           setProducts(res.data);
@@ -61,7 +61,7 @@ export default function App() {
           time: date,
         };
         const res = await axios.post(
-          `${URL}/interactions`,
+          `${serverURL}/interactions`,
           body,
           {
             headers: {
