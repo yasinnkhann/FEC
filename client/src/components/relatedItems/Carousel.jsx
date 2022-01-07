@@ -7,7 +7,6 @@ import axios from 'axios';
 import { isAtFinalIndex, isAtBeginningIndex, getMaxIndexBasedOnScreenSize } from './utils';
 
 // API imports
-import { TOKEN } from '../../config.js';
 
 // Context & Hooks imports
 import AppContext from '../../AppContext.js';
