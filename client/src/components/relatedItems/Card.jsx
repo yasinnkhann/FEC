@@ -64,7 +64,9 @@ export default function CarouselCard({ product, name }) {
 
   // EVENT HANDLERS
   const handleClick = (newSelectedProduct) => {
-    setSelectedProduct(newSelectedProduct);
+    if (newSelectedProduct.id !== selectedProduct.id) {
+      setSelectedProduct(newSelectedProduct);
+    }
   };
 
   // RENDER METHODS
