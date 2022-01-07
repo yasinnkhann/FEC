@@ -5,7 +5,7 @@ import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
-import { TOKEN, cloudinaryInfo } from '../../config.js';
+import { cloudinaryInfo } from '../../config.js';
 import Loader from 'react-loader-spinner';
 
 const serverURL = 'http://34.223.4.224:3000/api';
