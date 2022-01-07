@@ -2,9 +2,9 @@ Will update with Documentation
 
 **API REFERENCE**
 
-| Base URL                     |
-| ---------------------------- | --- |
-| `http://your_ip_here:80/api` |     |
+| Base URL                       |
+| ------------------------------ | --- |
+| `http://your_ip_here:3000/api` |     |
 
 **Products**
 Products represent all products available to Project Catwalk

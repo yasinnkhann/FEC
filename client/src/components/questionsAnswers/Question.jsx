@@ -5,7 +5,7 @@ import AddAnswer from './AddAnswer.jsx';
 import QuestionsContext from './QuestionsContext.js';
 import Answer from './Answer.jsx';
 
-const serverURL = 'http://54.183.142.178:80/api';
+const serverURL = 'http://localhost:3000/api';
 
 export default function Question({ questionObj }) {
   // CONTEXT

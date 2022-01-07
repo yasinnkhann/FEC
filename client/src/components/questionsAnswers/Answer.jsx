@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Moment from 'react-moment';
 import QuestionsContext from './QuestionsContext.js';
 
-const serverURL = 'http://54.183.142.178:80/api';
+const serverURL = 'http://localhost:3000/api';
 
 export default function Answer({ questionObj }) {
   // CONTEXT

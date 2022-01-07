@@ -5,10 +5,10 @@ import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
-import { TOKEN, cloudinaryInfo } from '../../config.js';
+import { cloudinaryInfo } from '../../config.js';
 import Loader from 'react-loader-spinner';
 
-const serverURL = 'http://54.183.142.178:80/api';
+const serverURL = 'http://localhost:3000/api';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
@@ -26,11 +26,6 @@ export default function AddAnswer({ closeModal, question }) {
     yourEmail: '',
   });
   const [isPostReqSubmitted, setIsPostReqSubmitted] = useState(false);
-
-  // VARIABLES
-  // const specifiedProduct = products.filter(
-  //   product => Number(product.id) === Number(questionsData.product_id)
-  // );
 
   // METHODS
   useEffect(() => {
@@ -115,9 +110,6 @@ export default function AddAnswer({ closeModal, question }) {
         <UpperContent>
           <Content onSubmit={handleSubmit}>
             <h2>Submit your Answer</h2>
-            {/* <h4>
-              {specifiedProduct[0].name}: {question.question_body}
-            </h4> */}
             <h4>
               {selectedProduct.name}: {question.question_body}
             </h4>

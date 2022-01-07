@@ -10,7 +10,7 @@ import StyleSelector from './StyleSelector.jsx';
 import StylesContext from './StylesContext.js';
 import Icons from './Icons.jsx';
 
-const URL = 'http://54.183.142.178:80/api';
+const URL = 'http://localhost:3000/api';
 
 const Grid = styled.div`
   display: flex;

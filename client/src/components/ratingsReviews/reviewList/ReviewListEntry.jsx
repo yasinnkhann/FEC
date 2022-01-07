@@ -4,7 +4,7 @@ import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
 
-const URL = 'http://54.183.142.178:80/api';
+const URL = 'http://localhost:3000/api';
 
 const Stars = styled.div`
   display: inline-block;

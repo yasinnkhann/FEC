@@ -5,7 +5,7 @@ import { Photo } from '@material-ui/icons';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 
-const URL = 'http://54.183.142.178:80/api';
+const URL = 'http://localhost:3000/api';
 
 const Checked = styled.div`
   position: absolute;
