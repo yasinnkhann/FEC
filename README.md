@@ -13,6 +13,8 @@
 3. Run server with:
    > `yarn run start`
 
+4. Connect with:
+   >`http://34.223.4.224/`
 ---
 
 ## Contributors
