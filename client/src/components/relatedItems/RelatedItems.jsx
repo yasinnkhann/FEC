@@ -14,7 +14,7 @@ import dummyUser from './dummyUser.js';
 import styled from 'styled-components';
 
 // Variables
-import serverURL from '../../config.js';
+import {serverURL} from '../../config.js';
 
 // RELATED ITEMS
 export default function RelatedItems() {

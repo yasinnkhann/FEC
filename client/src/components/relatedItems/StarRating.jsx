@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import styled from 'styled-components';
 import axios from 'axios';
-import serverURL from '../../config.js';
+import {serverURL} from '../../config.js';
 
 // STAR RATING
 export default function StarRating({ product }) {

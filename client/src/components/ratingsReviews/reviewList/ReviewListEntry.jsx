@@ -3,7 +3,7 @@ import styled from 'styled-components'; // need this for Stars
 import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
-import serverURL from '../../config.js';
+import {serverURL} from '../../../config.js';
 
 const Stars = styled.div`
   display: inline-block;

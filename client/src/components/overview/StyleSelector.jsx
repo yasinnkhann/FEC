@@ -5,7 +5,7 @@ import { Photo } from '@material-ui/icons';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 
-import serverURL from '../../config.js';
+import {serverURL} from '../../config.js';
 
 const Checked = styled.div`
   position: absolute;

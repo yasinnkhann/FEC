@@ -13,7 +13,7 @@ import AddToOutfit from './AddToOutfit.jsx';
 import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
-import serverURL from '../../config.js';
+import {serverURL} from '../../config.js';
 
 // CARD
 export default function CarouselCard({ product, name }) {

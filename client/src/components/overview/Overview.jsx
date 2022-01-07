@@ -10,7 +10,7 @@ import StyleSelector from './StyleSelector.jsx';
 import StylesContext from './StylesContext.js';
 import Icons from './Icons.jsx';
 
-import serverURL from '../../config.js';
+import {serverURL} from '../../config.js';
 
 const Grid = styled.div`
   display: flex;

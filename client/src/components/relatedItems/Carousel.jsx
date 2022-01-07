@@ -14,7 +14,7 @@ import useWindowSize from './useWindowSize.js';
 // Component imports
 import ScrollArrow from './ScrollArrows.jsx';
 import Card from './Card.jsx';
-import serverURL from '../../config.js';
+import {serverURL} from '../../config.js';
 
 /**
  * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT

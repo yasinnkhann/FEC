@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import AddAnswer from './AddAnswer.jsx';
 import QuestionsContext from './QuestionsContext.js';
 import Answer from './Answer.jsx';
-import serverURL from '../../config.js';
+import {serverURL} from '../../config.js';
 
 export default function Question({ questionObj }) {
   // CONTEXT
