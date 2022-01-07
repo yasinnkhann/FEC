@@ -132,4 +132,5 @@ const ActionStyle = styled.a`
   z-index: 2;
   max-height: 35px;
   max-width: 35px;
+  color: #b1a8ac;
 `;
