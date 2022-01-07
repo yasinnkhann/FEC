@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext, Suspense } from 'react';
 import axios from 'axios';
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
-// import Carousel from './Carousel.jsx';
 import styled from 'styled-components';
 import {serverURL} from '../../config.js';
 
@@ -51,14 +50,12 @@ export default function RelatedItems() {
       }}
     >
       <div className='related-items-and-comparison'>
-        <RelatedItemsHeader>Related Items</RelatedItemsHeader>
         <Suspense fallback={<h2>Loading...</h2>}>
+          <RelatedItemsHeader>Related Items</RelatedItemsHeader>
           <Carousel
             name='related-items'
             relatedProductIds={relatedProductIds}
           />
-        </Suspense>
-        <Suspense fallback={<h2>Loading...</h2>}>
           <YourOutfitHeader>Your Outfit</YourOutfitHeader>
           <Carousel name='your-outfit' />
         </Suspense>

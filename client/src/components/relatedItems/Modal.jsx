@@ -1,4 +1,3 @@
-// Dependency imports
 import { getMaxLengthOfCombinedArrays, getFeatures, filterArraysByFeature, getValues, getRows, mapProductValues, mapCategories, formatWord, formatValue, capitalize } from './utils';
 import React, { useState, useImperativeHandle, useCallback, useEffect, useContext, forwardRef, Suspense } from 'react';
 import { createPortal } from 'react-dom';
@@ -284,32 +283,3 @@ const ModalTitle = styled.td`
   text-align: center;
   justify-content: center;
 `;
-
-// const mapProductValues = (listToMap, id) => {
-//   let mappedList = listToMap.map(currentValue => {
-//     let formattedCurrentValue;
-//     if (typeof currentValue === 'object' ) {
-//       return <br></br>;
-//     } else {
-//       formattedCurrentValue = formatValue(currentValue);
-//     }
-//     return (
-//       <CategoryRowItem key={`${formattedCurrentValue}-${id}`}>
-//         {typeof currentValue === 'object' ? <br></br> : currentValue }
-//       </CategoryRowItem>
-//     );
-//   });
-//   return mappedList;
-// };
-
-// const mapCategories = (categoryList, id) => {
-//   let mappedCategories = categoryList.map(product => {
-//     let category = formatWord(product);
-//     return (
-//       <CategoryRowItem key={`${category}-${id}`}>
-//         {category}
-//       </CategoryRowItem>
-//     );
-//   });
-//   return mappedCategories;
-// };
