@@ -11,4 +11,3 @@ const ScrollArrow = ({ direction }) => {
 };
 
 export default ScrollArrow;
-

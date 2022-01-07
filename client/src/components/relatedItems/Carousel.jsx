@@ -1,24 +1,14 @@
-// look up lazy loading
-
-// Dependency and Utility imports
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { isAtFinalIndex, isAtBeginningIndex, getMaxIndexBasedOnScreenSize } from './utils';
-
-// Context & Hooks imports
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
 import useWindowSize from './useWindowSize.js';
-
-// Component imports
-import ScrollArrow from './ScrollArrows.jsx';
-import Card from './Card.jsx';
 import {serverURL} from '../../config.js';
 
-/**
- * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT
- */
+const ScrollArrow = React.lazy(() => import('./ScrollArrows.jsx'));
+const Card = React.lazy(() => import('./Card.jsx'));
 
 // CAROUSEL
 export default function Carousel({ name, relatedProductIds }) {
@@ -160,27 +150,29 @@ export default function Carousel({ name, relatedProductIds }) {
   return (
     <CarouselStyle className="carousel" >
       <div className="carousel-row" style={{display: 'flex'}} >
-        {isAtBeginningIndex(relatedProducts, visibleProducts)
-          ? <div style={{width: '40px'}}></div>
-          : <BaseArrow className="carousel-left" onClick={(e) => scrollLeft(e)} >
-            <LeftArrow>
-              <ScrollArrow direction={'left'} />
-            </LeftArrow>
-          </BaseArrow>}
-        {
-          <div className="carousel-middle" style={{display: 'flex', gap: '20px'}} >
-            {renderCarousel(name)}
-          </div>
-        }
-        {isAtFinalIndex(relatedProducts, visibleProducts)
-          ? <div style={{width: '40px'}}></div>
-          : visibleProducts.length === relatedProducts.length
+        <Suspense fallback={<h2>Loading...</h2>}>
+          {isAtBeginningIndex(relatedProducts, visibleProducts)
             ? <div style={{width: '40px'}}></div>
-            : <BaseArrow className="carousel-right" onClick={(e) => scrollRight(e)} >
-              <RightArrow>
-                <ScrollArrow direction={'right'} />
-              </RightArrow>
+            : <BaseArrow className="carousel-left" onClick={(e) => scrollLeft(e)} >
+                <LeftArrow>
+                  <ScrollArrow direction={'left'} />
+                </LeftArrow>
             </BaseArrow>}
+          {
+            <div className="carousel-middle" style={{display: 'flex', gap: '20px'}} >
+                {renderCarousel(name)}
+            </div>
+          }
+          {isAtFinalIndex(relatedProducts, visibleProducts)
+            ? <div style={{width: '40px'}}></div>
+            : visibleProducts.length === relatedProducts.length
+              ? <div style={{width: '40px'}}></div>
+              : <BaseArrow className="carousel-right" onClick={(e) => scrollRight(e)} >
+                  <RightArrow>
+                    <ScrollArrow direction={'right'} />
+                  </RightArrow>
+              </BaseArrow>}
+        </Suspense>
       </div>
     </CarouselStyle>
   );

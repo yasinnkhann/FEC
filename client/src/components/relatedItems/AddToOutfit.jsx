@@ -1,12 +1,7 @@
-// Dependency imports
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-
-// Context imports
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
-
-// Icons
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
 // ADD TO OUTFIT
@@ -48,7 +43,6 @@ export default function AddToOutfit() {
 const OutfitHeader = styled.h3 `
   text-align: center;
   margin-left: 2rem;
-
 `;
 const AddButtonStyle = styled.div`
   text-align: center;

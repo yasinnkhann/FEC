@@ -33,8 +33,6 @@ export default function StarRating({ product }) {
 
   }, []);
 
-
-
   const getAverageRating = (ratings) => {
     const ratingsArr = [...Object.values(ratings)];
     const totalRatings = ratingsArr.reduce(addNumRatings);
