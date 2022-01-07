@@ -5,7 +5,7 @@ import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
 
-const serverURL = 'http://localhost:3000/api';
+const serverURL = 'http://54.183.142.178:80/api';
 
 export default function AddQuestion({ closeModal, question }) {
   // CONTEXT
@@ -50,15 +50,11 @@ export default function AddQuestion({ closeModal, question }) {
         email: formData.yourEmail,
         product_id: Number(questionsData.product_id),
       };
-      const res = await axios.post(
-        `${serverURL}/qa/question`,
-        body,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.post(`${serverURL}/qa/question`, body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('ADD Q POST RES: ', res);
     } catch (err) {
       console.error(err);

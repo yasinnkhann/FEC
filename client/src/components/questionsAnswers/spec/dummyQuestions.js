@@ -408,8 +408,8 @@ export const questions = [
             answerer_name: 'nope',
             helpfulness: 0,
             photos: [
-              'blob:http://localhost:3000/4e1b881f-b88f-4978-a72e-06d4fbebd436',
-              'blob:http://localhost:3000/4e582559-8cc0-4adc-8f04-10beef247395',
+              'blob:http://54.183.142.178:80/4e1b881f-b88f-4978-a72e-06d4fbebd436',
+              'blob:http://54.183.142.178:80/4e582559-8cc0-4adc-8f04-10beef247395',
             ],
           },
         },

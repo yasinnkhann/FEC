@@ -15,7 +15,7 @@ import styled from 'styled-components';
 
 // Variables
 // const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
-const URL = 'http://localhost:3000/api';
+const URL = 'http://54.183.142.178:80/api';
 
 // RELATED ITEMS
 export default function RelatedItems() {
@@ -33,25 +33,21 @@ export default function RelatedItems() {
   // HOOKS
   // API HANDLER
   useEffect(() => {
-      const getRelatedProductIds = async () => {
-        try {
-          const res = await axios.get(
-            `${URL}/products/related`,
-            {
-              params: {
-                product_id: selectedProduct.id
-              },
-            }
-          );
-          setIsLoaded(true);
-          let noDupedIds = Array.from(new Set(res.data));
-          setRelatedProductIds(noDupedIds);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      getRelatedProductIds();
-
+    const getRelatedProductIds = async () => {
+      try {
+        const res = await axios.get(`${URL}/products/related`, {
+          params: {
+            product_id: selectedProduct.id,
+          },
+        });
+        setIsLoaded(true);
+        let noDupedIds = Array.from(new Set(res.data));
+        setRelatedProductIds(noDupedIds);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getRelatedProductIds();
   }, [selectedProduct]);
 
   // JSX
@@ -86,17 +82,17 @@ export default function RelatedItems() {
   }
 }
 const RelatedItemsHeader = styled.h3`
-   font-size: xx-large;
-   text-align: center;
-   padding-bottom: 1rem;
-   font-family: 'Lobster Two', cursive;
-   color: #38062B;
+  font-size: xx-large;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-family: 'Lobster Two', cursive;
+  color: #38062b;
 `;
 
 const YourOutfitHeader = styled.h3`
-   font-size: x-large;
-   text-align: center;
-   padding-bottom: 1rem;
-   font-family: 'Lobster Two', cursive;
-   color: #38062B;
+  font-size: x-large;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-family: 'Lobster Two', cursive;
+  color: #38062b;
 `;

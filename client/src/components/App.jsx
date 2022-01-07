@@ -8,15 +8,19 @@ import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
-const URL = 'http://localhost:3000/api';
+const URL = 'http://54.183.142.178:80/api';
 
-const Body = styled.div `
+const Body = styled.div`
   font-family: 'Open Sans';
   font-style: normal;
   background: #38062b;
-  background: linear-gradient(0deg, rgba(56,6,43,1) 10%, rgba(177,169,172,1) 51%, rgba(253,240,213,1) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(56, 6, 43, 1) 10%,
+    rgba(177, 169, 172, 1) 51%,
+    rgba(253, 240, 213, 1) 100%
+  );
 `;
-
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -27,10 +31,7 @@ export default function App() {
     let clearId = setTimeout(() => {
       const getApi = async () => {
         try {
-
-          const res = await axios.get(
-            `${URL}/products`
-          );
+          const res = await axios.get(`${URL}/products`);
 
           setProducts(res.data);
           setSelectedProduct(res.data[0]);
@@ -60,15 +61,11 @@ export default function App() {
           widget: widget,
           time: date,
         };
-        const res = await axios.post(
-          `${URL}/interactions`,
-          body,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
+        const res = await axios.post(`${URL}/interactions`, body, {
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
+        });
       } catch (err) {
         console.error(err);
       }

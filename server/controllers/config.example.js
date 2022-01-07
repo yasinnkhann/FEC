@@ -1,6 +1,6 @@
-export const TOKEN = '';
+const TOKEN = '';
 
-export const cloudinaryInfo = {
+const cloudinaryInfo = {
   CLOUDINARY_NAME: '',
   CLOUDINARY_API_KEY: '',
   CLOUDINARY_API_SECRET: '',
@@ -8,4 +8,9 @@ export const cloudinaryInfo = {
   CLOUDINARY_API_BASE_URL: '',
   CLOUDINARY_SECURE_DELIVERY_URL: '',
   CLOUDINARY_UPLOAD_PRESET: '',
+};
+
+module.exports = {
+  TOKEN: TOKEN,
+  cloudinaryInfo: cloudinaryInfo,
 };

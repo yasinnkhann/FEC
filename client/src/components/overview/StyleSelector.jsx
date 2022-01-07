@@ -5,13 +5,13 @@ import { Photo } from '@material-ui/icons';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 
-const URL = 'http://localhost:3000/api'
+const URL = 'http://54.183.142.178:80/api';
 
 const Checked = styled.div`
   position: absolute;
   top: 5px;
   right: 5px;
-  color: #38062B;
+  color: #38062b;
 `;
 
 const StylePicsDiv = styled.div`
@@ -27,19 +27,16 @@ const StylePic = styled.img`
   width: 60px;
   border-radius: 50%;
   object-fit: cover;
-
 `;
 
 const StyleName = styled.h3`
   font-family: 'Lobster Two';
 `;
-const SelectedStyle = styled.h3`
-
-`;
+const SelectedStyle = styled.h3``;
 const Button = styled.button`
   position: relative;
-  background-color: #B1A9AC;
-  border: 2px solid #38062B;
+  background-color: #b1a9ac;
+  border: 2px solid #38062b;
 `;
 const Price = styled.h3`
   font-family: 'Fjalla One', sans-serif;
@@ -69,15 +66,15 @@ const DropDownHeader = styled.button`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
   font-weight: 500;
   font-size: 1rem;
-  color: #FDF0D5;
+  color: #fdf0d5;
   width: 130px;
-  background-color: #38062B;
+  background-color: #38062b;
 `;
 
 const DropdownList = styled.div`
   padding: 1rem;
-  background-color: #B1A9AC;
-  border: 2px solid #38062B;
+  background-color: #b1a9ac;
+  border: 2px solid #38062b;
   box-sizing: border-box;
   font-size: large;
   font-weight: 500;
@@ -97,7 +94,7 @@ const OutOfStock = styled.div`
   flex-wrap: wrap;
   width: 150px;
   padding: 2rem;
-  background-color: #38062B;
+  background-color: #38062b;
   color: red;
   justify-content: center;
   border: 1px solid black;
@@ -109,8 +106,8 @@ const AddtoCartButton = styled.button`
   font-weight: 500;
   font-size: 1rem;
   width: 260px;
-  color: #FDF0D5;
-  background-color: #38062B;
+  color: #fdf0d5;
+  background-color: #38062b;
 `;
 
 const SelectASize = styled.div`
@@ -131,7 +128,7 @@ export default function StyleSelector() {
 
   const sizes = () => {
     const sizeArray = [];
-    Object.keys(currentStyle.skus).forEach((key) => {
+    Object.keys(currentStyle.skus).forEach(key => {
       currentStyle.skus[key].quantity ? sizeArray.push(key) : null;
     });
     return sizeArray;
@@ -140,7 +137,7 @@ export default function StyleSelector() {
   const stylesList = sizes();
   const sizeQuantity = () => {
     var obj = {};
-    Object.values(currentStyle.skus).forEach((value) => {
+    Object.values(currentStyle.skus).forEach(value => {
       if (!obj[value.size]) {
         obj[value.size] = value.quantity;
       } else {
@@ -150,15 +147,14 @@ export default function StyleSelector() {
     return obj;
   };
 
-  const onPhotoClick = (value) => {
+  const onPhotoClick = value => {
     setCurrentStyle(value);
     setSelectedQuantity(1);
     setSelectedSize(null);
   };
 
-
   const uniqueSizes = () => {
-    return Array.from(new Set(sizes().map((sku) => currentStyle.skus[sku].size)));
+    return Array.from(new Set(sizes().map(sku => currentStyle.skus[sku].size)));
   };
 
   const togglingSize = () => setIsSizeOpen(!isSizeOpen);
@@ -166,18 +162,18 @@ export default function StyleSelector() {
 
   const quantobj = sizeQuantity();
 
-  const onSizeClicked = (e) => {
+  const onSizeClicked = e => {
     setSelectedSize(e.target.innerHTML);
     setQuantityOptions(quantobj[e.target.innerHTML]);
     setIsSizeOpen(false);
     setShowMessage(false);
   };
 
-  const onQuantityClicked = (e) => {
+  const onQuantityClicked = e => {
     setSelectedQuantity(parseInt(e.target.innerHTML));
     setIsQuantOpen(false);
   };
-  const addToCartHandler = (e) => {
+  const addToCartHandler = e => {
     selectedSize ? addInCart() : badCartHandler();
   };
 
@@ -200,11 +196,11 @@ export default function StyleSelector() {
     return quantityArray;
   };
 
-  const getSkuId = Object.keys(currentStyle.skus).filter((key) => {
+  const getSkuId = Object.keys(currentStyle.skus).filter(key => {
     return currentStyle.skus[key].size === selectedSize;
   });
 
-  const addInCart = async (e) => {
+  const addInCart = async e => {
     try {
       const body = {
         sku_id: getSkuId[0],
@@ -238,9 +234,12 @@ export default function StyleSelector() {
           <SelectedStyle>Selected Style: </SelectedStyle>
           <StyleName key={currentStyle.style_id}>{currentStyle.name}</StyleName>
           <StylePicsDiv>
-            {results.map((photo) => {
+            {results.map(photo => {
               return (
-                <Button onClick={() => onPhotoClick(photo)} key={photo.style_id}>
+                <Button
+                  onClick={() => onPhotoClick(photo)}
+                  key={photo.style_id}
+                >
                   <StylePic src={photo.photos[0].thumbnail_url}></StylePic>
                   {currentStyle.name === photo.name ? (
                     <Checked>
@@ -254,15 +253,20 @@ export default function StyleSelector() {
           <Dropdown>
             <div>
               <>
-                {showMessage ? <SelectASize>Please Select a Size</SelectASize> : null}
+                {showMessage ? (
+                  <SelectASize>Please Select a Size</SelectASize>
+                ) : null}
                 <DropDownHeader onClick={togglingSize}>
                   {!selectedSize ? 'Select A Size' : 'Size: ' + selectedSize}
                 </DropDownHeader>
                 {isSizeOpen && (
                   <DropDownListContainer>
                     <DropdownList>
-                      {uniqueSizes().map((size) => (
-                        <ListItem onClick={(e) => onSizeClicked(e)} key={Math.random()}>
+                      {uniqueSizes().map(size => (
+                        <ListItem
+                          onClick={e => onSizeClicked(e)}
+                          key={Math.random()}
+                        >
                           {size}
                         </ListItem>
                       ))}
@@ -274,7 +278,9 @@ export default function StyleSelector() {
             <div>
               {selectedSize ? (
                 <DropDownHeader onClick={togglingQuant}>
-                  {!selectedQuantity ? 'Quantity: 1' : 'Quantity: ' + selectedQuantity}
+                  {!selectedQuantity
+                    ? 'Quantity: 1'
+                    : 'Quantity: ' + selectedQuantity}
                 </DropDownHeader>
               ) : (
                 <DropDownHeader>-</DropDownHeader>
@@ -282,9 +288,12 @@ export default function StyleSelector() {
               {isQuantOpen && (
                 <DropDownListContainer>
                   <DropdownList>
-                    {quantityArr().map((num) => {
+                    {quantityArr().map(num => {
                       return (
-                        <ListItem onClick={(e) => onQuantityClicked(e)} key={Math.random()}>
+                        <ListItem
+                          onClick={e => onQuantityClicked(e)}
+                          key={Math.random()}
+                        >
                           {num}
                         </ListItem>
                       );
@@ -293,7 +302,9 @@ export default function StyleSelector() {
                 </DropDownListContainer>
               )}
             </div>
-            <AddtoCartButton onClick={(e) => addToCartHandler(e)}>Add to Cart</AddtoCartButton>
+            <AddtoCartButton onClick={e => addToCartHandler(e)}>
+              Add to Cart
+            </AddtoCartButton>
           </Dropdown>
         </>
       ) : (
@@ -302,4 +313,3 @@ export default function StyleSelector() {
     </div>
   );
 }
-

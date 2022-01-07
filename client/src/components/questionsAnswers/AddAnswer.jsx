@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TOKEN, cloudinaryInfo } from '../../config.js';
 import Loader from 'react-loader-spinner';
 
-const serverURL = 'http://localhost:3000/api';
+const serverURL = 'http://54.183.142.178:80/api';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
@@ -90,18 +90,14 @@ export default function AddAnswer({ closeModal, question }) {
         email: addAnsData.yourEmail,
         photos: photoUrls,
       };
-      const res = await axios.post(
-        `${serverURL}/qa/answer`,
-        body,
-        {
-          params: {
-            question_id: question.question_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.post(`${serverURL}/qa/answer`, body, {
+        params: {
+          question_id: question.question_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       setIsPostReqSubmitted(false);
 
       console.log('SUBMIT RES: ', res);
@@ -324,7 +320,7 @@ const ImagesContainer = styled.div``;
 
 const XIcon = styled(CloseIcon)`
   && {
-    color: #38062B;
+    color: #38062b;
     font-size: 2rem;
   }
 `;

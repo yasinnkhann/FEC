@@ -6,7 +6,7 @@ import Questions from './Questions.jsx';
 import Search from './Search.jsx';
 import styled from 'styled-components';
 
-const serverURL = 'http://localhost:3000/api';
+const serverURL = 'http://54.183.142.178:80/api';
 
 export default function QuestionsAnswers() {
   // STATE
@@ -41,20 +41,17 @@ export default function QuestionsAnswers() {
   useEffect(() => {
     const getQs = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/qa/questions`,
-          {
-            params: {
-              product_id: selectedProduct?.id,
-              // product_id: products[345]?.id,
-              // page: 1,
-              count: 20,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/qa/questions`, {
+          params: {
+            product_id: selectedProduct?.id,
+            // product_id: products[345]?.id,
+            // page: 1,
+            count: 20,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         setQuestionsData(res.data);
         setIsLoaded(true);
       } catch (err) {
@@ -93,10 +90,10 @@ export default function QuestionsAnswers() {
   );
 }
 
-const QandAHeader = styled.h3 `
-   font-size: xx-large;
-   text-align: center;
-   padding-bottom: 1rem;
-   font-family: 'Lobster Two', cursive;
-   color: #FDF0D5;
+const QandAHeader = styled.h3`
+  font-size: xx-large;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-family: 'Lobster Two', cursive;
+  color: #fdf0d5;
 `;

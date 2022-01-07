@@ -10,7 +10,7 @@ import StyleSelector from './StyleSelector.jsx';
 import StylesContext from './StylesContext.js';
 import Icons from './Icons.jsx';
 
-const URL = 'http://localhost:3000/api';
+const URL = 'http://54.183.142.178:80/api';
 
 const Grid = styled.div`
   display: flex;
@@ -18,7 +18,7 @@ const Grid = styled.div`
   max-height: 700px;
   padding: 1rem;
 `;
-const Layout = styled.div `
+const Layout = styled.div`
   max-width: 1200px;
   margin: 0 auto;
 `;
@@ -33,13 +33,13 @@ const Container = styled.div`
 `;
 
 const Slogan = styled.h3`
-font-size: large;
+  font-size: large;
 `;
 const Description = styled.p`
-font-style: italic;
+  font-style: italic;
 `;
 
-const InfoBox = styled.div `
+const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;

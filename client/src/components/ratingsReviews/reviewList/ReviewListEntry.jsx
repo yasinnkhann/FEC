@@ -4,7 +4,7 @@ import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
 
-const URL = 'http://localhost:3000/api';
+const URL = 'http://54.183.142.178:80/api';
 
 const Stars = styled.div`
   display: inline-block;
@@ -100,22 +100,20 @@ class ReviewListEntry extends React.Component {
     const body = {};
     const review_id = this.props.review.review_id;
     axios
-      .put(`${URL}/reviews/helpful`, body,
-        {
-          params: {
-            review_id: review_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        }
-      )
-      .then((results) => {
+      .put(`${URL}/reviews/helpful`, body, {
+        params: {
+          review_id: review_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(results => {
         alert('Helpful feedback received!');
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
-        alert('There\'s been an issue with your request');
+        alert("There's been an issue with your request");
       });
   }
 
@@ -123,57 +121,72 @@ class ReviewListEntry extends React.Component {
     const body = {};
     const review_id = this.props.review.review_id;
     axios
-      .put(`${URL}/reviews/report`, body,
-        {
-          params: {
-            review_id: review_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        }
-      )
-      .then((results) => {
+      .put(`${URL}/reviews/report`, body, {
+        params: {
+          review_id: review_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(results => {
         alert('Reported!');
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
-        alert('There\'s been an issue with your request');
+        alert("There's been an issue with your request");
       });
   }
 
   render() {
     const { review } = this.props;
     return (
-      <div className="ratings-flexbox-container" style={gridLayout}>
+      <div className='ratings-flexbox-container' style={gridLayout}>
         <div style={starLayout}>
           <div style={{ display: 'flex', zIndex: '-1', marginRight: 'auto' }}>
             <Stars>
-              <Rating name="read-only" value={review.rating} precision={0.25} max={5} size="small" readOnly />
+              <Rating
+                name='read-only'
+                value={review.rating}
+                precision={0.25}
+                max={5}
+                size='small'
+                readOnly
+              />
             </Stars>
           </div>
         </div>
 
         <div style={{ display: 'flex', marginLeft: 'auto' }}>
           <div style={nameLayout}>
-            <div style={{ display: 'flex', marginLeft: 'auto' }}>{review.reviewer_name},</div>
+            <div style={{ display: 'flex', marginLeft: 'auto' }}>
+              {review.reviewer_name},
+            </div>
           </div>
 
           <div style={dateLayout}>
             <div style={{ display: 'flex' }}>
-              {new Date(review.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+              {new Date(review.date).toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
             </div>
           </div>
         </div>
         {review.summary ? (
           <div style={reviewLayout}>
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>{review.summary}</div>
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              {review.summary}
+            </div>
           </div>
         ) : (
           <div style={emptyDiv} />
         )}
         <div style={bodyLayout}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>{review.body}</div>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            {review.body}
+          </div>
         </div>
         {review.response !== null ? (
           <div style={responseLayout}>
@@ -213,8 +226,8 @@ class ReviewListEntry extends React.Component {
               Helpful?
               <u
                 onClick={this.handlePutEntryHelpful}
-                aria-hidden="true"
-                id="helpful"
+                aria-hidden='true'
+                id='helpful'
                 style={{ marginLeft: '4px', marginRight: '2px' }}
               >
                 Yes
@@ -222,9 +235,10 @@ class ReviewListEntry extends React.Component {
               {`(${review.helpfulness}) | `}
               <u
                 onClick={this.handlePutEntryReported}
-                aria-hidden="true"
-                id="report"
-                style={{ marginLeft: '4px' }}>
+                aria-hidden='true'
+                id='report'
+                style={{ marginLeft: '4px' }}
+              >
                 Report
               </u>
             </div>

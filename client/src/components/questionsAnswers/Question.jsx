@@ -5,7 +5,7 @@ import AddAnswer from './AddAnswer.jsx';
 import QuestionsContext from './QuestionsContext.js';
 import Answer from './Answer.jsx';
 
-const serverURL = 'http://localhost:3000/api';
+const serverURL = 'http://54.183.142.178:80/api';
 
 export default function Question({ questionObj }) {
   // CONTEXT
@@ -26,18 +26,14 @@ export default function Question({ questionObj }) {
     e.stopPropagation();
     try {
       const body = {};
-      const res = await axios.put(
-        `${serverURL}/qa/question/helpful`,
-        body,
-        {
-          params: {
-            question_id: questionObj.question_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.put(`${serverURL}/qa/question/helpful`, body, {
+        params: {
+          question_id: questionObj.question_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('Q HELPFUL PUT RES: ', res);
 
       const questionsDataCopy = [...questionsData.results];
@@ -68,18 +64,14 @@ export default function Question({ questionObj }) {
     e.stopPropagation();
     const body = {};
     try {
-      const res = await axios.put(
-        `${serverURL}/qa/question/report`,
-        body,
-        {
-          params: {
-            question_id: questionObj.question_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.put(`${serverURL}/qa/question/report`, body, {
+        params: {
+          question_id: questionObj.question_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('Q REPORTED PUT RES: ', res);
 
       const questionsDataCopy = [...questionsData.results];
@@ -195,7 +187,7 @@ export default function Question({ questionObj }) {
 const Container = styled.div`
   font-family: 'Poppins', sans-serif;
   background-color: #fdf0d5;
-  color: #38062B;
+  color: #38062b;
   margin-top: 10px;
   box-shadow: 1px 1px 10px #ccc;
   padding: 15px;

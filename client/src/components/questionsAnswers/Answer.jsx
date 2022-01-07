@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Moment from 'react-moment';
 import QuestionsContext from './QuestionsContext.js';
 
-const serverURL = 'http://localhost:3000/api';
+const serverURL = 'http://54.183.142.178:80/api';
 
 export default function Answer({ questionObj }) {
   // CONTEXT
@@ -22,17 +22,14 @@ export default function Answer({ questionObj }) {
   useEffect(() => {
     const getAnswers = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/qa/question/answers`,
-          {
-            params: {
-              question_id: questionObj.question_id
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/qa/question/answers`, {
+          params: {
+            question_id: questionObj.question_id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         setAnswers(res.data);
       } catch (err) {
         console.error(err);
@@ -45,18 +42,14 @@ export default function Answer({ questionObj }) {
     e.preventDefault();
     try {
       const body = {};
-      const res = await axios.put(
-        `${serverURL}/qa/answer/helpful`,
-        body,
-        {
-          params: {
-            answer_id: answerObj.answer_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.put(`${serverURL}/qa/answer/helpful`, body, {
+        params: {
+          answer_id: answerObj.answer_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('ANS HELPFUL PUT RES: ', res);
 
       const keyId = answerObj.answer_id;
@@ -89,18 +82,14 @@ export default function Answer({ questionObj }) {
     e.preventDefault();
     try {
       const body = {};
-      const res = await axios.put(
-        `${serverURL}/qa/answer/report`,
-        body,
-        {
-          params: {
-            answer_id: answerObj.answer_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.put(`${serverURL}/qa/answer/report`, body, {
+        params: {
+          answer_id: answerObj.answer_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('ANS REPORTED PUT RES: ', res);
 
       const keyId = answerObj.answer_id;
