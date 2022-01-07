@@ -10,7 +10,7 @@ import StyleSelector from './StyleSelector.jsx';
 import StylesContext from './StylesContext.js';
 import Icons from './Icons.jsx';
 
-const URL = 'http://34.223.4.224:80/api';
+import {serverURL} from '../../config.js';
 
 const Grid = styled.div`
   display: flex;
@@ -60,7 +60,7 @@ export default function Overview() {
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const res = await axios.get(`${URL}/reviews/meta`, {
+        const res = await axios.get(`${serverURL}/reviews/meta`, {
           params: {
             product_id: selectedProduct.id,
           },
@@ -79,7 +79,7 @@ export default function Overview() {
   useEffect(() => {
     const getStyles = async () => {
       try {
-        const res = await axios.get(`${URL}/products/styles`, {
+        const res = await axios.get(`${serverURL}/products/styles`, {
           params: {
             product_id: selectedProduct.id,
           },

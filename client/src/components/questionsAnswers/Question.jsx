@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import AddAnswer from './AddAnswer.jsx';
 import QuestionsContext from './QuestionsContext.js';
 import Answer from './Answer.jsx';
-
-const serverURL = 'http://34.223.4.224:80/api';
+import {serverURL} from '../../config.js';
 
 export default function Question({ questionObj }) {
   // CONTEXT
