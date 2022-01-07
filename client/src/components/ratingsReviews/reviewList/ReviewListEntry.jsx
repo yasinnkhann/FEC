@@ -3,8 +3,7 @@ import styled from 'styled-components'; // need this for Stars
 import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
-
-const URL = 'http://localhost:3000/api';
+import {serverURL} from '../../../config.js';
 
 const Stars = styled.div`
   display: inline-block;
@@ -91,7 +90,6 @@ const emptyDiv = {
 class ReviewListEntry extends React.Component {
   constructor(props) {
     super(props);
-    // this.handlePutEntry = this.handlePutEntry.bind(this);
     this.handlePutEntryHelpful = this.handlePutEntryHelpful.bind(this);
     this.handlePutEntryReported = this.handlePutEntryReported.bind(this);
   }
@@ -100,7 +98,7 @@ class ReviewListEntry extends React.Component {
     const body = {};
     const review_id = this.props.review.review_id;
     axios
-      .put(`${URL}/reviews/helpful`, body,
+      .put(`${serverURL}/reviews/helpful`, body,
         {
           params: {
             review_id: review_id,
@@ -123,7 +121,7 @@ class ReviewListEntry extends React.Component {
     const body = {};
     const review_id = this.props.review.review_id;
     axios
-      .put(`${URL}/reviews/report`, body,
+      .put(`${serverURL}/reviews/report`, body,
         {
           params: {
             review_id: review_id,

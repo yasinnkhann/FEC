@@ -2,18 +2,13 @@ import React, { useState, useEffect, useContext, Fragment} from 'react';
 // import React, { useState, useEffect, useContext, Fragment, Suspense, lazy } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-
 import AppContext from '../../AppContext.js';
-
 import ReviewList from './reviewList/ReviewList.jsx';
 import WriteReview from './writeReviews/WriteReview.jsx';
 import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
-
-// import metaDummy from './metaDummy.jsx';
-// import dummyDataReviews from './dummyDataReviews.jsx';
-const URL = 'http://localhost:3000/api';
+import {serverURL} from '../../config.js';
 
 // const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
 // const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
@@ -48,7 +43,6 @@ const mainDiv = {
   marginRight: 'auto',
   marginBottom: '30px',
   color: '#fdf0d5',
-  // fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
 };
 
@@ -74,15 +68,6 @@ const HeaderDiv = styled.div `
 `;
 
 const addReviewBtnStyle = {
-  // border: '1px solid grey',
-  // boxShadow: '2px 2px 4px grey',
-  // backgroundColor: 'white',
-  // padding: '10px',
-  // margin: 'auto',
-  // width: 'auto',
-  // maxWidth: '300px',
-  // minWidth: '150px',
-  // borderRadius: '16px',
   border: 'none',
   color: 'black',
   padding: '10px 20px',
@@ -100,11 +85,6 @@ const addReviewBtnStyle = {
 };
 
 const moreReviewsBtn = {
-  // border: '1px solid grey',
-  // width: '150px',
-  // boxShadow: '2px 2px 4px grey',
-  // backgroundColor: 'white',
-  // padding: '10px',
   border: 'none',
   color: 'black',
   padding: '10px 20px',
@@ -209,7 +189,7 @@ export default function RatingsReviews() {
     const getReviewApi = async () => {
       try {
         const res = await axios.get(
-          `${URL}/reviews`,
+          `${serverURL}/reviews`,
           {
             params: {
               count: 1000,
@@ -219,7 +199,6 @@ export default function RatingsReviews() {
               'Content-Type': 'application/json',
             },
           }
-
         );
         setReviewList(res.data);
         setReviewReady(true);
@@ -236,7 +215,7 @@ export default function RatingsReviews() {
     const getMetaApi = async () => {
       try {
         const res = await axios.get(
-          `${URL}/reviews/meta`,
+          `${serverURL}/reviews/meta`,
           {
             params: {
               count: 50,
@@ -286,14 +265,16 @@ export default function RatingsReviews() {
 
   const handleReviewData = async (reviewData) => {
     try {
-      const res = await axios.post(`${URL}/reviews`, reviewData,
+      const res = await axios.post(
+        `${serverURL}/reviews`,
+        reviewData,
         {
           headers: {
             'Content-Type': 'application/json',
           }
         }
       );
-      console.log('Add Review POST Success!! :: ', res);
+      // console.log('Add Review POST Success!! :: ', res);
     } catch (err) {
       console.log('err on review POST:: ', err);
     }

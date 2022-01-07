@@ -14,8 +14,7 @@ import dummyUser from './dummyUser.js';
 import styled from 'styled-components';
 
 // Variables
-// const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
-const URL = 'http://localhost:3000/api';
+import {serverURL} from '../../config.js';
 
 // RELATED ITEMS
 export default function RelatedItems() {
@@ -28,29 +27,29 @@ export default function RelatedItems() {
   const [relatedProductIds, setRelatedProductIds] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(dummyUser.name);
-  const [userOutfit, setUserOutfit] = useState(dummyUser.outfit);
+  const [userOutfit, setUserOutfit] = useState([]);
 
   // HOOKS
   // API HANDLER
   useEffect(() => {
-      const getRelatedProductIds = async () => {
-        try {
-          const res = await axios.get(
-            `${URL}/products/related`,
-            {
-              params: {
-                product_id: selectedProduct.id
-              },
-            }
-          );
-          setIsLoaded(true);
-          let noDupedIds = Array.from(new Set(res.data));
-          setRelatedProductIds(noDupedIds);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      getRelatedProductIds();
+    const getRelatedProductIds = async () => {
+      try {
+        const res = await axios.get(
+          `${serverURL}/products/related`,
+          {
+            params: {
+              product_id: selectedProduct.id
+            },
+          }
+        );
+        setIsLoaded(true);
+        let noDupedIds = Array.from(new Set(res.data));
+        setRelatedProductIds(noDupedIds);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getRelatedProductIds();
 
   }, [selectedProduct]);
 

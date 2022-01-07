@@ -5,10 +5,9 @@ import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
-import { TOKEN, cloudinaryInfo } from '../../config.js';
+import { cloudinaryInfo } from '../../config.js';
 import Loader from 'react-loader-spinner';
-
-const serverURL = 'http://localhost:3000/api';
+import {serverURL} from '../../config.js';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
