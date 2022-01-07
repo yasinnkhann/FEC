@@ -13,7 +13,7 @@ import SortOptions from './sortOptions/SortOption.jsx';
 
 // import metaDummy from './metaDummy.jsx';
 // import dummyDataReviews from './dummyDataReviews.jsx';
-const URL = 'http://34.223.4.224:80/api';
+const URL = 'http://34.223.4.224:3000/api';
 
 // const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
 // const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));

@@ -15,7 +15,7 @@ import useWindowSize from './useWindowSize.js';
 import ScrollArrow from './ScrollArrows.jsx';
 import Card from './Card.jsx';
 
-const URL = 'http://34.223.4.224:80/api';
+const URL = 'http://34.223.4.224:3000/api';
 
 /**
  * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT
