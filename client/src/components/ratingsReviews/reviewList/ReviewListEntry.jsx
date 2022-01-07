@@ -3,7 +3,6 @@ import styled from 'styled-components'; // need this for Stars
 import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 import PhotosMap from './PhotosMap.jsx';
-import { TOKEN } from '../../../config.js';
 
 const URL = 'http://localhost:3000/api';
 

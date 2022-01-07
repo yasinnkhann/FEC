@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import QuestionsContext from './QuestionsContext.js';
-import { TOKEN } from '../../config.js';
 
 const serverURL = 'http://localhost:3000/api';
 

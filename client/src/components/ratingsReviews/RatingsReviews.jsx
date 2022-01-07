@@ -4,7 +4,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import AppContext from '../../AppContext.js';
-import { TOKEN } from '../../config.js';
 
 import ReviewList from './reviewList/ReviewList.jsx';
 import WriteReview from './writeReviews/WriteReview.jsx';
@@ -65,7 +64,7 @@ const HeaderStyle = styled.h3 `
   text-align: 'center';
   padding-bottom: '1rem';
   font-family: 'Lobster Two', cursive;
-  color: black;
+  color: #B1A9AC;
 `;
 const HeaderDiv = styled.div `
   display: flex;
@@ -96,7 +95,8 @@ const addReviewBtnStyle = {
   boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
   backgroundColor: '#B1A9AC',
-  color: '#38062B'
+  color: '#38062B',
+  marginBottom: '30px'
 };
 
 const moreReviewsBtn = {
@@ -117,7 +117,8 @@ const moreReviewsBtn = {
   boxShadow: '0px 4px 8px 0px #0afa0a33',
   padding: '10px',
   backgroundColor: '#B1A9AC',
-  color: '#38062B'
+  color: '#38062B',
+  marginBottom: '30px'
 };
 
 const modalStyle = {
@@ -319,7 +320,7 @@ export default function RatingsReviews() {
     return (
       <div>
         <div className="ratings-and-reviews" style={noReviewsGrid}>
-          <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1' }}>
+          <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1', color: '#B1A9AC' }}>
           No review for this product Be the first to add one!
           </div>
           <button className="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
