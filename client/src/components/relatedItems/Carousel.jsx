@@ -17,8 +17,7 @@ import useWindowSize from './useWindowSize.js';
 // Component imports
 import ScrollArrow from './ScrollArrows.jsx';
 import Card from './Card.jsx';
-
-const URL = 'http://localhost:3000/api';
+import {serverURL} from '../../config.js';
 
 /**
  * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT
@@ -49,7 +48,7 @@ export default function Carousel({ name, relatedProductIds }) {
     const updateRelatedProducts = async (id) => {
       await axios
         .get(
-          `${URL}/products/product`, {
+          `${serverURL}/products/product`, {
             params: {
               product_id: id,
             },

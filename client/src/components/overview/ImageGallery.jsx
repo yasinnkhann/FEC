@@ -196,7 +196,6 @@ export default function ImageGallery() {
   const renderPhoto = () => {
     return getItemsForPage(currentPage).map((photo, index) => {
       const imageRendered = photo?.thumbnail_url ? photo?.thumbnail_url[0] === 'h' ? photo?.thumbnail_url : photo?.url : null;
-      console.log('FROM RENDER PHOTO: ', currentIndex);
       return (
         <ThumbnailImage
           selected={currentStyle.photos[currentIndex].thumbnail_url === photo?.thumbnail_url}
@@ -207,7 +206,6 @@ export default function ImageGallery() {
       );
     });
   };
-  console.log(currentStyle);
   const renderExpandedPhotos = () => {
     return currentStyle.photos.map((photo, index) => {
       const imageExpandRendered = photo?.thumbnail_url ? photo?.thumbnail_url[0] === 'h' ? photo?.thumbnail_url : photo?.url : null;

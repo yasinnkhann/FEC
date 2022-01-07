@@ -3,8 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import styled from 'styled-components';
 import axios from 'axios';
-
-const URL = 'http://localhost:3000/api'
+import {serverURL} from '../../config.js';
 
 // STAR RATING
 export default function StarRating({ product }) {
@@ -14,7 +13,7 @@ export default function StarRating({ product }) {
 
     const getReviewMetaData = async (id) => {
       await axios
-        .get(`${URL}/reviews/meta`, {
+        .get(`${serverURL}/reviews/meta`, {
           params: {
             product_id: id,
           },

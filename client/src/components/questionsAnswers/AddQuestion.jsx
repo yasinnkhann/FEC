@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
-
-const serverURL = 'http://localhost:3000/api';
+import {serverURL} from '../../config.js';
 
 export default function AddQuestion({ closeModal, question }) {
   // CONTEXT

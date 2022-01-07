@@ -13,8 +13,7 @@ import AddToOutfit from './AddToOutfit.jsx';
 import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
-
-const URL = 'http://localhost:3000/api';
+import {serverURL} from '../../config.js';
 
 // CARD
 export default function CarouselCard({ product, name }) {
@@ -36,7 +35,7 @@ export default function CarouselCard({ product, name }) {
       const getProductStyle = async (id) => {
         await axios
           .get(
-            `${URL}/products/styles`,
+            `${serverURL}/products/styles`,
             {
               params: {
                 product_id: id,
@@ -65,6 +64,9 @@ export default function CarouselCard({ product, name }) {
   // EVENT HANDLERS
   const handleClick = (newSelectedProduct) => {
     setSelectedProduct(newSelectedProduct);
+    document.body.style.cursor = 'wait';
+    window.scrollTo(0, 0);
+    document.body.style.cursor = 'default';
   };
 
   // RENDER METHODS
