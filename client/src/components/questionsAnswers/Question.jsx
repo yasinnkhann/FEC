@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, lazy, Suspense } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import AddAnswer from './AddAnswer.jsx';
 import QuestionsContext from './QuestionsContext.js';
-import Answer from './Answer.jsx';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
+
+const Answer = lazy(() => import('./Answer.jsx'));
+const AddAnswer = lazy(() => import('./AddAnswer.jsx'));
 
 export default function Question({ questionObj }) {
   // CONTEXT
@@ -170,14 +171,20 @@ export default function Question({ questionObj }) {
         <>
           <br />
           <hr />
-          <Answer questionObj={questionObj} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Answer questionObj={questionObj} />
+          </Suspense>
         </>
       )}
       {showAnswerModal && (
-        <AddAnswer
-          closeModal={() => setShowAnswerModal(false)}
-          question={questionObj}
-        />
+        <>
+          <Suspense fallback={<div>Loading...</div>}>
+            <AddAnswer
+              closeModal={() => setShowAnswerModal(false)}
+              question={questionObj}
+            />
+          </Suspense>
+        </>
       )}
     </Container>
   );

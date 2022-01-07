@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense, lazy } from 'react';
 import axios from 'axios';
 import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
-import Questions from './Questions.jsx';
-import Search from './Search.jsx';
 import styled from 'styled-components';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
+
+const Questions = lazy(() => import('./Questions.jsx'));
+const Search = lazy(() => import('./Search.jsx'));
 
 export default function QuestionsAnswers() {
   // STATE
@@ -74,12 +75,16 @@ export default function QuestionsAnswers() {
             }}
           >
             <QandAHeader>Questions &#38; Answers</QandAHeader>
-            <Search handleChange={handleSearchQuery} />
-            <Questions
-              questionsData={questionsData.results}
-              filteredData={filteredQuestions}
-              searchQuery={searchQuery}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Search handleChange={handleSearchQuery} />
+            </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Questions
+                questionsData={questionsData.results}
+                filteredData={filteredQuestions}
+                searchQuery={searchQuery}
+              />
+            </Suspense>
           </QuestionsContext.Provider>
         </>
       )}
