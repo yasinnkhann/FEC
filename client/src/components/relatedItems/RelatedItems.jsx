@@ -15,7 +15,7 @@ import styled from 'styled-components';
 
 // Variables
 // const URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/';
-const URL = 'http://localhost:3000/api';
+const URL = 'http://3.132.214.88:3000/api';
 
 // RELATED ITEMS
 export default function RelatedItems() {

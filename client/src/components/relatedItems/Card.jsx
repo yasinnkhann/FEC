@@ -14,7 +14,7 @@ import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
 
-const URL = 'http://localhost:3000/api';
+const URL = 'http://3.132.214.88:3000/api';
 
 // CARD
 export default function CarouselCard({ product, name }) {

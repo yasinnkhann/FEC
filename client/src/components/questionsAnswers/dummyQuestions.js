@@ -378,8 +378,8 @@ export const dummyQs = [
             answerer_name: 'nope',
             helpfulness: 0,
             photos: [
-              'blob:http://localhost:3000/4e1b881f-b88f-4978-a72e-06d4fbebd436',
-              'blob:http://localhost:3000/4e582559-8cc0-4adc-8f04-10beef247395',
+              'blob:http://3.132.214.88:3000/4e1b881f-b88f-4978-a72e-06d4fbebd436',
+              'blob:http://3.132.214.88:3000/4e582559-8cc0-4adc-8f04-10beef247395',
             ],
           },
         },

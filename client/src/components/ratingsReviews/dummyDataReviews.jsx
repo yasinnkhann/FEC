@@ -125,7 +125,7 @@
 //       photos: [
 //         {
 //           id: 2100575,
-//           url: 'blob:http://localhost:3001/3c2bca00-1215-4f70-a1ca-aafaf99ade0d',
+//           url: 'blob:http://3.132.214.88:3001/3c2bca00-1215-4f70-a1ca-aafaf99ade0d',
 //         },
 //       ],
 //     },
