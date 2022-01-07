@@ -3,9 +3,6 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-// API imports
-import { TOKEN } from '../../config.js';
-
 // Context imports
 import AppContext from '../../AppContext.js';
 import ModalContext from './ModalContext.js';

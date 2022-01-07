@@ -4,7 +4,7 @@ Will update with Documentation
 
 | Base URL |
 |----------|
-|`http://localhost:3000/api`||
+|`http://your_ip_here:3000/api`||
 
 **Products**
 Products represent all products available to Project Catwalk

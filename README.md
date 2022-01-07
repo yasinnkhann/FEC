@@ -3,15 +3,18 @@
 ## Getting Started
 
 1. Download dependencies with:
-    > `yarn install`
+
+   > `yarn install`
 
 2. Run webpack with:
-    > `yarn run watch`
+
+   > `yarn run watch`
 
 3. Run server with:
-    > `yarn run start`
+   > `yarn run start`
 
 ---
+
 ## Contributors
 
 **Ellie Hunt**
