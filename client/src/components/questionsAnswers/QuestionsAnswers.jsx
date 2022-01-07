@@ -99,4 +99,5 @@ const QandAHeader = styled.h3 `
    text-align: center;
    padding-bottom: 1rem;
    font-family: 'Lobster Two', cursive;
+   color: #FDF0D5;
 `;

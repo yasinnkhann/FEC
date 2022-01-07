@@ -35,6 +35,9 @@ const ModalBody = styled.section `
 const ModalImg = styled.img `
   width: 1000px;
   height: 1000px;
+  background-position: center;
+  background-size: cover;
+  cursor: crosshair;
 `;
 
 const MainImgContainer = styled.div`
@@ -75,7 +78,7 @@ const Down = styled.button`
   bottom: -35px;
   left: 50%;
   transform: translateX(-50%);
-  color: #B1A9AC;
+  color: #FDF0D5;
   background-color: #38062B;
 `;
 const Up = styled.button`
@@ -83,7 +86,7 @@ const Up = styled.button`
   left: 50%;
   top: -35px;
   transform: translateX(-50%);
-  color: #B1A9AC;
+  color: #FDF0D5;
   background-color: #38062B;
 `;
 const Left = styled.button`
@@ -91,7 +94,7 @@ const Left = styled.button`
   left: 90px;
   position: absolute;
   top: 50%;
-  color: #B1A9AC;
+  color: #FDF0D5;
   background-color: #38062B;
 `;
 const Right = styled.button`
@@ -99,7 +102,7 @@ const Right = styled.button`
   z-index: 1;
   position: absolute;
   top: 50%;
-  color: #B1A9AC;
+  color: #FDF0D5;
   background-color: #38062B;
 `;
 //silver #adadad
@@ -135,21 +138,26 @@ const ThumbnailExpandedImage = styled.img`
   border: 2px solid #38062B;
 
 `;
-const ThumbnailExpandedContainer = styled.div`
-  z-index: 1;
-  bottom: 0;
-  max-height: 420px;
-  position: absolute;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 20px;
-  background-color: rgba(0, 0, 0, 0.6);
-  justify-content: space-evenly;
-  padding: 0.5rem;
-  border-top-right-radius:  10px;
-  border-top-left-radius: 10px;
-`;
 
+// width: 600px;
+// height: 338px;
+// background-position: center;
+// background-size: cover;
+// cursor: crosshair;
+// const ThumbnailExpandedContainer = styled.div`
+//   z-index: 1;
+//   bottom: 0;
+//   max-height: 420px;
+//   position: relative;
+//   display: flex;
+//   flex-wrap: nowrap;
+//   gap: 20px;
+//   background-color: rgba(0, 0, 0, 0.6);
+//   justify-content: space-evenly;
+//   padding: 0.5rem;
+//   border-top-right-radius:  10px;
+//   border-top-left-radius: 10px;
+// `;
 
 export default function ImageGallery() {
   const { stylesDataContent, currentStyleContent } = useContext(StylesContext);
@@ -160,6 +168,7 @@ export default function ImageGallery() {
   const [modalOpen, setmodalOpen] = useState(false);
   const { selectedProductContext } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
+  const [zoomMode, setZoomMode] = useState(false);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -229,17 +238,17 @@ export default function ImageGallery() {
               // onMouseMove={() => console.log('I am image')}
               src={currentStyle.photos[currentIndex].url}
             ></ModalImg>
-            <ThumbnailExpandedContainer>
+            {/* <ThumbnailExpandedContainer>
               <LeftExpand onClick={(e) => {
                 e.stopPropagation();
                 { currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : null; }
               }}><ChevronLeftIcon/>
               </LeftExpand>
-              {renderExpandedPhotos()}
-              <RightExpand onClick={(e) => {
-                { currentIndex < currentStyle.photos.length - 1 ? setCurrentIndex(currentIndex + 1) : null; }
+              {/* {renderExpandedPhotos()} */}
+            {/* <RightExpand onClick={(e) => { */}
+            {/* { currentIndex < currentStyle.photos.length - 1 ? setCurrentIndex(currentIndex + 1) : null; }
               }}><ChevronRightIcon/></RightExpand>
-            </ThumbnailExpandedContainer>
+            </ThumbnailExpandedContainer>  */}
           </ModalBody>
         </ModalContainer>
       </div>

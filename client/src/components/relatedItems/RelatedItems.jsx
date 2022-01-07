@@ -93,6 +93,7 @@ const RelatedItemsHeader = styled.h3`
    text-align: center;
    padding-bottom: 1rem;
    font-family: 'Lobster Two', cursive;
+   color: #38062B;
 `;
 
 const YourOutfitHeader = styled.h3`
@@ -100,4 +101,5 @@ const YourOutfitHeader = styled.h3`
    text-align: center;
    padding-bottom: 1rem;
    font-family: 'Lobster Two', cursive;
+   color: #38062B;
 `;
