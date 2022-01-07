@@ -6,6 +6,9 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { isAtFinalIndex, isAtBeginningIndex, getMaxIndexBasedOnScreenSize } from './utils';
 
+// API imports
+import { TOKEN } from '../../config.js';
+
 // Context & Hooks imports
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
@@ -39,52 +42,52 @@ export default function Carousel({ name, relatedProductIds }) {
   // HOOKS & INITILIZATION
   // Populates relatedProducts state to render each item
   useEffect(() => {
-      setRelatedProducts([]);
-      setVisibleProducts([]);
+    setRelatedProducts([]);
+    setVisibleProducts([]);
 
-      // API HANDLERS
-      const updateRelatedProducts = async (id) => {
-        await axios
-          .get(
-            `${URL}/products/product`, {
-              params: {
-                product_id: id,
-              },
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          )
-          .then((productData) => {
-            if (productData.data.name === 'Bright Future Sunglasses') {
-              null;
-            } else {
-              setRelatedProducts(state => [...state, productData]);
-            }
-          })
-          .catch((err) => console.log(err));
-      };
+    // API HANDLERS
+    const updateRelatedProducts = async (id) => {
+      await axios
+        .get(
+          `${URL}/products/product`, {
+            params: {
+              product_id: id,
+            },
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        .then((productData) => {
+          if (productData.data.name === 'Bright Future Sunglasses') {
+            null;
+          } else {
+            setRelatedProducts(state => [...state, productData]);
+          }
+        })
+        .catch((err) => console.log(err));
+    };
 
-      if (relatedProductIds !== undefined) {
-        relatedProductIds.forEach((id) => {
-          updateRelatedProducts(id);
-        });
-      }
-      setIsLoaded(true);
+    if (relatedProductIds !== undefined) {
+      relatedProductIds.forEach((id) => {
+        updateRelatedProducts(id);
+      });
+    }
+    setIsLoaded(true);
   }, [relatedProductIds]);
 
   // Changes number of items shown based on window size
   useEffect(() => {
-      const newEndIndex = getMaxIndexBasedOnScreenSize();
-      if (newEndIndex < 3) {
-        setEndIndex(newEndIndex);
-      }
-      let newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
-      setVisibleProducts(newVisibleProducts);
+    const newEndIndex = getMaxIndexBasedOnScreenSize();
+    if (newEndIndex < 3) {
+      setEndIndex(newEndIndex);
+    }
+    let newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
+    setVisibleProducts(newVisibleProducts);
   }, [size, relatedProducts]);
 
   useEffect(() => {
-      changeVisibleProductsArray(startIndex, endIndex);
+    changeVisibleProductsArray(startIndex, endIndex);
   }, [startIndex]);
 
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
@@ -203,7 +206,6 @@ const BaseArrow = styled.span`
   align-items: center;
   width: 35px;
   height: 35px;
-  border-radius: 100%;
 `;
 
 const LeftArrow = styled.div`

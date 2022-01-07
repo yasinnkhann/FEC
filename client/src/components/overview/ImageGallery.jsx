@@ -35,9 +35,10 @@ const ModalBody = styled.section `
 const ModalImg = styled.img `
   width: 1000px;
   height: 1000px;
-  background-position: center;
-  background-size: cover;
   cursor: crosshair;
+  /* background-position: center;
+  background-size: cover;
+  cursor: crosshair; */
 `;
 
 const MainImgContainer = styled.div`
@@ -48,8 +49,7 @@ const MainImgContainer = styled.div`
   height: 650px;
   width: 600px;
 `;
-//dark #1F0318
-//light #E5F2C9
+
 const MainImage = styled.img`
  width: 100%;
  height: 100%;
@@ -144,20 +144,20 @@ const ThumbnailExpandedImage = styled.img`
 // background-position: center;
 // background-size: cover;
 // cursor: crosshair;
-// const ThumbnailExpandedContainer = styled.div`
-//   z-index: 1;
-//   bottom: 0;
-//   max-height: 420px;
-//   position: relative;
-//   display: flex;
-//   flex-wrap: nowrap;
-//   gap: 20px;
-//   background-color: rgba(0, 0, 0, 0.6);
-//   justify-content: space-evenly;
-//   padding: 0.5rem;
-//   border-top-right-radius:  10px;
-//   border-top-left-radius: 10px;
-// `;
+const ThumbnailExpandedContainer = styled.div`
+  z-index: 1;
+  bottom: 0;
+  max-height: 420px;
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  border-top-right-radius:  10px;
+  border-top-left-radius: 10px;
+`;
 
 export default function ImageGallery() {
   const { stylesDataContent, currentStyleContent } = useContext(StylesContext);
@@ -238,17 +238,17 @@ export default function ImageGallery() {
               // onMouseMove={() => console.log('I am image')}
               src={currentStyle.photos[currentIndex].url}
             ></ModalImg>
-            {/* <ThumbnailExpandedContainer>
+            <ThumbnailExpandedContainer>
               <LeftExpand onClick={(e) => {
                 e.stopPropagation();
                 { currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : null; }
               }}><ChevronLeftIcon/>
               </LeftExpand>
-              {/* {renderExpandedPhotos()} */}
-            {/* <RightExpand onClick={(e) => { */}
-            {/* { currentIndex < currentStyle.photos.length - 1 ? setCurrentIndex(currentIndex + 1) : null; }
+              {renderExpandedPhotos()}
+              <RightExpand onClick={(e) => {
+                { currentIndex < currentStyle.photos.length - 1 ? setCurrentIndex(currentIndex + 1) : null; }
               }}><ChevronRightIcon/></RightExpand>
-            </ThumbnailExpandedContainer>  */}
+            </ThumbnailExpandedContainer>
           </ModalBody>
         </ModalContainer>
       </div>

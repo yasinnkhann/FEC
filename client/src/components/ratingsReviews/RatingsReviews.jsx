@@ -216,7 +216,7 @@ export default function RatingsReviews() {
               product_id: selectedProduct.id,
             },
             headers: {
-              Authorization: `${TOKEN}`,
+              'Content-Type': 'application/json',
             },
           }
 
@@ -243,7 +243,7 @@ export default function RatingsReviews() {
               product_id: selectedProduct.id,
             },
             headers: {
-              Authorization: `${TOKEN}`,
+              'Content-Type': 'application/json',
             },
           }
         );
@@ -429,7 +429,6 @@ export default function RatingsReviews() {
   );
 }
 
-//
 // return (
 //   <Fragment>
 //     {isLoaded ? (
