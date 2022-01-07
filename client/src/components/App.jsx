@@ -1,14 +1,15 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, Suspense} from 'react';
 import axios from 'axios';
-import Overview from './overview/Overview.jsx';
-import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
-import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
-import RelatedItems from './relatedItems/RelatedItems.jsx';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
-const URL = 'http://localhost:3000/api';
+const Overview = React.lazy(() => import('./questionsAnswers/QuestionsAnswers.jsx'));
+const QuestionsAnswers = React.lazy(() => import('./ratingsReviews/RatingsReviews.jsx'));
+const RatingsReviews = React.lazy(() => import('./relatedItems/RelatedItems.jsx'));
+const RelatedItems = React.lazy(() => import('../AppContext.js'));
+
+import {serverURL} from '../config.js';
 
 const Body = styled.div `
   font-family: 'Open Sans';
@@ -29,7 +30,7 @@ export default function App() {
         try {
 
           const res = await axios.get(
-            `${URL}/products`
+            `${serverURL}/products`
           );
 
           setProducts(res.data);
@@ -61,7 +62,7 @@ export default function App() {
           time: date,
         };
         const res = await axios.post(
-          `${URL}/interactions`,
+          `${serverURL}/interactions`,
           body,
           {
             headers: {
@@ -80,22 +81,8 @@ export default function App() {
   return (
     <Body>
       <Fragment>
-        {isLoaded ? (
           <>
-            <AppContext.Provider
-              value={{
-                productsContext: [products, setProducts],
-                selectedProductContext: [selectedProduct, setSelectedProduct],
-              }}
-            >
-              <Overview />
-              <RelatedItems />
-              <QuestionsAnswers />
-              <RatingsReviews />
-            </AppContext.Provider>
-          </>
-        ) : (
-          <Loader
+          <Suspense fallback={<Loader
             type='Oval'
             color='#38062B'
             height={160}
@@ -108,7 +95,20 @@ export default function App() {
               transform: 'translate(-50%, -50%)',
             }}
           />
-        )}
+          }>
+              <AppContext.Provider
+                value={{
+                  productsContext: [products, setProducts],
+                  selectedProductContext: [selectedProduct, setSelectedProduct],
+                }}
+              >
+                <Overview />
+                <RelatedItems />
+                <QuestionsAnswers />
+                <RatingsReviews />
+              </AppContext.Provider>
+            </Suspense>
+          </>
       </Fragment>
     </Body>
   );

@@ -13,7 +13,7 @@ import SortOptions from './sortOptions/SortOption.jsx';
 
 // import metaDummy from './metaDummy.jsx';
 // import dummyDataReviews from './dummyDataReviews.jsx';
-const URL = 'http://localhost:3000/api';
+import {serverURL} from '../../config.js';
 
 // const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
 // const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
@@ -209,17 +209,16 @@ export default function RatingsReviews() {
     const getReviewApi = async () => {
       try {
         const res = await axios.get(
-          `${URL}/reviews`,
+          `${serverURL}/reviews`,
           {
             params: {
               count: 1000,
               product_id: selectedProduct.id,
             },
             headers: {
-              Authorization: `${TOKEN}`,
+              'Content-Type': 'application/json',
             },
           }
-
         );
         setReviewList(res.data);
         setReviewReady(true);
@@ -236,14 +235,14 @@ export default function RatingsReviews() {
     const getMetaApi = async () => {
       try {
         const res = await axios.get(
-          `${URL}/reviews/meta`,
+          `${serverURL}/reviews/meta`,
           {
             params: {
               count: 50,
               product_id: selectedProduct.id,
             },
             headers: {
-              Authorization: `${TOKEN}`,
+              'Content-Type': 'application/json',
             },
           }
         );
@@ -287,7 +286,7 @@ export default function RatingsReviews() {
   const handleReviewData = async (reviewData) => {
     try {
       const res = await axios.post(
-        `${URL}/reviews`,
+        `${serverURL}/reviews`,
         reviewData,
         {
           params: {
@@ -429,7 +428,6 @@ export default function RatingsReviews() {
   );
 }
 
-//
 // return (
 //   <Fragment>
 //     {isLoaded ? (

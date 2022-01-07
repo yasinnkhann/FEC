@@ -1,25 +1,14 @@
-// look up lazy loading
-
-// Dependency and Utility imports
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { isAtFinalIndex, isAtBeginningIndex, getMaxIndexBasedOnScreenSize } from './utils';
-
-// Context & Hooks imports
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
 import useWindowSize from './useWindowSize.js';
+import {serverURL} from '../../config.js';
 
-// Component imports
-import ScrollArrow from './ScrollArrows.jsx';
-import Card from './Card.jsx';
-
-const URL = 'http://localhost:3000/api';
-
-/**
- * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT
- */
+const ScrollArrow = React.lazy(() => import('./ScrollArrows.jsx'));
+const Card = React.lazy(() => import('./Card.jsx'));
 
 // CAROUSEL
 export default function Carousel({ name, relatedProductIds }) {
@@ -39,52 +28,52 @@ export default function Carousel({ name, relatedProductIds }) {
   // HOOKS & INITILIZATION
   // Populates relatedProducts state to render each item
   useEffect(() => {
-      setRelatedProducts([]);
-      setVisibleProducts([]);
+    setRelatedProducts([]);
+    setVisibleProducts([]);
 
-      // API HANDLERS
-      const updateRelatedProducts = async (id) => {
-        await axios
-          .get(
-            `${URL}/products/product`, {
-              params: {
-                product_id: id,
-              },
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          )
-          .then((productData) => {
-            if (productData.data.name === 'Bright Future Sunglasses') {
-              null;
-            } else {
-              setRelatedProducts(state => [...state, productData]);
-            }
-          })
-          .catch((err) => console.log(err));
-      };
+    // API HANDLERS
+    const updateRelatedProducts = async (id) => {
+      await axios
+        .get(
+          `${serverURL}/products/product`, {
+            params: {
+              product_id: id,
+            },
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        .then((productData) => {
+          if (productData.data.name === 'Bright Future Sunglasses') {
+            null;
+          } else {
+            setRelatedProducts(state => [...state, productData]);
+          }
+        })
+        .catch((err) => console.log(err));
+    };
 
-      if (relatedProductIds !== undefined) {
-        relatedProductIds.forEach((id) => {
-          updateRelatedProducts(id);
-        });
-      }
-      setIsLoaded(true);
+    if (relatedProductIds !== undefined) {
+      relatedProductIds.forEach((id) => {
+        updateRelatedProducts(id);
+      });
+    }
+    setIsLoaded(true);
   }, [relatedProductIds]);
 
   // Changes number of items shown based on window size
   useEffect(() => {
-      const newEndIndex = getMaxIndexBasedOnScreenSize();
-      if (newEndIndex < 3) {
-        setEndIndex(newEndIndex);
-      }
-      let newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
-      setVisibleProducts(newVisibleProducts);
+    const newEndIndex = getMaxIndexBasedOnScreenSize();
+    if (newEndIndex < 3) {
+      setEndIndex(newEndIndex);
+    }
+    let newVisibleProducts = relatedProducts.slice(startIndex, endIndex);
+    setVisibleProducts(newVisibleProducts);
   }, [size, relatedProducts]);
 
   useEffect(() => {
-      changeVisibleProductsArray(startIndex, endIndex);
+    changeVisibleProductsArray(startIndex, endIndex);
   }, [startIndex]);
 
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
@@ -161,27 +150,29 @@ export default function Carousel({ name, relatedProductIds }) {
   return (
     <CarouselStyle className="carousel" >
       <div className="carousel-row" style={{display: 'flex'}} >
-        {isAtBeginningIndex(relatedProducts, visibleProducts)
-          ? <div style={{width: '40px'}}></div>
-          : <BaseArrow className="carousel-left" onClick={(e) => scrollLeft(e)} >
-            <LeftArrow>
-              <ScrollArrow direction={'left'} />
-            </LeftArrow>
-          </BaseArrow>}
-        {
-          <div className="carousel-middle" style={{display: 'flex', gap: '20px'}} >
-            {renderCarousel(name)}
-          </div>
-        }
-        {isAtFinalIndex(relatedProducts, visibleProducts)
-          ? <div style={{width: '40px'}}></div>
-          : visibleProducts.length === relatedProducts.length
+        <Suspense fallback={<h2>Loading...</h2>}>
+          {isAtBeginningIndex(relatedProducts, visibleProducts)
             ? <div style={{width: '40px'}}></div>
-            : <BaseArrow className="carousel-right" onClick={(e) => scrollRight(e)} >
-              <RightArrow>
-                <ScrollArrow direction={'right'} />
-              </RightArrow>
+            : <BaseArrow className="carousel-left" onClick={(e) => scrollLeft(e)} >
+                <LeftArrow>
+                  <ScrollArrow direction={'left'} />
+                </LeftArrow>
             </BaseArrow>}
+          {
+            <div className="carousel-middle" style={{display: 'flex', gap: '20px'}} >
+                {renderCarousel(name)}
+            </div>
+          }
+          {isAtFinalIndex(relatedProducts, visibleProducts)
+            ? <div style={{width: '40px'}}></div>
+            : visibleProducts.length === relatedProducts.length
+              ? <div style={{width: '40px'}}></div>
+              : <BaseArrow className="carousel-right" onClick={(e) => scrollRight(e)} >
+                  <RightArrow>
+                    <ScrollArrow direction={'right'} />
+                  </RightArrow>
+              </BaseArrow>}
+        </Suspense>
       </div>
     </CarouselStyle>
   );
@@ -197,13 +188,11 @@ const CarouselStyle = styled.div`
 `;
 
 const BaseArrow = styled.span`
-  border: 2px solid rgba(0, 0, 0, 1);
   display: flex;
   justify-content: center;
   align-items: center;
   width: 35px;
   height: 35px;
-  border-radius: 100%;
 `;
 
 const LeftArrow = styled.div`

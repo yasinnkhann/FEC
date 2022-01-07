@@ -1,9 +1,7 @@
-// Dependency imports
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import StarsIcon from '@material-ui/icons/Stars';
 import styled from 'styled-components';
-// Context imports
 import ModalContext from './ModalContext.js';
 
 // ACTION BUTTON

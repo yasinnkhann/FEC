@@ -1,12 +1,7 @@
-// Dependency imports
-import React, { useContext, useState, useEffect, Fragment } from 'react';
+import React, { useContext, useState, useEffect, Fragment, Suspense } from 'react';
 import styled from 'styled-components';
-
-// Context imports
 import AppContext from '../../AppContext.js';
-
-// State imports
-import StarRating from './StarRating.jsx';
+const StarRating = React.lazy(() => import('./StarRating.jsx'));
 
 // PRODUCT INFO
 export default function ProductInfo({ product, styles, salePrice }) {
@@ -23,20 +18,22 @@ export default function ProductInfo({ product, styles, salePrice }) {
 
   return (
     <Fragment>
-      {product !== null ? (
-        <InfoCardStyle className="product-info">
+      <Suspense fallback={<h2>Loading...</h2>}>
+        {product !== null ? (
+          <InfoCardStyle className="product-info">
 
-          <InfoCategory>Category: {product.category}</InfoCategory>
-          <InfoProductName>{product.name}</InfoProductName>
-          {hasSalePrice ?
-            <SalePrice>{'$' + price}</SalePrice>
-            :
-            <Price>{'$' + price}</Price>}
-            <StarRating product={product} />
-        </InfoCardStyle>
-      ) : (
-        <h3>This will be an outfit</h3>
-      )}
+            <InfoCategory>Category: {product.category}</InfoCategory>
+            <InfoProductName>{product.name}</InfoProductName>
+            {hasSalePrice ?
+              <SalePrice>{'$' + price}</SalePrice>
+              :
+              <Price>{'$' + price}</Price>}
+              <StarRating product={product} />
+          </InfoCardStyle>
+        ) : (
+          <h3>This will be an outfit</h3>
+        )}
+      </Suspense>
     </Fragment>
   );
 }
@@ -80,6 +77,3 @@ const InfoCardStyle = styled.div`
   align-items: flex-start;
   flex-direction: column;
 `;
-//light = #FDF0D5
-//burgundy = #38062B
-//silver = #B1A9AC
