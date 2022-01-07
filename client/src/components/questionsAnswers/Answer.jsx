@@ -3,8 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import QuestionsContext from './QuestionsContext.js';
-
-const serverURL = 'http://34.223.4.224:80/api';
+import {serverURL} from '../../config.js';
 
 export default function Answer({ questionObj }) {
   // CONTEXT

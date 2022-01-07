@@ -8,7 +8,7 @@ import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
-const URL = 'http://34.223.4.224:80/api';
+import { serverURL } from '../config.js';
 
 const Body = styled.div`
   font-family: 'Open Sans';
@@ -31,7 +31,7 @@ export default function App() {
     let clearId = setTimeout(() => {
       const getApi = async () => {
         try {
-          const res = await axios.get(`${URL}/products`);
+          const res = await axios.get(`${serverURL}/products`);
 
           setProducts(res.data);
           setSelectedProduct(res.data[0]);
@@ -61,7 +61,7 @@ export default function App() {
           widget: widget,
           time: date,
         };
-        const res = await axios.post(`${URL}/interactions`, body, {
+        const res = await axios.post(`${serverURL}/interactions`, body, {
           headers: {
             'Content-Type': 'application/json',
           },
