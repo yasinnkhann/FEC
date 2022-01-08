@@ -15,7 +15,7 @@ const gridLayout = {
   gridTemplateColumns: 'repeat(3, 1fr)',
   gridTemplateRows: 'minmax(5, 1fr) 200px',
   gridGap: '10px',
-  color: '#fdf0d5'
+  color: '#fdf0d5',
 };
 
 const noReviewsGrid = {
@@ -46,15 +46,15 @@ const ratingGrid = {
   maxheight: '200px',
 };
 
-const HeaderStyle = styled.h3 `
+const HeaderStyle = styled.h3`
   text-align: 'center';
   font-size: 'xx-large';
   text-align: 'center';
   padding-bottom: '1rem';
   font-family: 'Lobster Two', cursive;
-  color: #B1A9AC;
+  color: #b1a9ac;
 `;
-const HeaderDiv = styled.div `
+const HeaderDiv = styled.div`
   display: flex;
   align-content: space-between;
   justify-content: space-around;
@@ -75,7 +75,7 @@ const addReviewBtnStyle = {
   padding: '10px',
   backgroundColor: '#B1A9AC',
   color: '#38062B',
-  marginBottom: '30px'
+  marginBottom: '30px',
 };
 
 const moreReviewsBtn = {
@@ -92,7 +92,7 @@ const moreReviewsBtn = {
   padding: '10px',
   backgroundColor: '#B1A9AC',
   color: '#38062B',
-  marginBottom: '30px'
+  marginBottom: '30px',
 };
 
 const modalStyle = {
@@ -178,18 +178,15 @@ export default function RatingsReviews() {
     // get review api data
     const getReviewApi = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/reviews`,
-          {
-            params: {
-              count: 1000,
-              product_id: selectedProduct.id,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/reviews`, {
+          params: {
+            count: 1000,
+            product_id: selectedProduct.id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         setReviewList(res.data);
         setReviewReady(true);
 
@@ -204,18 +201,15 @@ export default function RatingsReviews() {
     //get meta data
     const getMetaApi = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/reviews/meta`,
-          {
-            params: {
-              count: 50,
-              product_id: selectedProduct.id,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/reviews/meta`, {
+          params: {
+            count: 50,
+            product_id: selectedProduct.id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         // console.log(res.data);
         setMetaData(res.data);
       } catch (err) {
@@ -232,15 +226,16 @@ export default function RatingsReviews() {
     script.crossorigin = 'anonymous';
     script.async = true;
     document.body.appendChild(script);
-    return () => { document.body.removeChild(script); };
-
+    return () => {
+      document.body.removeChild(script);
+    };
   }, [selectedProduct]);
 
-  const listSortChange = (event) => {
+  const listSortChange = event => {
     setListSort(event.target.value);
   };
 
-  const sortByStar = (event) => {
+  const sortByStar = event => {
     if (starSort.indexOf(event.target.id) === -1) {
       setStarSort([...starSort, event.target.id]);
     } else {
@@ -253,18 +248,17 @@ export default function RatingsReviews() {
     setStarSort([]);
   };
 
-  const handleReviewData = async (reviewData) => {
+  const handleReviewData = async reviewData => {
     try {
-      const res = await axios.post(
-        `${serverURL}/reviews`,
-        reviewData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        }
-      );
-      // console.log('Add Review POST Success!! :: ', res);
+      const res = await axios.post(`${serverURL}/reviews`, reviewData, {
+        params: {
+          product_id: selectedProduct.id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Add Review POST Success!! :: ', res);
     } catch (err) {
       console.log('err on review POST:: ', err);
     }

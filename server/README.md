@@ -2,9 +2,9 @@ Will update with Documentation
 
 **API REFERENCE**
 
-| Base URL |
-|----------|
-|`http://your_ip_here:80/api`||
+| Base URL                     |
+| ---------------------------- | --- |
+| `http://your_ip_here:80/api` |     |
 
 **Products**
 Products represent all products available to Project Catwalk
@@ -24,7 +24,6 @@ Reviews are particular to a given product
 |POST|`/reviews`|`product_id`: int| `product_id`: int, `rating`: int, `summary`: string, `body`: string, `recommend`: boolean, `name`: string, `email`: string, `photos`: [string or strings of photo urls], `characteristics`: {int: int}|
 |PUT|`reviews/report`|`review_id`: int|empty object|
 |PUT|`reviews/helpful`|`review_id`: int|empty object|
-
 
 **Questions and Answers**
 Questions related to a given product

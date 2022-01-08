@@ -4,7 +4,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { isAtFinalIndex, isAtBeginningIndex, getMaxIndexBasedOnScreenSize } from './utils';
+import {
+  isAtFinalIndex,
+  isAtBeginningIndex,
+  getMaxIndexBasedOnScreenSize,
+} from './utils';
 
 // API imports
 
@@ -16,7 +20,7 @@ import useWindowSize from './useWindowSize.js';
 // Component imports
 import ScrollArrow from './ScrollArrows.jsx';
 import Card from './Card.jsx';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
 
 /**
  * WILL BE THE OUTER DIV FOR BOTH LISTS: RELATED PRODUCTS AND YOUR OUTFIT
@@ -24,8 +28,8 @@ import {serverURL} from '../../config.js';
 
 // CAROUSEL
 export default function Carousel({ name, relatedProductIds }) {
-  const {selectedProductContext} = useContext(AppContext);
-  const {userContext, outfitContext} = useContext(UserContext);
+  const { selectedProductContext } = useContext(AppContext);
+  const { userContext, outfitContext } = useContext(UserContext);
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
@@ -44,30 +48,28 @@ export default function Carousel({ name, relatedProductIds }) {
     setVisibleProducts([]);
 
     // API HANDLERS
-    const updateRelatedProducts = async (id) => {
+    const updateRelatedProducts = async id => {
       await axios
-        .get(
-          `${serverURL}/products/product`, {
-            params: {
-              product_id: id,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-        .then((productData) => {
+        .get(`${serverURL}/products/product`, {
+          params: {
+            product_id: id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(productData => {
           if (productData.data.name === 'Bright Future Sunglasses') {
             null;
           } else {
             setRelatedProducts(state => [...state, productData]);
           }
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     };
 
     if (relatedProductIds !== undefined) {
-      relatedProductIds.forEach((id) => {
+      relatedProductIds.forEach(id => {
         updateRelatedProducts(id);
       });
     }
@@ -89,47 +91,52 @@ export default function Carousel({ name, relatedProductIds }) {
   }, [startIndex]);
 
   const changeVisibleProductsArray = (newStartIndex, newEndIndex) => {
-    const newRelatedProducts = relatedProducts.slice(newStartIndex, newEndIndex);
+    const newRelatedProducts = relatedProducts.slice(
+      newStartIndex,
+      newEndIndex
+    );
     setVisibleProducts(newRelatedProducts);
   };
 
-  const renderCarousel = (name) => {
+  const renderCarousel = name => {
     if (isLoaded) {
-      return (
-        getCarousel(name)
-      );
+      return getCarousel(name);
     } else {
-      return (<div>{`Loading. ${name}..`}</div>);
+      return <div>{`Loading. ${name}..`}</div>;
     }
   };
 
   // EVENT HANDLERS
-  const getCarousel = (name) => {
+  const getCarousel = name => {
     if (name === 'related-items') {
       if (visibleProducts && visibleProducts.length >= 1) {
-        return (
-          visibleProducts.map(product =>
-            <Card key={product.data.id} product={product.data} name="related-item" />
-          )
-        );
+        return visibleProducts.map(product => (
+          <Card
+            key={product.data.id}
+            product={product.data}
+            name='related-item'
+          />
+        ));
       } else {
-        return (<div>Loading...</div>);
+        return <div>Loading...</div>;
       }
     }
     if (name === 'your-outfit') {
       let outfitList = [];
-      outfitList = userOutfit?.map(outfitPiece =>
-        <Card key={outfitPiece.id} product={outfitPiece} name={outfitPiece.name} />
-      );
-      outfitList.unshift(<Card key="add-to-outfit" name="add-button"/>);
-      return (
-        outfitList
-      );
+      outfitList = userOutfit?.map(outfitPiece => (
+        <Card
+          key={outfitPiece.id}
+          product={outfitPiece}
+          name={outfitPiece.name}
+        />
+      ));
+      outfitList.unshift(<Card key='add-to-outfit' name='add-button' />);
+      return outfitList;
     }
   };
 
   // Click handler that adjusts items shown based on left arrow being clicked
-  const scrollLeft = (e) => {
+  const scrollLeft = e => {
     const relatedFirstIndex = relatedProducts[0];
     const visibleFirstIndex = visibleProducts[0];
     if (isAtBeginningIndex() || startIndex - 1 < 0) {
@@ -144,7 +151,7 @@ export default function Carousel({ name, relatedProductIds }) {
   };
 
   // Click handler that adjusts items shown based on right arrow being clicked
-  const scrollRight = (e) => {
+  const scrollRight = e => {
     const relatedLastIndex = relatedProducts.length - 1;
     const visibleLastIndex = visibleProducts.length - 1;
     if (isAtFinalIndex()) {
@@ -160,29 +167,36 @@ export default function Carousel({ name, relatedProductIds }) {
 
   // JSX
   return (
-    <CarouselStyle className="carousel" >
-      <div className="carousel-row" style={{display: 'flex'}} >
-        {isAtBeginningIndex(relatedProducts, visibleProducts)
-          ? <div style={{width: '40px'}}></div>
-          : <BaseArrow className="carousel-left" onClick={(e) => scrollLeft(e)} >
+    <CarouselStyle className='carousel'>
+      <div className='carousel-row' style={{ display: 'flex' }}>
+        {isAtBeginningIndex(relatedProducts, visibleProducts) ? (
+          <div style={{ width: '40px' }}></div>
+        ) : (
+          <BaseArrow className='carousel-left' onClick={e => scrollLeft(e)}>
             <LeftArrow>
               <ScrollArrow direction={'left'} />
             </LeftArrow>
-          </BaseArrow>}
+          </BaseArrow>
+        )}
         {
-          <div className="carousel-middle" style={{display: 'flex', gap: '20px'}} >
+          <div
+            className='carousel-middle'
+            style={{ display: 'flex', gap: '20px' }}
+          >
             {renderCarousel(name)}
           </div>
         }
-        {isAtFinalIndex(relatedProducts, visibleProducts)
-          ? <div style={{width: '40px'}}></div>
-          : visibleProducts.length === relatedProducts.length
-            ? <div style={{width: '40px'}}></div>
-            : <BaseArrow className="carousel-right" onClick={(e) => scrollRight(e)} >
-              <RightArrow>
-                <ScrollArrow direction={'right'} />
-              </RightArrow>
-            </BaseArrow>}
+        {isAtFinalIndex(relatedProducts, visibleProducts) ? (
+          <div style={{ width: '40px' }}></div>
+        ) : visibleProducts.length === relatedProducts.length ? (
+          <div style={{ width: '40px' }}></div>
+        ) : (
+          <BaseArrow className='carousel-right' onClick={e => scrollRight(e)}>
+            <RightArrow>
+              <ScrollArrow direction={'right'} />
+            </RightArrow>
+          </BaseArrow>
+        )}
       </div>
     </CarouselStyle>
   );
@@ -206,8 +220,8 @@ const BaseArrow = styled.span`
 `;
 
 const LeftArrow = styled.div`
-  background-color: #38062B;
-  color: #FDF0D5;
+  background-color: #38062b;
+  color: #fdf0d5;
 `;
 
 const RightArrow = styled.div`

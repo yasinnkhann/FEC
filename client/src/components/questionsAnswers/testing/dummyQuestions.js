@@ -1,10 +1,42 @@
-export const dummyQs = [
+import React from 'react';
+import { render } from '@testing-library/react';
+import AppContext from '../../../AppContext.js';
+
+export const providerProps = {
+  id: 40344,
+  campus: 'hr-rfp',
+  name: 'Camo Onesie',
+  slogan: 'Blend in to your crowd',
+  description:
+    'The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.',
+  category: 'Jackets',
+  default_price: '140.00',
+  created_at: '2021-08-13T14:38:44.509Z',
+  updated_at: '2021-08-13T14:38:44.509Z',
+  features: [
+    {
+      feature: 'Fabric',
+      value: 'Canvas',
+    },
+    {
+      feature: 'Buttons',
+      value: 'Brass',
+    },
+  ],
+};
+
+export const customRender = (ui, { providerProps, ...renderOptions }) => {
+  return render(<AppContext.Provider {...providerProps}>{ui}</AppContext.Provider>, renderOptions);
+};
+
+export const questions = [
   {
     product_id: '40344',
     results: [
       {
         question_id: 553458,
-        question_body: 'Has Anyone Really Been Far Even as Decided to Use Even Go Want to do Look More Like?',
+        question_body:
+          'Has Anyone Really Been Far Even as Decided to Use Even Go Want to do Look More Like?',
         question_date: '2021-11-10T00:00:00.000Z',
         asker_name: 'Anonymous',
         question_helpfulness: 4449,
@@ -281,7 +313,9 @@ export const dummyQs = [
             date: '2021-11-09T00:00:00.000Z',
             answerer_name: 'tester1',
             helpfulness: 0,
-            photos: ['https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__480.jpg'],
+            photos: [
+              'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__480.jpg',
+            ],
           },
           5181004: {
             id: 5181004,
@@ -305,7 +339,9 @@ export const dummyQs = [
             date: '2021-11-10T00:00:00.000Z',
             answerer_name: 'shion',
             helpfulness: 0,
-            photos: ['https://cdn.discordapp.com/attachments/452414661971673088/906403719673954314/unknown.png'],
+            photos: [
+              'https://cdn.discordapp.com/attachments/452414661971673088/906403719673954314/unknown.png',
+            ],
           },
           5181039: {
             id: 5181039,
@@ -313,7 +349,9 @@ export const dummyQs = [
             date: '2021-11-10T00:00:00.000Z',
             answerer_name: 'shion',
             helpfulness: 0,
-            photos: ['https://cdn.discordapp.com/attachments/452414661971673088/906403719673954314/unknown.png'],
+            photos: [
+              'https://cdn.discordapp.com/attachments/452414661971673088/906403719673954314/unknown.png',
+            ],
           },
           5181042: {
             id: 5181042,
@@ -378,6 +416,8 @@ export const dummyQs = [
             answerer_name: 'nope',
             helpfulness: 0,
             photos: [
+              'blob:http://54.183.142.178:80/4e1b881f-b88f-4978-a72e-06d4fbebd436',
+              'blob:http://54.183.142.178:80/4e582559-8cc0-4adc-8f04-10beef247395',
               'blob:http://34.223.4.224:80/4e1b881f-b88f-4978-a72e-06d4fbebd436',
               'blob:http://34.223.4.224:80/4e582559-8cc0-4adc-8f04-10beef247395',
             ],
@@ -430,7 +470,9 @@ export const dummyQs = [
             date: '2021-11-13T00:00:00.000Z',
             answerer_name: 'Never gonna give them up',
             helpfulness: 0,
-            photos: ['https://www.nme.com/wp-content/uploads/2021/07/RickAstley2021.jpg'],
+            photos: [
+              'https://www.nme.com/wp-content/uploads/2021/07/RickAstley2021.jpg',
+            ],
           },
         },
       },
@@ -621,7 +663,9 @@ export const dummyQs = [
             date: '2021-09-24T00:00:00.000Z',
             answerer_name: 'asdfdsafasdf',
             helpfulness: 1,
-            photos: ['https://www.linkpicture.com/q/Screen-Shot-2021-09-23-at-5.15.16-PM.png'],
+            photos: [
+              'https://www.linkpicture.com/q/Screen-Shot-2021-09-23-at-5.15.16-PM.png',
+            ],
           },
           3990312: {
             id: 3990312,
@@ -629,7 +673,9 @@ export const dummyQs = [
             date: '2021-09-24T00:00:00.000Z',
             answerer_name: 'asdfasdfsadf',
             helpfulness: 0,
-            photos: ['https://www.linkpicture.com/q/Screen-Shot-2021-09-23-at-5.15.16-PM.png'],
+            photos: [
+              'https://www.linkpicture.com/q/Screen-Shot-2021-09-23-at-5.15.16-PM.png',
+            ],
           },
         },
       },
@@ -889,7 +935,9 @@ export const dummyQs = [
             date: '2021-11-13T00:00:00.000Z',
             answerer_name: 'asd',
             helpfulness: 0,
-            photos: ['https://source.unsplash.com/random?sig={{getRandomNumber(2)}}'],
+            photos: [
+              'https://source.unsplash.com/random?sig={{getRandomNumber(2)}}',
+            ],
           },
         },
       },
@@ -938,6 +986,34 @@ export const dummyQs = [
         question_helpfulness: 0,
         reported: false,
         answers: {},
+      },
+    ],
+  },
+];
+
+export const answers = [
+  {
+    answer_id: 8,
+    body: 'What a great question!',
+    date: '2018-01-04T00:00:00.000Z',
+    answerer_name: 'metslover',
+    helpfulness: 8,
+    photos: [],
+  },
+  {
+    answer_id: 5,
+    body: "Something pretty durable but I can't be sure",
+    date: '2018-01-04T00:00:00.000Z',
+    answerer_name: 'metslover',
+    helpfulness: 5,
+    photos: [
+      {
+        id: 1,
+        url: 'urlplaceholder/answer_5_photo_number_1.jpg',
+      },
+      {
+        id: 2,
+        url: 'urlplaceholder/answer_5_photo_number_2.jpg',
       },
     ],
   },

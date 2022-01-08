@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense, lazy } from 'react';
 import axios from 'axios';
 import AppContext from '../../AppContext.js';
 import QuestionsContext from './QuestionsContext.js';
-import Questions from './Questions.jsx';
-import Search from './Search.jsx';
 import styled from 'styled-components';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
+
+const Questions = lazy(() => import('./Questions.jsx'));
+const Search = lazy(() => import('./Search.jsx'));
 
 export default function QuestionsAnswers() {
   // STATE
@@ -40,20 +41,16 @@ export default function QuestionsAnswers() {
   useEffect(() => {
     const getQs = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/qa/questions`,
-          {
-            params: {
-              product_id: selectedProduct?.id,
-              // product_id: products[345]?.id,
-              // page: 1,
-              count: 20,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/qa/questions`, {
+          params: {
+            product_id: selectedProduct?.id,
+            // page: 1,
+            count: 20,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         setQuestionsData(res.data);
         setIsLoaded(true);
       } catch (err) {
@@ -77,25 +74,27 @@ export default function QuestionsAnswers() {
             }}
           >
             <QandAHeader>Questions &#38; Answers</QandAHeader>
-            <Search handleChange={handleSearchQuery} />
-            <Questions
-              questionsData={questionsData.results}
-              filteredData={filteredQuestions}
-              searchQuery={searchQuery}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Search handleChange={handleSearchQuery} />
+            </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Questions
+                questionsData={questionsData.results}
+                filteredData={filteredQuestions}
+                searchQuery={searchQuery}
+              />
+            </Suspense>
           </QuestionsContext.Provider>
         </>
       )}
-      {/* {console.log('PRODUCTS FROM QA: ', products)} */}
-      {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
     </div>
   );
 }
 
-const QandAHeader = styled.h3 `
-   font-size: xx-large;
-   text-align: center;
-   padding-bottom: 1rem;
-   font-family: 'Lobster Two', cursive;
-   color: #FDF0D5;
+const QandAHeader = styled.h3`
+  font-size: xx-large;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-family: 'Lobster Two', cursive;
+  color: #fdf0d5;
 `;

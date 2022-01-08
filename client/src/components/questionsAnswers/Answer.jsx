@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import QuestionsContext from './QuestionsContext.js';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
 
 export default function Answer({ questionObj }) {
   // CONTEXT
@@ -19,43 +19,45 @@ export default function Answer({ questionObj }) {
 
   // METHODS
   useEffect(() => {
+    const abortCont = new AbortController();
+
     const getAnswers = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/qa/question/answers`,
-          {
-            params: {
-              question_id: questionObj.question_id
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/qa/question/answers`, {
+          signal: abortCont.signal,
+          params: {
+            question_id: questionObj.question_id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         setAnswers(res.data);
       } catch (err) {
-        console.error(err);
+        if (err.name === 'AbortError') {
+          console.log('fetch aborted');
+        } else {
+          console.error(err);
+        }
       }
     };
     getAnswers();
+
+    return () => abortCont.abort();
   }, []);
 
   const increaseAnswerHelpfulCount = async (e, answerObj) => {
     e.preventDefault();
     try {
       const body = {};
-      const res = await axios.put(
-        `${serverURL}/qa/answer/helpful`,
-        body,
-        {
-          params: {
-            answer_id: answerObj.answer_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.put(`${serverURL}/qa/answer/helpful`, body, {
+        params: {
+          answer_id: answerObj.answer_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('ANS HELPFUL PUT RES: ', res);
 
       const keyId = answerObj.answer_id;
@@ -88,18 +90,14 @@ export default function Answer({ questionObj }) {
     e.preventDefault();
     try {
       const body = {};
-      const res = await axios.put(
-        `${serverURL}/qa/answer/report`,
-        body,
-        {
-          params: {
-            answer_id: answerObj.answer_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.put(`${serverURL}/qa/answer/report`, body, {
+        params: {
+          answer_id: answerObj.answer_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('ANS REPORTED PUT RES: ', res);
 
       const keyId = answerObj.answer_id;
@@ -272,10 +270,13 @@ export default function Answer({ questionObj }) {
 
   return (
     <Container>
-      {initialMappedAnswers}
+      {initialMappedAnswers?.length === 0 ? (
+        <i>No answers have been submitted.</i>
+      ) : (
+        initialMappedAnswers
+      )}
       {showRemainderAnswers && remainingMappedAnswers}
       <hr style={{ border: '1px solid #000', borderColor: 'black' }} />
-      {/* {console.log('ANSWERS: ', answers)} */}
       {remainingFinalAnswers?.length > 0 && (
         <span>
           <a href='' onClick={handleSeeMoreAnswers}>

@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, Suspense, lazy } from 'react';
 import styled from 'styled-components';
 import QuestionsContext from './QuestionsContext.js';
 import Question from './Question.jsx';
-import AddQuestion from './AddQuestion.jsx';
+
+const AddQuestion = lazy(() => import('./AddQuestion.jsx'));
 
 export default function Questions({
   questionsData,
@@ -117,12 +118,12 @@ export default function Questions({
       </SubmitNewQBtn>
 
       {showQuestionModal && (
-        <AddQuestion closeModal={() => setShowQuestionModal(false)} />
+        <>
+          <Suspense fallback={<div>Loading...</div>}>
+            <AddQuestion closeModal={() => setShowQuestionModal(false)} />
+          </Suspense>
+        </>
       )}
-      {/* {console.log('INITIAL QS: ', initialQs)}
-      {console.log('REMAINING QS: ', remainingQs)}
-      {console.log('FILTERED DATA: ', filteredData)} */}
-      {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
     </Container>
   );
 }
