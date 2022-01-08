@@ -1,17 +1,17 @@
-// Dependency imports
-import React, { useState, useImperativeHandle, useCallback, useEffect, useContext, forwardRef } from 'react';
+import React, { useState, useImperativeHandle, useCallback, useEffect, useContext, forwardRef, Suspense } from 'react';
+import { getMaxLengthOfCombinedArrays, getFeatures, filterArraysByFeature, getValues, getRows, mapProductValues, mapCategories, formatWord, formatValue, capitalize } from './utils';
 import { createPortal } from 'react-dom';
 import styled, { keyframes } from 'styled-components';
 import CheckIcon from '@material-ui/icons/Check';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
-import _ from 'lodash';
+import { union } from 'lodash';
 
 // Context imports
 import AppContext from '../../AppContext.js';
 import ModalContext from './ModalContext.js';
 
 // Component imports
-import ActionButton from './ActionButton.jsx';
+const ActionButton = React.lazy(() => import('./ActionButton.jsx'));
 
 const modalElement = document.getElementById('modal-root');
 
@@ -61,7 +61,7 @@ export const Modal = ({ product, fade = false }, ref) => {
 
   // HELPER FUNCTIONS: Table Rendering
   const renderTable = (currentProduct, comparedProduct) => {
-    const categoriesArray = _.union([...Object.keys(currentProduct)], [...Object.keys(comparedProduct)]);
+    const categoriesArray = union([...Object.keys(currentProduct)], [...Object.keys(comparedProduct)]);
     const formattedCurrentProductArray = mapProductValues([...Object.values(currentProduct)]);
     const formattedComparedProductArray = mapProductValues([...Object.values(comparedProduct)]);
     const formattedCategoriesArray = mapCategories(categoriesArray);
@@ -92,13 +92,7 @@ export const Modal = ({ product, fade = false }, ref) => {
       const leftFeatures = getFeatures(leftProduct);
       const leftValues = getValues(leftProduct);
       const rightValues = getValues(rightProduct);
-      const features = _.union(leftFeatures, rightFeatures);
-
-      // console.log('RIGHT FEATURES::', rightFeatures);
-      // console.log('RIGHT VALUES::', rightValues);
-      // console.log('LEFT FEATURES::', leftFeatures);
-      // console.log('LEFT VALUES::', leftValues);
-
+      const features = union(leftFeatures, rightFeatures);
       return getRows(leftProduct, features, rightProduct);
     } else {
       return;
@@ -116,7 +110,6 @@ export const Modal = ({ product, fade = false }, ref) => {
   };
 
   const renderRow = (leftValue, feature, rightValue) => {
-
     return (
       <ModalRow key={feature ? feature : null}>
         <RightAndLeftRowFeature>
@@ -132,28 +125,13 @@ export const Modal = ({ product, fade = false }, ref) => {
     );
   };
 
-  // Please don't yell at me
-  const getMaxLengthOfCombinedArrays = (arr) => {
-    return Math.max(...[...arr.map(e => e ? e.length : 0), arr.length]);
-  };
-
-  const getFeatures = (featuresArray) => {
-    return featuresArray?.map(product => { return product[1].feature; });
-  };
-
-  const getValues = (valuesArray) => {
-    return valuesArray?.map(product => { return product[1].value; });
-  };
-
   const getRows = (leftProduct, featuresArr, rightProduct) => {
-
     return featuresArr.map((feature) => {
       let left = null;
       let right = null;
       if (leftProduct && Array.isArray(leftProduct)) {
         for (let i = 0; i < leftProduct.length; i++) {
           let lProduct = leftProduct[i][1];
-          console.log('CURRENT LEFT INDEX::', lProduct);
           if (lProduct.feature === feature) {
             left = lProduct.value;
           } else {
@@ -161,8 +139,6 @@ export const Modal = ({ product, fade = false }, ref) => {
           }
         }
       }
-
-      console.log(feature);
 
       if (rightProduct && Array.isArray(rightProduct)) {
         for (let j = 0; j < rightProduct.length; j++) {
@@ -175,72 +151,36 @@ export const Modal = ({ product, fade = false }, ref) => {
           }
         }
       }
-
       return renderRow(left, feature, right);
     });
   };
 
   // HELPER FUNCTIONS: Formatting
-  const mapProductValues = (listToMap) => {
-    return listToMap.map(currentValue => {
-      if (typeof currentValue === 'object' ) {
-        return [...Object.entries(currentValue)];
-      } else {
-        return formatValue(currentValue);
-      }
-    });
-
-  };
-
-  const mapCategories = (categoryList) => {
-    return categoryList.map(product => {
-      return formatWord(product);
-    });
-  };
-
-  const formatWord = (wordToBeFormatted) => {
-    let capitalizedWord = capitalize(wordToBeFormatted);
-    let formattedWord = capitalizedWord.replace('_', ' ');
-    return formattedWord;
-  };
-
-  const formatValue = (valueToFormat) => {
-    return valueToFormat.toString();
-  };
-
-  const capitalize = (wordToCapitalize) => {
-    if (typeof wordToCapitalize !== 'string') {
-      wordToCapitalize = wordToCapitalize.toString();
-    }
-    let capitalizedWord = wordToCapitalize.toLowerCase();
-    let firstLetter = capitalizedWord.slice(0, 1).toUpperCase();
-    capitalizedWord = firstLetter.concat(capitalizedWord.slice(1));
-    return capitalizedWord;
-  };
 
   // JSX
   return createPortal(
     // Show or hide depending on click
     isOpen ? (
-      <ModalStyle className={`modal ${fade ? 'modal-fade' : ''}`}>
-        <ModalOverlay onClick={close}>
-          <ModalClose onClick={close}>
-            <ActionButton name="close-modal" />
-          </ModalClose>
-          <ModalBody className="modal-body">
-
-            <ModalTable>
-              <thead>
-                <ModalBoldRow>
-                </ModalBoldRow>
-              </thead>
-              <tbody>
-                {renderTable(product, selectedProduct)}
-              </tbody>
-            </ModalTable>
-          </ModalBody>
-        </ModalOverlay>
-      </ModalStyle>
+      <Suspense fallback={<h2>Loading...</h2>}>
+        <ModalStyle className={`modal ${fade ? 'modal-fade' : ''}`}>
+          <ModalOverlay onClick={close}>
+            <ModalClose onClick={close}>
+              <ActionButton name="close-modal" />
+            </ModalClose>
+            <ModalBody className="modal-body">
+              <ModalTable>
+                <thead>
+                  <ModalBoldRow>
+                  </ModalBoldRow>
+                </thead>
+                <tbody>
+                  {renderTable(product, selectedProduct)}
+                </tbody>
+              </ModalTable>
+            </ModalBody>
+          </ModalOverlay>
+        </ModalStyle>
+      </Suspense>
     ) : null,
     modalElement
   );
@@ -376,31 +316,3 @@ const ProductMiddleFeature = styled.td`
   font-family: 'Open Sans';
   padding: 3px;
 `;
-// const mapProductValues = (listToMap, id) => {
-//   let mappedList = listToMap.map(currentValue => {
-//     let formattedCurrentValue;
-//     if (typeof currentValue === 'object' ) {
-//       return <br></br>;
-//     } else {
-//       formattedCurrentValue = formatValue(currentValue);
-//     }
-//     return (
-//       <CategoryRowItem key={`${formattedCurrentValue}-${id}`}>
-//         {typeof currentValue === 'object' ? <br></br> : currentValue }
-//       </CategoryRowItem>
-//     );
-//   });
-//   return mappedList;
-// };
-
-// const mapCategories = (categoryList, id) => {
-//   let mappedCategories = categoryList.map(product => {
-//     let category = formatWord(product);
-//     return (
-//       <CategoryRowItem key={`${category}-${id}`}>
-//         {category}
-//       </CategoryRowItem>
-//     );
-//   });
-//   return mappedCategories;
-// };
