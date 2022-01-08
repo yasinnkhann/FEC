@@ -1,20 +1,14 @@
-// import React, { useState, useEffect, Fragment } from 'react';
-import React, { useState, useEffect, Fragment, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
-// import Overview from './overview/Overview.jsx';
-// import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
-// import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
-// import RelatedItems from './relatedItems/RelatedItems.jsx';
+import Overview from './overview/Overview.jsx';
+import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
+import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
+import RelatedItems from './relatedItems/RelatedItems.jsx';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
 import {serverURL} from '../config.js';
-
-const Overview = React.lazy(() => import('./overview/Overview.jsx'));
-const QuestionsAnswers = React.lazy(() => import('./questionsAnswers/QuestionsAnswers.jsx'));
-const RatingsReviews = React.lazy(() => import('./ratingsReviews/RatingsReviews.jsx'));
-const RelatedItems = React.lazy(() => import('./relatedItems/RelatedItems.jsx'));
 
 const Body = styled.div `
   font-family: 'Open Sans';
@@ -93,12 +87,11 @@ export default function App() {
                 productsContext: [products, setProducts],
                 selectedProductContext: [selectedProduct, setSelectedProduct],
               }}
-            > <Suspense fallback={<div>Loading...</div>}>
-                <Overview />
-                <RelatedItems />
-                <QuestionsAnswers />
-                <RatingsReviews />
-              </Suspense>;
+            >
+              <Overview />
+              <RelatedItems />
+              <QuestionsAnswers />
+              <RatingsReviews />
             </AppContext.Provider>
           </>
         ) : (
