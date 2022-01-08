@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, Fragment} from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 // import React, { useState, useEffect, useContext, Fragment, Suspense, lazy } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ import SortOptions from './sortOptions/SortOption.jsx';
 
 // import metaDummy from './metaDummy.jsx';
 // import dummyDataReviews from './dummyDataReviews.jsx';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
 
 // const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
 // const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
@@ -26,7 +26,7 @@ const gridLayout = {
   gridTemplateColumns: 'repeat(3, 1fr)',
   gridTemplateRows: 'minmax(5, 1fr) 200px',
   gridGap: '10px',
-  color: '#fdf0d5'
+  color: '#fdf0d5',
 };
 
 const noReviewsGrid = {
@@ -58,15 +58,15 @@ const ratingGrid = {
   maxheight: '200px',
 };
 
-const HeaderStyle = styled.h3 `
+const HeaderStyle = styled.h3`
   text-align: 'center';
   font-size: 'xx-large';
   text-align: 'center';
   padding-bottom: '1rem';
   font-family: 'Lobster Two', cursive;
-  color: #B1A9AC;
+  color: #b1a9ac;
 `;
-const HeaderDiv = styled.div `
+const HeaderDiv = styled.div`
   display: flex;
   align-content: space-between;
   justify-content: space-around;
@@ -96,7 +96,7 @@ const addReviewBtnStyle = {
   padding: '10px',
   backgroundColor: '#B1A9AC',
   color: '#38062B',
-  marginBottom: '30px'
+  marginBottom: '30px',
 };
 
 const moreReviewsBtn = {
@@ -118,7 +118,7 @@ const moreReviewsBtn = {
   padding: '10px',
   backgroundColor: '#B1A9AC',
   color: '#38062B',
-  marginBottom: '30px'
+  marginBottom: '30px',
 };
 
 const modalStyle = {
@@ -208,18 +208,15 @@ export default function RatingsReviews() {
     // get review api data
     const getReviewApi = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/reviews`,
-          {
-            params: {
-              count: 1000,
-              product_id: selectedProduct.id,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/reviews`, {
+          params: {
+            count: 1000,
+            product_id: selectedProduct.id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         setReviewList(res.data);
         setReviewReady(true);
 
@@ -234,18 +231,15 @@ export default function RatingsReviews() {
     //get meta data
     const getMetaApi = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/reviews/meta`,
-          {
-            params: {
-              count: 50,
-              product_id: selectedProduct.id,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/reviews/meta`, {
+          params: {
+            count: 50,
+            product_id: selectedProduct.id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         // console.log(res.data);
         setMetaData(res.data);
       } catch (err) {
@@ -262,15 +256,16 @@ export default function RatingsReviews() {
     script.crossorigin = 'anonymous';
     script.async = true;
     document.body.appendChild(script);
-    return () => { document.body.removeChild(script); };
-
+    return () => {
+      document.body.removeChild(script);
+    };
   }, [selectedProduct]);
 
-  const listSortChange = (event) => {
+  const listSortChange = event => {
     setListSort(event.target.value);
   };
 
-  const sortByStar = (event) => {
+  const sortByStar = event => {
     if (starSort.indexOf(event.target.id) === -1) {
       setStarSort([...starSort, event.target.id]);
     } else {
@@ -283,20 +278,16 @@ export default function RatingsReviews() {
     setStarSort([]);
   };
 
-  const handleReviewData = async (reviewData) => {
+  const handleReviewData = async reviewData => {
     try {
-      const res = await axios.post(
-        `${serverURL}/reviews`,
-        reviewData,
-        {
-          params: {
-            product_id: selectedProduct.id
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        }
-      );
+      const res = await axios.post(`${serverURL}/reviews`, reviewData, {
+        params: {
+          product_id: selectedProduct.id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('Add Review POST Success!! :: ', res);
     } catch (err) {
       console.log('err on review POST:: ', err);
@@ -323,17 +314,42 @@ export default function RatingsReviews() {
   if (noReviews) {
     return (
       <div>
-        <div className="ratings-and-reviews" style={noReviewsGrid}>
-          <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1', color: '#B1A9AC' }}>
-          No review for this product Be the first to add one!
+        <div className='ratings-and-reviews' style={noReviewsGrid}>
+          <div
+            style={{
+              textAlign: 'center',
+              fontSize: '30px',
+              gridRow: '1',
+              color: '#B1A9AC',
+            }}
+          >
+            No review for this product Be the first to add one!
           </div>
-          <button className="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
-          ADD A REVIEW +
+          <button
+            className='addReview'
+            type='button'
+            onClick={writeReviewClick}
+            style={addReviewBtnStyle}
+          >
+            ADD A REVIEW +
           </button>
           {writeReviewModal && (
-            <div style={modalStyle} aria-hidden="true" role="button" onClick={exitWriteReviewClick}>
-              <div style={innerModalStyle} aria-hidden="true" onClick={(e) => e.stopPropagation()}>
-                <WriteReview handleReviewData={handleReviewData} productID={selectedProduct.id} metaData={metaData} />
+            <div
+              style={modalStyle}
+              aria-hidden='true'
+              role='button'
+              onClick={exitWriteReviewClick}
+            >
+              <div
+                style={innerModalStyle}
+                aria-hidden='true'
+                onClick={e => e.stopPropagation()}
+              >
+                <WriteReview
+                  handleReviewData={handleReviewData}
+                  productID={selectedProduct.id}
+                  metaData={metaData}
+                />
                 <br />
               </div>
             </div>
@@ -345,12 +361,13 @@ export default function RatingsReviews() {
 
   return (
     <Fragment>
-      <div className="ratings-and-reviews" id='ratings-reviews'>
-        <HeaderDiv><HeaderStyle>Ratings &#38; Reviews</HeaderStyle></HeaderDiv>
+      <div className='ratings-and-reviews' id='ratings-reviews'>
+        <HeaderDiv>
+          <HeaderStyle>Ratings &#38; Reviews</HeaderStyle>
+        </HeaderDiv>
         {isLoaded ? (
           <>
-            <div style = {mainDiv}>
-
+            <div style={mainDiv}>
               {/* {console.log('from reviewList:', reviewList)} */}
               {/* {console.log('from metaData:', metaData)} */}
               {/* {console.log('selectedProduct:: ', selectedProduct)} */}
@@ -374,14 +391,14 @@ export default function RatingsReviews() {
                   {writeReviewModal && (
                     <div
                       style={modalStyle}
-                      aria-hidden="true"
-                      role="button"
+                      aria-hidden='true'
+                      role='button'
                       onClick={exitWriteReviewClick}
                     >
                       <div
                         style={innerModalStyle}
-                        aria-hidden="true"
-                        onClick={(e) => e.stopPropagation()}
+                        aria-hidden='true'
+                        onClick={e => e.stopPropagation()}
                       >
                         <WriteReview
                           handleReviewData={handleReviewData}
@@ -393,7 +410,11 @@ export default function RatingsReviews() {
                     </div>
                   )}
                   <div style={sortOptionsStyle}>
-                    <SortOptions metaData={metaData} listSort={listSort} listSortChange={listSortChange} />
+                    <SortOptions
+                      metaData={metaData}
+                      listSort={listSort}
+                      listSortChange={listSortChange}
+                    />
                   </div>
                   <div style={reviewListStyle}>
                     <ReviewList
@@ -406,23 +427,41 @@ export default function RatingsReviews() {
                     />
                   </div>
                   <div style={reviewButtonsStyle}>
-                    <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
-                      {reviewList.results.length > 2 && hideMoreReviews === false && (
-                        <button className="moreReviews" type="button" style={moreReviewsBtn} onClick={moreReviewsClick}>
-                      MORE REVIEWS
-                        </button>
-                      )}
-                      <button id="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
-                    ADD A REVIEW +
+                    <div
+                      style={{
+                        display: 'flex',
+                        marginTop: '90px',
+                        justifyContent: 'space-evenly',
+                      }}
+                    >
+                      {reviewList.results.length > 2 &&
+                        hideMoreReviews === false && (
+                          <button
+                            className='moreReviews'
+                            type='button'
+                            style={moreReviewsBtn}
+                            onClick={moreReviewsClick}
+                          >
+                            MORE REVIEWS
+                          </button>
+                        )}
+                      <button
+                        id='addReview'
+                        type='button'
+                        onClick={writeReviewClick}
+                        style={addReviewBtnStyle}
+                      >
+                        ADD A REVIEW +
                       </button>
                     </div>
                   </div>
                 </div>
               )}
             </div>
-
           </>
-        ) : <p> Ratings &#38; Reviews: Loading...</p> }
+        ) : (
+          <p> Ratings &#38; Reviews: Loading...</p>
+        )}
       </div>
     </Fragment>
   );

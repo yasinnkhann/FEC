@@ -14,7 +14,7 @@ import dummyUser from './dummyUser.js';
 import styled from 'styled-components';
 
 // Variables
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
 
 // RELATED ITEMS
 export default function RelatedItems() {
@@ -34,14 +34,11 @@ export default function RelatedItems() {
   useEffect(() => {
     const getRelatedProductIds = async () => {
       try {
-        const res = await axios.get(
-          `${serverURL}/products/related`,
-          {
-            params: {
-              product_id: selectedProduct.id
-            },
-          }
-        );
+        const res = await axios.get(`${serverURL}/products/related`, {
+          params: {
+            product_id: selectedProduct.id,
+          },
+        });
         setIsLoaded(true);
         let noDupedIds = Array.from(new Set(res.data));
         setRelatedProductIds(noDupedIds);
@@ -50,7 +47,6 @@ export default function RelatedItems() {
       }
     };
     getRelatedProductIds();
-
   }, [selectedProduct]);
 
   // JSX
@@ -85,17 +81,17 @@ export default function RelatedItems() {
   }
 }
 const RelatedItemsHeader = styled.h3`
-   font-size: xx-large;
-   text-align: center;
-   padding-bottom: 1rem;
-   font-family: 'Lobster Two', cursive;
-   color: #38062B;
+  font-size: xx-large;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-family: 'Lobster Two', cursive;
+  color: #38062b;
 `;
 
 const YourOutfitHeader = styled.h3`
-   font-size: x-large;
-   text-align: center;
-   padding-bottom: 1rem;
-   font-family: 'Lobster Two', cursive;
-   color: #38062B;
+  font-size: x-large;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-family: 'Lobster Two', cursive;
+  color: #38062b;
 `;

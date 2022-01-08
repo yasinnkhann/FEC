@@ -13,7 +13,7 @@ import AddToOutfit from './AddToOutfit.jsx';
 import Modal from './Modal.jsx';
 import ProductPreviewImages from './ProductPreviewImages.jsx';
 import ProductInfo from './ProductInfo.jsx';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
 
 // CARD
 export default function CarouselCard({ product, name }) {
@@ -31,38 +31,35 @@ export default function CarouselCard({ product, name }) {
 
   // HOOKS
   useEffect(() => {
-      // API HANDLER
-      const getProductStyle = async (id) => {
-        await axios
-          .get(
-            `${serverURL}/products/styles`,
-            {
-              params: {
-                product_id: id,
-              },
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          )
-          .then(res => {
-            setStyles(res.data);
-            if (res?.data.results[0].salePrice) {
-              setSalePrice(res.data.results[0].salePrice);
-            }
-            return res?.data.results[0].photos[0].thumbnail_url;
-          })
-          .then(url => setimageUrl(url))
-          .catch(err => console.error(err));
-      };
+    // API HANDLER
+    const getProductStyle = async id => {
+      await axios
+        .get(`${serverURL}/products/styles`, {
+          params: {
+            product_id: id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(res => {
+          setStyles(res.data);
+          if (res?.data.results[0].salePrice) {
+            setSalePrice(res.data.results[0].salePrice);
+          }
+          return res?.data.results[0].photos[0].thumbnail_url;
+        })
+        .then(url => setimageUrl(url))
+        .catch(err => console.error(err));
+    };
 
-      if (product) { getProductStyle(product.id); }
+    if (product) {
+      getProductStyle(product.id);
+    }
   }, []);
 
-
-
   // EVENT HANDLERS
-  const handleClick = (newSelectedProduct) => {
+  const handleClick = newSelectedProduct => {
     setSelectedProduct(newSelectedProduct);
     document.body.style.cursor = 'wait';
     window.scrollTo(0, 0);
@@ -70,25 +67,32 @@ export default function CarouselCard({ product, name }) {
   };
 
   // RENDER METHODS
-  const renderCard = (cardName) => {
+  const renderCard = cardName => {
     if (cardName === 'add-button') {
       return (
-        <CardStyle >
-          <ProductInfoStyle >
+        <CardStyle>
+          <ProductInfoStyle>
             <AddToOutfit />
           </ProductInfoStyle>
         </CardStyle>
       );
     } else {
       return (
-        <CardStyle >
+        <CardStyle>
           <ActionStyle onClick={() => modal.current.open()}>
-            <ActionButton name="open-modal" />
+            <ActionButton name='open-modal' />
           </ActionStyle>
           <Modal key={`modal-${product.id}`} ref={modal} product={product} />
-          <ProductInfoStyle onClick={() => handleClick(product)} >
-            <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
-            <ProductInfo product={product} styles={styles} salePrice={salePrice} />
+          <ProductInfoStyle onClick={() => handleClick(product)}>
+            <ProductPreviewImages
+              imageUrl={imageUrl}
+              productName={product.name}
+            />
+            <ProductInfo
+              product={product}
+              styles={styles}
+              salePrice={salePrice}
+            />
           </ProductInfoStyle>
         </CardStyle>
       );
@@ -96,17 +100,15 @@ export default function CarouselCard({ product, name }) {
   };
 
   // JSX
-  return (
-    renderCard(name)
-  );
+  return renderCard(name);
 }
 
 const CardStyle = styled.div`
   width: 208px;
   height: 310px;
   margin: 5px;
-  background-color: #B1A9AC;
-  border: 0.25rem solid #38062B;
+  background-color: #b1a9ac;
+  border: 0.25rem solid #38062b;
   position: relative;
   display: flex;
   flex-direction: row;

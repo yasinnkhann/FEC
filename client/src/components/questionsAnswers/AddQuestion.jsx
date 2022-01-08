@@ -49,15 +49,11 @@ export default function AddQuestion({ closeModal, question }) {
         email: formData.yourEmail,
         product_id: Number(questionsData.product_id),
       };
-      const res = await axios.post(
-        `${serverURL}/qa/question`,
-        body,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.post(`${serverURL}/qa/question`, body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log('ADD Q POST RES: ', res);
     } catch (err) {
       console.error(err);
@@ -170,8 +166,8 @@ const Content = styled.form`
 `;
 
 const UpperContent = styled.div`
-  background: #FDF0D5;
-  color: #38062B;
+  background: #fdf0d5;
+  color: #38062b;
   width: 40rem;
   max-width: calc(100vw - 2rem);
   max-height: calc(100vh - 2rem);

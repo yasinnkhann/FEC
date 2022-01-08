@@ -7,17 +7,15 @@ import React from 'react';
 import 'regenerator-runtime/runtime';
 
 describe('Search Component', () => {
-  it('Rendered Input', () => {
-    const { getByTestId } = render(<Search handleChange={true} />);
+  it('Rendered Search Bar', () => {
+    const { getByTestId } = render(<Search />);
     const input = getByTestId('searchBar');
-    expect(input.placeholder).toBe('Have a question? Search for answers…');
+    expect(input).toBeTruthy();
   });
 
   // it('Updates Search Query', async () => {
   //   await act(async () => {
-  //     const { getByTestId } = render(
-  //       <Search handleChange={e => e.target.value} />
-  //     );
+  //     const { getByTestId } = render(<Search handleChange={() => 'test'} />);
   //     const input = getByTestId('searchBar');
   //     const inputWord = 'test';
   //     await fireEvent.change(input, { target: { value: inputWord } });
