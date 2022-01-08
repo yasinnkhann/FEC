@@ -31,32 +31,32 @@ export default function CarouselCard({ product, name }) {
 
   // HOOKS
   useEffect(() => {
-      // API HANDLER
-      const getProductStyle = async (id) => {
-        await axios
-          .get(
-            `${serverURL}/products/styles`,
-            {
-              params: {
-                product_id: id,
-              },
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          )
-          .then(res => {
-            setStyles(res.data);
-            if (res?.data.results[0].salePrice) {
-              setSalePrice(res.data.results[0].salePrice);
-            }
-            return res?.data.results[0].photos[0].thumbnail_url;
-          })
-          .then(url => setimageUrl(url))
-          .catch(err => console.error(err));
-      };
+    // API HANDLER
+    const getProductStyle = async (id) => {
+      await axios
+        .get(
+          `${serverURL}/products/styles`,
+          {
+            params: {
+              product_id: id,
+            },
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        .then(res => {
+          setStyles(res.data);
+          if (res?.data.results[0].salePrice) {
+            setSalePrice(res.data.results[0].salePrice);
+          }
+          return res?.data.results[0].photos[0].thumbnail_url;
+        })
+        .then(url => setimageUrl(url))
+        .catch(err => console.error(err));
+    };
 
-      if (product) { getProductStyle(product.id); }
+    if (product) { getProductStyle(product.id); }
   }, []);
 
 

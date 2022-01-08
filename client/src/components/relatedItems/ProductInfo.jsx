@@ -32,7 +32,7 @@ export default function ProductInfo({ product, styles, salePrice }) {
             <SalePrice>{'$' + price}</SalePrice>
             :
             <Price>{'$' + price}</Price>}
-            <StarRating product={product} />
+          <StarRating product={product} />
         </InfoCardStyle>
       ) : (
         <h3>This will be an outfit</h3>
