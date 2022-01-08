@@ -108,9 +108,9 @@ export const Modal = ({ product, fade = false }, ref) => {
   const renderNameColumn = (leftProduct, category, rightProduct) => {
     return (
       <ModalBoldRow key={category ? category : null}>
-        <td>{`${category}: ${leftProduct}`}</td>
-        <td>{null}</td>
-        <td>{`${category}: ${rightProduct}`}</td>
+        <td>{`${leftProduct}`}</td>
+        <VS>vs</VS>
+        <td>{`${rightProduct}`}</td>
       </ModalBoldRow>
     );
   };
@@ -119,15 +119,15 @@ export const Modal = ({ product, fade = false }, ref) => {
 
     return (
       <ModalRow key={feature ? feature : null}>
-        <td>
+        <RightAndLeftRowFeature>
           {typeof leftValue === 'boolean' ? <CheckIcon /> : !leftValue ? <NotInterestedIcon /> : leftValue}
-        </td>
-        <td>
+        </RightAndLeftRowFeature>
+        <ProductMiddleFeature>
           {feature}
-        </td>
-        <td>
+        </ProductMiddleFeature>
+        <RightAndLeftRowFeature>
           {typeof rightValue === 'boolean' ? <CheckIcon /> : !rightValue ? <NotInterestedIcon /> : rightValue}
-        </td>
+        </RightAndLeftRowFeature>
       </ModalRow>
     );
   };
@@ -228,16 +228,16 @@ export const Modal = ({ product, fade = false }, ref) => {
             <ActionButton name="close-modal" />
           </ModalClose>
           <ModalBody className="modal-body">
-            <table>
+
+            <ModalTable>
               <thead>
                 <ModalBoldRow>
-                  <ModalTitle><h2>Comparing</h2></ModalTitle>
                 </ModalBoldRow>
               </thead>
               <tbody>
                 {renderTable(product, selectedProduct)}
               </tbody>
-            </table>
+            </ModalTable>
           </ModalBody>
         </ModalOverlay>
       </ModalStyle>
@@ -290,15 +290,18 @@ const ModalOverlay = styled.div`
   left: 0;
 `;
 
+const VS = styled.td `
+  float: center;
+`;
+
 const ModalClose = styled.a`
   position: absolute;
   right: 15px;
   top: 10px;
-  color: #5e5e5e;
+  color: #38062b;
   cursor: pointer;
   font-size: 1.25em;
   padding: 7px;
-  background: rgba(1, 1, 1, 0.749);
   border-radius: 50%;
   width: 42px;
   height: 42px;
@@ -321,15 +324,16 @@ const ModalBody = styled.div`
   position: relative;
   justify-content: center;
   margin: 0 auto;
-  background-color: white;
-  border: 1px solid rgba(1, 1, 1, 0.25);
+  background-color: #b1a9ac;
+  color: #38062b;
+  box-shadow: 5px 5px 5px 5px;
+  border: 1px solid #fdf0d5;
   border-radius: 3px;
   overflow-x: hidden;
   overflow-y: auto;
   width: 500px;
   height: 350px;
   padding: 15px 20px;
-  color: #c3c0c0;
 `;
 
 const CategoryRowItem = styled.tr`
@@ -341,23 +345,37 @@ const CategoryRowItem = styled.tr`
 `;
 
 const ModalRow = styled.tr`
-  color: black;
+  color: #38062b;
   margin: 0 auto;
   padding: 1px;
 `;
 
 const ModalBoldRow = styled.tr`
+  font-family: 'Open Sans';
   font-weight: bold;
-  color: black;
+  color: #38062b;
   margin: 0 auto;
   padding: 1px;
 `;
 
-const ModalTitle = styled.td`
-  text-align: center;
+const ModalTitle = styled.h2`
+  float: center;
   justify-content: center;
+  font-family: 'Open Sans';
+  color: #38062b;
 `;
-
+const ModalTable = styled.table`
+`;
+const RightAndLeftRowFeature = styled.td `
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-size: small;
+  padding: 10px;
+`;
+const ProductMiddleFeature = styled.td`
+  font-family: 'Open Sans';
+  padding: 3px;
+`;
 // const mapProductValues = (listToMap, id) => {
 //   let mappedList = listToMap.map(currentValue => {
 //     let formattedCurrentValue;
