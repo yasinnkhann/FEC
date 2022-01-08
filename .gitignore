@@ -7,3 +7,5 @@ server/controllers/config.js
 .DS_Store
 package-lock.json
 coverage
+client/dist/*.bundle.js
+*.bundle.js
