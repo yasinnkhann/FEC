@@ -149,10 +149,10 @@ export const Modal = ({ product, fade = false }, ref) => {
       <Suspense fallback={<h2>Loading...</h2>}>
         <ModalStyle className={`modal ${fade ? 'modal-fade' : ''}`}>
           <ModalOverlay onClick={close}>
-            <ModalClose onClick={close}>
-              <ActionButton name="close-modal" />
-            </ModalClose>
             <ModalBody className="modal-body">
+              <ModalClose onClick={close}>
+                <ActionButton name="close-modal" />
+              </ModalClose>
               <table>
                 <thead>
                   <ModalBoldRow>

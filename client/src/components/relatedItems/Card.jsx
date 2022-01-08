@@ -116,6 +116,9 @@ const CardStyle = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
+  &:hover {
+    box-shadow: 5px 3px 3px #38062b;
+  }
 `;
 
 const ProductInfoStyle = styled.div`

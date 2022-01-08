@@ -8,7 +8,7 @@ export default function ProductPreviewImages({ imageUrl, productName }) {
 
   // JSX
   return (
-    <Suspense fallback={<></>}>
+    <Suspense fallback={<a>Loading...</a>}>
         <Image src={imageUrl} alt={productName} />
     </Suspense>
   )
