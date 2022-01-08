@@ -62,7 +62,7 @@ export default function QuestionsAnswers() {
   }, [selectedProduct]);
 
   return (
-    <div className='questions-and-answers'>
+    <div className='questions-and-answers' id='questions-answers'>
       {isLoaded && (
         <>
           <QuestionsContext.Provider

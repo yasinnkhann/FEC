@@ -361,7 +361,7 @@ export default function RatingsReviews() {
 
   return (
     <Fragment>
-      <div className='ratings-and-reviews'>
+      <div className='ratings-and-reviews' id='ratings-reviews'>
         <HeaderDiv>
           <HeaderStyle>Ratings &#38; Reviews</HeaderStyle>
         </HeaderDiv>

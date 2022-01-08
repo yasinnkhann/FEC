@@ -11,6 +11,7 @@ import { PortalWithState } from 'react-portal';
 const MainImgContainer = styled.div`
   position: relative;
   padding: 1rem;
+  padding-top: 5rem;
   grid-column-start: 1;
   grid-column-end: 2;
   height: 650px;

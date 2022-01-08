@@ -36,6 +36,7 @@ const Container = styled.div`
   flex-direction: column;
   text-align: center;
   padding: 1rem;
+  padding-top: 5rem;
 `;
 
 const Slogan = styled.h3`
@@ -55,6 +56,7 @@ const InfoBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 1rem;
+  padding-top: 3rem;
 `;
 
 export default function Overview() {
@@ -108,7 +110,7 @@ export default function Overview() {
     getStyles();
   }, [selectedProduct]);
   return (
-    <div className='overview'>
+    <div className='overview' id='product-overview'>
       <Layout>
         <Grid>
           <StylesContext.Provider
