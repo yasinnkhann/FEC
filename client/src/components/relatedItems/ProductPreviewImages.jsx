@@ -1,14 +1,17 @@
-// Dependency imports
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import styled from 'styled-components';
-
-// Context imports
 import StylesContext from '../overview/StylesContext.js';
+const ActionButton = React.lazy(() => import('./ActionButton.jsx'));
 
 // PRODUCT PREVIEW IMAGES
 export default function ProductPreviewImages({ imageUrl, productName }) {
+
   // JSX
-  return <Image src={imageUrl} alt={productName} />;
+  return (
+    <Suspense fallback={<a>Loading...</a>}>
+        <Image src={imageUrl} alt={productName} />
+    </Suspense>
+  )
 }
 
 const Image = styled.img`
@@ -16,6 +19,3 @@ const Image = styled.img`
   height: 200px;
   object-fit: cover;
 `;
-//light = #FDF0D5
-//burgundy = #38062B
-//silver = #B1A9AC
