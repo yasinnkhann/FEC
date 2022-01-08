@@ -10,6 +10,8 @@ import {
   getMaxIndexBasedOnScreenSize,
 } from './utils';
 
+// API imports
+
 // Context & Hooks imports
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
@@ -210,13 +212,11 @@ const CarouselStyle = styled.div`
 `;
 
 const BaseArrow = styled.span`
-  border: 2px solid rgba(0, 0, 0, 1);
   display: flex;
   justify-content: center;
   align-items: center;
   width: 35px;
   height: 35px;
-  border-radius: 100%;
 `;
 
 const LeftArrow = styled.div`
@@ -225,6 +225,11 @@ const LeftArrow = styled.div`
 `;
 
 const RightArrow = styled.div`
+<<<<<<< HEAD
   background-color: #38062b;
   color: #fdf0d5;
+=======
+  background-color: #38062B;
+  color: #FDF0D5;
+>>>>>>> main
 `;

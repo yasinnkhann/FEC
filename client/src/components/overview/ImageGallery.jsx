@@ -8,38 +8,6 @@ import { ArrowUpward } from '@material-ui/icons';
 import { ArrowDownward } from '@material-ui/icons';
 import { PortalWithState } from 'react-portal';
 
-const ModalContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  max-width: 1200px;
-  max-height: 1000px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-`;
-
-const ModalBody = styled.section`
-  background-color: rgb(220, 245, 253);
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  overflow: auto;
-  display: flex;
-  justify-content: center;
-  border: 1rem solid #38062b;
-`;
-const ModalImg = styled.img`
-  width: 1000px;
-  height: 1000px;
-  background-position: center;
-  background-size: cover;
-  cursor: crosshair;
-`;
-
 const MainImgContainer = styled.div`
   position: relative;
   padding: 1rem;
@@ -48,8 +16,7 @@ const MainImgContainer = styled.div`
   height: 650px;
   width: 600px;
 `;
-//dark #1F0318
-//light #E5F2C9
+
 const MainImage = styled.img`
  width: 100%;
  height: 100%;
@@ -61,6 +28,29 @@ const MainImage = styled.img`
  box-shadow: 0 2px 3px rgba(0, 0, 0, 2);
 `;
 
+const ModalContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-height: 1200px;
+  max-width: 1200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+`;
+const ModalBody = styled.section`
+  background-color: rgb(220, 245, 253);
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  border: 1rem solid #38062b;
+`;
 const ThumbnailContainer = styled.div`
   z-index: 1;
   width: 50px;
@@ -105,10 +95,11 @@ const Right = styled.button`
   color: #fdf0d5;
   background-color: #38062b;
 `;
-//silver #adadad
-//blue #849a9a
-//dark #072636
-//red #3c0225
+const ModalImg = styled.img`
+  width: 1000px;
+  height: 1000px;
+`;
+
 const LeftExpand = styled.button`
   z-index: 3;
   left: 90px;
@@ -138,25 +129,20 @@ const ThumbnailExpandedImage = styled.img`
   border: 2px solid #38062b;
 `;
 
-// width: 600px;
-// height: 338px;
-// background-position: center;
-// background-size: cover;
-// cursor: crosshair;
-// const ThumbnailExpandedContainer = styled.div`
-//   z-index: 1;
-//   bottom: 0;
-//   max-height: 420px;
-//   position: relative;
-//   display: flex;
-//   flex-wrap: nowrap;
-//   gap: 20px;
-//   background-color: rgba(0, 0, 0, 0.6);
-//   justify-content: space-evenly;
-//   padding: 0.5rem;
-//   border-top-right-radius:  10px;
-//   border-top-left-radius: 10px;
-// `;
+const ThumbnailExpandedContainer = styled.div`
+  z-index: 1;
+  bottom: 0;
+  max-height: 420px;
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+`;
 
 export default function ImageGallery() {
   const { stylesDataContent, currentStyleContent } = useContext(StylesContext);
@@ -168,6 +154,9 @@ export default function ImageGallery() {
   const { selectedProductContext } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [zoomMode, setZoomMode] = useState(false);
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const [size, setSize] = useState(100);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -191,6 +180,12 @@ export default function ImageGallery() {
       }
     };
   }, [modalOpen]);
+
+  // useEffect (() => {
+  //   setSize(100);
+  //   setMouseX(0);
+  //   setMouseY(0);
+  // }, [zoomMode]);
 
   const renderPhoto = () => {
     return getItemsForPage(currentPage).map((photo, index) => {
@@ -232,38 +227,80 @@ export default function ImageGallery() {
       );
     });
   };
+  // const handleMouseOver = () => {
+  //   setZoomMode(false);
+  // };
+  // const handleMouseOut = () => {
+  //   setZoomMode(false);
+  // };
 
+  // const handleMouseMovement = (e) => {
+  //   const {left, top, width, height} =
+  //   e.target.getBoundingClientRect();
+  //   const x = (e.pageX - left) / width * 100;
+  //   const y = (e.pageY - top) / height * 100;
+  //   //console.log(x, y);
+  //   setMouseX(x);
+  //   setSize(250);
+  //   setMouseY(y);
+  // };
+  // const OnClose = () => {
+  //   setSize(100);
+  // };
+  // const src = currentStyle.photos[currentIndex].url;
+
+  // const ModalImg = {
+  //   width: '1000px',
+  //   height: '1000px',
+  //   cursor: 'zoom-in',
+  //   //backgroundImage: src,
+  //   //backgroundPosition: `${mouseX}% ${mouseY}%`
+  // };
+  // const ZoomImg = {
+  //   width: '100%',
+  //   height: '100%',
+  //   cursor: 'zoom-out',
+  //   '&:hover': {
+  //     backgroundImage: src,
+  //     opacity: 0,
+  //     backgroundPosition: `${mouseX}% ${mouseY}%`,
+  //     backgroundSize: `${size}%`
+  //   }
+  // };
   const renderPortal = ({ portal }) => {
     return portal(
       <div>
-        <ModalContainer
-          onClick={e => {
-            setmodalOpen(false);
-            console.log('I am container bitch');
-          }}
-        >
+        <ModalContainer onClick={e => setmodalOpen(false)}>
           <ModalBody
-            // onMouseMove={() => console.log('I am body')}
             onClick={e => {
               e.stopPropagation();
-              console.log('I am body');
             }}
           >
-            <ModalImg
-              // onMouseMove={() => console.log('I am image')}
-              src={currentStyle.photos[currentIndex].url}
-            ></ModalImg>
-            {/* <ThumbnailExpandedContainer>
-              <LeftExpand onClick={(e) => {
-                e.stopPropagation();
-                { currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : null; }
-              }}><ChevronLeftIcon/>
+            <ModalImg src={currentStyle.photos[currentIndex].url}></ModalImg>
+            <ThumbnailExpandedContainer>
+              <LeftExpand
+                onClick={e => {
+                  e.stopPropagation();
+                  {
+                    currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : null;
+                  }
+                }}
+              >
+                <ChevronLeftIcon />
               </LeftExpand>
-              {/* {renderExpandedPhotos()} */}
-            {/* <RightExpand onClick={(e) => { */}
-            {/* { currentIndex < currentStyle.photos.length - 1 ? setCurrentIndex(currentIndex + 1) : null; }
-              }}><ChevronRightIcon/></RightExpand>
-            </ThumbnailExpandedContainer>  */}
+              {renderExpandedPhotos()}
+              <RightExpand
+                onClick={e => {
+                  {
+                    currentIndex < currentStyle.photos.length - 1
+                      ? setCurrentIndex(currentIndex + 1)
+                      : null;
+                  }
+                }}
+              >
+                <ChevronRightIcon />
+              </RightExpand>
+            </ThumbnailExpandedContainer>
           </ModalBody>
         </ModalContainer>
       </div>
@@ -290,9 +327,6 @@ export default function ImageGallery() {
     setCurrentIndex(newindex);
   };
 
-  // const renderModal = () => {
-
-  // };
   return (
     <MainImgContainer>
       <ThumbnailContainer>
@@ -321,10 +355,10 @@ export default function ImageGallery() {
       )}
       <MainImage
         src={currentStyle.photos[currentIndex].url}
-        onClick={() => setmodalOpen(true)}
+        onClick={() => setmodalOpen(!modalOpen)}
       ></MainImage>
       {modalOpen ? (
-        <PortalWithState defaultOpen closeOnEsc onClose={close}>
+        <PortalWithState defaultOpen closeOnEsc>
           {renderPortal}
         </PortalWithState>
       ) : null}
@@ -332,20 +366,45 @@ export default function ImageGallery() {
   );
 }
 
-// const renderExpandedThumbs = () => {
-//   currentStyle.photos.map((photo) => {
-//     return (
-//       <ExpandedThumb>{photo.thumbnail_url}</ExpandedThumb>
-//     );
-//   });
-// };
-
-// if (open) {
-//   return (
-//     <PortalWithState defaultOpen closeOnEsc onClose={close}>
-//       {renderPortal}
-//     </PortalWithState>
+// const renderPortal = ({ portal }) => {
+//   return portal(
+//     <div>
+//       <ModalContainer
+//         onClick={(e) => setmodalOpen(false)}>
+//         <ModalBody
+//           onClick = {(e) => {
+//             e.stopPropagation();
+//           }}>
+//           {zoomMode ?
+//             <div style={ZoomImg}>
+//               <img
+//                 onClick={() => setZoomMode(!zoomMode)}
+//                 onMouseMove={(e) => handleMouseMovement(e)}
+//                 onMouseOver = {() => handleMouseOver}
+//                 onMouseOut = {() => handleMouseOut}
+//                 src = {currentStyle.photos[currentIndex].url}>
+//               </img>
+//             </div>
+//             :
+//             <>
+//               <ModalImg
+//                 onClick={() => setZoomMode(!zoomMode)} src={src}>
+//               </ModalImg>
+//               <ThumbnailExpandedContainer>
+//                 <LeftExpand onClick={(e) => {
+//                   e.stopPropagation();
+//                   { currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : null; }
+//                 }}><ChevronLeftIcon/>
+//                 </LeftExpand>
+//                 {renderExpandedPhotos()}
+//                 <RightExpand onClick={(e) => {
+//                   { currentIndex < currentStyle.photos.length - 1 ? setCurrentIndex(currentIndex + 1) : null; }
+//                 }}><ChevronRightIcon/></RightExpand>
+//               </ThumbnailExpandedContainer>
+//             </>
+//           }
+//         </ModalBody>
+//       </ModalContainer>
+//     </div>
 //   );
-// } else {
-//   return null;
-// }
+// };

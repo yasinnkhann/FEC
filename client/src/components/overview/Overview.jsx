@@ -42,7 +42,12 @@ const Slogan = styled.h3`
   font-size: large;
 `;
 const Description = styled.p`
+<<<<<<< HEAD
   font-style: italic;
+=======
+font-style: italic;
+max-width: 600px;
+>>>>>>> main
 `;
 
 const InfoBox = styled.div`
