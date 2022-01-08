@@ -68,7 +68,7 @@ export default function CarouselCard({ product, name, carouselName }) {
   };
 
   const removeFromOutfit = () => {
-    setUserOutfit(state => [...state].filter(item => item.id !== selectedProduct.id))
+    setUserOutfit(state => [...state].filter(item => item.id !== product.id))
   }
 
   // RENDER METHODS
@@ -131,5 +131,5 @@ const ActionStyle = styled.a`
   z-index: 2;
   max-height: 35px;
   max-width: 35px;
-  color: #37062a;
+  color: #b1a8ac;
 `;
