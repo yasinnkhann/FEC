@@ -3,8 +3,10 @@ import axios from 'axios';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
-// import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
 // import Overview from './overview/Overview.jsx';
+// import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
+// import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
+// import RelatedItems from './relatedItems/RelatedItems.jsx';
 
 const Overview = React.lazy(() => import('./overview/Overview.jsx'));
 const QuestionsAnswers = React.lazy(() => import('./questionsAnswers/QuestionsAnswers.jsx'));

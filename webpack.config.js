@@ -8,7 +8,7 @@ module.exports = {
     filename: 'bundle.js',
     path: DIST_DIR,
   },
-  mode: 'production',
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
