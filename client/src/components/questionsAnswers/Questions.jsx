@@ -27,7 +27,11 @@ export default function Questions({
     initialQs = questionsData
       ?.slice(0, 4)
       .map(question => (
-        <Question key={question.question_id} questionObj={question} />
+        <>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Question key={question.question_id} questionObj={question} />
+          </Suspense>
+        </>
       ))
       .sort(
         (a, b) =>
@@ -37,7 +41,11 @@ export default function Questions({
     remainingQs = questionsData
       ?.slice(4)
       .map(question => (
-        <Question key={question.question_id} questionObj={question} />
+        <>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Question key={question.question_id} questionObj={question} />
+          </Suspense>
+        </>
       ))
       .sort(
         (a, b) =>

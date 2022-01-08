@@ -5,8 +5,10 @@ var DIST_DIR = path.join(__dirname, '/client/dist');
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
     path: DIST_DIR,
+    publicPath: DIST_DIR,
   },
   devtool: 'eval-source-map',
   module: {
