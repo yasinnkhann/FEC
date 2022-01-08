@@ -13,16 +13,21 @@ const QuestionsAnswers = React.lazy(() => import('./questionsAnswers/QuestionsAn
 const RatingsReviews = React.lazy(() => import('./ratingsReviews/RatingsReviews.jsx'));
 const RelatedItems = React.lazy(() => import('./relatedItems/RelatedItems.jsx'));
 
-import {serverURL} from '../config.js';
+import { serverURL } from '../config.js';
 
-const Body = styled.div `
+const Body = styled.div`
   font-family: 'Open Sans';
   font-style: normal;
   background: #38062b;
-  background: linear-gradient(0deg, rgba(56,6,43,1) 10%, rgba(177,169,172,1) 51%, rgba(253,240,213,1) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(56, 6, 43, 1) 10%,
+    rgba(177, 169, 172, 1) 51%,
+    rgba(253, 240, 213, 1) 100%
+  );
 `;
 
-const HeaderDiv = styled.div `
+const HeaderDiv = styled.div`
   background-color: #38062b;
   position: fixed;
   z-index: 999;
@@ -40,7 +45,7 @@ const PageName = styled.div`
   text-transform: uppercase;
   margin-left: 1rem;
 `;
-const Routes = styled.a `
+const Routes = styled.a`
   float: right;
   color: #fdf0d5;
   text-align: center;
@@ -52,7 +57,6 @@ const Routes = styled.a `
   }
 `;
 
-
 export default function App() {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -62,10 +66,7 @@ export default function App() {
     let clearId = setTimeout(() => {
       const getApi = async () => {
         try {
-
-          const res = await axios.get(
-            `${serverURL}/products`
-          );
+          const res = await axios.get(`${serverURL}/products`);
 
           setProducts(res.data);
           setSelectedProduct(res.data[0]);
@@ -95,15 +96,11 @@ export default function App() {
           widget: widget,
           time: date,
         };
-        const res = await axios.post(
-          `${serverURL}/interactions`,
-          body,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
+        const res = await axios.post(`${serverURL}/interactions`, body, {
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
+        });
       } catch (err) {
         console.error(err);
       }

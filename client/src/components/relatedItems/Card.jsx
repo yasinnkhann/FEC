@@ -6,6 +6,14 @@ import ModalContext from './ModalContext.js';
 import UserContext from './UserContext.js';
 import {serverURL} from '../../config.js';
 
+// Component imports
+// import ActionButton from './ActionButton.jsx';
+// import AddToOutfit from './AddToOutfit.jsx';
+// import Modal from './Modal.jsx';
+// import ProductPreviewImages from './ProductPreviewImages.jsx';
+// import ProductInfo from './ProductInfo.jsx';
+// import { serverURL } from '../../config.js';
+
 const ActionButton = React.lazy(() => import('./ActionButton.jsx'));
 const AddToOutfit = React.lazy(() => import('./AddToOutfit.jsx'));
 const Modal = React.lazy(() => import('./Modal.jsx'));
@@ -31,36 +39,35 @@ export default function CarouselCard({ product, name, carouselName }) {
 
   // HOOKS
   useEffect(() => {
-      // API HANDLER
-      const getProductStyle = async (id) => {
-        await axios
-          .get(
-            `${serverURL}/products/styles`,
-            {
-              params: {
-                product_id: id,
-              },
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          )
-          .then(res => {
-            setStyles(res.data);
-            if (res?.data.results[0].salePrice) {
-              setSalePrice(res.data.results[0].salePrice);
-            }
-            return res?.data.results[0].photos[0].thumbnail_url;
-          })
-          .then(url => setimageUrl(url))
-          .catch(err => console.error(err));
-      };
+    // API HANDLER
+    const getProductStyle = async id => {
+      await axios
+        .get(`${serverURL}/products/styles`, {
+          params: {
+            product_id: id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(res => {
+          setStyles(res.data);
+          if (res?.data.results[0].salePrice) {
+            setSalePrice(res.data.results[0].salePrice);
+          }
+          return res?.data.results[0].photos[0].thumbnail_url;
+        })
+        .then(url => setimageUrl(url))
+        .catch(err => console.error(err));
+    };
 
-      if (product) { getProductStyle(product.id); }
+    if (product) {
+      getProductStyle(product.id);
+    }
   }, []);
 
   // EVENT HANDLERS
-  const handleClick = (newSelectedProduct) => {
+  const handleClick = newSelectedProduct => {
     setSelectedProduct(newSelectedProduct);
     document.body.style.cursor = 'wait';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -72,7 +79,7 @@ export default function CarouselCard({ product, name, carouselName }) {
   }
 
   // RENDER METHODS
-  const renderCard = (cardName) => {
+  const renderCard = cardName => {
     if (cardName === 'add-button') {
       return (
         <Suspense fallback={<h3>Loading...</h3>}>
@@ -102,17 +109,15 @@ export default function CarouselCard({ product, name, carouselName }) {
   };
 
   // JSX
-  return (
-    renderCard(name)
-  );
+  return renderCard(name);
 }
 
 const CardStyle = styled.div`
   width: 210px;
   height: 310px;
   margin: 5px;
-  background-color: #B1A9AC;
-  border: 0.25rem solid #38062B;
+  background-color: #b1a9ac;
+  border: 0.25rem solid #38062b;
   position: relative;
   display: flex;
   flex-direction: row;

@@ -1,16 +1,22 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import AppContext from '../../AppContext.js';
 import styled from 'styled-components';
-import ProductDetail from './ProductDetail.jsx';
-import ImageGallery from './ImageGallery.jsx';
+// import ProductDetail from './ProductDetail.jsx';
+// import ImageGallery from './ImageGallery.jsx';
 import axios from 'axios';
 import ReviewsContext from './ReviewsContext.js';
-import ReviewsStars from './ReviewsStars.jsx';
-import StyleSelector from './StyleSelector.jsx';
+// import ReviewsStars from './ReviewsStars.jsx';
+// import StyleSelector from './StyleSelector.jsx';
 import StylesContext from './StylesContext.js';
-import Icons from './Icons.jsx';
+// import Icons from './Icons.jsx';
 
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
+
+const ProductDetail = lazy(() => import('./ProductDetail.jsx'));
+const ImageGallery = lazy(() => import('./ImageGallery.jsx'));
+const ReviewsStars = lazy(() => import('./ReviewsStars.jsx'));
+const StyleSelector = lazy(() => import('./StyleSelector.jsx'));
+const Icons = lazy(() => import('./Icons.jsx'));
 
 const Grid = styled.div`
   display: flex;
@@ -18,7 +24,7 @@ const Grid = styled.div`
   max-height: 700px;
   padding: 1rem;
 `;
-const Layout = styled.div `
+const Layout = styled.div`
   max-width: 1200px;
   margin: 0 auto;
 `;
@@ -34,14 +40,14 @@ const Container = styled.div`
 `;
 
 const Slogan = styled.h3`
-font-size: large;
+  font-size: large;
 `;
 const Description = styled.p`
-font-style: italic;
-max-width: 600px;
+  font-style: italic;
+  max-width: 600px;
 `;
 
-const InfoBox = styled.div `
+const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -109,22 +115,49 @@ export default function Overview() {
               currentStyleContent: [currentStyle, setCurrentStyle],
             }}
           >
-            {loadingStatusStyles && <ImageGallery />}
+            {/* {loadingStatusStyles && <ImageGallery />} */}
+            {loadingStatusStyles && (
+              <>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <ImageGallery />
+                </Suspense>
+              </>
+            )}
           </StylesContext.Provider>
           <Container>
             <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
-              {loadingStatusReviews && <ReviewsStars />}
+              {/* {loadingStatusReviews && <ReviewsStars />} */}
+              {loadingStatusStyles && (
+                <>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <ReviewsStars />
+                  </Suspense>
+                </>
+              )}
             </ReviewsContext.Provider>
-            <ProductDetail product={selectedProduct} />
+            {/* <ProductDetail product={selectedProduct} /> */}
+            <Suspense fallback={<div>Loading...</div>}>
+              <ProductDetail product={selectedProduct} />
+            </Suspense>
             <StylesContext.Provider
               value={{
                 stylesDataContent: [stylesData, setstylesData],
                 currentStyleContent: [currentStyle, setCurrentStyle],
               }}
             >
-              {loadingStatusStyles && <StyleSelector />}
+              {/* {loadingStatusStyles && <StyleSelector />} */}
+              {loadingStatusStyles && (
+                <>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <StyleSelector />
+                  </Suspense>
+                </>
+              )}
             </StylesContext.Provider>
-            <Icons />
+            {/* <Icons /> */}
+            <Suspense fallback={<div>Loading...</div>}>
+              <Icons />
+            </Suspense>
           </Container>
         </Grid>
         <InfoBox>

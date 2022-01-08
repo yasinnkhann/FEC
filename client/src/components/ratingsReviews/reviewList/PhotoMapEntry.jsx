@@ -52,18 +52,19 @@ class PhotoMapEntry extends React.Component {
         {expand === true && (
           <div
             style={modalStyle}
-            aria-hidden="true"
+            aria-hidden='true'
             onClick={() => {
               this.setState({ expand: false });
             }}
           >
-            <img src={url} alt="" style={expandedImg} />
+            <img src={url} alt='' style={expandedImg} />
           </div>
         )}
         <img
           src={url}
-          alt=""
-          aria-hidden="true"
+          alt=''
+          aria-hidden='true'
+          loading='lazy'
           style={imgStyle}
           onClick={() => {
             this.setState({ expand: true });

@@ -7,7 +7,7 @@ import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
 import { cloudinaryInfo } from '../../config.js';
 import Loader from 'react-loader-spinner';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
@@ -25,11 +25,6 @@ export default function AddAnswer({ closeModal, question }) {
     yourEmail: '',
   });
   const [isPostReqSubmitted, setIsPostReqSubmitted] = useState(false);
-
-  // VARIABLES
-  // const specifiedProduct = products.filter(
-  //   product => Number(product.id) === Number(questionsData.product_id)
-  // );
 
   // METHODS
   useEffect(() => {
@@ -89,18 +84,14 @@ export default function AddAnswer({ closeModal, question }) {
         email: addAnsData.yourEmail,
         photos: photoUrls,
       };
-      const res = await axios.post(
-        `${serverURL}/qa/answer`,
-        body,
-        {
-          params: {
-            question_id: question.question_id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.post(`${serverURL}/qa/answer`, body, {
+        params: {
+          question_id: question.question_id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       setIsPostReqSubmitted(false);
 
       console.log('SUBMIT RES: ', res);
@@ -118,9 +109,6 @@ export default function AddAnswer({ closeModal, question }) {
         <UpperContent>
           <Content onSubmit={handleSubmit}>
             <h2>Submit your Answer</h2>
-            {/* <h4>
-              {specifiedProduct[0].name}: {question.question_body}
-            </h4> */}
             <h4>
               {selectedProduct.name}: {question.question_body}
             </h4>
@@ -216,6 +204,7 @@ export default function AddAnswer({ closeModal, question }) {
                         key={uuidv4()}
                         src={URL.createObjectURL(thumbnail)}
                         alt='uploaded photo'
+                        loading='lazy'
                         style={{
                           height: '50px',
                           width: '50px',
@@ -323,7 +312,7 @@ const ImagesContainer = styled.div``;
 
 const XIcon = styled(CloseIcon)`
   && {
-    color: #38062B;
+    color: #38062b;
     font-size: 2rem;
   }
 `;
