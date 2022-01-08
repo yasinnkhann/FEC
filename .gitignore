@@ -5,5 +5,7 @@ client/src/config.js
 server/controllers/config.js
 *.excalidraw
 .DS_Store
+*.bundle.js
 package-lock.json
 coverage
+FEC-Key.pem

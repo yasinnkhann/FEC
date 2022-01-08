@@ -90,7 +90,6 @@ const emptyDiv = {
 class ReviewListEntry extends React.Component {
   constructor(props) {
     super(props);
-    // this.handlePutEntry = this.handlePutEntry.bind(this);
     this.handlePutEntryHelpful = this.handlePutEntryHelpful.bind(this);
     this.handlePutEntryReported = this.handlePutEntryReported.bind(this);
   }

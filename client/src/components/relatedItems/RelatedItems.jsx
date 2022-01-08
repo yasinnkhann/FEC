@@ -1,35 +1,23 @@
-// Dependency imports
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import axios from 'axios';
-
-// Context imports
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
-
-// Component imports
-import Carousel from './Carousel.jsx';
-
-// Dummy data import
-import dummyUser from './dummyUser.js';
 import styled from 'styled-components';
-
-// Variables
 import {serverURL} from '../../config.js';
+
+const Carousel = React.lazy(() => import('./Carousel.jsx'))
 
 // RELATED ITEMS
 export default function RelatedItems() {
   // CONTEXT
   const { productsContext, selectedProductContext } = useContext(AppContext);
-
   // STATE
-
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [relatedProductIds, setRelatedProductIds] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [currentUser, setCurrentUser] = useState(dummyUser.name);
+  const [currentUser, setCurrentUser] = useState();
   const [userOutfit, setUserOutfit] = useState([]);
 
-  // HOOKS
   // API HANDLER
   useEffect(() => {
     const getRelatedProductIds = async () => {
@@ -54,15 +42,15 @@ export default function RelatedItems() {
   }, [selectedProduct]);
 
   // JSX
-  if (isLoaded && relatedProductIds.length >= 1) {
-    return (
-      <UserContext.Provider
-        value={{
-          userContext: [currentUser, setCurrentUser],
-          outfitContext: [userOutfit, setUserOutfit],
-        }}
-      >
-        <div className='related-items-and-comparison' id='related-items'>
+  return (
+    <UserContext.Provider
+      value={{
+        userContext: [currentUser, setCurrentUser],
+        outfitContext: [userOutfit, setUserOutfit],
+      }}
+    >
+      <div className='related-items-and-comparison'>
+        <Suspense fallback={<h2>Loading...</h2>}>
           <RelatedItemsHeader>Related Items</RelatedItemsHeader>
           <Carousel
             name='related-items'
@@ -70,19 +58,10 @@ export default function RelatedItems() {
           />
           <YourOutfitHeader>Your Outfit</YourOutfitHeader>
           <Carousel name='your-outfit' />
-        </div>
-      </UserContext.Provider>
-    );
-  } else {
-    return (
-      <div className='related-items-and-comparison'>
-        <h3>RELATED ITEMS</h3>
-        <h2>Loading...</h2>
-        <h3>YOUR OUTFIT</h3>
-        <h2>Loading...</h2>
+        </Suspense>
       </div>
-    );
-  }
+    </UserContext.Provider>
+  );
 }
 const RelatedItemsHeader = styled.h3`
    font-size: xx-large;

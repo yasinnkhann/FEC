@@ -1,12 +1,15 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, Suspense} from 'react';
 import axios from 'axios';
-import Overview from './overview/Overview.jsx';
-import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
-import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
-import RelatedItems from './relatedItems/RelatedItems.jsx';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
+// import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
+// import Overview from './overview/Overview.jsx';
+
+const Overview = React.lazy(() => import('./overview/Overview.jsx'));
+const QuestionsAnswers = React.lazy(() => import('./questionsAnswers/QuestionsAnswers.jsx'));
+const RatingsReviews = React.lazy(() => import('./ratingsReviews/RatingsReviews.jsx'));
+const RelatedItems = React.lazy(() => import('./relatedItems/RelatedItems.jsx'));
 
 import {serverURL} from '../config.js';
 
@@ -117,22 +120,8 @@ export default function App() {
         <Routes href='#product-overview'>Product Overview</Routes>
       </HeaderDiv>
       <Fragment>
-        {isLoaded ? (
           <>
-            <AppContext.Provider
-              value={{
-                productsContext: [products, setProducts],
-                selectedProductContext: [selectedProduct, setSelectedProduct],
-              }}
-            >
-              <Overview />
-              <RelatedItems />
-              <QuestionsAnswers />
-              <RatingsReviews />
-            </AppContext.Provider>
-          </>
-        ) : (
-          <Loader
+          <Suspense fallback={<Loader
             type='Oval'
             color='#38062B'
             height={160}
@@ -145,7 +134,20 @@ export default function App() {
               transform: 'translate(-50%, -50%)',
             }}
           />
-        )}
+          }>
+              <AppContext.Provider
+                value={{
+                  productsContext: [products, setProducts],
+                  selectedProductContext: [selectedProduct, setSelectedProduct],
+                }}
+              >
+                <Overview />
+                <RelatedItems />
+                <QuestionsAnswers />
+                <RatingsReviews />
+              </AppContext.Provider>
+            </Suspense>
+          </>
       </Fragment>
     </Body>
   );

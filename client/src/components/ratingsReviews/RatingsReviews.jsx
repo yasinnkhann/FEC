@@ -2,17 +2,12 @@ import React, { useState, useEffect, useContext, Fragment} from 'react';
 // import React, { useState, useEffect, useContext, Fragment, Suspense, lazy } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-
 import AppContext from '../../AppContext.js';
-
 import ReviewList from './reviewList/ReviewList.jsx';
 import WriteReview from './writeReviews/WriteReview.jsx';
 import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
 import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
 import SortOptions from './sortOptions/SortOption.jsx';
-
-// import metaDummy from './metaDummy.jsx';
-// import dummyDataReviews from './dummyDataReviews.jsx';
 import {serverURL} from '../../config.js';
 
 // const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
@@ -48,7 +43,6 @@ const mainDiv = {
   marginRight: 'auto',
   marginBottom: '30px',
   color: '#fdf0d5',
-  fontFamily: 'Open Sans, sans-serif, Arial',
   scrollBehavior: 'smooth',
 };
 
@@ -74,15 +68,6 @@ const HeaderDiv = styled.div `
 `;
 
 const addReviewBtnStyle = {
-  // border: '1px solid grey',
-  // boxShadow: '2px 2px 4px grey',
-  // backgroundColor: 'white',
-  // padding: '10px',
-  // margin: 'auto',
-  // width: 'auto',
-  // maxWidth: '300px',
-  // minWidth: '150px',
-  // borderRadius: '16px',
   border: 'none',
   color: 'black',
   padding: '10px 20px',
@@ -100,11 +85,6 @@ const addReviewBtnStyle = {
 };
 
 const moreReviewsBtn = {
-  // border: '1px solid grey',
-  // width: '150px',
-  // boxShadow: '2px 2px 4px grey',
-  // backgroundColor: 'white',
-  // padding: '10px',
   border: 'none',
   color: 'black',
   padding: '10px 20px',
@@ -289,15 +269,12 @@ export default function RatingsReviews() {
         `${serverURL}/reviews`,
         reviewData,
         {
-          params: {
-            product_id: selectedProduct.id
-          },
           headers: {
             'Content-Type': 'application/json',
           }
         }
       );
-      console.log('Add Review POST Success!! :: ', res);
+      // console.log('Add Review POST Success!! :: ', res);
     } catch (err) {
       console.log('err on review POST:: ', err);
     }
@@ -350,14 +327,6 @@ export default function RatingsReviews() {
         {isLoaded ? (
           <>
             <div style = {mainDiv}>
-
-              {/* {console.log('from reviewList:', reviewList)} */}
-              {/* {console.log('from metaData:', metaData)} */}
-              {/* {console.log('selectedProduct:: ', selectedProduct)} */}
-              {/* {console.log('review CacheData:: ', reviewCache)} */}
-              {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
-              {/* {console.log('listSort:: ', listSort)}  */}
-
               {reviewsReady === true && (
                 <div style={gridLayout}>
                   <div style={ratingGrid}>
@@ -427,93 +396,3 @@ export default function RatingsReviews() {
     </Fragment>
   );
 }
-
-// return (
-//   <Fragment>
-//     {isLoaded ? (
-//       <div style = {mainDiv}>
-//         {/* {console.log('from reviewList:', reviewList)} */}
-//         {/* {console.log('from metaData:', metaData)} */}
-//         {/* {console.log('selectedProduct:: ', selectedProduct)} */}
-//         {/* {console.log('review CacheData:: ', reviewCache)} */}
-//         {/* {console.log('reviewCacheState: ', reviewCacheState)} */}
-//         {/* {console.log('listSort:: ', listSort)}  */}
-
-//         {reviewsReady === true && (
-//           <div style={gridLayout}>
-//             <div style={ratingGrid}>
-//               <RatingBreakdown
-//                 metaData={metaData}
-//                 sortByStar={sortByStar}
-//                 starSort={starSort}
-//                 clearStarFilter={clearStarFilter}
-//               />
-//             </div>
-//             <div style={productStyle}>
-//               <ProductBreakdown metaData={metaData} />
-//             </div>
-//             {writeReviewModal && (
-//               <div
-//                 style={modalStyle}
-//                 aria-hidden="true"
-//                 role="button"
-//                 onClick={exitWriteReviewClick}
-//               >
-//                 <div
-//                   style={innerModalStyle}
-//                   aria-hidden="true"
-//                   onClick={(e) => e.stopPropagation()}
-//                 >
-//                   <WriteReview
-//                     handleReviewData={handleReviewData}
-//                     productID={selectedProduct}
-//                     metaData={metaData}
-//                   />
-//                   <br />
-//                 </div>
-//               </div>
-//             )}
-//             <div style={sortOptionsStyle}>
-//               <SortOptions metaData={metaData} listSort={listSort} listSortChange={listSortChange} />
-//             </div>
-//             <div style={reviewListStyle}>
-//               <ReviewList
-//                 reviewCache={reviewCache}
-//                 reviewCacheState={reviewCacheState}
-//                 starSort={starSort}
-//                 reviewList={reviewList}
-//                 reviewEnd={reviewEnd}
-//                 handlePut={handlePut}
-//               />
-//             </div>
-//             <div style={reviewButtonsStyle}>
-//               <div style={{ display: 'flex', marginTop: '90px', justifyContent: 'space-evenly' }}>
-//                 {reviewList.results.length > 2 && hideMoreReviews === false && (
-//                   <button className="moreReviews" type="button" style={moreReviewsBtn} onClick={moreReviewsClick}>
-//                     MORE REVIEWS
-//                   </button>
-//                 )}
-//                 <button id="addReview" type="button" onClick={writeReviewClick} style={addReviewBtnStyle}>
-//                   ADD A REVIEW +
-//                 </button>
-//               </div>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//     ) : (
-//       <Loader
-//         type='Oval'
-//         color='blue'
-//         height={160}
-//         width={160}
-//         arialLabel='loading-indicator'
-//         style={{
-//           position: 'fixed',
-//           top: '50%',
-//           left: '50%',
-//           transform: 'translate(-50%, -50%)',
-//         }} />
-//     )}
-//   </Fragment>
-// );

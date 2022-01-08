@@ -14,12 +14,6 @@ export function isAtBeginningIndex(relatedProducts, visibleProducts) {
     return relatedProducts[0]?.data.id === visibleProducts[0]?.data.id
   }
   return false;
-  // if (!relatedProducts[0] || !visibleProducts[0]) {
-  //   return;
-  // }
-  // const firstRelatedItem = relatedProducts[0].data.id;
-  // const firstVisibleItem = visibleProducts[0].data.id;
-  // return firstVisibleItem === firstRelatedItem;
 };
 
 // Divides width of inner window by width of a card and rounds up to the nearest integer
@@ -29,4 +23,52 @@ export function getMaxIndexBasedOnScreenSize() {
   const width = window.innerWidth;
   const maxIndexBasedOnScreenSize = width % 200 > 0 ? Math.floor(width / 200) : 1;
   return maxIndexBasedOnScreenSize;
+};
+
+export function getMaxLengthOfCombinedArrays(arr) {
+  return Math.max(...[...arr.map(e => e ? e.length : 0), arr.length]);
+}
+
+export function getFeatures(featuresArray) {
+  return featuresArray?.map(product => { return product[1].feature; });
+};
+
+export function getValues(valuesArray) {
+  return valuesArray?.map(product => { return product[1].value; });
+};
+
+export function mapProductValues(listToMap) {
+  return listToMap.map(currentValue => {
+    if (typeof currentValue === 'object' ) {
+      return [...Object.entries(currentValue)];
+    } else {
+      return formatValue(currentValue);
+    }
+  });
+};
+
+export function mapCategories(categoryList) {
+  return categoryList.map(product => {
+    return formatWord(product);
+  });
+};
+
+export function formatWord(wordToBeFormatted) {
+  let capitalizedWord = capitalize(wordToBeFormatted);
+  let formattedWord = capitalizedWord.replace('_', ' ');
+  return formattedWord;
+};
+
+export function formatValue(valueToFormat) {
+  return valueToFormat.toString();
+};
+
+export function capitalize(wordToCapitalize) {
+  if (typeof wordToCapitalize !== 'string') {
+    wordToCapitalize = wordToCapitalize.toString();
+  }
+  let capitalizedWord = wordToCapitalize.toLowerCase();
+  let firstLetter = capitalizedWord.slice(0, 1).toUpperCase();
+  capitalizedWord = firstLetter.concat(capitalizedWord.slice(1));
+  return capitalizedWord;
 };

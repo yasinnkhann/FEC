@@ -1,30 +1,30 @@
-// Dependency imports
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef, Suspense } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-
-// Context imports
 import AppContext from '../../AppContext.js';
 import ModalContext from './ModalContext.js';
-
-// Component imports
-import ActionButton from './ActionButton.jsx';
-import AddToOutfit from './AddToOutfit.jsx';
-import Modal from './Modal.jsx';
-import ProductPreviewImages from './ProductPreviewImages.jsx';
-import ProductInfo from './ProductInfo.jsx';
+import UserContext from './UserContext.js';
 import {serverURL} from '../../config.js';
 
+const ActionButton = React.lazy(() => import('./ActionButton.jsx'));
+const AddToOutfit = React.lazy(() => import('./AddToOutfit.jsx'));
+const Modal = React.lazy(() => import('./Modal.jsx'));
+const ProductPreviewImages = React.lazy(() => import('./ProductPreviewImages.jsx'));
+const ProductInfo = React.lazy(() => import('./ProductInfo.jsx'));
+
 // CARD
-export default function CarouselCard({ product, name }) {
+export default function CarouselCard({ product, name, carouselName }) {
   // CONTEXT
   const { selectedProductContext } = useContext(AppContext);
+  const {outfitContext} = useContext(UserContext);
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
+  const [userOutfit, setUserOutfit] = outfitContext;
   const [imageUrl, setimageUrl] = useState('');
   const [styles, setStyles] = useState([]);
   const [salePrice, setSalePrice] = useState(null);
+
 
   // REF
   const modal = useRef(null);
@@ -59,38 +59,44 @@ export default function CarouselCard({ product, name }) {
       if (product) { getProductStyle(product.id); }
   }, []);
 
-
-
   // EVENT HANDLERS
   const handleClick = (newSelectedProduct) => {
     setSelectedProduct(newSelectedProduct);
     document.body.style.cursor = 'wait';
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     document.body.style.cursor = 'default';
   };
+
+  const removeFromOutfit = () => {
+    setUserOutfit(state => [...state].filter(item => item.id !== product.id))
+  }
 
   // RENDER METHODS
   const renderCard = (cardName) => {
     if (cardName === 'add-button') {
       return (
-        <CardStyle >
-          <ProductInfoStyle >
-            <AddToOutfit />
-          </ProductInfoStyle>
-        </CardStyle>
+        <Suspense fallback={<h2>Loading...</h2>}>
+          <CardStyle >
+            <ProductInfoStyle >
+              <AddToOutfit />
+            </ProductInfoStyle>
+          </CardStyle>
+        </Suspense>
       );
     } else {
       return (
-        <CardStyle >
-          <ActionStyle onClick={() => modal.current.open()}>
-            <ActionButton name="open-modal" />
-          </ActionStyle>
-          <Modal key={`modal-${product.id}`} ref={modal} product={product} />
-          <ProductInfoStyle onClick={() => handleClick(product)} >
-            <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
-            <ProductInfo product={product} styles={styles} salePrice={salePrice} />
-          </ProductInfoStyle>
-        </CardStyle>
+        <Suspense fallback={<h2>Loading...</h2>}>
+          <CardStyle >
+            <ActionStyle onClick={carouselName === 'related-items' ? () => modal.current.open() : () => removeFromOutfit()}>
+              <ActionButton name={carouselName ==='related-items' ? "open-modal" : "close"} />
+            </ActionStyle>
+            <Modal key={`modal-${product.id}`} ref={modal} product={product} />
+            <ProductInfoStyle onClick={() => handleClick(product)} >
+              <ProductPreviewImages imageUrl={imageUrl} productName={product.name} />
+              <ProductInfo product={product} styles={styles} salePrice={salePrice} />
+            </ProductInfoStyle>
+          </CardStyle>
+        </Suspense>
       );
     }
   };
@@ -102,7 +108,7 @@ export default function CarouselCard({ product, name }) {
 }
 
 const CardStyle = styled.div`
-  width: 208px;
+  width: 210px;
   height: 310px;
   margin: 5px;
   background-color: #B1A9AC;
@@ -110,6 +116,9 @@ const CardStyle = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
+  &:hover {
+    box-shadow: 5px 3px 3px #38062b;
+  }
 `;
 
 const ProductInfoStyle = styled.div`
@@ -125,4 +134,5 @@ const ActionStyle = styled.a`
   z-index: 2;
   max-height: 35px;
   max-width: 35px;
+  color: #b1a8ac;
 `;

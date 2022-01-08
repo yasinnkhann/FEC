@@ -210,7 +210,7 @@ export default function StyleSelector() {
       const body = {
         sku_id: getSkuId[0],
       };
-      const res = await axios.post(`${URL}/cart/addToCart`, body, {
+      const res = await axios.post(`${serverURL}/cart/addToCart`, body, {
         headers: {
           'Content-Type': 'application/json',
         },
