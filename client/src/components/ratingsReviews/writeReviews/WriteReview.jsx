@@ -235,7 +235,7 @@ class WriteReview extends React.Component {
     const { email } = this.state;
     const { metaData } = this.props;
     // console.log('props:: ', this.props);
-    console.log('state:: ', this.state);
+    // console.log('state:: ', this.state);
     return (
       <div>
         <form onSubmit={this.HandleReviewData} id="reviewForm" style={gridLayout}>
