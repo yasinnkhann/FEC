@@ -225,11 +225,6 @@ const LeftArrow = styled.div`
 `;
 
 const RightArrow = styled.div`
-<<<<<<< HEAD
   background-color: #38062b;
   color: #fdf0d5;
-=======
-  background-color: #38062B;
-  color: #FDF0D5;
->>>>>>> main
 `;
