@@ -1,11 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import styled from 'styled-components';
 import StylesContext from '../overview/StylesContext.js';
+const ActionButton = React.lazy(() => import('./ActionButton.jsx'));
 
 // PRODUCT PREVIEW IMAGES
 export default function ProductPreviewImages({ imageUrl, productName }) {
+
   // JSX
-  return <Image src={imageUrl} alt={productName} />;
+  return (
+    <Suspense fallback={<></>}>
+        <Image src={imageUrl} alt={productName} />
+    </Suspense>
+  )
 }
 
 const Image = styled.img`

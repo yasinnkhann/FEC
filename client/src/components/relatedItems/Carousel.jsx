@@ -97,7 +97,7 @@ export default function Carousel({ name, relatedProductIds }) {
       if (visibleProducts && visibleProducts.length >= 1) {
         return (
           visibleProducts.map(product =>
-            <Card key={product.data.id} product={product.data} name="related-item" />
+            <Card key={product.data.id} product={product.data} name="related-item" carouselName="related-items" />
           )
         );
       } else {
@@ -107,7 +107,7 @@ export default function Carousel({ name, relatedProductIds }) {
     if (name === 'your-outfit') {
       let outfitList = [];
       outfitList = userOutfit?.map(outfitPiece =>
-        <Card key={outfitPiece.id} product={outfitPiece} name={outfitPiece.name} />
+        <Card key={outfitPiece.id} product={outfitPiece} name={outfitPiece.name} carouselName="your-outfit" />
       );
       outfitList.unshift(<Card key="add-to-outfit" name="add-button"/>);
       return (
