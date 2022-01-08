@@ -9,7 +9,7 @@
     "watch": "webpack --config ./webpack.config.js --mode development -w",
     "test": "jest --env=jsdom",
     "coverage": "jest --coverage",
-    "build": "webpack --mode production"
+    "build": "webpack --mode=development"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
@@ -19,9 +19,10 @@
     "axios": "^0.24.0",
     "cors": "^2.8.5",
     "express": "^4.17.2",
+    "firebase": "^9.6.2",
     "global": "^4.4.0",
     "moment": "^2.29.1",
-    "mysql2": "2.3.3" ,
+    "mysql2": "2.3.3",
     "react": "^17.0.2",
     "react-dev": "^0.0.1",
     "react-dom": "^17.0.2",
