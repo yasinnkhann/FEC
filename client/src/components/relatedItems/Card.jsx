@@ -75,7 +75,7 @@ export default function CarouselCard({ product, name, carouselName }) {
   const renderCard = (cardName) => {
     if (cardName === 'add-button') {
       return (
-        <Suspense fallback={<h2>Loading...</h2>}>
+        <Suspense fallback={<td>Loading...</td>}>
           <CardStyle >
             <ProductInfoStyle >
               <AddToOutfit />
@@ -85,7 +85,7 @@ export default function CarouselCard({ product, name, carouselName }) {
       );
     } else {
       return (
-        <Suspense fallback={<h2>Loading...</h2>}>
+        <Suspense fallback={<td>Loading...</td>}>
           <CardStyle >
             <ActionStyle onClick={carouselName === 'related-items' ? () => modal.current.open() : () => removeFromOutfit()}>
               <ActionButton name={carouselName ==='related-items' ? "open-modal" : "close"} />

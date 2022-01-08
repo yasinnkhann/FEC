@@ -73,7 +73,7 @@ export default function App() {
         }
       };
       getApi();
-    }, 400);
+    }, 500);
 
     return () => clearTimeout(clearId);
   }, []);

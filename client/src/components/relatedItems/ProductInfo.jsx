@@ -21,7 +21,6 @@ export default function ProductInfo({ product, styles, salePrice }) {
       <Suspense fallback={<h2>Loading...</h2>}>
         {product !== null ? (
           <InfoCardStyle className="product-info">
-
             <InfoCategory>Category: {product.category}</InfoCategory>
             <InfoProductName>{product.name}</InfoProductName>
             {hasSalePrice ?
