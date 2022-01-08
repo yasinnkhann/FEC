@@ -32,24 +32,24 @@ export default function RelatedItems() {
   // HOOKS
   // API HANDLER
   useEffect(() => {
-      const getRelatedProductIds = async () => {
-        try {
-          const res = await axios.get(
-            `${serverURL}/products/related`,
-            {
-              params: {
-                product_id: selectedProduct.id
-              },
-            }
-          );
-          setIsLoaded(true);
-          let noDupedIds = Array.from(new Set(res.data));
-          setRelatedProductIds(noDupedIds);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      getRelatedProductIds();
+    const getRelatedProductIds = async () => {
+      try {
+        const res = await axios.get(
+          `${serverURL}/products/related`,
+          {
+            params: {
+              product_id: selectedProduct.id
+            },
+          }
+        );
+        setIsLoaded(true);
+        let noDupedIds = Array.from(new Set(res.data));
+        setRelatedProductIds(noDupedIds);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getRelatedProductIds();
 
   }, [selectedProduct]);
 
@@ -62,7 +62,7 @@ export default function RelatedItems() {
           outfitContext: [userOutfit, setUserOutfit],
         }}
       >
-        <div className='related-items-and-comparison'>
+        <div className='related-items-and-comparison' id='related-items'>
           <RelatedItemsHeader>Related Items</RelatedItemsHeader>
           <Carousel
             name='related-items'
