@@ -19,8 +19,8 @@ describe('QuestionsAnswers Component', () => {
   });
   test('Is Q&A title rendered', () => {
     screen.getByRole('');
-    // const { getByText } = render(<QuestionsAnswers />);
-    // const title = getByText(/Questions &#38; Answers/i);
-    // expect(title).toBeInTheDocument();
+    const { getByText } = render(<QuestionsAnswers />);
+    const title = getByText(/Questions &#38; Answers/i);
+    expect(title).toBeInTheDocument();
   });
 });
