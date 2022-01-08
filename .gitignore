@@ -7,4 +7,7 @@ server/controllers/config.js
 .DS_Store
 package-lock.json
 coverage
+FEC-Key.pem
+client/src/components/ratingsReviews/metaDummy.jsx
+client/src/components/ratingsReviews/dummyDataReviews.jsx
 *.bundle.js
