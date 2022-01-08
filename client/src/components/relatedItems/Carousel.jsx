@@ -111,6 +111,7 @@ export default function Carousel({ name, relatedProductIds }) {
             key={product.data.id}
             product={product.data}
             name='related-item'
+            carouselName="related-items"
           />
         ));
       } else {
@@ -124,6 +125,7 @@ export default function Carousel({ name, relatedProductIds }) {
           key={outfitPiece.id}
           product={outfitPiece}
           name={outfitPiece.name}
+          carouselName="your-outfit"
         />
       ));
       outfitList.unshift(<Card key='add-to-outfit' name='add-button' />);
