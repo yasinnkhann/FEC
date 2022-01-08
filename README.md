@@ -59,15 +59,6 @@ the question and answer section. The average rating is displayed as a star ratin
 4. Connect with:
    > `http://34.223.4.224/`
 
----
-
-## Contributors
-
-   > `yarn run build`
-
-4. Run server with:
-   > `yarn run start`
-
 
 ## Technologies used
 ### **Set-up and Workflow**
