@@ -126,8 +126,8 @@ export default function Overview() {
           </Container>
         </Grid>
         <InfoBox>
-          <Slogan>{selectedProduct.slogan}</Slogan>
-          <Description>{selectedProduct.description}</Description>
+          <Slogan>{selectedProduct?.slogan}</Slogan>
+          <Description>{selectedProduct?.description}</Description>
         </InfoBox>
       </Layout>
     </div>

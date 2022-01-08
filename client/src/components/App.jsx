@@ -3,11 +3,13 @@ import axios from 'axios';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
+// import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
+// import Overview from './overview/Overview.jsx';
 
-const Overview = React.lazy(() => import('./questionsAnswers/QuestionsAnswers.jsx'));
-const QuestionsAnswers = React.lazy(() => import('./ratingsReviews/RatingsReviews.jsx'));
-const RatingsReviews = React.lazy(() => import('./relatedItems/RelatedItems.jsx'));
-const RelatedItems = React.lazy(() => import('../AppContext.js'));
+const Overview = React.lazy(() => import('./overview/Overview.jsx'));
+const QuestionsAnswers = React.lazy(() => import('./questionsAnswers/QuestionsAnswers.jsx'));
+const RatingsReviews = React.lazy(() => import('./ratingsReviews/RatingsReviews.jsx'));
+const RelatedItems = React.lazy(() => import('./relatedItems/RelatedItems.jsx'));
 
 import {serverURL} from '../config.js';
 
