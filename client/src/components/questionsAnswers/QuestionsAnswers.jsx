@@ -44,7 +44,6 @@ export default function QuestionsAnswers() {
         const res = await axios.get(`${serverURL}/qa/questions`, {
           params: {
             product_id: selectedProduct?.id,
-            // product_id: products[345]?.id,
             // page: 1,
             count: 20,
           },
@@ -88,8 +87,6 @@ export default function QuestionsAnswers() {
           </QuestionsContext.Provider>
         </>
       )}
-      {/* {console.log('PRODUCTS FROM QA: ', products)} */}
-      {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
     </div>
   );
 }

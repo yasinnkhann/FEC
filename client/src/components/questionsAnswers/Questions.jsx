@@ -1,8 +1,8 @@
 import React, { useState, useContext, Suspense, lazy } from 'react';
 import styled from 'styled-components';
 import QuestionsContext from './QuestionsContext.js';
+import Question from './Question.jsx';
 
-const Question = lazy(() => import('./Question.jsx'));
 const AddQuestion = lazy(() => import('./AddQuestion.jsx'));
 
 export default function Questions({
@@ -27,11 +27,7 @@ export default function Questions({
     initialQs = questionsData
       ?.slice(0, 4)
       .map(question => (
-        <>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Question key={question.question_id} questionObj={question} />
-          </Suspense>
-        </>
+        <Question key={question.question_id} questionObj={question} />
       ))
       .sort(
         (a, b) =>
@@ -41,11 +37,7 @@ export default function Questions({
     remainingQs = questionsData
       ?.slice(4)
       .map(question => (
-        <>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Question key={question.question_id} questionObj={question} />
-          </Suspense>
-        </>
+        <Question key={question.question_id} questionObj={question} />
       ))
       .sort(
         (a, b) =>
@@ -56,11 +48,7 @@ export default function Questions({
     initialQs = filteredData
       ?.slice(0, 4)
       .map(question => (
-        <>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Question key={question.question_id} questionObj={question} />
-          </Suspense>
-        </>
+        <Question key={question.question_id} questionObj={question} />
       ))
       .sort(
         (a, b) =>
@@ -70,11 +58,7 @@ export default function Questions({
     remainingQs = filteredData
       ?.slice(4)
       .map(question => (
-        <>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Question key={question.question_id} questionObj={question} />
-          </Suspense>
-        </>
+        <Question key={question.question_id} questionObj={question} />
       ))
       .sort(
         (a, b) =>
@@ -140,10 +124,6 @@ export default function Questions({
           </Suspense>
         </>
       )}
-      {/* {console.log('INITIAL QS: ', initialQs)}
-      {console.log('REMAINING QS: ', remainingQs)}
-      {console.log('FILTERED DATA: ', filteredData)} */}
-      {/* {console.log('QUESTIONS DATA: ', questionsData)} */}
     </Container>
   );
 }
