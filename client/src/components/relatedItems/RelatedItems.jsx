@@ -62,7 +62,7 @@ export default function RelatedItems() {
           outfitContext: [userOutfit, setUserOutfit],
         }}
       >
-        <div className='related-items-and-comparison'>
+        <div className='related-items-and-comparison' id='related-items'>
           <RelatedItemsHeader>Related Items</RelatedItemsHeader>
           <Carousel
             name='related-items'

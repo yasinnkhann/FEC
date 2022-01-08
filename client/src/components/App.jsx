@@ -17,6 +17,36 @@ const Body = styled.div `
   background: linear-gradient(0deg, rgba(56,6,43,1) 10%, rgba(177,169,172,1) 51%, rgba(253,240,213,1) 100%);
 `;
 
+const HeaderDiv = styled.div `
+  background-color: #38062b;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  top: 0;
+`;
+const PageName = styled.div`
+  float: left;
+  color: #fdf0d5;
+  text-align: center;
+  font-family: 'Questrial', sans-serif;
+  padding: 20px 20px;
+  font-size: 35px;
+  letter-spacing: 4.5px;
+  text-transform: uppercase;
+  margin-left: 1rem;
+`;
+const Routes = styled.a `
+  float: right;
+  color: #fdf0d5;
+  text-align: center;
+  font-family: 'Lobster Two', cursive;
+  padding: 20px 20px;
+  font-size: 20px;
+  &:hover {
+    color: #b1a9ac;
+  }
+`;
+
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -79,6 +109,13 @@ export default function App() {
 
   return (
     <Body>
+      <HeaderDiv>
+        <PageName>Slink</PageName>
+        <Routes href='#ratings-reviews'>Ratings &#38; Reviews</Routes>
+        <Routes href='#questions-answers'>Questions &#38; Answers</Routes>
+        <Routes href='#related-items'>Related Items</Routes>
+        <Routes href='#product-overview'>Product Overview</Routes>
+      </HeaderDiv>
       <Fragment>
         {isLoaded ? (
           <>

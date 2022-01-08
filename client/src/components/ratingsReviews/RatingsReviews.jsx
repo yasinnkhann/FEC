@@ -291,7 +291,7 @@ export default function RatingsReviews() {
     return (
       <Suspense fallback={<div> Loading...</div>}>
         <div>
-          <div className="ratings-and-reviews" style={noReviewsGrid}>
+          <div className="ratings-and-reviews" id='ratings-reviews' style={noReviewsGrid}>
             <div style={{ textAlign: 'center', fontSize: '30px', gridRow: '1', color: '#B1A9AC' }}>
           No review for this product Be the first to add one!
             </div>
@@ -315,7 +315,7 @@ export default function RatingsReviews() {
   return (
     <Suspense fallback={<div> Loading...</div>}>
       <Fragment>
-        <div className="ratings-and-reviews">
+        <div className="ratings-and-reviews" id='ratings-reviews'>
           <HeaderDiv><HeaderStyle>Ratings &#38; Reviews</HeaderStyle></HeaderDiv>
           {(
             <>
