@@ -1,14 +1,18 @@
-import { getMaxLengthOfCombinedArrays, getFeatures, filterArraysByFeature, getValues, getRows, mapProductValues, mapCategories, formatWord, formatValue, capitalize } from './utils';
 import React, { useState, useImperativeHandle, useCallback, useEffect, useContext, forwardRef, Suspense } from 'react';
+import { getMaxLengthOfCombinedArrays, getFeatures, filterArraysByFeature, getValues, getRows, mapProductValues, mapCategories, formatWord, formatValue, capitalize } from './utils';
 import { createPortal } from 'react-dom';
 import styled, { keyframes } from 'styled-components';
 import CheckIcon from '@material-ui/icons/Check';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import { union } from 'lodash';
+
+// Context imports
 import AppContext from '../../AppContext.js';
 import ModalContext from './ModalContext.js';
 
+// Component imports
 const ActionButton = React.lazy(() => import('./ActionButton.jsx'));
+
 const modalElement = document.getElementById('modal-root');
 
 // MODAL
@@ -54,6 +58,7 @@ export const Modal = ({ product, fade = false }, ref) => {
     if (e.keyCode === 27) { close(); }
   }, [close]);
 
+
   // HELPER FUNCTIONS: Table Rendering
   const renderTable = (currentProduct, comparedProduct) => {
     const categoriesArray = union([...Object.keys(currentProduct)], [...Object.keys(comparedProduct)]);
@@ -94,6 +99,32 @@ export const Modal = ({ product, fade = false }, ref) => {
     }
   };
 
+  const renderNameColumn = (leftProduct, category, rightProduct) => {
+    return (
+      <ModalBoldRow key={category ? category : null}>
+        <td>{`${leftProduct}`}</td>
+        <VS>vs</VS>
+        <td>{`${rightProduct}`}</td>
+      </ModalBoldRow>
+    );
+  };
+
+  const renderRow = (leftValue, feature, rightValue) => {
+    return (
+      <ModalRow key={feature ? feature : null}>
+        <RightAndLeftRowFeature>
+          {typeof leftValue === 'boolean' ? <CheckIcon /> : !leftValue ? <NotInterestedIcon /> : leftValue}
+        </RightAndLeftRowFeature>
+        <ProductMiddleFeature>
+          {feature}
+        </ProductMiddleFeature>
+        <RightAndLeftRowFeature>
+          {typeof rightValue === 'boolean' ? <CheckIcon /> : !rightValue ? <NotInterestedIcon /> : rightValue}
+        </RightAndLeftRowFeature>
+      </ModalRow>
+    );
+  };
+
   const getRows = (leftProduct, featuresArr, rightProduct) => {
     return featuresArr.map((feature) => {
       let left = null;
@@ -108,9 +139,11 @@ export const Modal = ({ product, fade = false }, ref) => {
           }
         }
       }
+
       if (rightProduct && Array.isArray(rightProduct)) {
         for (let j = 0; j < rightProduct.length; j++) {
           let rProduct = rightProduct[j][1];
+          console.log('CURRENT R INDEX::', rProduct);
           if (rProduct.feature === feature) {
             right = rProduct.value;
           } else {
@@ -122,25 +155,7 @@ export const Modal = ({ product, fade = false }, ref) => {
     });
   };
 
-  const renderNameColumn = (leftProduct, category, rightProduct) => {
-    return (
-      <ModalBoldRow key={category ? category : null}>
-        <td>{`${category}: ${leftProduct}`}</td>
-        <td>{null}</td>
-        <td>{`${category}: ${rightProduct}`}</td>
-      </ModalBoldRow>
-    );
-  };
-
-  const renderRow = (leftValue, feature, rightValue) => {
-    return (
-        <ModalRow key={feature ? feature : null}>
-          <td> {typeof leftValue === 'boolean' ? <CheckIcon /> : !leftValue ? <NotInterestedIcon /> : leftValue} </td>
-          <td> {feature} </td>
-          <td> {typeof rightValue === 'boolean' ? <CheckIcon /> : !rightValue ? <NotInterestedIcon /> : rightValue} </td>
-        </ModalRow>
-    );
-  };
+  // HELPER FUNCTIONS: Formatting
 
   // JSX
   return createPortal(
@@ -149,20 +164,19 @@ export const Modal = ({ product, fade = false }, ref) => {
       <Suspense fallback={<h2>Loading...</h2>}>
         <ModalStyle className={`modal ${fade ? 'modal-fade' : ''}`}>
           <ModalOverlay onClick={close}>
+            <ModalClose onClick={close}>
+              <ActionButton name="close-modal" />
+            </ModalClose>
             <ModalBody className="modal-body">
-              <ModalClose onClick={close}>
-                <ActionButton name="close-modal" />
-              </ModalClose>
-              <table>
+              <ModalTable>
                 <thead>
                   <ModalBoldRow>
-                    <ModalTitle><h2>Comparing</h2></ModalTitle>
                   </ModalBoldRow>
                 </thead>
                 <tbody>
                   {renderTable(product, selectedProduct)}
                 </tbody>
-              </table>
+              </ModalTable>
             </ModalBody>
           </ModalOverlay>
         </ModalStyle>
