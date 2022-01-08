@@ -5,11 +5,7 @@ import { Photo } from '@material-ui/icons';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 
-<<<<<<< HEAD
-const URL = 'http://localhost:3000/api'
-=======
 import {serverURL} from '../../config.js';
->>>>>>> production
 
 const Checked = styled.div`
   position: absolute;
@@ -214,7 +210,7 @@ export default function StyleSelector() {
       const body = {
         sku_id: getSkuId[0],
       };
-      const res = await axios.post(`${URL}/cart/addToCart`, body, {
+      const res = await axios.post(`${serverURL}/cart/addToCart`, body, {
         headers: {
           'Content-Type': 'application/json',
         },
