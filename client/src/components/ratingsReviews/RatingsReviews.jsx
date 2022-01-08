@@ -2,21 +2,13 @@ import React, { useState, useEffect, useContext, Fragment, Suspense, lazy } from
 import axios from 'axios';
 import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
-import ReviewList from './reviewList/ReviewList.jsx';
-import WriteReview from './writeReviews/WriteReview.jsx';
-import RatingBreakdown from './ratingBreakdown/RatingBreakdown.jsx';
-import ProductBreakdown from './productBreakdown/ProductBreakdown.jsx';
-import SortOptions from './sortOptions/SortOption.jsx';
+import {serverURL} from '../../config.js';
 
-// import metaDummy from './metaDummy.jsx';
-// import dummyDataReviews from './dummyDataReviews.jsx';
-import { serverURL } from '../../config.js';
-
-// const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
-// const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
-// const RatingBreakdown = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
-// const ProductBreakdown = React.lazy(() => import('./productBreakdown/ProductBreakdown.jsx'));
-// const SortOptions = React.lazy(() => import('./sortOptions/SortOption.jsx'));
+const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
+const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
+const RatingBreakdown = React.lazy(() => import('./ratingBreakdown/RatingBreakdown.jsx'));
+const ProductBreakdown = React.lazy(() => import('./productBreakdown/ProductBreakdown.jsx'));
+const SortOptions = React.lazy(() => import('./sortOptions/SortOption.jsx'));
 
 const gridLayout = {
   display: 'grid',
