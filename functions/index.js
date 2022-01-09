@@ -11,8 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(router);
 
-// app.get('/', (req, res) => res.status(200).send('Hello World!'));
+app.get('/', (req, res) => res.status(200).send('Hello World!'));
 
 
 exports.api = functions.https.onRequest(app);
 
+// https://us-central1-project-catwalk-f2680.cloudfunctions.net/api
