@@ -25,7 +25,7 @@ are on each item card, as well as the option to compare the related product to t
 item card. The outfit has the option to add the current product to a user specific outfit that persists as the current product changes. It is also
 possible to remove any product from an outfit.
 
-![](https://media.giphy.com/media/LharojqjrGGwXIzDEE/giphy.gif)
+![](https://media.giphy.com/media/LharojqjrGGwXIzDEE/giphy-downsized-large.gif)
 
 # Questions and Answers
 ### **Contributor: Yasin Khan**
