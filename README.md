@@ -13,8 +13,6 @@ The main description for the product currently being viewed. It shows all the re
 sizing, average customer rating, quantity in stock, and ability to add to cart. While our team was not tasked with the full Cart service we ensured it was connected properly. The main image can be clicked on for a more detailed view, as well as having access to the rest of the pictures
 for that specific item, so as to not require exiting the zoom view and selecting another thumbnail. This greatly improved user experience.
 
-![Overview](<img src='https://giphy.com/gifs/RYQFYUTsZfr0meAWoD' />);
-
 # Related Products and Outfit
 ### **Contributor: Kenneth Bakke**
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kenneth-bakke-543a39157/)
@@ -25,8 +23,6 @@ are on each item card, as well as the option to compare the related product to t
 item card. The outfit has the option to add the current product to a user specific outfit that persists as the current product changes. It is also
 possible to remove any product from an outfit.
 
-![Related Items](<img src='https://giphy.com/gifs/LharojqjrGGwXIzDEE' />)
-
 # Questions and Answers
 ### **Contributor: Yasin Khan**
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yasin-khan-09245ba9/)
@@ -35,8 +31,6 @@ possible to remove any product from an outfit.
 Showing the first four user submitted questions related to the current product, each question shows the top answer on click. If there are more questions, there is a button to show the next two questions. There is also a button inside each question to view more answers if they exist.
 The ability to mark specific questions and/or answers as helpful is implemented as well as the ability to report a question or answer.
 There is also the option to add a question and answer, both with the functionality of adding images and required data for viewing.
-
-![Questions & Answers](<img src='https://giphy.com/gifs/CMgTuEdytNqcNZrqIE' />)
 
 # Ratings and Reviews
 ### **Contributor: Hatha Dam**
@@ -47,7 +41,6 @@ Every user is able to view all reviews for the current product, an average ratin
 reviewer specific rating, the date submitted, and optional pictures. Reviews also have the option to be marked as helpful or to report just as with
 the question and answer section. The average rating is displayed as a star rating ranging from 1 to 5 stars. This average based on all the review scores and displays number of reviews for each of the star options. There is also a list of product characteristics that show the average rating for each characteristic. Finally there is also an option to add your own review complete with image handling, required characteristics, and text input.
 
-![Ratings & Reviews](<img src='https://giphy.com/gifs/ZNxH8bRV8SmNMa4SQ4v' />)
 
 
 ## Getting Started
