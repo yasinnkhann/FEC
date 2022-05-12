@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
 import StylesContext from './StylesContext.js';
 import styled from 'styled-components';
-import { Photo } from '@material-ui/icons';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
-
 import { serverURL } from '../../config.js';
 
 const Checked = styled.div`
@@ -31,7 +29,7 @@ const StylePic = styled.img`
 
 const StyleName = styled.h3`
   font-family: 'Lobster Two';
-  color: #38062B;
+  color: #38062b;
 `;
 const SelectedStyle = styled.h3``;
 const Button = styled.button`

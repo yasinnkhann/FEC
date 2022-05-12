@@ -7,14 +7,14 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 // ADD TO OUTFIT
 export default function AddToOutfit() {
   // CONTEXT
-  const {selectedProductContext} = useContext(AppContext);
-  const {outfitContext} = useContext(UserContext);
+  const { selectedProductContext } = useContext(AppContext);
+  const { outfitContext } = useContext(UserContext);
 
   // STATE
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
   const [userOutfit, setUserOutfit] = outfitContext;
 
-  const addToOutfit = (productToAdd) => {
+  const addToOutfit = productToAdd => {
     if (userOutfit.length === 0) {
       setUserOutfit([productToAdd]);
     } else {
@@ -34,13 +34,16 @@ export default function AddToOutfit() {
 
   // JSX
   return (
-    <AddButtonStyle >
+    <AddButtonStyle>
       <OutfitHeader>ADD TO OUTFIT</OutfitHeader>
-      <AddBoxIcon onClick={() => addToOutfit(selectedProduct)} style={{ fontSize: 40, marginLeft: '5rem'}} />
+      <AddBoxIcon
+        onClick={() => addToOutfit(selectedProduct)}
+        style={{ fontSize: 40, marginLeft: '5rem' }}
+      />
     </AddButtonStyle>
   );
 }
-const OutfitHeader = styled.h3 `
+const OutfitHeader = styled.h3`
   text-align: center;
   margin-left: 2rem;
 `;

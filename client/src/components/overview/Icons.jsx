@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PinterestIcon from '@material-ui/icons/Pinterest';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';

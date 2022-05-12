@@ -1,35 +1,36 @@
-var path = require('path');
-var SRC_DIR = path.join(__dirname, '/client/src');
-var DIST_DIR = path.join(__dirname, '/client/dist');
+const path = require('path');
+const SRC_DIR = path.join(__dirname, '/client/src');
+const DIST_DIR = path.join(__dirname, '/client/dist');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: `${SRC_DIR}/index.jsx`,
   output: {
     filename: 'bundle.js',
     path: DIST_DIR,
   },
-  devtool: 'eval-source-map',
+  target: 'web',
+  devServer: {
+    port: '3000',
+    static: ['./client/dist'],
+    open: true,
+    hot: true,
+    liveReload: true,
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
+  },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)?/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: [
-              ['@babel/plugin-syntax-dynamic-import'],
-              [
-                  '@babel/plugin-transform-runtime',
-                {
-                  regenerator: true,
-                },
-              ]
-            ],
-          },
         },
       },
     ],
   },
+  plugins: [new HtmlWebpackPlugin({ template: `${SRC_DIR}/index.html` })],
 };

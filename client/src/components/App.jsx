@@ -7,7 +7,6 @@ import RelatedItems from './relatedItems/RelatedItems.jsx';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
-
 import { serverURL } from '../config.js';
 
 const Body = styled.div`

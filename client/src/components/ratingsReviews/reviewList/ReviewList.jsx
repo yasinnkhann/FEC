@@ -7,7 +7,14 @@ const gridLayout = {
   alignItems: 'center',
 };
 
-const ReviewList = ({ reviewList, reviewEnd, handlePut, starSort, reviewCacheState, reviewCache }) => {
+const ReviewList = ({
+  reviewList,
+  reviewEnd,
+  handlePut,
+  starSort,
+  reviewCacheState,
+  reviewCache,
+}) => {
   return (
     <div>
       {starSort.length === 0 && (
@@ -20,9 +27,15 @@ const ReviewList = ({ reviewList, reviewEnd, handlePut, starSort, reviewCacheSta
       {starSort.length > 0 && (
         <ul style={gridLayout}>
           {reviewCache[reviewCacheState].results.map((review, key) =>
-            starSort.map((star) => {
+            starSort.map(star => {
               if (Number(star) === review.rating) {
-                return <ReviewListEntry review={review} key={key} handlePut={handlePut} />;
+                return (
+                  <ReviewListEntry
+                    review={review}
+                    key={key}
+                    handlePut={handlePut}
+                  />
+                );
               }
             })
           )}

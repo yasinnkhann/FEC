@@ -1,15 +1,9 @@
 import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import AppContext from '../../AppContext.js';
 import styled from 'styled-components';
-// import ProductDetail from './ProductDetail.jsx';
-// import ImageGallery from './ImageGallery.jsx';
 import axios from 'axios';
 import ReviewsContext from './ReviewsContext.js';
-// import ReviewsStars from './ReviewsStars.jsx';
-// import StyleSelector from './StyleSelector.jsx';
 import StylesContext from './StylesContext.js';
-// import Icons from './Icons.jsx';
-
 import { serverURL } from '../../config.js';
 
 const ProductDetail = lazy(() => import('./ProductDetail.jsx'));
@@ -115,7 +109,6 @@ export default function Overview() {
               currentStyleContent: [currentStyle, setCurrentStyle],
             }}
           >
-            {/* {loadingStatusStyles && <ImageGallery />} */}
             {loadingStatusStyles && (
               <>
                 <Suspense fallback={<div>Loading...</div>}>
@@ -126,7 +119,6 @@ export default function Overview() {
           </StylesContext.Provider>
           <Container>
             <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
-              {/* {loadingStatusReviews && <ReviewsStars />} */}
               {loadingStatusStyles && (
                 <>
                   <Suspense fallback={<div>Loading...</div>}>
@@ -135,7 +127,6 @@ export default function Overview() {
                 </>
               )}
             </ReviewsContext.Provider>
-            {/* <ProductDetail product={selectedProduct} /> */}
             <Suspense fallback={<div>Loading...</div>}>
               <ProductDetail product={selectedProduct} />
             </Suspense>
@@ -145,7 +136,6 @@ export default function Overview() {
                 currentStyleContent: [currentStyle, setCurrentStyle],
               }}
             >
-              {/* {loadingStatusStyles && <StyleSelector />} */}
               {loadingStatusStyles && (
                 <>
                   <Suspense fallback={<div>Loading...</div>}>
@@ -154,7 +144,6 @@ export default function Overview() {
                 </>
               )}
             </StylesContext.Provider>
-            {/* <Icons /> */}
             <Suspense fallback={<div>Loading...</div>}>
               <Icons />
             </Suspense>

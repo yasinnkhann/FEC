@@ -18,7 +18,11 @@ const descriptionFlex = {
   flexDirection: 'column',
 };
 
-const CharacteristicsRadioListEntry = ({ characteristicID, characteristic, characteristicsRadioClick }) => (
+const CharacteristicsRadioListEntry = ({
+  characteristicID,
+  characteristic,
+  characteristicsRadioClick,
+}) => (
   <div>
     <div style={containerStyle}>
       <b style={{ color: '#38062B' }}> * </b>
@@ -27,13 +31,13 @@ const CharacteristicsRadioListEntry = ({ characteristicID, characteristic, chara
     <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
       <div style={centerFlex}>
         <input
-          type="radio"
+          type='radio'
           id={`${characteristic}1`}
           name={characteristicID}
-          value="1"
+          value='1'
           onClick={characteristicsRadioClick}
         />
-        <label htmlFor="size1" style={descriptionFlex}>
+        <label htmlFor='size1' style={descriptionFlex}>
           {characteristic === 'Size' && <div> A size too small</div>}
           {characteristic === 'Width' && <div> Too narrow </div>}
           {characteristic === 'Comfort' && <div> Uncomfortable </div>}
@@ -44,13 +48,13 @@ const CharacteristicsRadioListEntry = ({ characteristicID, characteristic, chara
       </div>
       <div style={centerFlex}>
         <input
-          type="radio"
+          type='radio'
           id={`${characteristic}2`}
           name={characteristicID}
-          value="2"
+          value='2'
           onClick={characteristicsRadioClick}
         />
-        <label htmlFor="size2" style={descriptionFlex}>
+        <label htmlFor='size2' style={descriptionFlex}>
           {characteristic === 'Size' && <div> ½ a size too small </div>}
           {characteristic === 'Width' && <div> Slightly narrow </div>}
           {characteristic === 'Comfort' && <div> Slightly uncomfortable</div>}
@@ -61,13 +65,13 @@ const CharacteristicsRadioListEntry = ({ characteristicID, characteristic, chara
       </div>
       <div style={centerFlex}>
         <input
-          type="radio"
+          type='radio'
           id={`${characteristic}3`}
           name={characteristicID}
-          value="3"
+          value='3'
           onClick={characteristicsRadioClick}
         />
-        <label htmlFor="size3" style={descriptionFlex}>
+        <label htmlFor='size3' style={descriptionFlex}>
           {characteristic === 'Size' && <div> Perfect </div>}
           {characteristic === 'Width' && <div> Perfect </div>}
           {characteristic === 'Comfort' && <div> Ok </div>}
@@ -78,13 +82,13 @@ const CharacteristicsRadioListEntry = ({ characteristicID, characteristic, chara
       </div>
       <div style={centerFlex}>
         <input
-          type="radio"
+          type='radio'
           id={`${characteristic}4`}
           name={characteristicID}
-          value="4"
+          value='4'
           onClick={characteristicsRadioClick}
         />
-        <label htmlFor="size4" style={descriptionFlex}>
+        <label htmlFor='size4' style={descriptionFlex}>
           {characteristic === 'Size' && <div> ½ a size too big </div>}
           {characteristic === 'Width' && <div> Slightly wide </div>}
           {characteristic === 'Comfort' && <div> Comfortable </div>}
@@ -95,13 +99,13 @@ const CharacteristicsRadioListEntry = ({ characteristicID, characteristic, chara
       </div>
       <div style={centerFlex}>
         <input
-          type="radio"
+          type='radio'
           id={`${characteristic}5`}
           name={characteristicID}
-          value="5"
+          value='5'
           onClick={characteristicsRadioClick}
         />
-        <label htmlFor="size5" style={descriptionFlex}>
+        <label htmlFor='size5' style={descriptionFlex}>
           {characteristic === 'Size' && <div> A size too wide </div>}
           {characteristic === 'Width' && <div> Too wide </div>}
           {characteristic === 'Comfort' && <div> Perfect </div>}

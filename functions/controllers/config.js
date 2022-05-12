@@ -1,4 +1,4 @@
-const TOKEN = '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';
+const TOKEN = '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';
 
 const cloudinaryInfo = {
   CLOUDINARY_NAME: 'dwbhfydeg',
@@ -12,6 +12,6 @@ const cloudinaryInfo = {
 };
 
 module.exports = {
-  TOKEN: TOKEN,
-  cloudinaryInfo: cloudinaryInfo,
+  TOKEN,
+  cloudinaryInfo,
 };

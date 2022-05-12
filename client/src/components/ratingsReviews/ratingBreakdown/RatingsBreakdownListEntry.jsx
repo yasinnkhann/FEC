@@ -34,8 +34,19 @@ const starPercentage = (obj, key) => {
   return (Number(obj[key]) / total).toFixed(2) * 100;
 };
 
-const RatingsBreakdownListEntry = ({ rating, ratings, totalRating, sortByStar }) => (
-  <div id={rating} aria-hidden="true" className="starBar" style={starBarFlex} onClick={sortByStar}>
+const RatingsBreakdownListEntry = ({
+  rating,
+  ratings,
+  totalRating,
+  sortByStar,
+}) => (
+  <div
+    id={rating}
+    aria-hidden='true'
+    className='starBar'
+    style={starBarFlex}
+    onClick={sortByStar}
+  >
     <u id={rating} style={starFont}>
       {`${rating} stars`}
     </u>

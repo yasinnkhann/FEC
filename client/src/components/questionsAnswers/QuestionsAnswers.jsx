@@ -39,12 +39,9 @@ export default function QuestionsAnswers() {
   };
 
   useEffect(() => {
-    const abortCont = new AbortController();
-
     const getQs = async () => {
       try {
         const res = await axios.get(`${serverURL}/qa/questions`, {
-          signal: abortCont.signal,
           params: {
             product_id: selectedProduct?.id,
             // page: 1,
@@ -57,17 +54,11 @@ export default function QuestionsAnswers() {
         setQuestionsData(res.data);
         setIsLoaded(true);
       } catch (err) {
-        if (err.name === 'AbortError') {
-          console.log('fetch aborted');
-        } else {
-          console.error(err);
-        }
+        console.error(err);
       }
     };
 
     getQs();
-
-    return () => abortCont.abort();
   }, [selectedProduct]);
 
   return (

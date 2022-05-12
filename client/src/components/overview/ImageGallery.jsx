@@ -182,12 +182,6 @@ export default function ImageGallery() {
     };
   }, [modalOpen]);
 
-  // useEffect (() => {
-  //   setSize(100);
-  //   setMouseX(0);
-  //   setMouseY(0);
-  // }, [zoomMode]);
-
   const renderPhoto = () => {
     return getItemsForPage(currentPage).map((photo, index) => {
       const imageRendered = photo?.thumbnail_url
@@ -228,46 +222,7 @@ export default function ImageGallery() {
       );
     });
   };
-  // const handleMouseOver = () => {
-  //   setZoomMode(false);
-  // };
-  // const handleMouseOut = () => {
-  //   setZoomMode(false);
-  // };
 
-  // const handleMouseMovement = (e) => {
-  //   const {left, top, width, height} =
-  //   e.target.getBoundingClientRect();
-  //   const x = (e.pageX - left) / width * 100;
-  //   const y = (e.pageY - top) / height * 100;
-  //   //console.log(x, y);
-  //   setMouseX(x);
-  //   setSize(250);
-  //   setMouseY(y);
-  // };
-  // const OnClose = () => {
-  //   setSize(100);
-  // };
-  // const src = currentStyle.photos[currentIndex].url;
-
-  // const ModalImg = {
-  //   width: '1000px',
-  //   height: '1000px',
-  //   cursor: 'zoom-in',
-  //   //backgroundImage: src,
-  //   //backgroundPosition: `${mouseX}% ${mouseY}%`
-  // };
-  // const ZoomImg = {
-  //   width: '100%',
-  //   height: '100%',
-  //   cursor: 'zoom-out',
-  //   '&:hover': {
-  //     backgroundImage: src,
-  //     opacity: 0,
-  //     backgroundPosition: `${mouseX}% ${mouseY}%`,
-  //     backgroundSize: `${size}%`
-  //   }
-  // };
   const renderPortal = ({ portal }) => {
     return portal(
       <div>
@@ -366,46 +321,3 @@ export default function ImageGallery() {
     </MainImgContainer>
   );
 }
-
-// const renderPortal = ({ portal }) => {
-//   return portal(
-//     <div>
-//       <ModalContainer
-//         onClick={(e) => setmodalOpen(false)}>
-//         <ModalBody
-//           onClick = {(e) => {
-//             e.stopPropagation();
-//           }}>
-//           {zoomMode ?
-//             <div style={ZoomImg}>
-//               <img
-//                 onClick={() => setZoomMode(!zoomMode)}
-//                 onMouseMove={(e) => handleMouseMovement(e)}
-//                 onMouseOver = {() => handleMouseOver}
-//                 onMouseOut = {() => handleMouseOut}
-//                 src = {currentStyle.photos[currentIndex].url}>
-//               </img>
-//             </div>
-//             :
-//             <>
-//               <ModalImg
-//                 onClick={() => setZoomMode(!zoomMode)} src={src}>
-//               </ModalImg>
-//               <ThumbnailExpandedContainer>
-//                 <LeftExpand onClick={(e) => {
-//                   e.stopPropagation();
-//                   { currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : null; }
-//                 }}><ChevronLeftIcon/>
-//                 </LeftExpand>
-//                 {renderExpandedPhotos()}
-//                 <RightExpand onClick={(e) => {
-//                   { currentIndex < currentStyle.photos.length - 1 ? setCurrentIndex(currentIndex + 1) : null; }
-//                 }}><ChevronRightIcon/></RightExpand>
-//               </ThumbnailExpandedContainer>
-//             </>
-//           }
-//         </ModalBody>
-//       </ModalContainer>
-//     </div>
-//   );
-// };

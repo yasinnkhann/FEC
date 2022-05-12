@@ -1,5 +1,24 @@
-import React, { useState, useImperativeHandle, useCallback, useEffect, useContext, forwardRef, Suspense } from 'react';
-import { getMaxLengthOfCombinedArrays, getFeatures, filterArraysByFeature, getValues, getRows, mapProductValues, mapCategories, formatWord, formatValue, capitalize } from './utils';
+import React, {
+  useState,
+  useImperativeHandle,
+  useCallback,
+  useEffect,
+  useContext,
+  forwardRef,
+  Suspense,
+} from 'react';
+import {
+  getMaxLengthOfCombinedArrays,
+  getFeatures,
+  filterArraysByFeature,
+  getValues,
+  getRows,
+  mapProductValues,
+  mapCategories,
+  formatWord,
+  formatValue,
+  capitalize,
+} from './utils';
 import { createPortal } from 'react-dom';
 import styled, { keyframes } from 'styled-components';
 import CheckIcon from '@material-ui/icons/Check';
@@ -54,30 +73,53 @@ export const Modal = ({ product, fade = false }, ref) => {
   };
 
   // Triggers close on escape keydown or click
-  const handleEscape = useCallback(e => {
-    if (e.keyCode === 27) { close(); }
-  }, [close]);
-
+  const handleEscape = useCallback(
+    e => {
+      if (e.keyCode === 27) {
+        close();
+      }
+    },
+    [close]
+  );
 
   // HELPER FUNCTIONS: Table Rendering
   const renderTable = (currentProduct, comparedProduct) => {
-    const categoriesArray = union([...Object.keys(currentProduct)], [...Object.keys(comparedProduct)]);
-    const formattedCurrentProductArray = mapProductValues([...Object.values(currentProduct)]);
-    const formattedComparedProductArray = mapProductValues([...Object.values(comparedProduct)]);
+    const categoriesArray = union(
+      [...Object.keys(currentProduct)],
+      [...Object.keys(comparedProduct)]
+    );
+    const formattedCurrentProductArray = mapProductValues([
+      ...Object.values(currentProduct),
+    ]);
+    const formattedComparedProductArray = mapProductValues([
+      ...Object.values(comparedProduct),
+    ]);
     const formattedCategoriesArray = mapCategories(categoriesArray);
 
-    return (
-      filterArraysByFeature(formattedCurrentProductArray, formattedCategoriesArray, formattedComparedProductArray)
+    return filterArraysByFeature(
+      formattedCurrentProductArray,
+      formattedCategoriesArray,
+      formattedComparedProductArray
     );
   };
 
-  const filterArraysByFeature = (currentProductArray, categoryArray, compareProductArray) => {
-    const tableArray = [currentProductArray, categoryArray, compareProductArray];
+  const filterArraysByFeature = (
+    currentProductArray,
+    categoryArray,
+    compareProductArray
+  ) => {
+    const tableArray = [
+      currentProductArray,
+      categoryArray,
+      compareProductArray,
+    ];
     const len = getMaxLengthOfCombinedArrays(tableArray);
     let comparisonTable = [];
 
     for (let i = 0; i < len; i++) {
-      comparisonTable.push(renderRows(tableArray[0][i], tableArray[1][i], tableArray[2][i]));
+      comparisonTable.push(
+        renderRows(tableArray[0][i], tableArray[1][i], tableArray[2][i])
+      );
     }
 
     return comparisonTable;
@@ -113,20 +155,30 @@ export const Modal = ({ product, fade = false }, ref) => {
     return (
       <ModalRow key={feature ? feature : null}>
         <RightAndLeftRowFeature>
-          {typeof leftValue === 'boolean' ? <CheckIcon /> : !leftValue ? <NotInterestedIcon /> : leftValue}
+          {typeof leftValue === 'boolean' ? (
+            <CheckIcon />
+          ) : !leftValue ? (
+            <NotInterestedIcon />
+          ) : (
+            leftValue
+          )}
         </RightAndLeftRowFeature>
-        <ProductMiddleFeature>
-          {feature}
-        </ProductMiddleFeature>
+        <ProductMiddleFeature>{feature}</ProductMiddleFeature>
         <RightAndLeftRowFeature>
-          {typeof rightValue === 'boolean' ? <CheckIcon /> : !rightValue ? <NotInterestedIcon /> : rightValue}
+          {typeof rightValue === 'boolean' ? (
+            <CheckIcon />
+          ) : !rightValue ? (
+            <NotInterestedIcon />
+          ) : (
+            rightValue
+          )}
         </RightAndLeftRowFeature>
       </ModalRow>
     );
   };
 
   const getRows = (leftProduct, featuresArr, rightProduct) => {
-    return featuresArr.map((feature) => {
+    return featuresArr.map(feature => {
       let left = null;
       let right = null;
       if (leftProduct && Array.isArray(leftProduct)) {
@@ -164,18 +216,15 @@ export const Modal = ({ product, fade = false }, ref) => {
       <Suspense fallback={<h2>Loading...</h2>}>
         <ModalStyle className={`modal ${fade ? 'modal-fade' : ''}`}>
           <ModalOverlay onClick={close}>
-            <ModalBody className="modal-body">
+            <ModalBody className='modal-body'>
               <ModalClose onClick={close}>
-                <ActionButton name="close-modal" />
+                <ActionButton name='close-modal' />
               </ModalClose>
               <ModalTable>
                 <thead>
-                  <ModalBoldRow>
-                  </ModalBoldRow>
+                  <ModalBoldRow></ModalBoldRow>
                 </thead>
-                <tbody>
-                  {renderTable(product, selectedProduct)}
-                </tbody>
+                <tbody>{renderTable(product, selectedProduct)}</tbody>
               </ModalTable>
             </ModalBody>
           </ModalOverlay>
@@ -230,7 +279,7 @@ const ModalOverlay = styled.div`
   left: 0;
 `;
 
-const VS = styled.td `
+const VS = styled.td`
   float: center;
 `;
 
@@ -304,9 +353,8 @@ const ModalTitle = styled.h2`
   font-family: 'Open Sans';
   color: #38062b;
 `;
-const ModalTable = styled.table`
-`;
-const RightAndLeftRowFeature = styled.td `
+const ModalTable = styled.table``;
+const RightAndLeftRowFeature = styled.td`
   font-family: 'Open Sans';
   font-style: italic;
   font-size: small;
