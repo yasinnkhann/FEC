@@ -8,7 +8,7 @@ module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
   output: {
     filename: 'bundle.js',
-    path: DIST_DIR,
+    path: `${DIST_DIR}`,
   },
   target: 'web',
   devServer: {
@@ -32,5 +32,10 @@ module.exports = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: `${SRC_DIR}/index.html` })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: `${SRC_DIR}/index.html`,
+      favicon: `${SRC_DIR}/favicon.ico`,
+    }),
+  ],
 };
