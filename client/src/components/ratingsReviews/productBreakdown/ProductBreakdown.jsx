@@ -46,7 +46,7 @@ class ProductBreakdown extends React.Component {
     const { characteristics } = this.props.metaData;
     return (
       <div className='breakdown' id='route' style={gridLayout}>
-        {characteristics.Comfort && (
+        {characteristics?.Comfort && (
           <div
             style={{
               gridColumn: '1',
@@ -69,7 +69,7 @@ class ProductBreakdown extends React.Component {
                   color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${
-                    (this.characteristicStats(characteristics.Comfort.value) /
+                    (this.characteristicStats(characteristics?.Comfort?.value) /
                       5) *
                       100 -
                     2
@@ -79,7 +79,7 @@ class ProductBreakdown extends React.Component {
             </div>
           </div>
         )}
-        {characteristics.Fit && (
+        {characteristics?.Fit && (
           <div
             style={{
               gridColumn: '1',
@@ -112,7 +112,8 @@ class ProductBreakdown extends React.Component {
                   color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${
-                    (this.characteristicStats(characteristics.Fit.value) / 5) *
+                    (this.characteristicStats(characteristics?.Fit?.value) /
+                      5) *
                       100 -
                     2
                   }%`,
@@ -121,7 +122,7 @@ class ProductBreakdown extends React.Component {
             </div>
           </div>
         )}
-        {characteristics.Length && (
+        {characteristics?.length > 0 && (
           <div
             style={{
               gridColumn: '1',
@@ -160,7 +161,7 @@ class ProductBreakdown extends React.Component {
             </div>
           </div>
         )}
-        {characteristics.Quality && (
+        {characteristics?.Quality && (
           <div
             style={{
               gridColumn: '1',
@@ -188,7 +189,7 @@ class ProductBreakdown extends React.Component {
                   color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${
-                    (this.characteristicStats(characteristics.Quality.value) /
+                    (this.characteristicStats(characteristics?.Quality?.value) /
                       5) *
                       100 -
                     2
@@ -198,7 +199,7 @@ class ProductBreakdown extends React.Component {
             </div>
           </div>
         )}
-        {characteristics.Size && (
+        {characteristics?.Size && (
           <div
             style={{
               gridColumn: '1',
@@ -227,7 +228,8 @@ class ProductBreakdown extends React.Component {
                   color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${
-                    (this.characteristicStats(characteristics.Size.value) / 5) *
+                    (this.characteristicStats(characteristics?.Size?.value) /
+                      5) *
                       100 -
                     2
                   }%`,
@@ -236,7 +238,7 @@ class ProductBreakdown extends React.Component {
             </div>
           </div>
         )}
-        {characteristics.Width && (
+        {characteristics?.Width && (
           <div
             style={{
               gridColumn: '1',
@@ -265,7 +267,7 @@ class ProductBreakdown extends React.Component {
                   color: '#fdf0d5',
                   height: '20px',
                   marginLeft: `${
-                    (this.characteristicStats(characteristics.Width.value) /
+                    (this.characteristicStats(characteristics?.Width?.value) /
                       5) *
                       100 -
                     2

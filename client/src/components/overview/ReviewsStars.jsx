@@ -18,21 +18,26 @@ const Stars = styled.div`
 
 export default function ReviewsStars() {
   const { reviewsData, setreviewsData } = useContext(ReviewsContext);
+
   const totalReviews = () => {
-    let count = 0;
-    Object.entries(reviewsData.ratings)
-      .map(([key, value]) => {
-        return [parseInt(key), parseInt(value)];
-      })
-      .forEach(([key, value]) => {
-        count += value;
-      });
-    return count;
+    if (reviewsData.length > 0) {
+      console.log('reviewsData', reviewsData);
+      let count = 0;
+      Object.entries(reviewsData?.ratings)
+        .map(([key, value]) => {
+          return [parseInt(key), parseInt(value)];
+        })
+        .forEach(([key, value]) => {
+          count += value;
+        });
+      return count;
+    }
   };
+
   const average = () => {
     let count = 0;
     let sum = 0;
-    Object.entries(reviewsData.ratings)
+    Object.entries(reviewsData?.ratings)
       .map(([key, value]) => {
         return [parseInt(key), parseInt(value)];
       })

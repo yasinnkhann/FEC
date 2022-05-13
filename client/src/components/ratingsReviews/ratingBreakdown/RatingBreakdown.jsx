@@ -68,8 +68,8 @@ const averageRating = obj => {
 };
 
 const recommendedAverage = obj => {
-  const total = Number(obj.false) + Number(obj.true);
-  const result = Number(obj.true) / total;
+  const total = Number(obj?.false) + Number(obj?.true);
+  const result = Number(obj?.true) / total;
 
   if (isNaN(result.toFixed(2) * 100)) {
     return 0;

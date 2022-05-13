@@ -24,14 +24,16 @@ const starFont = {
 };
 
 const starPercentage = (obj, key) => {
-  let total = 0;
-  for (const star in obj) {
-    total += Number(obj[star]);
+  if (obj) {
+    let total = 0;
+    for (const star in obj) {
+      total += Number(obj[star]);
+    }
+    if (isNaN((Number(obj[key]) / total).toFixed(2))) {
+      return 0;
+    }
+    return (Number(obj[key]) / total).toFixed(2) * 100;
   }
-  if (isNaN((Number(obj[key]) / total).toFixed(2))) {
-    return 0;
-  }
-  return (Number(obj[key]) / total).toFixed(2) * 100;
 };
 
 const RatingsBreakdownListEntry = ({
@@ -57,7 +59,11 @@ const RatingsBreakdownListEntry = ({
           background: '#333baacc',
           height: '100%',
           borderRadius: 'inherit',
-          width: `${starPercentage(ratings, rating)}%`,
+          width: `${
+            starPercentage(ratings, rating)
+              ? starPercentage(ratings, rating)
+              : 0
+          }%`,
         }}
       />
     </div>

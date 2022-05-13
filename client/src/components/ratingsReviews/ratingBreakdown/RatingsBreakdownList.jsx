@@ -8,7 +8,7 @@ export default function RatingsBreakdownList({ metaData, sortByStar }) {
         <RatingsBreakdownListEntry
           rating={rating}
           ratings={metaData.ratings}
-          totalRating={metaData.ratings[rating] || 0}
+          totalRating={metaData?.ratings?.rating || 0}
           sortByStar={sortByStar}
           key={rating}
         />
