@@ -42,6 +42,10 @@ const Logo = styled.div`
   letter-spacing: 4.5px;
   text-transform: uppercase;
   margin-left: 1rem;
+  cursor: pointer;
+  &:hover {
+    color: gold;
+  }
 `;
 
 const Nav = styled.nav`
@@ -122,10 +126,17 @@ export default function App() {
     sendClickData();
   });
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <MasterContainer>
       <Header>
-        <Logo>Slink</Logo>
+        <Logo onClick={scrollToTop}>Slink</Logo>
         <Nav>
           <Routes href='#ratings-reviews'>Ratings &#38; Reviews</Routes>
           <Routes href='#questions-answers'>Questions &#38; Answers</Routes>
