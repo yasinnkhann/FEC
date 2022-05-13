@@ -37,14 +37,17 @@ const Logo = styled.div`
   color: #fdf0d5;
   text-align: center;
   font-family: 'Questrial', sans-serif;
-  padding: 20px 20px;
-  font-size: 35px;
+  padding: 1.25rem 1rem 1.25rem 0rem;
+  font-size: 1.5rem;
   letter-spacing: 4.5px;
   text-transform: uppercase;
   margin-left: 1rem;
   cursor: pointer;
   &:hover {
     color: gold;
+  }
+  @media (min-width: 640px) {
+    font-size: 2rem;
   }
 `;
 
@@ -53,15 +56,18 @@ const Nav = styled.nav`
   justify-content: flex-end;
 `;
 
-const Routes = styled.a`
+const Routes = styled.p`
   font-family: 'Lobster Two', cursive;
   float: right;
   color: #fdf0d5;
   margin: 0 1rem;
   font-size: 1rem;
   align-self: center;
+  text-decoration: underline;
+  text-underline-offset: 1px;
+  cursor: pointer;
   &:hover {
-    color: #b1a9ac;
+    color: gold;
   }
   @media (min-width: 640px) {
     font-size: 1.25rem;
@@ -133,15 +139,36 @@ export default function App() {
     });
   };
 
+  const scrollToRelatedItems = () => {
+    window.scrollTo({
+      top: document.getElementById('related-items').offsetTop - 100,
+      behavior: 'smooth',
+    });
+  };
+
+  const scrollToQA = () => {
+    window.scrollTo({
+      top: document.getElementById('questions-answers').offsetTop - 100,
+      behavior: 'smooth',
+    });
+  };
+
+  const scrollToRR = () => {
+    window.scrollTo({
+      top: document.getElementById('ratings-reviews').offsetTop - 60,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <MasterContainer>
       <Header>
         <Logo onClick={scrollToTop}>Slink</Logo>
         <Nav>
-          <Routes href='#ratings-reviews'>Ratings &#38; Reviews</Routes>
-          <Routes href='#questions-answers'>Questions &#38; Answers</Routes>
-          <Routes href='#related-items'>Related Items</Routes>
-          <Routes href='#product-overview'>Product Overview</Routes>
+          <Routes onClick={scrollToTop}>Product Overview</Routes>
+          <Routes onClick={scrollToRelatedItems}>Related Items</Routes>
+          <Routes onClick={scrollToQA}>Questions &#38; Answers</Routes>
+          <Routes onClick={scrollToRR}>Ratings &#38; Reviews</Routes>
         </Nav>
       </Header>
       <>

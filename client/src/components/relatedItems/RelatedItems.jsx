@@ -3,8 +3,6 @@ import axios from 'axios';
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
 import styled from 'styled-components';
-
-// Variables
 import { serverURL } from '../../config.js';
 
 const Carousel = React.lazy(() => import('./Carousel.jsx'));
