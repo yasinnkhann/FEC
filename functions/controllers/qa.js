@@ -1,4 +1,4 @@
-const URL = require('./url.js');
+const HEROKU_URL = require('./heroku-url.js');
 const { TOKEN } = require('./config.js');
 const axios = require('axios');
 
@@ -7,7 +7,7 @@ module.exports = {
     const { question_id } = req.query;
     try {
       await axios.put(
-        `${URL}/qa/questions/${question_id}/helpful`,
+        `${HEROKU_URL}/qa/questions/${question_id}/helpful`,
         {},
         {
           headers: {
@@ -24,7 +24,7 @@ module.exports = {
     const { question_id } = req.query;
     try {
       await axios.put(
-        `${URL}/qa/questions/${question_id}/report`,
+        `${HEROKU_URL}/qa/questions/${question_id}/report`,
         {},
         {
           headers: {
@@ -41,7 +41,7 @@ module.exports = {
     const { answer_id } = req.query;
     try {
       await axios.put(
-        `${URL}/qa/answers/${answer_id}/helpful`,
+        `${HEROKU_URL}/qa/answers/${answer_id}/helpful`,
         {},
         {
           headers: {
@@ -58,7 +58,7 @@ module.exports = {
     const { answer_id } = req.query;
     try {
       await axios.put(
-        `${URL}/qa/answers/${answer_id}/report`,
+        `${HEROKU_URL}/qa/answers/${answer_id}/report`,
         {},
         {
           headers: {
@@ -75,14 +75,18 @@ module.exports = {
     const { question_id } = req.query;
     const body = req.body;
     try {
-      await axios.post(`${URL}/qa/questions/${question_id}/answers`, body, {
-        params: {
-          question_id: question_id,
-        },
-        headers: {
-          Authorization: `${TOKEN}`,
-        },
-      });
+      await axios.post(
+        `${HEROKU_URL}/qa/questions/${question_id}/answers`,
+        body,
+        {
+          params: {
+            question_id: question_id,
+          },
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
+      );
       res.status(201).json('CREATED');
     } catch (err) {
       console.error(err);
@@ -91,7 +95,7 @@ module.exports = {
   postQuestion: async function (req, res) {
     const body = req.body;
     try {
-      await axios.post(`${URL}/qa/questions`, body, {
+      await axios.post(`${HEROKU_URL}/qa/questions`, body, {
         headers: {
           Authorization: `${TOKEN}`,
         },
@@ -104,7 +108,7 @@ module.exports = {
   getQuestions: async function (req, res) {
     const { product_id, count } = req.query;
     try {
-      const response = await axios.get(`${URL}/qa/questions`, {
+      const response = await axios.get(`${HEROKU_URL}/qa/questions`, {
         params: {
           product_id: product_id,
           page: 1,
@@ -123,7 +127,7 @@ module.exports = {
     const { question_id } = req.query;
     try {
       const response = await axios.get(
-        `${URL}/qa/questions/${question_id}/answers`,
+        `${HEROKU_URL}/qa/questions/${question_id}/answers`,
         {
           params: {
             question_id: question_id,

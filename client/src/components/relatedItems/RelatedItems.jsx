@@ -49,7 +49,9 @@ export default function RelatedItems() {
     >
       <div className='related-items-and-comparison'>
         <Suspense fallback={<h2>Loading...</h2>}>
-          <RelatedItemsHeader>Related Items</RelatedItemsHeader>
+          <RelatedItemsHeader id='related-items'>
+            Related Items
+          </RelatedItemsHeader>
           <Carousel
             name='related-items'
             relatedProductIds={relatedProductIds}

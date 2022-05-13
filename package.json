@@ -10,7 +10,7 @@
     "build": "webpack --mode production",
     "test": "jest --env=jsdom",
     "coverage": "jest --coverage",
-    "deploy": "npm run build && firebase deploy --only hosting"
+    "deploy": "yarn run build && firebase deploy --only hosting"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",

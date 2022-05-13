@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Overview from './overview/Overview.jsx';
 import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
@@ -9,7 +9,7 @@ import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import { serverURL } from '../config.js';
 
-const Body = styled.div`
+const MasterContainer = styled.div`
   font-family: 'Open Sans';
   font-style: normal;
   background: #38062b;
@@ -21,14 +21,18 @@ const Body = styled.div`
   );
 `;
 
-const HeaderDiv = styled.div`
+const Header = styled.header`
   background-color: #38062b;
   position: fixed;
   z-index: 999;
   width: 100%;
   top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
-const PageName = styled.div`
+
+const Logo = styled.div`
   float: left;
   color: #fdf0d5;
   text-align: center;
@@ -39,22 +43,37 @@ const PageName = styled.div`
   text-transform: uppercase;
   margin-left: 1rem;
 `;
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const Routes = styled.a`
+  font-family: 'Lobster Two', cursive;
   float: right;
   color: #fdf0d5;
-  text-align: center;
-  font-family: 'Lobster Two', cursive;
-  padding: 20px 20px;
-  font-size: 20px;
+  margin: 0 1rem;
+  font-size: 1rem;
+  align-self: center;
   &:hover {
     color: #b1a9ac;
+  }
+  @media (min-width: 640px) {
+    font-size: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    font-size: 1.75rem;
   }
 `;
 
 export default function App() {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(products[0]); // For selecting the current product to be shown
+  const [selectedProduct, setSelectedProduct] = useState(products[0]);
 
   useEffect(() => {
     let clearId = setTimeout(() => {
@@ -90,7 +109,7 @@ export default function App() {
           widget: widget,
           time: date,
         };
-        const res = await axios.post(`${serverURL}/interactions`, body, {
+        await axios.post(`${serverURL}/interactions`, body, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -104,15 +123,17 @@ export default function App() {
   });
 
   return (
-    <Body>
-      <HeaderDiv>
-        <PageName>Slink</PageName>
-        <Routes href='#ratings-reviews'>Ratings &#38; Reviews</Routes>
-        <Routes href='#questions-answers'>Questions &#38; Answers</Routes>
-        <Routes href='#related-items'>Related Items</Routes>
-        <Routes href='#product-overview'>Product Overview</Routes>
-      </HeaderDiv>
-      <Fragment>
+    <MasterContainer>
+      <Header>
+        <Logo>Slink</Logo>
+        <Nav>
+          <Routes href='#ratings-reviews'>Ratings &#38; Reviews</Routes>
+          <Routes href='#questions-answers'>Questions &#38; Answers</Routes>
+          <Routes href='#related-items'>Related Items</Routes>
+          <Routes href='#product-overview'>Product Overview</Routes>
+        </Nav>
+      </Header>
+      <>
         {isLoaded ? (
           <>
             <AppContext.Provider
@@ -142,7 +163,7 @@ export default function App() {
             }}
           />
         )}
-      </Fragment>
-    </Body>
+      </>
+    </MasterContainer>
   );
 }

@@ -1,4 +1,4 @@
-const URL = require('./url.js');
+const HEROKU_URL = require('./heroku-url.js');
 const { TOKEN } = require('./config.js');
 const axios = require('axios');
 
@@ -6,7 +6,7 @@ module.exports = {
   getReviews: async function (req, res) {
     const { product_id, count } = req.query;
     try {
-      const response = await axios.get(`${URL}/reviews`, {
+      const response = await axios.get(`${HEROKU_URL}/reviews`, {
         params: {
           page: 1,
           count: count,
@@ -24,7 +24,7 @@ module.exports = {
   getReviewMetadata: async function (req, res) {
     const { product_id } = req.query;
     try {
-      const response = await axios.get(`${URL}/reviews/meta`, {
+      const response = await axios.get(`${HEROKU_URL}/reviews/meta`, {
         params: {
           count: 50,
           product_id: product_id,
@@ -41,7 +41,7 @@ module.exports = {
   postReview: async function (req, res) {
     const body = req.body;
     try {
-      await axios.post(`${URL}/reviews`, body, {
+      await axios.post(`${HEROKU_URL}/reviews`, body, {
         headers: {
           Authorization: `${TOKEN}`,
         },
@@ -55,7 +55,7 @@ module.exports = {
     const { review_id } = req.query;
     try {
       await axios.put(
-        `${URL}/reviews/${review_id}/helpful`,
+        `${HEROKU_URL}/reviews/${review_id}/helpful`,
         {},
         {
           headers: {
@@ -72,7 +72,7 @@ module.exports = {
     const { review_id } = req.query;
     try {
       await axios.put(
-        `${URL}/reviews/${review_id}/report`,
+        `${HEROKU_URL}/reviews/${review_id}/report`,
         {},
         {
           headers: {

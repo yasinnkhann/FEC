@@ -27,7 +27,7 @@ router.get('/qa/question/answers', controller.qa.getAnswers);
 router.get('/cart', controller.cart.getCart);
 router.post('/cart/addToCart', controller.cart.addToCart);
 
-// Interations
+// Interactions
 router.post('/interactions', controller.interactions.logInteraction);
 
 // Outfits

@@ -1,4 +1,4 @@
-const URL = require('./url.js');
+const HEROKU_URL = require('./heroku-url.js');
 const { TOKEN } = require('./config.js');
 const axios = require('axios');
 
@@ -6,7 +6,7 @@ module.exports = {
   logInteraction: async function (req, res) {
     const body = req.body;
     try {
-      await axios.post(`${URL}/interactions`, body, {
+      await axios.post(`${HEROKU_URL}/interactions`, body, {
         headers: {
           Authorization: `${TOKEN}`,
         },

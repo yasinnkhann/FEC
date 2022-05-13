@@ -1,12 +1,12 @@
-const URL = require('./url.js');
-const { TOKEN } = require('./config.js');
 const axios = require('axios');
+const HEROKU_URL = require('./heroku-url.js');
+const { TOKEN } = require('./config.js');
 
 module.exports = {
   addToCart: async function (req, res) {
     const body = req.body;
     try {
-      await axios.post(`${URL}/cart`, body, {
+      await axios.post(`${HEROKU_URL}/cart`, body, {
         headers: {
           Authorization: `${TOKEN}`,
         },
@@ -18,7 +18,7 @@ module.exports = {
   },
   getCart: async function (req, res) {
     try {
-      const response = await axios.get(`${URL}/cart`, {
+      const response = await axios.get(`${HEROKU_URL}/cart`, {
         headers: {
           Authorization: `${TOKEN}`,
         },
