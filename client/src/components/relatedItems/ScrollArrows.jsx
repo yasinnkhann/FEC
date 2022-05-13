@@ -7,7 +7,11 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 // SCROLL ARROWS
 const ScrollArrow = ({ direction }) => {
   // JSX
-  return <span>{direction === 'left' ? <ChevronLeftIcon /> : <ChevronRightIcon />}</span>;
+  return (
+    <span>
+      {direction === 'left' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+    </span>
+  );
 };
 
 export default ScrollArrow;

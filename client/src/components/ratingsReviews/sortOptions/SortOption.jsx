@@ -15,9 +15,9 @@ const optionsBar = {
   zIndex: '1',
   borderRadius: '16px',
   backgroundColor: '#b1a9ac',
-  color: '#38062b'
+  color: '#38062b',
 };
-const DropdownOptions = styled.option `
+const DropdownOptions = styled.option`
   background-color: #b1a9ac;
   color: #38062b;
 `;
@@ -40,12 +40,12 @@ class SortOptions extends React.Component {
     const { metaData } = this.props;
     return (
       <div>
-        <div style={{ fontWeight: 'bold', fontStyle: 'italic'}}>
+        <div style={{ fontWeight: 'bold', fontStyle: 'italic' }}>
           {`${this.totalReviews(metaData.ratings)} reviews, sorted by most`}
           <select style={optionsBar} onChange={listSortChange}>
-            <DropdownOptions value="1">Relevant</DropdownOptions>
-            <DropdownOptions value="2">Helpful</DropdownOptions>
-            <DropdownOptions value="3">Newest</DropdownOptions>
+            <DropdownOptions value='1'>Relevant</DropdownOptions>
+            <DropdownOptions value='2'>Helpful</DropdownOptions>
+            <DropdownOptions value='3'>Newest</DropdownOptions>
           </select>
         </div>
       </div>

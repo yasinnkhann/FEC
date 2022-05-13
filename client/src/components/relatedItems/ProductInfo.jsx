@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect, Fragment, Suspense } from 'react';
+import React, { useState, useEffect, Fragment, Suspense } from 'react';
 import styled from 'styled-components';
-import AppContext from '../../AppContext.js';
 const StarRating = React.lazy(() => import('./StarRating.jsx'));
 
 // PRODUCT INFO
@@ -20,14 +19,15 @@ export default function ProductInfo({ product, styles, salePrice }) {
     <Fragment>
       <Suspense fallback={<h2>Loading...</h2>}>
         {product !== null ? (
-          <InfoCardStyle className="product-info">
+          <InfoCardStyle className='product-info'>
             <InfoCategory>Category: {product.category}</InfoCategory>
             <InfoProductName>{product.name}</InfoProductName>
-            {hasSalePrice ?
+            {hasSalePrice ? (
               <SalePrice>{'$' + price}</SalePrice>
-              :
-              <Price>{'$' + price}</Price>}
-              <StarRating product={product} />
+            ) : (
+              <Price>{'$' + price}</Price>
+            )}
+            <StarRating product={product} />
           </InfoCardStyle>
         ) : (
           <h3>This will be an outfit</h3>
@@ -51,7 +51,6 @@ const InfoProductName = styled.h4`
   padding-left: 1rem;
   margin: 0 auto;
 `;
-
 
 const Price = styled.h4`
   margin: 0 auto;

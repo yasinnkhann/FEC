@@ -1,17 +1,20 @@
 // HELPER FUNCTIONS
 
 // Checks the last item of all products and last item of shown products and checks if they are the same
-export function isAtFinalIndex(relatedProducts, visibleProducts) {
+export const isAtFinalIndex = (relatedProducts, visibleProducts) => {
   if (relatedProducts && visibleProducts) {
-    return relatedProducts[relatedProducts.length - 1]?.data.id === visibleProducts[visibleProducts.length - 1]?.data.id
+    return (
+      relatedProducts[relatedProducts.length - 1]?.data.id ===
+      visibleProducts[visibleProducts.length - 1]?.data.id
+    );
   }
   return false;
 };
 
 // Checks the first item of all products and first item of shown products and checks if they are the same
-export function isAtBeginningIndex(relatedProducts, visibleProducts) {
+export const isAtBeginningIndex = (relatedProducts, visibleProducts) => {
   if (relatedProducts && visibleProducts) {
-    return relatedProducts[0]?.data.id === visibleProducts[0]?.data.id
+    return relatedProducts[0]?.data.id === visibleProducts[0]?.data.id;
   }
   return false;
 };
@@ -19,27 +22,32 @@ export function isAtBeginningIndex(relatedProducts, visibleProducts) {
 // Divides width of inner window by width of a card and rounds up to the nearest integer
 // then returns it. If the remainder of window width divided by card width is above zero
 // then the previous calculation is return, if not then we hard set the return value to 1
-export function getMaxIndexBasedOnScreenSize() {
+export const getMaxIndexBasedOnScreenSize = () => {
   const width = window.innerWidth;
-  const maxIndexBasedOnScreenSize = width % 200 > 0 ? Math.floor(width / 200) : 1;
+  const maxIndexBasedOnScreenSize =
+    width % 200 > 0 ? Math.floor(width / 200) : 1;
   return maxIndexBasedOnScreenSize;
 };
 
-export function getMaxLengthOfCombinedArrays(arr) {
-  return Math.max(...[...arr.map(e => e ? e.length : 0), arr.length]);
-}
-
-export function getFeatures(featuresArray) {
-  return featuresArray?.map(product => { return product[1].feature; });
+export const getMaxLengthOfCombinedArrays = arr => {
+  return Math.max(...[...arr.map(e => (e ? e.length : 0)), arr.length]);
 };
 
-export function getValues(valuesArray) {
-  return valuesArray?.map(product => { return product[1].value; });
+export const getFeatures = featuresArray => {
+  return featuresArray?.map(product => {
+    return product[1].feature;
+  });
 };
 
-export function mapProductValues(listToMap) {
+export const getValues = valuesArray => {
+  return valuesArray?.map(product => {
+    return product[1].value;
+  });
+};
+
+export const mapProductValues = listToMap => {
   return listToMap.map(currentValue => {
-    if (typeof currentValue === 'object' ) {
+    if (typeof currentValue === 'object') {
       return [...Object.entries(currentValue)];
     } else {
       return formatValue(currentValue);
@@ -47,23 +55,23 @@ export function mapProductValues(listToMap) {
   });
 };
 
-export function mapCategories(categoryList) {
+export const mapCategories = categoryList => {
   return categoryList.map(product => {
     return formatWord(product);
   });
 };
 
-export function formatWord(wordToBeFormatted) {
+export const formatWord = wordToBeFormatted => {
   let capitalizedWord = capitalize(wordToBeFormatted);
   let formattedWord = capitalizedWord.replace('_', ' ');
   return formattedWord;
 };
 
-export function formatValue(valueToFormat) {
+export const formatValue = valueToFormat => {
   return valueToFormat.toString();
 };
 
-export function capitalize(wordToCapitalize) {
+export const capitalize = wordToCapitalize => {
   if (typeof wordToCapitalize !== 'string') {
     wordToCapitalize = wordToCapitalize.toString();
   }

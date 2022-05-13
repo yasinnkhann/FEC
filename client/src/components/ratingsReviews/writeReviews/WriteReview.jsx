@@ -189,7 +189,6 @@ class WriteReview extends React.Component {
     const { metaData } = this.props;
     const { handleReviewData } = this.props;
 
-
     if (rating === null || recommend === null) {
       alert('Please fill out all required (*) fields');
       e.preventDefault();
@@ -203,11 +202,13 @@ class WriteReview extends React.Component {
     }
     // email check
     if (
-      !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ||
+      !email.match(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      ) ||
       email.length > 60 ||
       email.length === 0
     ) {
-      alert('Please make sure email is in proper format ex. \'hello@hello.com');
+      alert("Please make sure email is in proper format ex. 'hello@hello.com");
       e.preventDefault();
       return false;
     }
@@ -238,7 +239,11 @@ class WriteReview extends React.Component {
     // console.log('state:: ', this.state);
     return (
       <div>
-        <form onSubmit={this.HandleReviewData} id="reviewForm" style={gridLayout}>
+        <form
+          onSubmit={this.HandleReviewData}
+          id='reviewForm'
+          style={gridLayout}
+        >
           <div
             style={{
               gridColumn: '1/-1',
@@ -266,8 +271,8 @@ class WriteReview extends React.Component {
             >
               {mouseOver[0] === 1 ? (
                 <span
-                  className="fa fa-star"
-                  aria-hidden="true"
+                  className='fa fa-star'
+                  aria-hidden='true'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 0, 0, 0, 0] });
                   }}
@@ -277,7 +282,7 @@ class WriteReview extends React.Component {
                 />
               ) : (
                 <span
-                  className="fa fa-star-o"
+                  className='fa fa-star-o'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 0, 0, 0, 0] });
                   }}
@@ -285,8 +290,8 @@ class WriteReview extends React.Component {
               )}
               {mouseOver[1] === 1 ? (
                 <span
-                  className="fa fa-star"
-                  aria-hidden="true"
+                  className='fa fa-star'
+                  aria-hidden='true'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 1, 0, 0, 0] });
                   }}
@@ -296,7 +301,7 @@ class WriteReview extends React.Component {
                 />
               ) : (
                 <span
-                  className="fa fa-star-o"
+                  className='fa fa-star-o'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 1, 0, 0, 0] });
                   }}
@@ -304,8 +309,8 @@ class WriteReview extends React.Component {
               )}
               {mouseOver[2] === 1 ? (
                 <span
-                  className="fa fa-star"
-                  aria-hidden="true"
+                  className='fa fa-star'
+                  aria-hidden='true'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 1, 1, 0, 0] });
                   }}
@@ -315,7 +320,7 @@ class WriteReview extends React.Component {
                 />
               ) : (
                 <span
-                  className="fa fa-star-o"
+                  className='fa fa-star-o'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 1, 1, 0, 0] });
                   }}
@@ -323,8 +328,8 @@ class WriteReview extends React.Component {
               )}
               {mouseOver[3] === 1 ? (
                 <span
-                  className="fa fa-star"
-                  aria-hidden="true"
+                  className='fa fa-star'
+                  aria-hidden='true'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 1, 1, 1, 0] });
                   }}
@@ -334,7 +339,7 @@ class WriteReview extends React.Component {
                 />
               ) : (
                 <span
-                  className="fa fa-star-o"
+                  className='fa fa-star-o'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 1, 1, 1, 0] });
                   }}
@@ -342,8 +347,8 @@ class WriteReview extends React.Component {
               )}
               {mouseOver[4] === 1 ? (
                 <span
-                  className="fa fa-star"
-                  aria-hidden="true"
+                  className='fa fa-star'
+                  aria-hidden='true'
                   onKeyUp={this.handleKeyUp}
                   onClick={() => {
                     this.setState({ rating: 5, mouseOver: [1, 1, 1, 1, 1] });
@@ -351,7 +356,7 @@ class WriteReview extends React.Component {
                 />
               ) : (
                 <span
-                  className="fa fa-star-o"
+                  className='fa fa-star-o'
                   onMouseEnter={() => {
                     this.setState({ mouseOver: [1, 1, 1, 1, 1] });
                   }}
@@ -368,23 +373,39 @@ class WriteReview extends React.Component {
           </div>
           <div style={recommendStyle}>
             <b>
-              <b style={{ color: 'red' }}> * </b> Would you recommend this product?
+              <b style={{ color: 'red' }}> * </b> Would you recommend this
+              product?
             </b>
             <div>
-              <input type="radio" id="yes" name="recommend" value onClick={this.recommendRadioClick} />
-              <label htmlFor="yes">Yes</label>
-              <input type="radio" id="no" name="recommend" value={false} onClick={this.recommendRadioClick} />
-              <label htmlFor="no">No</label>
+              <input
+                type='radio'
+                id='yes'
+                name='recommend'
+                value
+                onClick={this.recommendRadioClick}
+              />
+              <label htmlFor='yes'>Yes</label>
+              <input
+                type='radio'
+                id='no'
+                name='recommend'
+                value={false}
+                onClick={this.recommendRadioClick}
+              />
+              <label htmlFor='no'>No</label>
             </div>
           </div>
           <div style={characteristicsStyle}>
-            <CharacteristicsRadioList metaData={metaData} characteristicsRadioClick={this.characteristicsRadioClick} />
+            <CharacteristicsRadioList
+              metaData={metaData}
+              characteristicsRadioClick={this.characteristicsRadioClick}
+            />
           </div>
           <div style={summaryStyle}>
-            <label htmlFor="summary">Review Summary (optional): </label>
+            <label htmlFor='summary'>Review Summary (optional): </label>
             <textarea
-              id="summaryInput"
-              type="text"
+              id='summaryInput'
+              type='text'
               value={summary}
               style={{
                 width: '90%',
@@ -394,42 +415,42 @@ class WriteReview extends React.Component {
                 fontFamily: 'Open sans',
                 resize: 'none',
               }}
-              name="summary"
+              name='summary'
               onChange={this.onInputChange}
-              placeholder="Example: Best purchase ever!"
+              placeholder='Example: Best purchase ever!'
             />
           </div>
 
           <div style={nameStyle}>
-            <label htmlFor="name">
+            <label htmlFor='name'>
               <b>
                 <b style={{ color: 'red' }}> * </b> Your Name:{' '}
               </b>
             </label>
             <input
-              type="text"
-              name="name"
+              type='text'
+              name='name'
               style={innerNameStyle}
               value={name}
               onChange={this.onInputChange}
-              placeholder="Example: jacky101!"
+              placeholder='Example: jacky101!'
             />
             <br />
           </div>
 
           <div style={reviewStyle}>
-            <label htmlFor="body">
+            <label htmlFor='body'>
               <b>
                 <b style={{ color: 'red' }}> * </b> Your Review:{' '}
               </b>
             </label>
             <textarea
-              type="text"
+              type='text'
               style={innerReviewStyle}
               value={this.state.body}
-              name="body"
+              name='body'
               onChange={this.onInputChange}
-              placeholder="What did you like/dislike about the product?"
+              placeholder='What did you like/dislike about the product?'
             />
             <br />
             <small>{this.minimumCharCount()}</small>
@@ -438,22 +459,26 @@ class WriteReview extends React.Component {
           <div style={photoStyle}>
             Upload photos (optional)
             <button
-              style={{ marginLeft: '5px', borderRadius: '16px', boxShadow: '0px 4px 8px 0px #0afa0a33' }}
-              type="button"
-              onClick={(e) => e.preventDefault}
+              style={{
+                marginLeft: '5px',
+                borderRadius: '16px',
+                boxShadow: '0px 4px 8px 0px #0afa0a33',
+              }}
+              type='button'
+              onClick={e => e.preventDefault}
             >
               + Add photos
             </button>
           </div>
 
           <div style={emailStyle}>
-            <label htmlFor="email">
+            <label htmlFor='email'>
               <b>
                 <b style={{ color: 'red' }}> * </b> Email:{' '}
               </b>
             </label>
             <input
-              type="text"
+              type='text'
               style={{
                 width: '90%',
                 height: '30px',
@@ -461,15 +486,20 @@ class WriteReview extends React.Component {
                 borderRadius: '5px',
                 border: '1px solid grey',
               }}
-              name="email"
+              name='email'
               value={email}
               onChange={this.onInputChange}
-              placeholder="georgeWashington@gmail.com"
+              placeholder='georgeWashington@gmail.com'
             />
             <br />
           </div>
 
-          <button className="submitReview" type="button" style={submitStyle} onClick={this.HandleReviewData}>
+          <button
+            className='submitReview'
+            type='button'
+            style={submitStyle}
+            onClick={this.HandleReviewData}
+          >
             <b>Submit Review</b>
           </button>
         </form>

@@ -16,7 +16,7 @@ const recommendedAvgStyle = {
   display: 'flex',
   justifyContent: 'center',
   marginBottom: '10px',
-  color: '#FDF0D5'
+  color: '#FDF0D5',
 };
 
 const avgRatingSpacing = {
@@ -25,8 +25,6 @@ const avgRatingSpacing = {
   fontSize: '40px',
   textAlign: 'center',
 };
-
-
 
 const clearStarFilterStyle = {
   display: 'flex',
@@ -55,7 +53,7 @@ const Stars = styled.div`
   padding-top: 1rem;
 `;
 
-const averageRating = (obj) => {
+const averageRating = obj => {
   let wholeTotal = 0;
   let responseTotal = 0;
   for (const star in obj) {
@@ -69,9 +67,9 @@ const averageRating = (obj) => {
   return Number(result.toFixed(1));
 };
 
-const recommendedAverage = (obj) => {
-  const total = Number(obj.false) + Number(obj.true);
-  const result = Number(obj.true) / total;
+const recommendedAverage = obj => {
+  const total = Number(obj?.false) + Number(obj?.true);
+  const result = Number(obj?.true) / total;
 
   if (isNaN(result.toFixed(2) * 100)) {
     return 0;
@@ -79,7 +77,7 @@ const recommendedAverage = (obj) => {
   return result.toFixed(2) * 100;
 };
 
-const RatingBreakdown = (props) => {
+const RatingBreakdown = props => {
   const { ratings } = props.metaData;
   const { recommended } = props.metaData;
   const { sortByStar } = props;
@@ -97,7 +95,14 @@ const RatingBreakdown = (props) => {
       >
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <Stars>
-            <Rating name="read-only" value={averageRating(ratings)} precision={0.25} max={5} size="large" readOnly />
+            <Rating
+              name='read-only'
+              value={averageRating(ratings)}
+              precision={0.25}
+              max={5}
+              size='large'
+              readOnly
+            />
           </Stars>
         </div>
       </div>
@@ -110,7 +115,9 @@ const RatingBreakdown = (props) => {
           textAlign: 'center',
         }}
       >
-        <div style={recommendedAvgStyle}>{`${recommendedAverage(recommended)}% of reviews recommend this product`}</div>
+        <div style={recommendedAvgStyle}>{`${recommendedAverage(
+          recommended
+        )}% of reviews recommend this product`}</div>
       </div>
 
       <div
@@ -125,12 +132,22 @@ const RatingBreakdown = (props) => {
               <div style={starFilterStyle}>
                 {starSort
                   .sort((a, b) => b - a)
-                  .map((star) => (
-                    <StarFilterEntry star={star} sortByStar={sortByStar} key={star} />
+                  .map(star => (
+                    <StarFilterEntry
+                      star={star}
+                      sortByStar={sortByStar}
+                      key={star}
+                    />
                   ))}
               </div>
-              <div style={clearStarFilterStyle} aria-hidden="true" onClick={clearStarFilter}>
-                <u style={{ color: '#B1A9AC', fontSize: '13px' }}>Clear Star Review Filter</u>
+              <div
+                style={clearStarFilterStyle}
+                aria-hidden='true'
+                onClick={clearStarFilter}
+              >
+                <u style={{ color: '#B1A9AC', fontSize: '13px' }}>
+                  Clear Star Review Filter
+                </u>
               </div>
             </div>
           )}
@@ -146,7 +163,10 @@ const RatingBreakdown = (props) => {
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <RatingsBreakdownList metaData={props.metaData} sortByStar={sortByStar} />
+          <RatingsBreakdownList
+            metaData={props.metaData}
+            sortByStar={sortByStar}
+          />
         </div>
       </div>
     </div>

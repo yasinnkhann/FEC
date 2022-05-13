@@ -5,13 +5,12 @@ const ActionButton = React.lazy(() => import('./ActionButton.jsx'));
 
 // PRODUCT PREVIEW IMAGES
 export default function ProductPreviewImages({ imageUrl, productName }) {
-
   // JSX
   return (
     <Suspense fallback={<a>Loading...</a>}>
-        <Image src={imageUrl} alt={productName} />
+      <Image src={imageUrl} alt={productName} />
     </Suspense>
-  )
+  );
 }
 
 const Image = styled.img`
