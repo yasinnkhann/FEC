@@ -11,6 +11,6 @@ const cloudinaryInfo = {
 };
 
 module.exports = {
-  TOKEN: TOKEN,
-  cloudinaryInfo: cloudinaryInfo,
+  TOKEN,
+  cloudinaryInfo,
 };

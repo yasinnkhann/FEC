@@ -9,3 +9,4 @@ coverage
 FEC-Key.pem
 functions/controllers/config.js
 client/dist
+functions/firebase-debug.log
