@@ -6,79 +6,9 @@ import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import AppContext from '../AppContext.js';
 import Loader from 'react-loader-spinner';
-import styled from 'styled-components';
 import { serverURL } from '../config.js';
-
-const MasterContainer = styled.div`
-  font-family: 'Open Sans';
-  font-style: normal;
-  background: #38062b;
-  background: linear-gradient(
-    0deg,
-    rgba(56, 6, 43, 1) 10%,
-    rgba(177, 169, 172, 1) 51%,
-    rgba(253, 240, 213, 1) 100%
-  );
-`;
-
-const Header = styled.header`
-  background-color: #38062b;
-  position: fixed;
-  z-index: 999;
-  width: 100%;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Logo = styled.div`
-  float: left;
-  color: #fdf0d5;
-  text-align: center;
-  font-family: 'Questrial', sans-serif;
-  padding: 1.25rem 1rem 1.25rem 0rem;
-  font-size: 1.5rem;
-  letter-spacing: 4.5px;
-  text-transform: uppercase;
-  margin-left: 1rem;
-  cursor: pointer;
-  &:hover {
-    color: gold;
-  }
-  @media (min-width: 640px) {
-    font-size: 2rem;
-  }
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const Routes = styled.p`
-  font-family: 'Lobster Two', cursive;
-  float: right;
-  color: #fdf0d5;
-  margin: 0 1rem;
-  font-size: 1rem;
-  align-self: center;
-  text-decoration: underline;
-  text-underline-offset: 1px;
-  cursor: pointer;
-  &:hover {
-    color: gold;
-  }
-  @media (min-width: 640px) {
-    font-size: 1.25rem;
-  }
-  @media (min-width: 768px) {
-    font-size: 1.5rem;
-  }
-  @media (min-width: 1024px) {
-    font-size: 1.75rem;
-  }
-`;
+import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -90,7 +20,6 @@ export default function App() {
       const getApi = async () => {
         try {
           const res = await axios.get(`${serverURL}/products`);
-
           setProducts(res.data);
           setSelectedProduct(res.data[0]);
           setIsLoaded(true);
@@ -161,7 +90,8 @@ export default function App() {
   };
 
   return (
-    <MasterContainer>
+    <>
+      <GlobalStyle />
       <Header>
         <Logo onClick={scrollToTop}>Slink</Logo>
         <Nav>
@@ -181,9 +111,9 @@ export default function App() {
               }}
             >
               <Overview />
-              <RelatedItems />
+              {/* <RelatedItems />
               <QuestionsAnswers />
-              <RatingsReviews />
+              <RatingsReviews /> */}
             </AppContext.Provider>
           </>
         ) : (
@@ -202,6 +132,83 @@ export default function App() {
           />
         )}
       </>
-    </MasterContainer>
+    </>
   );
 }
+
+const GlobalStyle = createGlobalStyle`
+  html {
+      width: max-content;
+    }
+  body {
+    margin: 0;
+    font-family: 'Open Sans';
+    font-style: normal;
+    background: #38062b;
+    background: linear-gradient(
+      0deg,
+      rgba(56, 6, 43, 1) 10%,
+      rgba(177, 169, 172, 1) 51%,
+      rgba(253, 240, 213, 1) 100%
+    );
+  }
+`;
+
+const Header = styled.header`
+  background-color: #38062b;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Logo = styled.div`
+  float: left;
+  color: #fdf0d5;
+  text-align: center;
+  font-family: 'Questrial', sans-serif;
+  padding: 1.25rem 1rem 1.25rem 0rem;
+  font-size: 1.5rem;
+  letter-spacing: 4.5px;
+  text-transform: uppercase;
+  margin-left: 1rem;
+  cursor: pointer;
+  &:hover {
+    color: gold;
+  }
+  @media (min-width: 640px) {
+    font-size: 2rem;
+  }
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Routes = styled.p`
+  font-family: 'Lobster Two', cursive;
+  float: right;
+  color: #fdf0d5;
+  margin: 0 1rem;
+  font-size: 1rem;
+  align-self: center;
+  text-decoration: underline;
+  text-underline-offset: 1px;
+  cursor: pointer;
+  &:hover {
+    color: gold;
+  }
+  @media (min-width: 640px) {
+    font-size: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    font-size: 1.75rem;
+  }
+`;
