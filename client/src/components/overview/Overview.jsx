@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  lazy,
+  Suspense,
+  Fragment,
+} from 'react';
 import AppContext from '../../AppContext.js';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -12,41 +19,24 @@ const ReviewsStars = lazy(() => import('./ReviewsStars.jsx'));
 const StyleSelector = lazy(() => import('./StyleSelector.jsx'));
 const Icons = lazy(() => import('./Icons.jsx'));
 
-const Grid = styled.div`
-  display: flex;
-  justify-content: space-between;
-  max-height: 700px;
-  padding: 1rem;
-`;
 const Layout = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 6rem 0;
 `;
+
+const Grid = styled.div`
+  display grid;
+  grid-template-columns: 40vw 50vw;
+  grid-template-areas: 
+  'mainImg overview' 
+  'mainImg overview';
+  grid-gap: 1rem;
+`;
+
 const Container = styled.div`
-  grid-column-start: 2;
-  grid-column-end: 3;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  grid-area: overview;
   text-align: center;
-  padding: 1rem;
-  padding-top: 5rem;
-`;
-
-const Slogan = styled.h3`
-  font-size: large;
-`;
-const Description = styled.p`
-  font-style: italic;
-  max-width: 600px;
-`;
-
-const InfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 1rem;
-  padding-top: 3rem;
+  width: fit-content;
+  padding: 0 8rem;
 `;
 
 export default function Overview() {
@@ -100,9 +90,35 @@ export default function Overview() {
     getStyles();
   }, [selectedProduct]);
   return (
-    <div className='overview' id='product-overview'>
-      <Layout>
-        <Grid>
+    <Layout id='product-overview'>
+      <Grid>
+        <StylesContext.Provider
+          value={{
+            stylesDataContent: [stylesData, setstylesData],
+            currentStyleContent: [currentStyle, setCurrentStyle],
+          }}
+        >
+          {loadingStatusStyles && (
+            <>
+              <Suspense fallback={<div>Loading...</div>}>
+                <ImageGallery />
+              </Suspense>
+            </>
+          )}
+        </StylesContext.Provider>
+        <Container>
+          <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
+            {loadingStatusStyles && (
+              <>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <ReviewsStars />
+                </Suspense>
+              </>
+            )}
+          </ReviewsContext.Provider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProductDetail product={selectedProduct} />
+          </Suspense>
           <StylesContext.Provider
             value={{
               stylesDataContent: [stylesData, setstylesData],
@@ -112,48 +128,16 @@ export default function Overview() {
             {loadingStatusStyles && (
               <>
                 <Suspense fallback={<div>Loading...</div>}>
-                  <ImageGallery />
+                  <StyleSelector />
                 </Suspense>
               </>
             )}
           </StylesContext.Provider>
-          <Container>
-            <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
-              {loadingStatusStyles && (
-                <>
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <ReviewsStars />
-                  </Suspense>
-                </>
-              )}
-            </ReviewsContext.Provider>
-            <Suspense fallback={<div>Loading...</div>}>
-              <ProductDetail product={selectedProduct} />
-            </Suspense>
-            <StylesContext.Provider
-              value={{
-                stylesDataContent: [stylesData, setstylesData],
-                currentStyleContent: [currentStyle, setCurrentStyle],
-              }}
-            >
-              {loadingStatusStyles && (
-                <>
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <StyleSelector />
-                  </Suspense>
-                </>
-              )}
-            </StylesContext.Provider>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Icons />
-            </Suspense>
-          </Container>
-        </Grid>
-        <InfoBox>
-          <Slogan>{selectedProduct?.slogan}</Slogan>
-          <Description>{selectedProduct?.description}</Description>
-        </InfoBox>
-      </Layout>
-    </div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Icons />
+          </Suspense>
+        </Container>
+      </Grid>
+    </Layout>
   );
 }

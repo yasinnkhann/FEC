@@ -9,140 +9,143 @@ import { ArrowDownward } from '@material-ui/icons';
 import { PortalWithState } from 'react-portal';
 
 const MainImgContainer = styled.div`
+  grid-area: mainImg;
   position: relative;
-  padding: 1rem;
-  padding-top: 5rem;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  height: 650px;
-  width: 600px;
+  height: 41rem;
 `;
 
 const MainImage = styled.img`
- width: 100%;
- height: 100%;
- object-fit: cover:
- padding: 2rem;
- position: relative;
- cursor: zoom-in;
- border: 4px solid  #38062B;
- box-shadow: 0 2px 3px rgba(0, 0, 0, 2);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 4px solid #38062b;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 2);
+  margin-left: 1rem;
+  position: relative;
+  cursor: zoom-in;
 `;
 
 const ModalContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  max-height: 1200px;
-  max-width: 1200px;
-  position: absolute;
-  top: 0;
+  position: fixed;
+  z-index: 1;
   left: 0;
-  z-index: 1000;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
 `;
 const ModalBody = styled.section`
-  background-color: rgb(220, 245, 253);
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  overflow: auto;
+  background-color: black;
+  margin: auto;
+  border-radius: 4px;
+  position: relative;
+  margin-top: 5rem;
   display: flex;
   justify-content: center;
-  border: 1rem solid #38062b;
 `;
+
 const ThumbnailContainer = styled.div`
   z-index: 1;
-  width: 50px;
-  max-height: 420px;
   position: absolute;
   display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  gap: 20px;
-  left: 30px;
-  top: 120px;
+  flex-direction: column;
+  top: 5%;
+  left: calc(0% + 1.5rem);
+  align-items: center;
 `;
+
+const ThumbnailImage = styled.img`
+  border: ${props => (props.selected ? '3px solid #38062B' : null)};
+  width: 3.125rem;
+  height: 3.125rem;
+  object-fit: cover;
+  margin: 0.5rem;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 8);
+`;
+
 const Down = styled.button`
-  position: absolute;
-  bottom: -35px;
-  left: 50%;
-  transform: translateX(-50%);
   color: #fdf0d5;
   background-color: #38062b;
+  width: 3.125rem;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 1rem;
 `;
 const Up = styled.button`
-  position: absolute;
-  left: 50%;
-  top: -35px;
-  transform: translateX(-50%);
   color: #fdf0d5;
   background-color: #38062b;
+  width: 3.125rem;
+  margin-bottom: 0.5rem;
+  border: none;
+  border-radius: 1rem;
 `;
 const Left = styled.button`
   z-index: 1;
-  left: 90px;
+  left: calc(0% + 6rem);
   position: absolute;
   top: 50%;
   color: #fdf0d5;
   background-color: #38062b;
+  border: none;
+  border-radius: 1rem;
 `;
 const Right = styled.button`
-  right: 1rem;
   z-index: 1;
-  position: absolute;
-  top: 50%;
   color: #fdf0d5;
   background-color: #38062b;
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  border: none;
+  border-radius: 1rem;
 `;
 const ModalImg = styled.img`
-  width: 1000px;
-  height: 1000px;
+  height: calc(100vh - 6rem);
+  width: 40vw;
 `;
 
 const LeftExpand = styled.button`
-  z-index: 3;
-  left: 90px;
-  top: 50%;
-  color: #fdf0d5;
   background-color: #38062b;
+  color: #fdf0d5;
+  border: none;
+  border-radius: 1rem;
 `;
 const RightExpand = styled.button`
-  right: 3rem;
-  z-index: 3;
-  top: 50%;
-  color: #fdf0d5;
   background-color: #38062b;
+  color: #fdf0d5;
+  border: none;
+  border-radius: 1rem;
 `;
-const ThumbnailImage = styled.img`
-  border: ${props => (props.selected ? '3px solid #38062B' : null)};
-  width: 100%;
-  height: 50px;
-  object-fit: cover;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 8);
-`;
+
 const ThumbnailExpandedImage = styled.img`
-  height: 50px;
-  width: 50px;
+  height: 3.125rem;
+  width: 3.125rem;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #38062b;
+  margin: 0.5rem 0.5rem 0 0.5rem;
 `;
 
 const ThumbnailExpandedContainer = styled.div`
-  z-index: 1;
-  bottom: 0;
-  max-height: 420px;
   position: absolute;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 20px;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  justify-content: space-evenly;
-  padding: 0.5rem;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+const InfoBox = styled.div`
+  margin-left: 2rem;
+`;
+
+const Description = styled.p`
+  font-style: italic;
+`;
+
+const Slogan = styled.h3`
+  font-size: large;
 `;
 
 export default function ImageGallery() {
@@ -225,7 +228,7 @@ export default function ImageGallery() {
 
   const renderPortal = ({ portal }) => {
     return portal(
-      <div>
+      <>
         <ModalContainer onClick={e => setmodalOpen(false)}>
           <ModalBody
             onClick={e => {
@@ -259,7 +262,7 @@ export default function ImageGallery() {
             </ThumbnailExpandedContainer>
           </ModalBody>
         </ModalContainer>
-      </div>
+      </>
     );
   };
 
@@ -318,6 +321,10 @@ export default function ImageGallery() {
           {renderPortal}
         </PortalWithState>
       ) : null}
+      <InfoBox>
+        <Slogan>{selectedProduct?.slogan}</Slogan>
+        <Description>{selectedProduct?.description}</Description>
+      </InfoBox>
     </MainImgContainer>
   );
 }

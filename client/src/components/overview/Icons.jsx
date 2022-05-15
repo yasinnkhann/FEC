@@ -13,21 +13,25 @@ const FBIcon = styled.button`
   margin: 0.5rem;
   color: white;
   background: #3b5998;
+  border: none;
 `;
 
 const PinIcon = styled.button`
   margin: 0.5rem;
   color: white;
   background: #c8232c;
+  border: none;
 `;
 
 const TwitIcon = styled.button`
   margin: 0.5rem;
   color: white;
   background: #00acee;
+  border: none;
 `;
 
 const GramIcon = styled.button`
+  border: none;
   margin: 0.5rem;
   color: white;
   background: #f09433;

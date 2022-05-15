@@ -111,9 +111,9 @@ export default function App() {
               }}
             >
               <Overview />
-              {/* <RelatedItems />
+              <RelatedItems />
               <QuestionsAnswers />
-              <RatingsReviews /> */}
+              <RatingsReviews />
             </AppContext.Provider>
           </>
         ) : (
@@ -137,9 +137,14 @@ export default function App() {
 }
 
 const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+
   html {
       width: max-content;
     }
+
   body {
     margin: 0;
     font-family: 'Open Sans';
@@ -163,9 +168,11 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 4rem;
 `;
 
 const Logo = styled.div`
+  display: none;
   float: left;
   color: #fdf0d5;
   text-align: center;
@@ -181,6 +188,9 @@ const Logo = styled.div`
   }
   @media (min-width: 640px) {
     font-size: 2rem;
+  }
+  @media (min-width: 768px) {
+    display: block;
   }
 `;
 

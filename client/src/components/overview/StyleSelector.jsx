@@ -5,125 +5,19 @@ import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 import { serverURL } from '../../config.js';
 
-const Checked = styled.div`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  color: #38062b;
-`;
-
-const StylePicsDiv = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 260px;
-  justify-content: center;
-`;
-
-const StylePic = styled.img`
-  height: 70px;
-  margin: 5px;
-  width: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
-const StyleName = styled.h3`
-  font-family: 'Lobster Two';
-  color: #38062b;
-`;
-const SelectedStyle = styled.h3``;
-const Button = styled.button`
-  position: relative;
-  background-color: #b1a9ac;
-  border: 2px solid #38062b;
-`;
-const Price = styled.h3`
-  font-family: 'Fjalla One', sans-serif;
-`;
-const Sale = styled.p`
-  color: red;
-`;
-const OldPrice = styled.p`
-  text-decoration: line-through;
-`;
-const Dropdown = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
-  width: 260px;
-  padding-top: 2rem;
-`;
-
-const QuantityContainer = styled.div``;
-const SizeContainer = styled.div``;
-const DropDownListContainer = styled.div``;
-const DropDownHeader = styled.button`
-  padding: 1rem;
-  padding-left: 1rem;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
-  font-weight: 500;
-  font-size: 1rem;
-  color: #fdf0d5;
-  width: 130px;
-  background-color: #38062b;
-`;
-
-const DropdownList = styled.div`
-  padding: 1rem;
-  background-color: #b1a9ac;
-  border: 2px solid #38062b;
-  box-sizing: border-box;
-  font-size: large;
-  font-weight: 500;
-`;
-const DropdownOption = styled.select`
-  list-style: none;
-  margin-bottom: 0.8em;
-`;
-
-const ListItem = styled.option`
-  list-style: none;
-  margin-bottom: 0.8em;
-`;
-
-const OutOfStock = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 150px;
-  padding: 2rem;
-  background-color: #38062b;
-  color: red;
-  justify-content: center;
-  border: 1px solid black;
-`;
-const AddtoCartButton = styled.button`
-  padding: 1.5rem;
-  grid-column: 1 / -1;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
-  font-weight: 500;
-  font-size: 1rem;
-  width: 260px;
-  color: #fdf0d5;
-  background-color: #38062b;
-`;
-
-const SelectASize = styled.div`
-  font-size: 1rem;
-`;
-
 export default function StyleSelector() {
   const { stylesDataContent, currentStyleContent } = useContext(StylesContext);
   const [stylesData, setstylesData] = stylesDataContent;
   const [currentStyle, setCurrentStyle] = currentStyleContent;
   const results = stylesData.results;
   const [isSizeOpen, setIsSizeOpen] = useState(false);
-  const [isQuantOpen, setIsQuantOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(0);
-  const [quantityOptions, setQuantityOptions] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState({
+    size: '',
+    quantity: 0,
+  });
 
   const sizes = () => {
     const sizeArray = [];
@@ -134,17 +28,6 @@ export default function StyleSelector() {
   };
 
   const stylesList = sizes();
-  const sizeQuantity = () => {
-    var obj = {};
-    Object.values(currentStyle.skus).forEach(value => {
-      if (!obj[value.size]) {
-        obj[value.size] = value.quantity;
-      } else {
-        obj[value.size] = obj[value.size] + value.quantity;
-      }
-    });
-    return obj;
-  };
 
   const onPhotoClick = value => {
     setCurrentStyle(value);
@@ -156,22 +39,6 @@ export default function StyleSelector() {
     return Array.from(new Set(sizes().map(sku => currentStyle.skus[sku].size)));
   };
 
-  const togglingSize = () => setIsSizeOpen(!isSizeOpen);
-  const togglingQuant = () => setIsQuantOpen(!isQuantOpen);
-
-  const quantobj = sizeQuantity();
-
-  const onSizeClicked = e => {
-    setSelectedSize(e.target.innerHTML);
-    setQuantityOptions(quantobj[e.target.innerHTML]);
-    setIsSizeOpen(false);
-    setShowMessage(false);
-  };
-
-  const onQuantityClicked = e => {
-    setSelectedQuantity(parseInt(e.target.innerHTML));
-    setIsQuantOpen(false);
-  };
   const addToCartHandler = e => {
     selectedSize ? addInCart() : badCartHandler();
   };
@@ -181,25 +48,11 @@ export default function StyleSelector() {
     setShowMessage(true);
   };
 
-  const quantityArr = () => {
-    const quantityArray = [];
-    var max;
-    if (quantityAmount >= 15) {
-      max = 15;
-    } else {
-      max = quantityAmount;
-    }
-    for (var i = 1; i <= max; i++) {
-      quantityArray.push(i);
-    }
-    return quantityArray;
-  };
-
   const getSkuId = Object.keys(currentStyle.skus).filter(key => {
     return currentStyle.skus[key].size === selectedSize;
   });
 
-  const addInCart = async e => {
+  const addInCart = async () => {
     try {
       const body = {
         sku_id: getSkuId[0],
@@ -214,10 +67,13 @@ export default function StyleSelector() {
       console.error(err);
     }
   };
-  const quantityAmount = quantityOptions;
+
+  const handleChange = ({ target: { name, value } }) => {
+    setSelectedOptions({ ...selectedOptions, hasChanged: true, [name]: value });
+  };
 
   return (
-    <div>
+    <>
       {stylesList.length ? (
         <>
           <Price>
@@ -249,66 +105,159 @@ export default function StyleSelector() {
               );
             })}
           </StylePicsDiv>
-          <Dropdown>
-            <div>
-              <>
-                {showMessage ? (
-                  <SelectASize>Please Select a Size</SelectASize>
-                ) : null}
-                <DropDownHeader onClick={togglingSize}>
-                  {!selectedSize ? 'Select A Size' : 'Size: ' + selectedSize}
-                </DropDownHeader>
-                {isSizeOpen && (
-                  <DropDownListContainer>
-                    <DropdownList>
-                      {uniqueSizes().map(size => (
-                        <ListItem
-                          onClick={e => onSizeClicked(e)}
-                          key={Math.random()}
-                        >
-                          {size}
-                        </ListItem>
-                      ))}
-                    </DropdownList>
-                  </DropDownListContainer>
-                )}
-              </>
-            </div>
-            <div>
-              {selectedSize ? (
-                <DropDownHeader onClick={togglingQuant}>
-                  {!selectedQuantity
-                    ? 'Quantity: 1'
-                    : 'Quantity: ' + selectedQuantity}
-                </DropDownHeader>
+          {!selectedOptions.size && selectedOptions.hasChanged && (
+            <SelectASizeText>Please Select a Size</SelectASizeText>
+          )}
+          <DropdownContainer>
+            <>
+              <SizeSelect name='size' onChange={handleChange}>
+                <SizeOption value=''>Select A Size</SizeOption>
+                {uniqueSizes().map(size => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </SizeSelect>
+            </>
+            <>
+              {selectedOptions.size ? (
+                <QuantitySelect name='quantity' onChange={handleChange}>
+                  <QuantityOption value=''>Select Quantity</QuantityOption>
+                  {[...Array(8).keys()].map(quantity => (
+                    <option key={quantity + 1} value={quantity + 1}>
+                      {quantity + 1}
+                    </option>
+                  ))}
+                </QuantitySelect>
               ) : (
-                <DropDownHeader>-</DropDownHeader>
+                <QuantityBtn>-</QuantityBtn>
               )}
-              {isQuantOpen && (
-                <DropDownListContainer>
-                  <DropdownList>
-                    {quantityArr().map(num => {
-                      return (
-                        <ListItem
-                          onClick={e => onQuantityClicked(e)}
-                          key={Math.random()}
-                        >
-                          {num}
-                        </ListItem>
-                      );
-                    })}
-                  </DropdownList>
-                </DropDownListContainer>
-              )}
-            </div>
-            <AddtoCartButton onClick={e => addToCartHandler(e)}>
+            </>
+            <AddToCartBtn onClick={e => addToCartHandler(e)}>
               Add to Cart
-            </AddtoCartButton>
-          </Dropdown>
+            </AddToCartBtn>
+          </DropdownContainer>
         </>
       ) : (
         <OutOfStock>OUT OF STOCK</OutOfStock>
       )}
-    </div>
+    </>
   );
 }
+
+const Checked = styled.div`
+  color: #38062b;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+`;
+
+const StylePicsDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+`;
+
+const StylePic = styled.img`
+  margin: 1rem;
+  height: 3.75rem;
+  width: 3.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const StyleName = styled.h3`
+  font-family: 'Lobster Two';
+  color: #38062b;
+`;
+
+const SelectedStyle = styled.h3``;
+
+const Button = styled.button`
+  background-color: #b1a9ac;
+  border: 2px solid #38062b;
+  position: relative;
+`;
+
+const Price = styled.h3`
+  font-family: 'Fjalla One', sans-serif;
+`;
+
+const Sale = styled.p`
+  color: red;
+`;
+
+const OldPrice = styled.p`
+  text-decoration: line-through;
+`;
+
+const DropdownContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    'size quantity'
+    'addCart addCart';
+  grid-column-gap: 1rem;
+  margin-top: 2rem;
+  min-width: 324px;
+`;
+
+const OutOfStock = styled.div`
+  color: red;
+  background: #38062b;
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+`;
+const AddToCartBtn = styled.button`
+  grid-area: addCart;
+  padding: 1.5rem;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fdf0d5;
+  background-color: #38062b;
+  margin-top: 1rem;
+`;
+
+const SelectASizeText = styled.p`
+  font-size: 1rem;
+`;
+
+const QuantityBtn = styled.button`
+  background-color: #38062b;
+  color: #fdf0d5;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+  grid-area: quantity;
+`;
+
+const SizeSelect = styled.select`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #38062b;
+  color: #fdf0d5;
+  font-size: 1rem;
+  outline: none;
+  text-align: center;
+`;
+
+const SizeOption = styled.option``;
+
+const QuantitySelect = styled.select`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #38062b;
+  color: #fdf0d5;
+  font-size: 1rem;
+  outline: none;
+  text-align: center;
+`;
+
+const QuantityOption = styled.option``;

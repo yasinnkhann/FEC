@@ -27,7 +27,7 @@ export default function ReviewsStars() {
         .map(([key, value]) => {
           return [parseInt(key), parseInt(value)];
         })
-        .forEach(([key, value]) => {
+        .forEach(([_, value]) => {
           count += value;
         });
       return count;
@@ -48,26 +48,25 @@ export default function ReviewsStars() {
     return sum / count;
   };
   return (
-    <div>
-      {totalReviews() ? (
+    <>
+      {totalReviews() && (
         <>
           <Reviews>
             <a href='#route'>Read All {totalReviews()} Reviews</a>
           </Reviews>
-          <div>
-            <Stars>
-              <Rating
-                name='read-only'
-                value={average()}
-                precision={0.25}
-                max={5}
-                size='large'
-                readOnly
-              />
-            </Stars>
-          </div>
+
+          <Stars>
+            <Rating
+              name='read-only'
+              value={average()}
+              precision={0.25}
+              max={5}
+              size='large'
+              readOnly
+            />
+          </Stars>
         </>
-      ) : null}
-    </div>
+      )}
+    </>
   );
 }

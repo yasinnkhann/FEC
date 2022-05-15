@@ -12,9 +12,9 @@ const Category = styled.h3`
 
 export default function ProductDetail({ product }) {
   return (
-    <div>
+    <>
       <Category>{product?.category}</Category>
       <Name>{product?.name}</Name>
-    </div>
+    </>
   );
 }
