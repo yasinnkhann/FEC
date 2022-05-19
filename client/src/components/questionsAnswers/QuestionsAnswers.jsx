@@ -62,7 +62,7 @@ export default function QuestionsAnswers() {
   }, [selectedProduct]);
 
   return (
-    <div className='questions-and-answers' id='questions-answers'>
+    <MainContainer id='questions-answers'>
       {isLoaded && (
         <>
           <QuestionsContext.Provider
@@ -87,9 +87,11 @@ export default function QuestionsAnswers() {
           </QuestionsContext.Provider>
         </>
       )}
-    </div>
+    </MainContainer>
   );
 }
+
+const MainContainer = styled.div``;
 
 const QandAHeader = styled.h3`
   font-size: xx-large;

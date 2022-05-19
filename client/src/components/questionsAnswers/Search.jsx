@@ -21,34 +21,32 @@ export default function Search({ handleChange }) {
 }
 
 const Container = styled.div`
-  position: relative;
+  padding: 0 1rem;
+  width: 100%;
   display: flex;
-  min-width: 100px;
-  top: 0;
-  z-index: 100;
-  padding-bottom: 10px;
+  position: relative;
+  margin-bottom: 1rem;
 `;
 
 const SearchBar = styled.input`
+  width: 100%;
+  height: 2rem;
+  padding: 0 1rem;
   border: 1px solid grey;
   border-radius: 5px;
-  height: 25px;
-  width: 100%;
-  padding: 2px 23px 2px 30px;
   outline: 0;
-  background-color: #B1A9AC;
-  ::placeholder{
-    color: #38062B;
+  background-color: #b1a9ac;
+  ::placeholder {
+    color: #38062b;
   }
 `;
 
 const MagnifyGlassIcon = styled(SearchIcon)`
   position: absolute;
-  right: 0.5rem;
-  top: 36%;
-  transform: translateY(-50%);
+  right: 1rem;
+  margin-top: 0.2rem;
 
-  && {
-    color: #38062B;
+  &&& {
+    color: #38062b;
   }
 `;

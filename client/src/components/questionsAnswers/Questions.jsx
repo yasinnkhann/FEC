@@ -131,7 +131,6 @@ export default function Questions({
 const Container = styled.div`
   overflow-y: auto;
   padding: 0rem 1rem;
-
   &::-webkit-scrollbar {
     width: 7px;
   }

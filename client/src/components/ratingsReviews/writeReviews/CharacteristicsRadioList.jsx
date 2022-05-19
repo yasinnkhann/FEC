@@ -1,17 +1,22 @@
-import React from 'react';
-import CharacteristicsRadioListEntry from './CharacteristicsRadioListEntry.jsx';
+import React, { lazy, Suspense } from 'react';
+
+const CharacteristicsRadioListEntry = lazy(() =>
+  import('./CharacteristicsRadioListEntry.jsx')
+);
 
 const CharacteristicsRadioList = ({ metaData, characteristicsRadioClick }) => (
-  <div>
+  <>
     {Object.keys(metaData.characteristics).map((characteristic, index) => (
-      <CharacteristicsRadioListEntry
-        characteristicID={metaData.characteristics[characteristic].id}
-        characteristic={characteristic}
-        characteristicsRadioClick={characteristicsRadioClick}
-        key={index}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <CharacteristicsRadioListEntry
+          characteristicID={metaData.characteristics[characteristic].id}
+          characteristic={characteristic}
+          characteristicsRadioClick={characteristicsRadioClick}
+          key={index}
+        />
+      </Suspense>
     ))}
-  </div>
+  </>
 );
 
 export default CharacteristicsRadioList;

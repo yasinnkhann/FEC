@@ -3,25 +3,11 @@ import ReviewsContext from './ReviewsContext.js';
 import styled from 'styled-components';
 import Rating from '@material-ui/lab/Rating';
 
-const Reviews = styled.span`
-  cursor: pointer;
-  text-decoration: underline;
-  color: #38062b;
-  font-style: italic;
-`;
-
-const Stars = styled.div`
-  display: inline-block;
-  font-family: Times;
-  padding-top: 1rem;
-`;
-
 export default function ReviewsStars() {
-  const { reviewsData, setreviewsData } = useContext(ReviewsContext);
+  const { reviewsData } = useContext(ReviewsContext);
 
   const totalReviews = () => {
     if (reviewsData.length > 0) {
-      console.log('reviewsData', reviewsData);
       let count = 0;
       Object.entries(reviewsData?.ratings)
         .map(([key, value]) => {
@@ -70,3 +56,16 @@ export default function ReviewsStars() {
     </>
   );
 }
+
+const Reviews = styled.span`
+  cursor: pointer;
+  text-decoration: underline;
+  color: #38062b;
+  font-style: italic;
+`;
+
+const Stars = styled.div`
+  display: inline-block;
+  font-family: Times;
+  padding-top: 1rem;
+`;

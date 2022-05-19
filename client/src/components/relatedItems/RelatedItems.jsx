@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext, Suspense } from 'react';
+import React, { useState, useEffect, useContext, Suspense, lazy } from 'react';
 import axios from 'axios';
 import AppContext from '../../AppContext.js';
 import UserContext from './UserContext.js';
 import styled from 'styled-components';
 import { serverURL } from '../../config.js';
 
-const Carousel = React.lazy(() => import('./Carousel.jsx'));
+const Carousel = lazy(() => import('./Carousel.jsx'));
 
 // RELATED ITEMS
 export default function RelatedItems() {
@@ -37,7 +37,6 @@ export default function RelatedItems() {
     getRelatedProductIds();
   }, [selectedProduct]);
 
-  // JSX
   return (
     <UserContext.Provider
       value={{
@@ -45,26 +44,25 @@ export default function RelatedItems() {
         outfitContext: [userOutfit, setUserOutfit],
       }}
     >
-      <div className='related-items-and-comparison'>
+      <MainContainer id='related-items'>
+        <RelatedItemsHeader>Related Items</RelatedItemsHeader>
         <Suspense fallback={<h2>Loading...</h2>}>
-          <RelatedItemsHeader id='related-items'>
-            Related Items
-          </RelatedItemsHeader>
           <Carousel
             name='related-items'
             relatedProductIds={relatedProductIds}
           />
-          <YourOutfitHeader>Your Outfit</YourOutfitHeader>
+        </Suspense>
+        <YourOutfitHeader>Your Outfit</YourOutfitHeader>
+        <Suspense fallback={<h2>Loading...</h2>}>
           <Carousel name='your-outfit' />
         </Suspense>
-      </div>
+      </MainContainer>
     </UserContext.Provider>
   );
 }
 const RelatedItemsHeader = styled.h3`
   font-size: xx-large;
   text-align: center;
-  padding-bottom: 1rem;
   font-family: 'Lobster Two', cursive;
   color: #38062b;
 `;
@@ -72,7 +70,14 @@ const RelatedItemsHeader = styled.h3`
 const YourOutfitHeader = styled.h3`
   font-size: x-large;
   text-align: center;
-  padding-bottom: 1rem;
   font-family: 'Lobster Two', cursive;
   color: #38062b;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 `;

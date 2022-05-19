@@ -19,7 +19,7 @@ export default function ProductInfo({ product, styles, salePrice }) {
     <Fragment>
       <Suspense fallback={<h2>Loading...</h2>}>
         {product !== null ? (
-          <InfoCardStyle className='product-info'>
+          <InfoContainer className='product-info'>
             <InfoCategory>Category: {product.category}</InfoCategory>
             <InfoProductName>{product.name}</InfoProductName>
             {hasSalePrice ? (
@@ -28,7 +28,7 @@ export default function ProductInfo({ product, styles, salePrice }) {
               <Price>{'$' + price}</Price>
             )}
             <StarRating product={product} />
-          </InfoCardStyle>
+          </InfoContainer>
         ) : (
           <h3>This will be an outfit</h3>
         )}
@@ -68,10 +68,12 @@ const SalePrice = styled.h4`
   margin: 0 auto;
 `;
 
-const InfoCardStyle = styled.div`
-  width: 200px;
-  height: 100px;
+const InfoContainer = styled.div`
+  width: 100%;
+  height: 33%;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  position: absolute;
+  bottom: 0;
 `;

@@ -113,9 +113,9 @@ export default function StyleSelector() {
               <SizeSelect name='size' onChange={handleChange}>
                 <SizeOption value=''>Select A Size</SizeOption>
                 {uniqueSizes().map(size => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
+                  <SizeOption key={size} value={size}>
+                    Size: {size}
+                  </SizeOption>
                 ))}
               </SizeSelect>
             </>
@@ -124,9 +124,9 @@ export default function StyleSelector() {
                 <QuantitySelect name='quantity' onChange={handleChange}>
                   <QuantityOption value=''>Select Quantity</QuantityOption>
                   {[...Array(8).keys()].map(quantity => (
-                    <option key={quantity + 1} value={quantity + 1}>
-                      {quantity + 1}
-                    </option>
+                    <QuantityOption key={quantity + 1} value={quantity + 1}>
+                      Quantity: {quantity + 1}
+                    </QuantityOption>
                   ))}
                 </QuantitySelect>
               ) : (
@@ -155,7 +155,6 @@ const Checked = styled.div`
 const StylePicsDiv = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
 `;
 
 const StylePic = styled.img`
@@ -199,8 +198,7 @@ const DropdownContainer = styled.div`
     'size quantity'
     'addCart addCart';
   grid-column-gap: 1rem;
-  margin-top: 2rem;
-  min-width: 324px;
+  margin-top: 1rem;
 `;
 
 const OutOfStock = styled.div`
@@ -234,6 +232,7 @@ const QuantityBtn = styled.button`
   font-weight: 500;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
   grid-area: quantity;
+  border: none;
 `;
 
 const SizeSelect = styled.select`
@@ -245,9 +244,12 @@ const SizeSelect = styled.select`
   font-size: 1rem;
   outline: none;
   text-align: center;
+  text-align: -webkit-center;
 `;
 
-const SizeOption = styled.option``;
+const SizeOption = styled.option`
+  text-align: center;
+`;
 
 const QuantitySelect = styled.select`
   -webkit-appearance: none;
@@ -258,6 +260,9 @@ const QuantitySelect = styled.select`
   font-size: 1rem;
   outline: none;
   text-align: center;
+  text-align: -webkit-center;
 `;
 
-const QuantityOption = styled.option``;
+const QuantityOption = styled.option`
+  text-align: center;
+`;

@@ -1,48 +1,49 @@
-import React from 'react';
-import ReviewListEntry from './ReviewListEntry.jsx';
+import React, { lazy, Suspense } from 'react';
+import styled from 'styled-components';
 
-const gridLayout = {
-  display: 'grid',
-  padding: '10px',
-  alignItems: 'center',
-};
+const ReviewListEntry = lazy(() => import('./ReviewListEntry.jsx'));
 
-const ReviewList = ({
-  reviewList,
+export default function ReviewList({
+  filteredReviewList,
   reviewEnd,
   handlePut,
   starSort,
   reviewCacheState,
   reviewCache,
-}) => {
+}) {
   return (
-    <div>
+    <ReviewsList>
       {starSort.length === 0 && (
-        <ul style={gridLayout}>
-          {reviewList.results.slice(0, reviewEnd).map((review, key) => (
+        <>
+          {filteredReviewList.results.slice(0, reviewEnd).map((review, key) => (
             <ReviewListEntry review={review} key={key} handlePut={handlePut} />
           ))}
-        </ul>
+        </>
       )}
       {starSort.length > 0 && (
-        <ul style={gridLayout}>
+        <>
           {reviewCache[reviewCacheState].results.map((review, key) =>
             starSort.map(star => {
               if (Number(star) === review.rating) {
                 return (
-                  <ReviewListEntry
-                    review={review}
-                    key={key}
-                    handlePut={handlePut}
-                  />
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <ReviewListEntry
+                      review={review}
+                      key={key}
+                      handlePut={handlePut}
+                    />
+                  </Suspense>
                 );
               }
             })
           )}
-        </ul>
+        </>
       )}
-    </div>
+    </ReviewsList>
   );
-};
+}
 
-export default ReviewList;
+const ReviewsList = styled.ul`
+  padding: 1rem;
+  list-style-type: none;
+`;

@@ -82,17 +82,17 @@ export default function CarouselCard({ product, name, carouselName }) {
     if (cardName === 'add-button') {
       return (
         <Suspense fallback={<h3>Loading...</h3>}>
-          <CardStyle>
-            <ProductInfoStyle>
+          <CardContainer>
+            <ImageContainer>
               <AddToOutfit />
-            </ProductInfoStyle>
-          </CardStyle>
+            </ImageContainer>
+          </CardContainer>
         </Suspense>
       );
     } else {
       return (
         <Suspense fallback={<h3>Loading...</h3>}>
-          <CardStyle>
+          <CardContainer>
             <ActionStyle
               onClick={
                 carouselName === 'related-items'
@@ -105,31 +105,30 @@ export default function CarouselCard({ product, name, carouselName }) {
               />
             </ActionStyle>
             <Modal key={`modal-${product.id}`} ref={modal} product={product} />
-            <ProductInfoStyle onClick={() => handleClick(product)}>
+            <ImageContainer onClick={() => handleClick(product)}>
               <ProductPreviewImages
                 imageUrl={imageUrl}
                 productName={product.name}
               />
-              <ProductInfo
-                product={product}
-                styles={styles}
-                salePrice={salePrice}
-              />
-            </ProductInfoStyle>
-          </CardStyle>
+            </ImageContainer>
+            <ProductInfo
+              product={product}
+              styles={styles}
+              salePrice={salePrice}
+            />
+          </CardContainer>
         </Suspense>
       );
     }
   };
 
-  // JSX
   return renderCard(name);
 }
 
-const CardStyle = styled.div`
-  width: 210px;
-  height: 310px;
-  margin: 5px;
+const CardContainer = styled.div`
+  width: 13.125rem;
+  height: 19.375rem;
+  margin: 1rem;
   background-color: #b1a9ac;
   border: 0.25rem solid #38062b;
   position: relative;
@@ -140,18 +139,15 @@ const CardStyle = styled.div`
   }
 `;
 
-const ProductInfoStyle = styled.div`
-  width: 210px;
-  max-width: 210px;
-  height: 100%;
+const ImageContainer = styled.div`
+  width: 100%;
+  height: 64%;
   position: absolute;
-  bottom: 0;
-  overflow: auto;
+  top: 0;
+  overflow: hidden;
 `;
 
 const ActionStyle = styled.a`
   z-index: 2;
-  max-height: 35px;
-  max-width: 35px;
   color: #b1a8ac;
 `;

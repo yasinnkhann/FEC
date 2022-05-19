@@ -5,10 +5,10 @@ import QuestionsAnswers from './questionsAnswers/QuestionsAnswers.jsx';
 import RatingsReviews from './ratingsReviews/RatingsReviews.jsx';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import AppContext from '../AppContext.js';
-import Loader from 'react-loader-spinner';
 import { serverURL } from '../config.js';
 import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
+import { Circle } from 'better-react-spinkit';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -70,21 +70,21 @@ export default function App() {
 
   const scrollToRelatedItems = () => {
     window.scrollTo({
-      top: document.getElementById('related-items').offsetTop - 100,
+      top: document.getElementById('related-items').offsetTop - 50,
       behavior: 'smooth',
     });
   };
 
   const scrollToQA = () => {
     window.scrollTo({
-      top: document.getElementById('questions-answers').offsetTop - 100,
+      top: document.getElementById('questions-answers').offsetTop - 90,
       behavior: 'smooth',
     });
   };
 
   const scrollToRR = () => {
     window.scrollTo({
-      top: document.getElementById('ratings-reviews').offsetTop - 60,
+      top: document.getElementById('ratings-reviews').offsetTop - 65,
       behavior: 'smooth',
     });
   };
@@ -117,19 +117,11 @@ export default function App() {
             </AppContext.Provider>
           </>
         ) : (
-          <Loader
-            type='Oval'
-            color='#38062B'
-            height={160}
-            width={160}
-            arialLabel='loading-indicator'
-            style={{
-              position: 'fixed',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
+          <center
+            style={{ display: 'grid', placeItems: 'center', height: '100vh' }}
+          >
+            <Circle color='#fdf0d5' size={100} />
+          </center>
         )}
       </>
     </>
@@ -142,20 +134,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
-      width: max-content;
+      width: 100%;
     }
 
   body {
     margin: 0;
     font-family: 'Open Sans';
     font-style: normal;
-    background: #38062b;
-    background: linear-gradient(
-      0deg,
-      rgba(56, 6, 43, 1) 10%,
-      rgba(177, 169, 172, 1) 51%,
-      rgba(253, 240, 213, 1) 100%
-    );
+    background: linear-gradient( 0deg,rgba(56,6,43,1) 10%,rgb(182 89 124) 51%,rgba(253,240,213,1) 100% );
   }
 `;
 

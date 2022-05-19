@@ -1,14 +1,15 @@
-import React from 'react';
-import PhotoMapEntry from './PhotoMapEntry.jsx';
+import React, { lazy, Suspense } from 'react';
 
-const PhotosMap = ({ photos }) => (
-  <div>
-    <div style={{ display: 'flex' }}>
+const PhotoMapEntry = lazy(() => import('./PhotoMapEntry.jsx'));
+
+export default function PhotosMap({ photos }) {
+  return (
+    <>
       {photos.map(photo => (
-        <PhotoMapEntry photo={photo} key={photo.id} />
+        <Suspense key={photo.id} fallback={<div>Loading...</div>}>
+          <PhotoMapEntry photo={photo} key={photo.id} />
+        </Suspense>
       ))}
-    </div>
-  </div>
-);
-
-export default PhotosMap;
+    </>
+  );
+}

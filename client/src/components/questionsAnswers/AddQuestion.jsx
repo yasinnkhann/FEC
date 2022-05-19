@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
 import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
-import {serverURL} from '../../config.js';
+import { serverURL } from '../../config.js';
 
 export default function AddQuestion({ closeModal, question }) {
   // CONTEXT
@@ -67,14 +67,11 @@ export default function AddQuestion({ closeModal, question }) {
         <UpperContent>
           <Content onSubmit={handleSubmit}>
             <h2>Ask Your Question</h2>
-            {/* <h4>About the {specifiedProduct[0].name}</h4> */}
             <h4>About the {selectedProduct.name}</h4>
-
             <label htmlFor='yourQuestion'>
               Your Question<span style={{ color: 'red' }}>* </span>
             </label>
-            <textarea
-              style={{ verticalAlign: 'top', resize: 'none', margin: '0px' }}
+            <YourQuestion
               name='yourQuestion'
               value={formData.yourQuestion}
               onChange={handleChange}
@@ -87,13 +84,13 @@ export default function AddQuestion({ closeModal, question }) {
                 e.target.setCustomValidity('You must enter a valid question')
               }
               onInput={e => e.target.setCustomValidity('')}
-            ></textarea>
+            ></YourQuestion>
             <br />
             <br />
             <label htmlFor='yourNickName'>
               What is your nickname<span style={{ color: 'red' }}>* </span>
             </label>
-            <input
+            <YourNickname
               name='yourNickName'
               value={formData.yourNickName}
               onChange={handleChange}
@@ -116,7 +113,7 @@ export default function AddQuestion({ closeModal, question }) {
             <label htmlFor='yourEmail'>
               Your Email<span style={{ color: 'red' }}>* </span>
             </label>
-            <input
+            <YourEmail
               name='yourEmail'
               value={formData.yourEmail}
               onChange={handleChange}
@@ -135,8 +132,9 @@ export default function AddQuestion({ closeModal, question }) {
             <br />
             <span>For authentication reasons, you will not be emailed.</span>
             <br />
-            <br />
-            <SubmitBtn type='submit'>Submit Question</SubmitBtn>
+            <SubmitBtnContainer>
+              <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
+            </SubmitBtnContainer>
             <CloseBtn onClick={closeModal}>
               <XIcon />
             </CloseBtn>
@@ -186,20 +184,6 @@ const UpperContent = styled.div`
     background: #000;
     border-radius: 10px;
   }
-
-  input {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 98.5%;
-    height: 30px;
-    border-radius: 4px;
-    border: 1px solid #000;
-    padding: 0px 8px;
-  }
-
-  textarea {
-    width: 100%;
-  }
 `;
 
 const XIcon = styled(CloseIcon)`
@@ -220,13 +204,44 @@ const CloseBtn = styled.button`
   border: none;
 `;
 
+const SubmitBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const SubmitBtn = styled.button`
   margin-top: 1rem;
   margin-bottom: 1rem;
-	padding: 8px 12px;
+	padding: 0.5rem 0.75rem;
 	border-radius 6px;
 	border: none;
 	background: #38062B;
-	color: #B1A9AC;
+	color: #fdf0d5;
 	cursor: pointer;
+`;
+
+const YourQuestion = styled.textarea`
+  vertical-align: top;
+  margin: 0;
+  resize: none;
+  width: 100%;
+`;
+
+const YourNickname = styled.input`
+  margin: 0.3rem 0;
+  width: 100%;
+  height: 2rem;
+  border-radius: 4px;
+  border: 1px solid #000;
+  padding: 0px 0.5rem;
+`;
+
+const YourEmail = styled.input`
+  margin: 0.3rem 0;
+  width: 100%;
+  height: 2rem;
+  border-radius: 4px;
+  border: 1px solid #000;
+  padding: 0 0.5rem;
 `;

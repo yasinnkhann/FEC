@@ -1,28 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const starBar = {
-  height: '8px',
-  marginLeft: '8px',
-  marginRight: '10px',
-  marginTop: '5px',
-  width: '130px',
-  border: 'none',
-  backgroundColor: 'rgba(232, 232, 232, .8)',
-};
-
-const starBarFlex = {
-  display: 'flex',
-  marginBottom: '10px',
-  paddingLeft: '7px',
-  cursor: 'pointer',
-};
-
-const starFont = {
-  fontSize: '12px',
-  color: '#fdf0d5',
-};
-
 const starPercentage = (obj, key) => {
   if (obj) {
     let total = 0;
@@ -36,41 +14,53 @@ const starPercentage = (obj, key) => {
   }
 };
 
-const RatingsBreakdownListEntry = ({
+export default function RatingsBreakdownListEntry({
   rating,
   ratings,
-  totalRating,
   sortByStar,
-}) => (
-  <div
-    id={rating}
-    aria-hidden='true'
-    className='starBar'
-    style={starBarFlex}
-    onClick={sortByStar}
-  >
-    <u id={rating} style={starFont}>
-      {`${rating} stars`}
-    </u>
+}) {
+  return (
+    <StarBarContainer aria-hidden='true' onClick={() => sortByStar(rating)}>
+      <StarNumber>
+        {rating} {rating === 1 ? 'star' : 'stars'}
+      </StarNumber>
 
-    <div id={rating} style={starBar}>
-      <div
-        style={{
-          background: '#333baacc',
-          height: '100%',
-          borderRadius: 'inherit',
-          width: `${
-            starPercentage(ratings, rating)
-              ? starPercentage(ratings, rating)
-              : 0
-          }%`,
-        }}
-      />
-    </div>
-    <div id={rating} style={starFont}>
-      {totalRating}
-    </div>
-  </div>
-);
+      <StarBar>
+        <StarBarShading starPercentage={starPercentage(ratings, rating)} />
+      </StarBar>
+      <StarCount>{ratings[rating]}</StarCount>
+    </StarBarContainer>
+  );
+}
 
-export default RatingsBreakdownListEntry;
+const StarBar = styled.div`
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  width: 8rem;
+  background-color: rgba(232, 232, 232, 0.8);
+  height: 0.5rem;
+`;
+
+const StarBarContainer = styled.div`
+  display: flex;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+`;
+
+const StarNumber = styled.u`
+  font-size: 0.75rem;
+  color: #fdf0d5;
+`;
+
+const StarCount = styled.u`
+  font-size: 0.75rem;
+  color: #fdf0d5;
+`;
+
+const StarBarShading = styled.div`
+  background: #333baacc;
+  height: 100%;
+  border-radius: inherit;
+  width: ${props => (props.starPercentage ? `${props.starPercentage}%` : '0')};
+`;

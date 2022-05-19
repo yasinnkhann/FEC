@@ -1,250 +1,186 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components'; // need this for Stars
+import React, { useState, useContext, lazy, Suspense } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
-import PhotosMap from './PhotosMap.jsx';
 import { serverURL } from '../../../config.js';
+import ReviewsContext from '../RatingsContext.js';
 
-const Stars = styled.div`
-  display: inline-block;
-  font-family: Times;
-  margin-left: 0rem;
-  padding-top: 1rem;
-`;
+const PhotosMap = lazy(() => import('./PhotosMap.jsx'));
 
-const gridLayout = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gridTemplatRows: 'repeat(6, 1fr)',
-  borderBottom: '1px solid #B1A9AC',
-  paddingTop: '10px',
-  paddingBottom: '8px',
-};
+export default function ReviewListEntry({ review }) {
+  // CONTEXT
+  const { reviewList, setReviewList } = useContext(ReviewsContext);
 
-const starLayout = {
-  gridColumn: '1/3',
-  gridRow: '1',
-};
+  // STATE
+  const [reviewMarkedHelpful, setReviewMarkedHelpful] = useState(false);
+  const [reviewMarkedReported, setReviewMarkedReported] = useState(false);
 
-const nameLayout = {
-  padding: '5px',
-  textAlign: 'right',
-  gridRow: '1',
-  gridColumn: '2',
-  color: '#B1A9AC',
-  fontSize: '13px',
-};
-
-const dateLayout = {
-  padding: '5px',
-  textAlign: 'center',
-  gridRow: '1',
-  gridColumn: '3',
-  color: '#B1A9AC',
-  fontSize: '13px',
-};
-
-const reviewLayout = {
-  padding: '5px',
-  gridRow: '2',
-  gridColumnEnd: 'span 3',
-  fontWeight: 'bold',
-};
-
-const bodyLayout = {
-  padding: '5px',
-  fontSize: '13px',
-  gridRow: '3',
-  gridColumnEnd: 'span 3',
-};
-
-const recommendLayout = {
-  padding: '5px',
-  color: '#B1A9AC',
-  fontSize: '12px',
-  gridRow: '4',
-  gridColumn: '1/-1',
-};
-
-const responseLayout = {
-  padding: '5px',
-  fontSize: '13px',
-  gridRow: '5',
-  gridColumnEnd: 'span 3',
-  backgroundColor: 'lightgrey',
-};
-
-const helpfulnessLayout = {
-  padding: '5px',
-  color: '#B1A9AC',
-  fontSize: '11px',
-  gridRowEnd: '7',
-  gridColumnEnd: 'span 3',
-};
-
-const emptyDiv = {
-  height: '0px',
-  width: '0px',
-};
-
-class ReviewListEntry extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handlePutEntryHelpful = this.handlePutEntryHelpful.bind(this);
-    this.handlePutEntryReported = this.handlePutEntryReported.bind(this);
-  }
-
-  handlePutEntryHelpful(e) {
+  const handlePutEntryHelpful = async () => {
     const body = {};
-    const review_id = this.props.review.review_id;
-    axios
-      .put(`${serverURL}/reviews/helpful`, body, {
-        params: {
-          review_id: review_id,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(results => {
-        alert('Helpful feedback received!');
-      })
-      .catch(err => {
-        console.log(err);
-        alert("There's been an issue with your request");
-      });
-  }
+    const review_id = review.review_id;
+    if (!reviewMarkedHelpful) {
+      try {
+        await axios.put(`${serverURL}/reviews/helpful`, body, {
+          params: {
+            review_id: review_id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-  handlePutEntryReported(e) {
+        const reviewListCopy = Object.assign({}, reviewList);
+        const modifiedReview = reviewListCopy.results.find(
+          review => review.review_id === review_id
+        );
+        modifiedReview.helpfulness += 1;
+        setReviewList(reviewListCopy);
+        setReviewMarkedHelpful(true);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  const handlePutEntryReported = async () => {
     const body = {};
-    const review_id = this.props.review.review_id;
-    axios
-      .put(`${serverURL}/reviews/report`, body, {
-        params: {
-          review_id: review_id,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(results => {
-        alert('Reported!');
-      })
-      .catch(err => {
-        console.log(err);
-        alert("There's been an issue with your request");
-      });
-  }
+    const review_id = review.review_id;
+    if (!reviewMarkedReported) {
+      try {
+        await axios.put(`${serverURL}/reviews/report`, body, {
+          params: {
+            review_id: review_id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        setReviewMarkedReported(true);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
 
-  render() {
-    const { review } = this.props;
-    return (
-      <div className='ratings-flexbox-container' style={gridLayout}>
-        <div style={starLayout}>
-          <div style={{ display: 'flex', zIndex: '-1', marginRight: 'auto' }}>
-            <Stars>
-              <Rating
-                name='read-only'
-                value={review.rating}
-                precision={0.25}
-                max={5}
-                size='small'
-                readOnly
-              />
-            </Stars>
-          </div>
-        </div>
+  return (
+    <Review>
+      <TopLine>
+        <StarsContainer>
+          <Rating
+            name='read-only'
+            value={review.rating}
+            precision={0.25}
+            max={5}
+            size='small'
+            readOnly
+          />
+        </StarsContainer>
+        <NameAndDateContainer>
+          <Name>{`${review.reviewer_name},`}</Name>
+          <TheDate>
+            {new Date(review.date).toLocaleDateString(undefined, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </TheDate>
+        </NameAndDateContainer>
+      </TopLine>
 
-        <div style={{ display: 'flex', marginLeft: 'auto' }}>
-          <div style={nameLayout}>
-            <div style={{ display: 'flex', marginLeft: 'auto' }}>
-              {review.reviewer_name},
-            </div>
-          </div>
-
-          <div style={dateLayout}>
-            <div style={{ display: 'flex' }}>
-              {new Date(review.date).toLocaleDateString(undefined, {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </div>
-          </div>
-        </div>
-        {review.summary ? (
-          <div style={reviewLayout}>
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              {review.summary}
-            </div>
-          </div>
-        ) : (
-          <div style={emptyDiv} />
-        )}
-        <div style={bodyLayout}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            {review.body}
-          </div>
-        </div>
-        {review.response !== null ? (
-          <div style={responseLayout}>
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <b>{`Response from seller: ${review.response}`}</b>
-            </div>
-          </div>
-        ) : (
-          <div style={emptyDiv} />
-        )}
-        {review.recommend === true ? (
-          <div style={recommendLayout}>
-            <div style={{ display: 'flex' }}>✓ I recommend this product</div>
-          </div>
-        ) : (
-          <div style={emptyDiv} />
-        )}
-        <div style={helpfulnessLayout}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            {review.photos.length > 0 ? (
-              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <PhotosMap photos={review.photos} />
-              </div>
-            ) : (
-              <div style={emptyDiv} />
-            )}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                float: 'right',
-                marginLeft: 'auto',
-                marginTop: 'auto',
-              }}
-            >
-              {' '}
-              Helpful?
-              <u
-                onClick={this.handlePutEntryHelpful}
-                aria-hidden='true'
-                id='helpful'
-                style={{ marginLeft: '4px', marginRight: '2px' }}
-              >
-                Yes
-              </u>
-              {`(${review.helpfulness}) | `}
-              <u
-                onClick={this.handlePutEntryReported}
-                aria-hidden='true'
-                id='report'
-                style={{ marginLeft: '4px' }}
-              >
-                Report
-              </u>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+      {review.summary && <Summary>{review.summary}</Summary>}
+      <Body>{review.body}</Body>
+      {review.response && (
+        <SellerContainer>
+          <strong>Seller: </strong>
+          <SellerRes>{review.response}</SellerRes>
+        </SellerContainer>
+      )}
+      {review.recommend === true && (
+        <Recommended>✓ I recommend this product</Recommended>
+      )}
+      {review.photos.length > 0 && (
+        <PhotosContainer>
+          <Suspense fallback={<div>Loading...</div>}>
+            <PhotosMap photos={review.photos} />
+          </Suspense>
+        </PhotosContainer>
+      )}
+      <PutOptionsContainer>
+        <Helpful>Helpful?</Helpful>{' '}
+        <Yes onClick={handlePutEntryHelpful} aria-hidden='true'>
+          Yes
+        </Yes>{' '}
+        <YesCount>{`(${review.helpfulness})`}</YesCount>
+        {' | '}
+        <Report onClick={handlePutEntryReported} aria-hidden='true'>
+          {reviewMarkedReported ? 'Reported' : 'Report'}
+        </Report>
+      </PutOptionsContainer>
+    </Review>
+  );
 }
 
-export default ReviewListEntry;
+const Review = styled.li`
+  border-bottom: 2px solid lightcyan;
+  padding-bottom: 1rem;
+`;
+
+const TopLine = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
+
+const StarsContainer = styled.div``;
+
+const NameAndDateContainer = styled.div`
+  display: flex;
+  font-size: 0.9rem;
+`;
+
+const Name = styled.p`
+  color: yellow;
+`;
+
+const TheDate = styled.p`
+  margin-left: 0.5rem;
+`;
+
+const PutOptionsContainer = styled.div`
+  margin: auto 0 0 auto;
+  font-size: 0.8rem;
+  text-align: right;
+`;
+
+const Helpful = styled.span``;
+
+const Yes = styled.u`
+  color: limegreen;
+  cursor: pointer;
+`;
+
+const YesCount = styled.span``;
+
+const Report = styled.u`
+  color: red;
+  cursor: pointer;
+`;
+
+const Summary = styled.h4``;
+
+const Body = styled.p`
+  font-size: 0.8rem;
+`;
+
+const SellerContainer = styled.div``;
+
+const SellerRes = styled.p``;
+
+const Recommended = styled.span`
+  color: greenyellow;
+  font-size: 0.8rem;
+`;
+
+const PhotosContainer = styled.div`
+  display: flex;
+`;

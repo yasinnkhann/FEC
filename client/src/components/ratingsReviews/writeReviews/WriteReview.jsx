@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import styled from 'styled-components';
-import CharacteristicsRadioList from './CharacteristicsRadioList.jsx';
+
+const CharacteristicsRadioList = lazy(() =>
+  import('./CharacteristicsRadioList.jsx')
+);
 
 const gridLayout = {
   display: 'grid',
@@ -396,10 +399,12 @@ class WriteReview extends React.Component {
             </div>
           </div>
           <div style={characteristicsStyle}>
-            <CharacteristicsRadioList
-              metaData={metaData}
-              characteristicsRadioClick={this.characteristicsRadioClick}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <CharacteristicsRadioList
+                metaData={metaData}
+                characteristicsRadioClick={this.characteristicsRadioClick}
+              />
+            </Suspense>
           </div>
           <div style={summaryStyle}>
             <label htmlFor='summary'>Review Summary (optional): </label>

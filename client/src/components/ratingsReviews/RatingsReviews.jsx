@@ -1,262 +1,133 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  Fragment,
-  Suspense,
-  lazy,
-} from 'react';
+import React, { useState, useEffect, useContext, Suspense, lazy } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
+import ReviewsContext from './RatingsContext.js';
 import { serverURL } from '../../config.js';
 
-const ReviewList = React.lazy(() => import('./reviewList/ReviewList.jsx'));
-const WriteReview = React.lazy(() => import('./writeReviews/WriteReview.jsx'));
-const RatingBreakdown = React.lazy(() =>
+const ReviewList = lazy(() => import('./reviewList/ReviewList.jsx'));
+const WriteReview = lazy(() => import('./writeReviews/WriteReview.jsx'));
+const RatingBreakdown = lazy(() =>
   import('./ratingBreakdown/RatingBreakdown.jsx')
 );
-const ProductBreakdown = React.lazy(() =>
+const ProductBreakdown = lazy(() =>
   import('./productBreakdown/ProductBreakdown.jsx')
 );
-const SortOptions = React.lazy(() => import('./sortOptions/SortOption.jsx'));
-
-const gridLayout = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gridTemplateRows: 'minmax(5, 1fr) 200px',
-  gridGap: '10px',
-  color: '#fdf0d5',
-};
-
-const noReviewsGrid = {
-  display: 'grid',
-  justifyContent: 'center',
-  gridGap: '20px',
-  paddingTop: '30px',
-  paddingBottom: '30px',
-};
-
-const mainDiv = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  maxHeight: '100%',
-  maxWidth: '100%',
-  marginTop: '20px',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  marginBottom: '30px',
-  color: '#fdf0d5',
-  scrollBehavior: 'smooth',
-};
-
-const ratingGrid = {
-  gridColumn: '1',
-  gridRow: '1',
-  maxheight: '200px',
-};
-
-const HeaderStyle = styled.h3`
-  text-align: 'center';
-  font-size: 'xx-large';
-  text-align: 'center';
-  padding-bottom: '1rem';
-  font-family: 'Lobster Two', cursive;
-  color: #b1a9ac;
-`;
-const HeaderDiv = styled.div`
-  display: flex;
-  align-content: space-between;
-  justify-content: space-around;
-  font-size: xx-large;
-`;
-
-const addReviewBtnStyle = {
-  border: 'none',
-  color: 'black',
-  padding: '10px 20px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  margin: '4px 2px',
-  cursor: 'pointer',
-  borderRadius: '16px',
-  boxShadow: '0px 4px 8px 0px #0afa0a33',
-  padding: '10px',
-  backgroundColor: '#B1A9AC',
-  color: '#38062B',
-  marginBottom: '30px',
-};
-
-const moreReviewsBtn = {
-  border: 'none',
-  color: 'black',
-  padding: '10px 20px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  margin: '4px 2px',
-  cursor: 'pointer',
-  borderRadius: '16px',
-  boxShadow: '0px 4px 8px 0px #0afa0a33',
-  padding: '10px',
-  backgroundColor: '#B1A9AC',
-  color: '#38062B',
-  marginBottom: '30px',
-};
-
-const modalStyle = {
-  backdropFilter: 'blur(8px) contrast(70%)',
-  backgroundColor: 'rgb(0,0,0)',
-  backgroundColor: 'rgba(0,0,0,0.4)',
-  zIndex: '150',
-  height: '100%',
-  width: '100%',
-  position: 'fixed',
-  top: '0',
-  left: '0',
-  overflow: 'hidden',
-  paddingTop: '80px',
-};
-
-const innerModalStyle = {
-  backgroundColor: '#fdf0d5',
-  color: '#38062b',
-  width: '50%',
-  minWidth: '580px',
-  maxWidth: '100%',
-  maxHeight: '80%',
-  height: '80%',
-  margin: 'auto',
-  padding: '10px',
-  border: 'none',
-  overflow: 'auto',
-  borderRadius: '20px',
-};
-
-const productStyle = {
-  maxWidth: '100%',
-  margin: 'auto',
-  gridColumn: '1',
-  gridRow: '2',
-};
-
-const sortOptionsStyle = {
-  marginLeft: '30px',
-  gridColumn: '2/-1',
-  gridRow: '1',
-};
-
-const reviewListStyle = {
-  gridColumn: '2/-1',
-  gridRow: '1/5',
-  overflow: 'auto',
-  maxWidth: '90%',
-  maxHeight: '520px',
-  marginTop: '40px',
-  marginBottom: '20px',
-  marginLeft: '20px',
-  listStyle: 'none',
-};
-
-const reviewButtonsStyle = {
-  width: '100%',
-  marginTop: '10px',
-  gridColumn: '2/-1',
-  gridRowEnd: '5',
-};
+const SortOptions = lazy(() => import('./sortOptions/SortOption.jsx'));
 
 export default function RatingsReviews() {
   // CONTEXT
   const { productsContext, selectedProductContext } = useContext(AppContext);
   const [products, setProducts] = productsContext;
   const [selectedProduct, setSelectedProduct] = selectedProductContext;
+
   // STATE
-  const [reviewList, setReviewList] = useState([]);
+  const [reviewList, setReviewList] = useState({});
+  const [filteredReviewList, setFilteredReviewList] = useState({});
   const [metaData, setMetaData] = useState([]);
   const [reviewEnd, setReviewEnd] = useState(2);
   const [starSort, setStarSort] = useState([]);
-  const [listSort, setListSort] = useState(0);
+  const [listSort, setListSort] = useState('1');
   const [reviewsReady, setReviewReady] = useState(false);
   const [writeReviewModal, setWriteReviewModal] = useState(false);
   const [noReviews, setNoReviews] = useState(false);
   const [hideMoreReviews, setHideMoreReviews] = useState(false);
   const [reviewCache, setReviewCache] = useState([]);
   const [reviewCacheState, setReviewCacheState] = useState(0);
+  const [isReviewLoaded, setIsReviewLoaded] = useState(false);
+  const [isMetaDataLoaded, setIsMetaDataLoaded] = useState(false);
+  const [showClearFilter, setShowClearFilter] = useState(false);
 
-  useEffect(() => {
-    // get review api data
-    const getReviewApi = async () => {
-      try {
-        const res = await axios.get(`${serverURL}/reviews`, {
-          params: {
-            count: 1000,
-            product_id: selectedProduct.id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        setReviewList(res.data);
-        setReviewReady(true);
+  const getReviewApi = async () => {
+    try {
+      const res = await axios.get(`${serverURL}/reviews`, {
+        params: {
+          count: 1000,
+          product_id: selectedProduct.id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setReviewList(res.data);
+      setFilteredReviewList(res.data);
+      setIsReviewLoaded(true);
+      setReviewReady(true);
 
-        if (res.data.results.length === 0) {
-          setNoReviews(true);
-        }
-        reviewCache.push(res.data);
-      } catch (err) {
-        console.error(err);
+      if (res.data.results.length === 0) {
+        setNoReviews(true);
       }
-    };
-    //get meta data
-    const getMetaApi = async () => {
-      try {
-        const res = await axios.get(`${serverURL}/reviews/meta`, {
-          params: {
-            count: 50,
-            product_id: selectedProduct.id,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        // console.log(res.data);
-        setMetaData(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    getMetaApi();
-    getReviewApi();
-
-    // append font awesome to index.html
-    const script = document.createElement('script');
-    script.src = 'https://kit.fontawesome.com/1f15c8017d.js';
-    script.crossorigin = 'anonymous';
-    script.async = true;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, [selectedProduct]);
-
-  const listSortChange = event => {
-    setListSort(event.target.value);
-  };
-
-  const sortByStar = event => {
-    if (starSort.indexOf(event.target.id) === -1) {
-      setStarSort([...starSort, event.target.id]);
-    } else {
-      starSort.splice(starSort.indexOf(event.target.id), 1);
-      setStarSort({ starSort });
+      reviewCache.push(res.data);
+    } catch (err) {
+      console.error(err);
     }
   };
 
+  const getMetaApi = async () => {
+    try {
+      const res = await axios.get(`${serverURL}/reviews/meta`, {
+        params: {
+          count: 50,
+          product_id: selectedProduct.id,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setMetaData(res.data);
+      setIsMetaDataLoaded(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getMetaApi();
+    getReviewApi();
+  }, [selectedProduct]);
+
+  const listSortChange = e => {
+    setListSort(e.target.value);
+
+    // if (e.target.value === '1') {
+    //   setFilteredReviewList(reviewList);
+    // }
+
+    // if (e.target.value === '2') {
+    //   const mostHelpfulReviews = reviewList.results.sort(
+    //     (a, b) => b.helpfulness - a.helpfulness
+    //   );
+    //   setFilteredReviewList(currReviewsList => ({
+    //     ...currReviewsList,
+    //     results: mostHelpfulReviews,
+    //   }));
+    // }
+
+    // if (e.target.value === '3') {
+    //   const mostRecentReviews = reviewList.results.sort(
+    //     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    //   );
+    //   setFilteredReviewList(currReviewsList => ({
+    //     ...currReviewsList,
+    //     results: mostRecentReviews,
+    //   }));
+    // }
+  };
+
+  const handleSortByStar = rating => {
+    const filteredReviews = reviewList.results.filter(
+      review => review.rating === Number(rating)
+    );
+    setFilteredReviewList(currReviewList => ({
+      ...currReviewList,
+      results: filteredReviews,
+    }));
+    setShowClearFilter(true);
+  };
+
   const clearStarFilter = () => {
-    setStarSort([]);
+    setFilteredReviewList(reviewList);
+    setShowClearFilter(false);
   };
 
   const handleReviewData = async reviewData => {
@@ -294,154 +165,270 @@ export default function RatingsReviews() {
 
   if (noReviews) {
     return (
-      <Suspense fallback={<div> Loading...</div>}>
-        <div>
-          <div
-            className='ratings-and-reviews'
-            id='ratings-reviews'
-            style={noReviewsGrid}
-          >
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: '30px',
-                gridRow: '1',
-                color: '#B1A9AC',
-              }}
-            >
-              No review for this product Be the first to add one!
-            </div>
-            <button
-              className='addReview'
-              type='button'
-              onClick={writeReviewClick}
-              style={addReviewBtnStyle}
-            >
-              ADD A REVIEW +
-            </button>
-            {writeReviewModal && (
-              <div
-                style={modalStyle}
-                aria-hidden='true'
-                role='button'
-                onClick={exitWriteReviewClick}
-              >
-                <div
-                  style={innerModalStyle}
-                  aria-hidden='true'
-                  onClick={e => e.stopPropagation()}
-                >
-                  <WriteReview
-                    handleReviewData={handleReviewData}
-                    productID={selectedProduct.id}
-                    metaData={metaData}
-                  />
-                  <br />
-                </div>
-              </div>
-            )}
-          </div>
+      <NoReviewsGrid id='ratings-reviews'>
+        <div
+          style={{
+            textAlign: 'center',
+            fontSize: '30px',
+            gridRow: '1',
+            color: '#B1A9AC',
+          }}
+        >
+          No review for this product Be the first to add one!
         </div>
-      </Suspense>
+        <AddReviewBtn
+          className='addReview'
+          type='button'
+          onClick={writeReviewClick}
+        >
+          ADD A REVIEW +
+        </AddReviewBtn>
+        {writeReviewModal && (
+          <ModalStyle
+            aria-hidden='true'
+            role='button'
+            onClick={exitWriteReviewClick}
+          >
+            <InnerModal aria-hidden='true' onClick={e => e.stopPropagation()}>
+              <Suspense fallback={<div>Loading...</div>}>
+                <WriteReview
+                  handleReviewData={handleReviewData}
+                  productID={selectedProduct.id}
+                  metaData={metaData}
+                />
+              </Suspense>
+              <br />
+            </InnerModal>
+          </ModalStyle>
+        )}
+      </NoReviewsGrid>
     );
   }
 
   return (
-    <Suspense fallback={<div> Loading...</div>}>
-      <Fragment>
-        <div className='ratings-and-reviews' id='ratings-reviews'>
-          <HeaderDiv>
-            <HeaderStyle>Ratings &#38; Reviews</HeaderStyle>
-          </HeaderDiv>
-          {
-            <>
-              <div style={mainDiv}>
-                {reviewsReady === true && (
-                  <div style={gridLayout}>
-                    <div style={ratingGrid}>
-                      <RatingBreakdown
-                        metaData={metaData}
-                        sortByStar={sortByStar}
-                        starSort={starSort}
-                        clearStarFilter={clearStarFilter}
-                      />
-                    </div>
-                    <div style={productStyle}>
-                      <ProductBreakdown metaData={metaData} />
-                    </div>
-                    {writeReviewModal && (
-                      <div
-                        style={modalStyle}
-                        aria-hidden='true'
-                        role='button'
-                        onClick={exitWriteReviewClick}
-                      >
-                        <div
-                          style={innerModalStyle}
-                          aria-hidden='true'
-                          onClick={e => e.stopPropagation()}
-                        >
-                          <WriteReview
-                            handleReviewData={handleReviewData}
-                            productID={selectedProduct.id}
-                            metaData={metaData}
-                          />
-                          <br />
-                        </div>
-                      </div>
-                    )}
-                    <div style={sortOptionsStyle}>
+    <ReviewsContext.Provider
+      value={{
+        reviewList,
+        setReviewList,
+        metaData,
+        setMetaData,
+        showClearFilter,
+      }}
+    >
+      <MainContainer id='ratings-reviews'>
+        <Header>Ratings &#38; Reviews</Header>
+        {isMetaDataLoaded && isReviewLoaded && (
+          <MainDiv>
+            {reviewsReady === true && (
+              <>
+                <AvgRatingContainer>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <RatingBreakdown
+                      metaData={metaData}
+                      sortByStar={handleSortByStar}
+                      clearStarFilter={clearStarFilter}
+                    />
+                  </Suspense>
+                </AvgRatingContainer>
+                <ReviewBreakdownContainer>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <ProductBreakdown metaData={metaData} />
+                  </Suspense>
+                </ReviewBreakdownContainer>
+                {writeReviewModal && (
+                  <ModalStyle
+                    aria-hidden='true'
+                    role='button'
+                    onClick={exitWriteReviewClick}
+                  >
+                    <InnerModal
+                      aria-hidden='true'
+                      onClick={e => e.stopPropagation()}
+                    >
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <WriteReview
+                          handleReviewData={handleReviewData}
+                          productID={selectedProduct.id}
+                          metaData={metaData}
+                        />
+                      </Suspense>
+                      <br />
+                    </InnerModal>
+                  </ModalStyle>
+                )}
+                <ReviewListContainer>
+                  <SortOptionsContainer>
+                    <Suspense fallback={<div>Loading...</div>}>
                       <SortOptions
                         metaData={metaData}
-                        listSort={listSort}
                         listSortChange={listSortChange}
                       />
-                    </div>
-                    <div style={reviewListStyle}>
-                      <ReviewList
-                        reviewCache={reviewCache}
-                        reviewCacheState={reviewCacheState}
-                        starSort={starSort}
-                        reviewList={reviewList}
-                        reviewEnd={reviewEnd}
-                      />
-                    </div>
-                    <div style={reviewButtonsStyle}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          marginTop: '90px',
-                          justifyContent: 'space-evenly',
-                        }}
-                      >
-                        {reviewList.results.length > 2 &&
-                          hideMoreReviews === false && (
-                            <button
-                              className='moreReviews'
-                              type='button'
-                              style={moreReviewsBtn}
-                              onClick={moreReviewsClick}
-                            >
-                              MORE REVIEWS
-                            </button>
-                          )}
-                        <button
-                          id='addReview'
-                          type='button'
-                          onClick={writeReviewClick}
-                          style={addReviewBtnStyle}
-                        >
-                          ADD A REVIEW +
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </>
-          }
-        </div>
-      </Fragment>
-    </Suspense>
+                    </Suspense>
+                  </SortOptionsContainer>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <ReviewList
+                      reviewCache={reviewCache}
+                      reviewCacheState={reviewCacheState}
+                      starSort={starSort}
+                      filteredReviewList={filteredReviewList}
+                      reviewEnd={reviewEnd}
+                    />
+                  </Suspense>
+                </ReviewListContainer>
+                <ReviewBtnsContainer>
+                  {reviewList.results.length > 2 && hideMoreReviews === false && (
+                    <MoreReviewsBtn
+                      className='moreReviews'
+                      type='button'
+                      onClick={moreReviewsClick}
+                    >
+                      MORE REVIEWS
+                    </MoreReviewsBtn>
+                  )}
+                  <AddReviewBtn
+                    id='addReview'
+                    type='button'
+                    onClick={writeReviewClick}
+                  >
+                    ADD A REVIEW +
+                  </AddReviewBtn>
+                </ReviewBtnsContainer>
+              </>
+            )}
+          </MainDiv>
+        )}
+      </MainContainer>
+    </ReviewsContext.Provider>
   );
 }
+
+const MainContainer = styled.div``;
+
+const MainDiv = styled.div`
+  display: grid;
+  grid-template-columns: 33% 66%;
+  grid-template-rows: 20rem 1fr;
+  color: #fdf0d5;
+`;
+
+const NoReviewsGrid = styled.div`
+  display: grid;
+  justify-content: center;
+  grid-gap: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+`;
+
+const AvgRatingContainer = styled.div``;
+
+const Header = styled.h3`
+  font-size: xx-large;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-family: 'Lobster Two', cursive;
+  color: #fdf0d5;
+`;
+
+const AddReviewBtn = styled.button`
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+  box-shadow: 0px 4px 8px 0px #0afa0a33;
+  padding: 10px;
+  background-color: #b1a9ac;
+  color: #38062b;
+  margin-bottom: 30px;
+`;
+
+const MoreReviewsBtn = styled.button`
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+  box-shadow: 0px 4px 8px 0px #0afa0a33;
+  padding: 10px;
+  background-color: #b1a9ac;
+  color: #38062b;
+  margin-bottom: 30px;
+`;
+
+const ModalStyle = styled.div`
+  backdrop-filter: blur(8px) contrast(70%);
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 150;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  padding-top: 80px;
+`;
+
+const InnerModal = styled.div`
+  background-color: #fdf0d5;
+  color: #38062b;
+  width: 50%;
+  min-width: 580px;
+  max-width: 100%;
+  max-height: 80%;
+  height: 80%;
+  margin: auto;
+  padding: 10px;
+  border: none;
+  overflow: auto;
+  border-radius: 20px;
+`;
+
+const ReviewBreakdownContainer = styled.div`
+  margin: 2rem auto;
+  width: 100%;
+  padding: 0 5rem;
+`;
+
+const SortOptionsContainer = styled.div`
+  grid-column: 2 / -1;
+  grid-row: 1;
+  font-weight: bold;
+  font-style: italic;
+  text-align: end;
+  margin-right: 1rem;
+`;
+
+const ReviewListContainer = styled.div`
+  grid-column: 2 / -1;
+  grid-row: 1 / -1;
+  list-style: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-track {
+    background: #fdf0d5;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 10px;
+  }
+`;
+
+const ReviewBtnsContainer = styled.div`
+  width: 100%;
+  grid-column: 2 / -1;
+  display: flex;
+  justify-content: space-evenly;
+`;

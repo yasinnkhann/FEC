@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  lazy,
-  Suspense,
-  Fragment,
-} from 'react';
+import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import AppContext from '../../AppContext.js';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -18,26 +11,6 @@ const ImageGallery = lazy(() => import('./ImageGallery.jsx'));
 const ReviewsStars = lazy(() => import('./ReviewsStars.jsx'));
 const StyleSelector = lazy(() => import('./StyleSelector.jsx'));
 const Icons = lazy(() => import('./Icons.jsx'));
-
-const Layout = styled.div`
-  margin: 6rem 0;
-`;
-
-const Grid = styled.div`
-  display grid;
-  grid-template-columns: 40vw 50vw;
-  grid-template-areas: 
-  'mainImg overview' 
-  'mainImg overview';
-  grid-gap: 1rem;
-`;
-
-const Container = styled.div`
-  grid-area: overview;
-  text-align: center;
-  width: fit-content;
-  padding: 0 8rem;
-`;
 
 export default function Overview() {
   const { productsContext } = useContext(AppContext);
@@ -90,7 +63,7 @@ export default function Overview() {
     getStyles();
   }, [selectedProduct]);
   return (
-    <Layout id='product-overview'>
+    <MainContainer id='product-overview'>
       <Grid>
         <StylesContext.Provider
           value={{
@@ -106,7 +79,7 @@ export default function Overview() {
             </>
           )}
         </StylesContext.Provider>
-        <Container>
+        <OverviewContainer>
           <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
             {loadingStatusStyles && (
               <>
@@ -136,8 +109,28 @@ export default function Overview() {
           <Suspense fallback={<div>Loading...</div>}>
             <Icons />
           </Suspense>
-        </Container>
+        </OverviewContainer>
       </Grid>
-    </Layout>
+    </MainContainer>
   );
 }
+
+const MainContainer = styled.div`
+  margin: 6rem 0;
+`;
+
+const Grid = styled.div`
+  display grid;
+  grid-template-columns: 40% 60%;
+  grid-template-areas: 
+  'mainImg overview' 
+  'mainImg overview';
+  grid-gap: 1rem;
+`;
+
+const OverviewContainer = styled.div`
+  grid-area: overview;
+  text-align: center;
+  width: fit-content;
+  padding: 0 1rem 0 5rem;
+`;

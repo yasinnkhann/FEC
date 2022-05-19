@@ -1,25 +1,33 @@
-import React from 'react';
-import RatingsBreakdownListEntry from './RatingsBreakdownListEntry.jsx';
+import React, { lazy, Suspense } from 'react';
+import styled from 'styled-components';
+
+const RatingsBreakdownListEntry = lazy(() =>
+  import('./RatingsBreakdownListEntry.jsx')
+);
 
 export default function RatingsBreakdownList({ metaData, sortByStar }) {
   return (
-    <div style={gridLayout}>
-      {[5, 4, 3, 2, 1].map(rating => (
-        <RatingsBreakdownListEntry
-          rating={rating}
-          ratings={metaData.ratings}
-          totalRating={metaData?.ratings?.rating || 0}
-          sortByStar={sortByStar}
-          key={rating}
-        />
-      ))}
-    </div>
+    <RatingBreakdownList>
+      {metaData?.ratings &&
+        Object.keys(metaData?.ratings)
+          .reverse()
+          .map(rating => (
+            <Suspense key={rating} fallback={<div>Loading...</div>}>
+              <RatingsBreakdownListEntry
+                rating={rating}
+                ratings={metaData?.ratings}
+                totalRating={metaData?.ratings?.rating || 0}
+                sortByStar={sortByStar}
+                key={rating}
+              />
+            </Suspense>
+          ))}
+    </RatingBreakdownList>
   );
 }
 
-const gridLayout = {
-  display: 'grid',
-  gridTemplateColumns: '1fr',
-  gridTemplateRows: 'minwidth(5, 1fr) 50px',
-  margin: 'auto',
-};
+const RatingBreakdownList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

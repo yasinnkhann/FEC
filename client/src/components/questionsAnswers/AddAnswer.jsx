@@ -6,8 +6,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import QuestionsContext from './QuestionsContext.js';
 import { v4 as uuidv4 } from 'uuid';
 import { cloudinaryInfo } from '../../config.js';
-import Loader from 'react-loader-spinner';
 import { serverURL } from '../../config.js';
+import { Circle } from 'better-react-spinkit';
 
 export default function AddAnswer({ closeModal, question }) {
   // CONTEXT
@@ -116,12 +116,7 @@ export default function AddAnswer({ closeModal, question }) {
               Your Answer<span style={{ color: 'red' }}>* </span>
             </label>
             <br />
-            <textarea
-              style={{
-                verticalAlign: 'top',
-                margin: '0px',
-                resize: 'none',
-              }}
+            <YourAnswer
               name='yourAnswer'
               value={addAnsData.yourAnswer}
               onChange={handleChange}
@@ -134,14 +129,14 @@ export default function AddAnswer({ closeModal, question }) {
                 e.target.setCustomValidity('You must enter a valid answer')
               }
               onInput={e => e.target.setCustomValidity('')}
-            ></textarea>
+            ></YourAnswer>
             <br />
             <br />
             <label htmlFor='yourNickName'>
               What is your nickname<span style={{ color: 'red' }}>* </span>
             </label>
             <br />
-            <input
+            <YourNickname
               name='yourNickName'
               value={addAnsData.yourNickName}
               onChange={handleChange}
@@ -165,7 +160,7 @@ export default function AddAnswer({ closeModal, question }) {
               Your Email<span style={{ color: 'red' }}>* </span>
             </label>
             <br />
-            <input
+            <YourEmail
               name='yourEmail'
               value={addAnsData.yourEmail}
               onChange={handleChange}
@@ -185,11 +180,12 @@ export default function AddAnswer({ closeModal, question }) {
             <span>For authentication reasons, you will not be emailed.</span>
             <br />
             <br />
-            <label htmlFor='uploadInput'>Upload Photos: (Max: 5) </label>
+            <UploadLabel htmlFor='uploadInput'>Upload Photos</UploadLabel>
+            <MaxPhotosLine>(Max: 5) </MaxPhotosLine>
             <br />
             {numOfImages <= 5 && (
               <>
-                <input
+                <UploadBtn
                   type='file'
                   id='uploadInput'
                   name='images'
@@ -200,41 +196,28 @@ export default function AddAnswer({ closeModal, question }) {
                 {images && (
                   <ImagesContainer>
                     {[...images].map(thumbnail => (
-                      <img
+                      <UploadedImg
                         key={uuidv4()}
                         src={URL.createObjectURL(thumbnail)}
                         alt='uploaded photo'
                         loading='lazy'
-                        style={{
-                          height: '50px',
-                          width: '50px',
-                          border: '1px solid #000',
-                          margin: '5px',
-                        }}
                       />
                     ))}
                   </ImagesContainer>
                 )}
               </>
             )}
-            <br />
-            <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
+            <SubmitBtnContainer>
+              <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
+            </SubmitBtnContainer>
             <CloseBtn onClick={handleCloseModal}>
               <XIcon />
             </CloseBtn>
             {isPostReqSubmitted && (
-              <Loader
-                type='Oval'
+              <Circle
                 color='blue'
-                height={100}
-                width={100}
-                arialLabel='loading-indicator'
-                style={{
-                  position: 'fixed',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                }}
+                size={100}
+                style={{ position: 'absolute', top: '40%', right: '45%' }}
               />
             )}
           </Content>
@@ -282,37 +265,15 @@ const UpperContent = styled.div`
     background: #000;
     border-radius: 10px;
   }
-
-  input {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 98.5%;
-    height: 30px;
-    border-radius: 4px;
-    border: 1px solid #000;
-    padding: 0px 8px;
-  }
-
-  input[type='file'] {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: auto;
-    height: auto;
-    border-radius: 4px;
-    border: none;
-    padding: 0px 0px;
-  }
-
-  textarea {
-    width: 100%;
-  }
 `;
 
-const ImagesContainer = styled.div``;
+const ImagesContainer = styled.div`
+  margin-top: 1rem;
+`;
 
 const XIcon = styled(CloseIcon)`
   && {
-    color: #38062b;
+    color: red;
     font-size: 2rem;
   }
 `;
@@ -328,13 +289,68 @@ const CloseBtn = styled.button`
   border: none;
 `;
 
+const SubmitBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const SubmitBtn = styled.button`
   margin-top: 1rem;
   margin-bottom: 1rem;
-	padding: 8px 12px;
+	padding: 0.5rem 0.75rem;
 	border-radius 6px;
 	border: none;
 	background: #38062B;
-	color: #B1A9AC;
+	color: #fdf0d5;
 	cursor: pointer;
+`;
+
+const UploadBtn = styled.input`
+  display: none;
+`;
+
+const UploadLabel = styled.label`
+  background-color: #38062b;
+  color: #fdf0d5;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+`;
+
+const MaxPhotosLine = styled.span`
+  margin-left: 0.5rem;
+  font-size: 1rem;
+`;
+
+const YourAnswer = styled.textarea`
+  vertical-align: top;
+  margin: 0;
+  resize: none;
+  width: 100%;
+`;
+
+const YourNickname = styled.input`
+  margin: 0.3rem 0;
+  width: 100%;
+  height: 2rem;
+  border-radius: 4px;
+  border: 1px solid #000;
+  padding: 0 0.5rem;
+`;
+
+const YourEmail = styled.input`
+  margin: 0.3rem 0;
+  width: 100%;
+  height: 2rem;
+  border-radius: 4px;
+  border: 1px solid #000;
+  padding: 0 0.5rem;
+`;
+
+const UploadedImg = styled.img`
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid #000;
+  margin: 0.3rem;
 `;

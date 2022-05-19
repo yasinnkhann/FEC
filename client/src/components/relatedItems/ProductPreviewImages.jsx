@@ -14,7 +14,7 @@ export default function ProductPreviewImages({ imageUrl, productName }) {
 }
 
 const Image = styled.img`
-  width: 208px;
-  height: 200px;
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 `;

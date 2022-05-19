@@ -163,7 +163,9 @@ export default function Answer({ questionObj }) {
               ) : (
                 answer?.answerer_name
               )}
-              , <Moment format='MMMM Do YYYY'>{answer?.date}</Moment> | Helpful?{' '}
+              ,{' '}
+              <StyledMoment format='MMMM Do YYYY'>{answer?.date}</StyledMoment>{' '}
+              | Helpful?{' '}
               <a href=''>
                 <YesSec onClick={e => increaseAnswerHelpfulCount(e, answer)}>
                   Yes
@@ -223,7 +225,9 @@ export default function Answer({ questionObj }) {
               ) : (
                 answer?.answerer_name
               )}
-              , <Moment format='MMMM Do YYYY'>{answer?.date}</Moment> | Helpful?{' '}
+              ,{' '}
+              <StyledMoment format='MMMM Do YYYY'>{answer?.date}</StyledMoment>{' '}
+              | Helpful?{' '}
               <a href=''>
                 <YesSec onClick={e => increaseAnswerHelpfulCount(e, answer)}>
                   Yes
@@ -276,26 +280,22 @@ export default function Answer({ questionObj }) {
         initialMappedAnswers
       )}
       {showRemainderAnswers && remainingMappedAnswers}
-      <hr style={{ border: '1px solid #000', borderColor: 'black' }} />
+      <Line />
       {remainingFinalAnswers?.length > 0 && (
-        <span>
-          <a href='' onClick={handleSeeMoreAnswers}>
-            <CollapseBtn>
-              {showRemainderAnswers ? 'Collapse answers' : 'See more answers'}
-            </CollapseBtn>
-          </a>
-        </span>
+        <CollapseBtn onClick={handleSeeMoreAnswers}>
+          {showRemainderAnswers ? 'Collapse answers' : 'See more answers'}
+        </CollapseBtn>
       )}
     </Container>
   );
 }
 
 const Container = styled.div`
-  max-height: 320px;
+  max-height: 20rem;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 7px;
+    width: 0.5rem;
   }
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
@@ -307,12 +307,12 @@ const Container = styled.div`
 `;
 
 const AnswerBodyContainer = styled.div`
-  margin: 0px 0px 0px 10px;
+  margin-left: 1rem;
 `;
 
 const AnswerPortion = styled.div`
   display: flex;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 `;
 
 const AnswerHeader = styled.div`
@@ -320,11 +320,11 @@ const AnswerHeader = styled.div`
 `;
 
 const AnswerBody = styled.p`
-  margin: 0px 0px 0px 0px;
+  margin: 0;
 `;
 
 const AnswerDetails = styled.div`
-  font-size: 15px;
+  font-size: 1rem;
 `;
 
 const YesSec = styled.span`
@@ -338,19 +338,28 @@ const ReportSec = styled.span`
 const PhotoContainer = styled.div``;
 
 const Photos = styled.div`
-  margin-top: 8px;
+  margin-top: .5rem;
 
   img {
     border-radius 10px;
-    margin-right: 15px;
+    margin-right: 1rem;
   }
 `;
 
 const CollapseBtn = styled.button`
-	padding: 8px 12px;
+	padding: .5rem .75rem;
 	border-radius 6px;
 	border: none;
   background: #38062B;
-	color: #B1A9AC;
+	color: #fdf0d5;
 	cursor: pointer;
+`;
+
+const StyledMoment = styled(Moment)`
+  margin-left: 0.2rem;
+`;
+
+const Line = styled.hr`
+  border: 1px solid #000;
+  border-color: black;
 `;

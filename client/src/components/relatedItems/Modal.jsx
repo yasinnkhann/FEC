@@ -10,14 +10,9 @@ import React, {
 import {
   getMaxLengthOfCombinedArrays,
   getFeatures,
-  filterArraysByFeature,
   getValues,
-  getRows,
   mapProductValues,
   mapCategories,
-  formatWord,
-  formatValue,
-  capitalize,
 } from './utils';
 import { createPortal } from 'react-dom';
 import styled, { keyframes } from 'styled-components';
@@ -195,7 +190,6 @@ export const Modal = ({ product, fade = false }, ref) => {
       if (rightProduct && Array.isArray(rightProduct)) {
         for (let j = 0; j < rightProduct.length; j++) {
           let rProduct = rightProduct[j][1];
-          console.log('CURRENT R INDEX::', rProduct);
           if (rProduct.feature === feature) {
             right = rProduct.value;
           } else {
@@ -263,6 +257,7 @@ const ModalStyle = styled.div`
   padding: 1.5em 1em;
   z-index: 999999;
   box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const ModalFade = styled.div`
@@ -277,6 +272,11 @@ const ModalOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 `;
 
 const VS = styled.td`
