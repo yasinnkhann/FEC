@@ -89,29 +89,31 @@ export default function RatingsReviews() {
   const listSortChange = e => {
     setListSort(e.target.value);
 
-    // if (e.target.value === '1') {
-    //   setFilteredReviewList(reviewList);
-    // }
+    if (e.target.value === '1') {
+      setFilteredReviewList(reviewList);
+    }
 
-    // if (e.target.value === '2') {
-    //   const mostHelpfulReviews = reviewList.results.sort(
-    //     (a, b) => b.helpfulness - a.helpfulness
-    //   );
-    //   setFilteredReviewList(currReviewsList => ({
-    //     ...currReviewsList,
-    //     results: mostHelpfulReviews,
-    //   }));
-    // }
+    if (e.target.value === '2') {
+      const resultsCopy = [...reviewList.results];
+      const mostHelpfulReviews = resultsCopy.sort(
+        (a, b) => b.helpfulness - a.helpfulness
+      );
+      setFilteredReviewList(currReviewsList => ({
+        ...currReviewsList,
+        results: mostHelpfulReviews,
+      }));
+    }
 
-    // if (e.target.value === '3') {
-    //   const mostRecentReviews = reviewList.results.sort(
-    //     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    //   );
-    //   setFilteredReviewList(currReviewsList => ({
-    //     ...currReviewsList,
-    //     results: mostRecentReviews,
-    //   }));
-    // }
+    if (e.target.value === '3') {
+      const resultsCopy = [...reviewList.results];
+      const mostRecentReviews = resultsCopy.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+      setFilteredReviewList(currReviewsList => ({
+        ...currReviewsList,
+        results: mostRecentReviews,
+      }));
+    }
   };
 
   const handleSortByStar = rating => {
