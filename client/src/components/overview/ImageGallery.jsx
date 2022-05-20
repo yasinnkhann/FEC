@@ -61,7 +61,7 @@ export default function ImageGallery() {
               ? setCurrentIndex(index)
               : setCurrentIndex(7 * currentPage + index)
           }
-        ></ThumbnailImage>
+        />
       );
     });
   };
@@ -74,10 +74,14 @@ export default function ImageGallery() {
         : null;
       return (
         <ThumbnailExpandedImage
+          selected={
+            currentStyle.photos[currentIndex].thumbnail_url ===
+            photo?.thumbnail_url
+          }
           onClick={() => setCurrentIndex(index)}
           src={imageExpandRendered}
           key={photo.thumbnail_url}
-        ></ThumbnailExpandedImage>
+        />
       );
     });
   };
@@ -234,7 +238,7 @@ const ThumbnailContainer = styled.div`
 `;
 
 const ThumbnailImage = styled.img`
-  border: ${props => (props.selected ? '3px solid #38062B' : null)};
+  border: ${props => (props.selected ? '2px solid gold' : null)};
   width: 3.125rem;
   height: 3.125rem;
   object-fit: cover;
@@ -297,11 +301,11 @@ const RightExpand = styled.button`
 `;
 
 const ThumbnailExpandedImage = styled.img`
+  border: ${props => (props.selected ? '2px solid gold' : null)};
   height: 3.125rem;
   width: 3.125rem;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #38062b;
   margin: 0.5rem 0.5rem 0 0.5rem;
 `;
 
