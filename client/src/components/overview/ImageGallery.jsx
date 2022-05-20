@@ -147,7 +147,7 @@ export default function ImageGallery() {
   };
 
   return (
-    <MainImgContainer>
+    <>
       <ThumbnailContainer>
         {currentPage !== 0 && (
           <UpArrow onClick={() => setCurrentPage(currentPage - 1)}>
@@ -185,15 +185,9 @@ export default function ImageGallery() {
         <Slogan>{selectedProduct?.slogan}</Slogan>
         <Description>{selectedProduct?.description}</Description>
       </InfoBox>
-    </MainImgContainer>
+    </>
   );
 }
-
-const MainImgContainer = styled.div`
-  grid-area: mainImg;
-  position: relative;
-  height: 41rem;
-`;
 
 const MainImage = styled.img`
   width: 100%;

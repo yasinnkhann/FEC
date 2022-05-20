@@ -138,6 +138,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
   body {
+    width: 100%;
     margin: 0;
     font-family: 'Open Sans';
     font-style: normal;

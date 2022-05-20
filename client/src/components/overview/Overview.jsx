@@ -73,7 +73,9 @@ export default function Overview() {
         {loadingStatusStyles && (
           <>
             <Suspense fallback={<div>Loading...</div>}>
-              <ImageGallery />
+              <MainImgContainer>
+                <ImageGallery />
+              </MainImgContainer>
             </Suspense>
           </>
         )}
@@ -117,15 +119,20 @@ const MainContainer = styled.div`
   margin: 6rem 0;
   display grid;
   grid-template-columns: 40% 60%;
-  grid-template-areas:
-  'mainImg overview'
-  'mainImg overview';
-  grid-gap: 1rem;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas: "mainImg overview"
+                       "mainImg overview";
+  column-gap: 4rem;
+`;
+
+const MainImgContainer = styled.div`
+  grid-area: mainImg;
+  position: relative;
+  height: 41rem;
 `;
 
 const OverviewContainer = styled.div`
   grid-area: overview;
   text-align: center;
   width: fit-content;
-  padding: 0 1rem 0 5rem;
 `;
