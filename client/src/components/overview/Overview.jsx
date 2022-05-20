@@ -64,7 +64,33 @@ export default function Overview() {
   }, [selectedProduct]);
   return (
     <MainContainer id='product-overview'>
-      <Grid>
+      <StylesContext.Provider
+        value={{
+          stylesDataContent: [stylesData, setstylesData],
+          currentStyleContent: [currentStyle, setCurrentStyle],
+        }}
+      >
+        {loadingStatusStyles && (
+          <>
+            <Suspense fallback={<div>Loading...</div>}>
+              <ImageGallery />
+            </Suspense>
+          </>
+        )}
+      </StylesContext.Provider>
+      <OverviewContainer>
+        <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
+          {loadingStatusStyles && (
+            <>
+              <Suspense fallback={<div>Loading...</div>}>
+                <ReviewsStars />
+              </Suspense>
+            </>
+          )}
+        </ReviewsContext.Provider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ProductDetail product={selectedProduct} />
+        </Suspense>
         <StylesContext.Provider
           value={{
             stylesDataContent: [stylesData, setstylesData],
@@ -74,56 +100,25 @@ export default function Overview() {
           {loadingStatusStyles && (
             <>
               <Suspense fallback={<div>Loading...</div>}>
-                <ImageGallery />
+                <StyleSelector />
               </Suspense>
             </>
           )}
         </StylesContext.Provider>
-        <OverviewContainer>
-          <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
-            {loadingStatusStyles && (
-              <>
-                <Suspense fallback={<div>Loading...</div>}>
-                  <ReviewsStars />
-                </Suspense>
-              </>
-            )}
-          </ReviewsContext.Provider>
-          <Suspense fallback={<div>Loading...</div>}>
-            <ProductDetail product={selectedProduct} />
-          </Suspense>
-          <StylesContext.Provider
-            value={{
-              stylesDataContent: [stylesData, setstylesData],
-              currentStyleContent: [currentStyle, setCurrentStyle],
-            }}
-          >
-            {loadingStatusStyles && (
-              <>
-                <Suspense fallback={<div>Loading...</div>}>
-                  <StyleSelector />
-                </Suspense>
-              </>
-            )}
-          </StylesContext.Provider>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Icons />
-          </Suspense>
-        </OverviewContainer>
-      </Grid>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Icons />
+        </Suspense>
+      </OverviewContainer>
     </MainContainer>
   );
 }
 
 const MainContainer = styled.div`
   margin: 6rem 0;
-`;
-
-const Grid = styled.div`
   display grid;
   grid-template-columns: 40% 60%;
-  grid-template-areas: 
-  'mainImg overview' 
+  grid-template-areas:
+  'mainImg overview'
   'mainImg overview';
   grid-gap: 1rem;
 `;
