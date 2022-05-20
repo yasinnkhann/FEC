@@ -382,36 +382,34 @@ const Header = styled.h3`
 const AddReviewBtn = styled.button`
   border: none;
   color: black;
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  margin: 4px 2px;
+  margin: 0.25rem 0.125px;
   cursor: pointer;
-  border-radius: 16px;
-  box-shadow: 0px 4px 8px 0px #0afa0a33;
-  padding: 10px;
-  background-color: #b1a9ac;
+  border-radius: 1rem;
+  padding: 0.625rem;
+  background-color: floralwhite;
   color: #38062b;
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
   outline: none;
 `;
 
 const MoreReviewsBtn = styled.button`
   border: none;
   color: black;
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  margin: 4px 2px;
+  margin: 0.25rem 0.125px;
   cursor: pointer;
-  border-radius: 16px;
-  box-shadow: 0px 4px 8px 0px #0afa0a33;
-  padding: 10px;
-  background-color: #b1a9ac;
+  border-radius: 1rem;
+  padding: 0.625rem;
+  background-color: floralwhite;
   color: #38062b;
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
   outline: none;
 `;
 

@@ -23,6 +23,7 @@ export default function SortOptions({ listSortChange, metaData }) {
 }
 
 const DropdownSelect = styled.select`
+  background-color: floralwhite;
   border-radius: 1rem;
   color: #38062b;
   outline: none;

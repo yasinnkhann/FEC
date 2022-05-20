@@ -145,6 +145,7 @@ const ImageContainer = styled.div`
   position: absolute;
   top: 0;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const ActionStyle = styled.a`
