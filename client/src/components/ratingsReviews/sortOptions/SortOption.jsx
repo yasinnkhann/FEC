@@ -23,24 +23,19 @@ export default function SortOptions({ listSortChange, metaData }) {
 }
 
 const DropdownSelect = styled.select`
-  width: 95px;
-  margin-left: 5px;
-  border: 1px solid #38062b;
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  display: inline-block;
-  min-width: 90px;
-  box-shadow: 0px 4px 8px 0px #0afa0a33;
-  padding: 6px 8px;
-  z-index: 1;
-  border-radius: 16px;
-  background-color: #b1a9ac;
+  border-radius: 1rem;
   color: #38062b;
   outline: none;
+  padding: 0.4rem 0.5rem;
+  margin-left: 0.5rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 1.5rem;
+  background-image: url('https://img.icons8.com/material-sharp/24/000000/sort-down.png');
+  background-repeat: no-repeat;
+  background-position: calc(100% - 0.3rem) center;
+  background-size: 1.1rem;
 `;
 
-const DropdownOptions = styled.option`
-  background-color: #b1a9ac;
-  color: #38062b;
-`;
+const DropdownOptions = styled.option``;

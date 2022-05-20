@@ -129,7 +129,7 @@ const CardContainer = styled.div`
   width: 13.125rem;
   height: 19.375rem;
   margin: 1rem;
-  background-color: #b1a9ac;
+  background-color: #fdf0d5;
   border: 0.25rem solid #38062b;
   position: relative;
   display: flex;

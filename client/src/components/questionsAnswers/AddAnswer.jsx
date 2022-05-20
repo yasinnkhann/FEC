@@ -215,7 +215,7 @@ export default function AddAnswer({ closeModal, question }) {
             </CloseBtn>
             {isPostReqSubmitted && (
               <Circle
-                color='blue'
+                color='fuchsia'
                 size={100}
                 style={{ position: 'absolute', top: '40%', right: '45%' }}
               />

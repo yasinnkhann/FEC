@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import AppContext from '../../AppContext.js';
 import ReviewsContext from './RatingsContext.js';
 import { serverURL } from '../../config.js';
+import { cloudinaryInfo } from '../../config.js';
 
 const ReviewList = lazy(() => import('./reviewList/ReviewList.jsx'));
 const WriteReview = lazy(() => import('./writeReviews/WriteReview.jsx'));
@@ -37,6 +38,7 @@ export default function RatingsReviews() {
   const [isReviewLoaded, setIsReviewLoaded] = useState(false);
   const [isMetaDataLoaded, setIsMetaDataLoaded] = useState(false);
   const [showClearFilter, setShowClearFilter] = useState(false);
+  const [isPostReqPending, setIsPostReqPending] = useState(false);
 
   const getReviewApi = async () => {
     try {
@@ -116,6 +118,16 @@ export default function RatingsReviews() {
     }
   };
 
+  useEffect(() => {
+    const close = e => {
+      if (e.keyCode === 27) {
+        exitWriteReviewClick();
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
+
   const handleSortByStar = rating => {
     const filteredReviews = reviewList.results.filter(
       review => review.rating === Number(rating)
@@ -133,8 +145,36 @@ export default function RatingsReviews() {
   };
 
   const handleReviewData = async reviewData => {
+    const photoURLs = [];
+    for (let i = 0; i < reviewData.photos.length; i++) {
+      const formData = new FormData();
+      formData.append('file', reviewData.photos[i]);
+      formData.append('upload_preset', cloudinaryInfo.CLOUDINARY_UPLOAD_PRESET);
+      try {
+        const uploadRes = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloudinaryInfo.CLOUDINARY_NAME}/image/upload`,
+          formData
+        );
+        console.log('UPLOAD RES: ', uploadRes);
+        photoURLs.push(uploadRes.data.secure_url);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     try {
-      const res = await axios.post(`${serverURL}/reviews`, reviewData, {
+      const body = {
+        product_id: reviewData.product_id,
+        body: reviewData.body,
+        summary: reviewData.summary,
+        name: reviewData.name,
+        email: reviewData.email,
+        recommend: reviewData.recommend,
+        rating: reviewData.rating,
+        photos: photoURLs,
+        characteristics: reviewData.characteristics,
+      };
+      const res = await axios.post(`${serverURL}/reviews`, body, {
         params: {
           product_id: selectedProduct.id,
         },
@@ -143,6 +183,8 @@ export default function RatingsReviews() {
         },
       });
       console.log('Add Review POST Success!! :: ', res);
+      handlePostReqPending(false);
+      exitWriteReviewClick();
     } catch (err) {
       console.log('err on review POST:: ', err);
     }
@@ -163,6 +205,10 @@ export default function RatingsReviews() {
 
   const writeReviewClick = () => {
     setWriteReviewModal(true);
+  };
+
+  const handlePostReqPending = bool => {
+    setIsPostReqPending(bool);
   };
 
   if (noReviews) {
@@ -249,9 +295,11 @@ export default function RatingsReviews() {
                     >
                       <Suspense fallback={<div>Loading...</div>}>
                         <WriteReview
-                          handleReviewData={handleReviewData}
+                          reviewData={handleReviewData}
                           productID={selectedProduct.id}
                           metaData={metaData}
+                          isPostReqPending={isPostReqPending}
+                          handlePostReqPending={handlePostReqPending}
                         />
                       </Suspense>
                       <br />
@@ -346,6 +394,7 @@ const AddReviewBtn = styled.button`
   background-color: #b1a9ac;
   color: #38062b;
   margin-bottom: 30px;
+  outline: none;
 `;
 
 const MoreReviewsBtn = styled.button`
@@ -363,6 +412,7 @@ const MoreReviewsBtn = styled.button`
   background-color: #b1a9ac;
   color: #38062b;
   margin-bottom: 30px;
+  outline: none;
 `;
 
 const ModalStyle = styled.div`
@@ -382,12 +432,11 @@ const InnerModal = styled.div`
   background-color: #fdf0d5;
   color: #38062b;
   width: 50%;
-  min-width: 580px;
+  min-width: 36rem;
   max-width: 100%;
   max-height: 80%;
-  height: 80%;
   margin: auto;
-  padding: 10px;
+  padding: 0.5rem;
   border: none;
   overflow: auto;
   border-radius: 20px;

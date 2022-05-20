@@ -58,7 +58,7 @@ export default function RatingBreakdown({
       {showClearFilter && (
         <ClearFilterContainer>
           <ClearFilterBtn onClick={() => clearStarFilter()}>
-            CLEAR
+            CLEAR FILTER
           </ClearFilterBtn>
         </ClearFilterContainer>
       )}

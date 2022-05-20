@@ -1,123 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
+import { Circle } from 'better-react-spinkit';
 
 const CharacteristicsRadioList = lazy(() =>
   import('./CharacteristicsRadioList.jsx')
 );
-
-const gridLayout = {
-  display: 'grid',
-  padding: '10px',
-  gridGap: '5px',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gridTemplateRows: 'minwidth(6, 1fr) 200px',
-  alignItems: 'center',
-  overflow: 'auto',
-};
-
-const autoFlex = {
-  display: 'flex',
-  margin: 'auto',
-};
-
-const starStyle = {
-  fontSize: '12px',
-  textAlign: 'center',
-  gridColumn: '1',
-  gridRow: '2',
-};
-
-const recommendStyle = {
-  fontSize: '12px',
-  textAlign: 'center',
-  gridColumn: '2',
-  gridRow: '2',
-};
-
-const characteristicsStyle = {
-  fontSize: '12px',
-  textAlign: 'center',
-  width: '80%',
-  margin: 'auto',
-  marginBottom: '35px',
-  gridColumn: '1/-1',
-  gridRow: '3',
-};
-
-const summaryStyle = {
-  fontSize: '12px',
-  textAlign: 'center',
-  padding: '3px',
-  gridColumn: '1',
-  gridRow: '4',
-};
-
-const nameStyle = {
-  fontSize: '12px',
-  textAlign: 'center',
-  padding: '3px',
-  gridColumn: '2',
-  gridRow: '4',
-};
-
-const innerNameStyle = {
-  width: '90%',
-  height: '30px',
-  fontFamily: 'Open sans',
-  border: '1px solid grey',
-  borderRadius: '5px',
-};
-
-const reviewStyle = {
-  fontSize: '12px',
-  textAlign: 'center',
-  padding: '3px',
-  gridColumn: '1/-1',
-  gridRow: '5',
-};
-
-const innerReviewStyle = {
-  width: '95%',
-  height: '80px',
-  border: '1px solid grey',
-  borderRadius: '5px',
-  fontFamily: 'Open sans',
-  resize: 'none',
-};
-
-const photoStyle = {
-  fontSize: '12px',
-  textAlign: 'center',
-  padding: '3px',
-  gridColumn: '2',
-  gridRow: '6',
-};
-
-const emailStyle = {
-  fontSize: '12px',
-  textAlign: 'center',
-  padding: '3px',
-  gridColumn: '1',
-  gridRow: '6',
-};
-
-const submitStyle = {
-  fontFamily: 'Open Sans',
-  backgroundColor: '#38062B',
-  border: 'none',
-  color: '#B1A9AC',
-  padding: '10px 20px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  margin: 'auto',
-  cursor: 'pointer',
-  borderRadius: '16px',
-  boxShadow: '0px 4px 8px 0px #0afa0a33',
-  padding: '10px',
-  gridColumn: '1/-1',
-  gridRow: '7',
-};
 
 class WriteReview extends React.Component {
   constructor(props) {
@@ -125,6 +13,7 @@ class WriteReview extends React.Component {
     const { productID } = this.props;
     this.state = {
       mouseOver: [0, 0, 0, 0, 0],
+      isPostReqPending: false,
       product_id: productID,
       body: '',
       summary: '',
@@ -132,7 +21,7 @@ class WriteReview extends React.Component {
       email: '',
       recommend: null,
       rating: null,
-      photos: [],
+      photos: '',
       characteristics: {},
     };
 
@@ -140,7 +29,9 @@ class WriteReview extends React.Component {
     this.characteristicsRadioClick = this.characteristicsRadioClick.bind(this);
     this.recommendRadioClick = this.recommendRadioClick.bind(this);
     this.starRadioClick = this.starRadioClick.bind(this);
-    this.HandleReviewData = this.HandleReviewData.bind(this);
+    this.handleReviewData = this.handleReviewData.bind(this);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
+    this.handlePostReqPendingProxy = this.handlePostReqPendingProxy.bind(this);
   }
 
   onInputChange(e) {
@@ -182,15 +73,14 @@ class WriteReview extends React.Component {
     });
   }
 
-  HandleReviewData(e) {
-    const { rating, characteristics } = this.state;
+  handleReviewData(e) {
+    const { rating } = this.state;
     const { recommend } = this.state;
     const { body } = this.state;
     const { email } = this.state;
     const { summary } = this.state;
     const { name } = this.state;
-    const { metaData } = this.props;
-    const { handleReviewData } = this.props;
+    const { reviewData } = this.props;
 
     if (rating === null || recommend === null) {
       alert('Please fill out all required (*) fields');
@@ -227,9 +117,18 @@ class WriteReview extends React.Component {
       e.preventDefault();
       return false;
     }
+    this.handlePostReqPendingProxy(true);
+    reviewData(this.state);
+  }
 
-    alert('Your review has been submitted!');
-    handleReviewData(this.state);
+  handleFileUpload(e) {
+    this.setState({
+      photos: e.target.files,
+    });
+  }
+
+  handlePostReqPendingProxy(bool) {
+    this.props.handlePostReqPending(bool);
   }
 
   render() {
@@ -238,148 +137,164 @@ class WriteReview extends React.Component {
     const { name } = this.state;
     const { email } = this.state;
     const { metaData } = this.props;
-    // console.log('props:: ', this.props);
-    // console.log('state:: ', this.state);
-    return (
-      <div>
-        <form
-          onSubmit={this.HandleReviewData}
-          id='reviewForm'
-          style={gridLayout}
-        >
-          <div
-            style={{
-              gridColumn: '1/-1',
-              gridRow: '1',
-            }}
-          >
-            <h3 style={{ textAlign: 'center' }}>Tell us about this product!</h3>
-            <small>
-              (<b style={{ color: 'red' }}> * </b> Required fields)
-            </small>
-          </div>
-          <div style={starStyle}>
-            <b>
-              <b style={{ color: 'red' }}> * </b>Overall
-            </b>
 
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                fontSize: '20px',
-                marginTop: '5px',
-                marginBottom: '5px',
-              }}
-            >
-              {mouseOver[0] === 1 ? (
-                <span
-                  className='fa fa-star'
-                  aria-hidden='true'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 0, 0, 0, 0] });
-                  }}
-                  onClick={() => {
-                    this.setState({ rating: 1, mouseOver: [1, 0, 0, 0, 0] });
-                  }}
-                />
-              ) : (
-                <span
-                  className='fa fa-star-o'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 0, 0, 0, 0] });
-                  }}
-                />
-              )}
-              {mouseOver[1] === 1 ? (
-                <span
-                  className='fa fa-star'
-                  aria-hidden='true'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 1, 0, 0, 0] });
-                  }}
-                  onClick={() => {
-                    this.setState({ rating: 2, mouseOver: [1, 1, 0, 0, 0] });
-                  }}
-                />
-              ) : (
-                <span
-                  className='fa fa-star-o'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 1, 0, 0, 0] });
-                  }}
-                />
-              )}
-              {mouseOver[2] === 1 ? (
-                <span
-                  className='fa fa-star'
-                  aria-hidden='true'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 1, 1, 0, 0] });
-                  }}
-                  onClick={() => {
-                    this.setState({ rating: 3, mouseOver: [1, 1, 1, 0, 0] });
-                  }}
-                />
-              ) : (
-                <span
-                  className='fa fa-star-o'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 1, 1, 0, 0] });
-                  }}
-                />
-              )}
-              {mouseOver[3] === 1 ? (
-                <span
-                  className='fa fa-star'
-                  aria-hidden='true'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 1, 1, 1, 0] });
-                  }}
-                  onClick={() => {
-                    this.setState({ rating: 4, mouseOver: [1, 1, 1, 1, 0] });
-                  }}
-                />
-              ) : (
-                <span
-                  className='fa fa-star-o'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 1, 1, 1, 0] });
-                  }}
-                />
-              )}
-              {mouseOver[4] === 1 ? (
-                <span
-                  className='fa fa-star'
-                  aria-hidden='true'
-                  onKeyUp={this.handleKeyUp}
-                  onClick={() => {
-                    this.setState({ rating: 5, mouseOver: [1, 1, 1, 1, 1] });
-                  }}
-                />
-              ) : (
-                <span
-                  className='fa fa-star-o'
-                  onMouseEnter={() => {
-                    this.setState({ mouseOver: [1, 1, 1, 1, 1] });
-                  }}
-                />
-              )}
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <div style={autoFlex}> 1 - Poor </div>
-              <div style={autoFlex}> 2 - Fair </div>
-              <div style={autoFlex}> 3 - Average </div>
-              <div style={autoFlex}> 4 - Good </div>
-              <div style={autoFlex}> 5 - Great </div>
-            </div>
-          </div>
-          <div style={recommendStyle}>
-            <b>
-              <b style={{ color: 'red' }}> * </b> Would you recommend this
-              product?
-            </b>
-            <div>
+    return (
+      <ReviewForm onSubmit={this.handleReviewData} id='reviewForm'>
+        <Header>Tell us about this product!</Header>
+        <ReqFieldsContainer>
+          (<Asterisk>*</Asterisk> Required fields)
+        </ReqFieldsContainer>
+        <OverallRecContainer>
+          <OverallContainer>
+            <OverallHeader>
+              <Asterisk>*</Asterisk> Overall
+            </OverallHeader>
+            <StarContainer>
+              <QualityContainer>
+                {mouseOver[0] === 1 ? (
+                  <StarIcon
+                    className='fa fa-star'
+                    aria-hidden='true'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 0, 0, 0, 0] });
+                    }}
+                    onClick={() => {
+                      this.setState({
+                        rating: 1,
+                        mouseOver: [1, 0, 0, 0, 0],
+                      });
+                    }}
+                  >
+                    <Quality>Poor</Quality>
+                  </StarIcon>
+                ) : (
+                  <StarIcon
+                    className='fa fa-star-o'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 0, 0, 0, 0] });
+                    }}
+                  >
+                    <Quality>Poor</Quality>
+                  </StarIcon>
+                )}
+              </QualityContainer>
+              <QualityContainer>
+                {mouseOver[1] === 1 ? (
+                  <StarIcon
+                    className='fa fa-star'
+                    aria-hidden='true'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 1, 0, 0, 0] });
+                    }}
+                    onClick={() => {
+                      this.setState({
+                        rating: 2,
+                        mouseOver: [1, 1, 0, 0, 0],
+                      });
+                    }}
+                  >
+                    <Quality>Fair</Quality>
+                  </StarIcon>
+                ) : (
+                  <StarIcon
+                    className='fa fa-star-o'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 1, 0, 0, 0] });
+                    }}
+                  >
+                    <Quality>Fair</Quality>
+                  </StarIcon>
+                )}
+              </QualityContainer>
+              <QualityContainer>
+                {mouseOver[2] === 1 ? (
+                  <StarIcon
+                    className='fa fa-star'
+                    aria-hidden='true'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 1, 1, 0, 0] });
+                    }}
+                    onClick={() => {
+                      this.setState({
+                        rating: 3,
+                        mouseOver: [1, 1, 1, 0, 0],
+                      });
+                    }}
+                  >
+                    <Quality>Average</Quality>
+                  </StarIcon>
+                ) : (
+                  <StarIcon
+                    className='fa fa-star-o'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 1, 1, 0, 0] });
+                    }}
+                  >
+                    <Quality>Average</Quality>
+                  </StarIcon>
+                )}
+              </QualityContainer>
+              <QualityContainer>
+                {mouseOver[3] === 1 ? (
+                  <StarIcon
+                    className='fa fa-star'
+                    aria-hidden='true'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 1, 1, 1, 0] });
+                    }}
+                    onClick={() => {
+                      this.setState({
+                        rating: 4,
+                        mouseOver: [1, 1, 1, 1, 0],
+                      });
+                    }}
+                  >
+                    <Quality>Good</Quality>
+                  </StarIcon>
+                ) : (
+                  <StarIcon
+                    className='fa fa-star-o'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 1, 1, 1, 0] });
+                    }}
+                  >
+                    <Quality>Good</Quality>
+                  </StarIcon>
+                )}
+              </QualityContainer>
+              <QualityContainer>
+                {mouseOver[4] === 1 ? (
+                  <StarIcon
+                    className='fa fa-star'
+                    aria-hidden='true'
+                    onKeyUp={this.handleKeyUp}
+                    onClick={() => {
+                      this.setState({
+                        rating: 5,
+                        mouseOver: [1, 1, 1, 1, 1],
+                      });
+                    }}
+                  >
+                    <Quality>Great</Quality>
+                  </StarIcon>
+                ) : (
+                  <StarIcon
+                    className='fa fa-star-o'
+                    onMouseEnter={() => {
+                      this.setState({ mouseOver: [1, 1, 1, 1, 1] });
+                    }}
+                  >
+                    <Quality>Great</Quality>
+                  </StarIcon>
+                )}
+              </QualityContainer>
+            </StarContainer>
+          </OverallContainer>
+          <RecContainer>
+            <RecHeader>
+              <Asterisk>*</Asterisk> Would you recommend this product?
+            </RecHeader>
+            <RecChoices>
               <input
                 type='radio'
                 id='yes'
@@ -387,7 +302,7 @@ class WriteReview extends React.Component {
                 value
                 onClick={this.recommendRadioClick}
               />
-              <label htmlFor='yes'>Yes</label>
+              <Label htmlFor='yes'>Yes</Label>
               <input
                 type='radio'
                 id='no'
@@ -395,122 +310,266 @@ class WriteReview extends React.Component {
                 value={false}
                 onClick={this.recommendRadioClick}
               />
-              <label htmlFor='no'>No</label>
-            </div>
-          </div>
-          <div style={characteristicsStyle}>
-            <Suspense fallback={<div>Loading...</div>}>
-              <CharacteristicsRadioList
-                metaData={metaData}
-                characteristicsRadioClick={this.characteristicsRadioClick}
-              />
-            </Suspense>
-          </div>
-          <div style={summaryStyle}>
-            <label htmlFor='summary'>Review Summary (optional): </label>
-            <textarea
-              id='summaryInput'
-              type='text'
-              value={summary}
-              style={{
-                width: '90%',
-                height: '28px',
-                border: '1px solid grey',
-                borderRadius: '5px',
-                fontFamily: 'Open sans',
-                resize: 'none',
-              }}
-              name='summary'
-              onChange={this.onInputChange}
-              placeholder='Example: Best purchase ever!'
-            />
-          </div>
-
-          <div style={nameStyle}>
-            <label htmlFor='name'>
-              <b>
-                <b style={{ color: 'red' }}> * </b> Your Name:{' '}
-              </b>
-            </label>
-            <input
-              type='text'
-              name='name'
-              style={innerNameStyle}
-              value={name}
-              onChange={this.onInputChange}
-              placeholder='Example: jacky101!'
-            />
-            <br />
-          </div>
-
-          <div style={reviewStyle}>
-            <label htmlFor='body'>
-              <b>
-                <b style={{ color: 'red' }}> * </b> Your Review:{' '}
-              </b>
-            </label>
-            <textarea
-              type='text'
-              style={innerReviewStyle}
-              value={this.state.body}
-              name='body'
-              onChange={this.onInputChange}
-              placeholder='What did you like/dislike about the product?'
-            />
-            <br />
-            <small>{this.minimumCharCount()}</small>
-          </div>
-
-          <div style={photoStyle}>
+              <Label htmlFor='no'>No</Label>
+            </RecChoices>
+          </RecContainer>
+        </OverallRecContainer>
+        <Suspense fallback={<div>Loading...</div>}>
+          <CharacteristicsRadioList
+            metaData={metaData}
+            characteristicsRadioClick={this.characteristicsRadioClick}
+          />
+        </Suspense>
+        <SummaryContainer>
+          <Label htmlFor='summary'>Review Summary (optional): </Label>
+          <TextArea
+            id='summaryInput'
+            type='text'
+            value={summary}
+            name='summary'
+            onChange={this.onInputChange}
+            placeholder='Example: Best purchase ever!'
+          />
+        </SummaryContainer>
+        <NameContainer>
+          <Label htmlFor='name'>
+            <b>
+              <Asterisk>* </Asterisk>Your Name:{' '}
+            </b>
+          </Label>
+          <NameInput
+            type='text'
+            name='name'
+            value={name}
+            onChange={this.onInputChange}
+            placeholder='Example: jacky101!'
+          />
+          <br />
+        </NameContainer>
+        <ReviewContainer>
+          <Label htmlFor='body'>
+            <b>
+              <Asterisk>* </Asterisk>Your Review:{' '}
+            </b>
+          </Label>
+          <TextArea
+            type='text'
+            value={this.state.body}
+            name='body'
+            onChange={this.onInputChange}
+            placeholder='What did you like/dislike about the product?'
+          />
+          <br />
+          <small>{this.minimumCharCount()}</small>
+        </ReviewContainer>
+        <UploadContainer>
+          <UploadText>
             Upload photos (optional)
-            <button
-              style={{
-                marginLeft: '5px',
-                borderRadius: '16px',
-                boxShadow: '0px 4px 8px 0px #0afa0a33',
-              }}
-              type='button'
-              onClick={e => e.preventDefault}
-            >
-              + Add photos
-            </button>
-          </div>
+            {this.state.photos && (
+              <ImagesContainer>
+                {[...this.state.photos].map(thumbnail => (
+                  <UploadedImg
+                    key={uuidv4()}
+                    src={URL.createObjectURL(thumbnail)}
+                    alt='uploaded photo'
+                    loading='lazy'
+                  />
+                ))}
+              </ImagesContainer>
+            )}
+          </UploadText>
 
-          <div style={emailStyle}>
-            <label htmlFor='email'>
-              <b>
-                <b style={{ color: 'red' }}> * </b> Email:{' '}
-              </b>
-            </label>
-            <input
-              type='text'
-              style={{
-                width: '90%',
-                height: '30px',
-                fontFamily: 'Open sans',
-                borderRadius: '5px',
-                border: '1px solid grey',
-              }}
-              name='email'
-              value={email}
-              onChange={this.onInputChange}
-              placeholder='georgeWashington@gmail.com'
-            />
-            <br />
-          </div>
-
-          <button
+          <UploadLabel htmlFor='uploadInput'>+ Add photos</UploadLabel>
+          <UploadBtn
+            type='file'
+            id='uploadInput'
+            name='images'
+            multiple
+            accept='image/*'
+            onChange={this.handleFileUpload}
+          />
+        </UploadContainer>
+        <EmailContainer>
+          <Label htmlFor='email'>
+            <b>
+              <Asterisk>* </Asterisk> Email:{' '}
+            </b>
+          </Label>
+          <EmailInput
+            type='text'
+            name='email'
+            value={email}
+            onChange={this.onInputChange}
+            placeholder='georgeWashington@gmail.com'
+          />
+          <br />
+        </EmailContainer>
+        <SubmitContainer>
+          <SubmitBtn
             className='submitReview'
             type='button'
-            style={submitStyle}
-            onClick={this.HandleReviewData}
+            onClick={this.handleReviewData}
           >
             <b>Submit Review</b>
-          </button>
-        </form>
-      </div>
+          </SubmitBtn>
+        </SubmitContainer>
+        {this.props.isPostReqPending && (
+          <Circle
+            color='fuchsia'
+            size={100}
+            style={{ position: 'absolute', top: '40%', right: '45%' }}
+          />
+        )}
+      </ReviewForm>
     );
   }
 }
 
 export default WriteReview;
+
+const ReviewForm = styled.form``;
+
+const Header = styled.h3`
+  text-align: center;
+`;
+
+const ReqFieldsContainer = styled.div`
+  font-size: 0.9rem;
+  margin-left: 1rem;
+`;
+
+const Asterisk = styled.strong`
+  color: red;
+`;
+
+const OverallRecContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+`;
+
+const OverallContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const RecContainer = styled.div``;
+
+const OverallHeader = styled.p`
+  text-align: center;
+`;
+
+const StarContainer = styled.div`
+  text-align: center;
+  display: flex;
+`;
+
+const QualityContainer = styled.div`
+  display: flex;
+  margin-left: 0.75rem;
+`;
+
+const StarIcon = styled.span``;
+
+const Quality = styled.p`
+  font-weight: normal !important;
+`;
+
+const RecHeader = styled.p`
+  text-align: center;
+`;
+
+const RecChoices = styled.div`
+  text-align: center;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+`;
+
+const SummaryContainer = styled.div`
+  margin: 0 3.5rem;
+  padding-bottom: 1rem;
+`;
+
+const NameContainer = styled.div`
+  margin: 0 3.5rem;
+  padding-bottom: 1rem;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-right: 1rem;
+`;
+
+const TextArea = styled.textarea`
+  resize: none;
+  width: 100%;
+  height: 4rem;
+`;
+
+const NameInput = styled.input`
+  width: 60%;
+`;
+
+const ReviewContainer = styled.div`
+  margin: 0 3.5rem;
+`;
+
+const UploadContainer = styled.div`
+  margin: 1rem 3.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+`;
+
+const UploadBtn = styled.input`
+  margin-left: 0.5rem;
+  display: none;
+`;
+
+const UploadLabel = styled.label`
+  background-color: #38062b;
+  color: #fdf0d5;
+  padding: 0.3rem;
+  border-radius: 6px;
+  cursor: pointer;
+`;
+
+const EmailContainer = styled.div`
+  margin: 0 3.5rem;
+`;
+
+const EmailInput = styled.input`
+  width: 60%;
+`;
+
+const SubmitContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+`;
+
+const UploadText = styled.span`
+  margin-right: 0.5rem;
+`;
+
+const SubmitBtn = styled.button`
+  padding: 0.5rem 0.75rem;
+	border-radius 6px;
+	border: none;
+	background: #38062B;
+	color: #fdf0d5;
+	cursor: pointer;
+  `;
+
+const ImagesContainer = styled.div`
+  margin-top: 0.5rem;
+`;
+
+const UploadedImg = styled.img`
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid #000;
+  margin: 0.3rem;
+`;

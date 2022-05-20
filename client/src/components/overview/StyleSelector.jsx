@@ -173,7 +173,7 @@ const StyleName = styled.h3`
 const SelectedStyle = styled.h3``;
 
 const Button = styled.button`
-  background-color: #b1a9ac;
+  background-color: bisque;
   border: 2px solid #38062b;
   position: relative;
 `;
@@ -244,12 +244,11 @@ const SizeSelect = styled.select`
   font-size: 1rem;
   outline: none;
   text-align: center;
-  text-align: -webkit-center;
+  margin: 0 auto;
+  padding: 1.7rem;
 `;
 
-const SizeOption = styled.option`
-  text-align: center;
-`;
+const SizeOption = styled.option``;
 
 const QuantitySelect = styled.select`
   -webkit-appearance: none;
@@ -260,9 +259,8 @@ const QuantitySelect = styled.select`
   font-size: 1rem;
   outline: none;
   text-align: center;
-  text-align: -webkit-center;
+  margin: 0 auto;
+  padding: 1.3rem;
 `;
 
-const QuantityOption = styled.option`
-  text-align: center;
-`;
+const QuantityOption = styled.option``;

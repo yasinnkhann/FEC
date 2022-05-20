@@ -183,4 +183,7 @@ const Recommended = styled.span`
 
 const PhotosContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1rem 0;
 `;

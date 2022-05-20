@@ -41,10 +41,9 @@ export default function PhotoMapEntry({ photo: { url } }) {
 
 const ExpandedImg = styled.img`
   border-radius: 10px;
-  max-height: 600px;
-  max-width: 800px;
-  margin: auto;
-  overflow: hidden;
+  width: 50%;
+  margin-top: 6rem;
+  margin-bottom: 2rem;
 `;
 
 const ModalOverlay = styled.div`
@@ -63,14 +62,13 @@ const ModalOverlay = styled.div`
 `;
 
 const Img = styled.img`
-  height: 60px;
-  width: 60px;
-  border-radius: 40px;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2.5rem;
   object-fit: cover;
-  margin-left: 4px;
-  margin-right: 4px;
-  margin-top: 4px;
   cursor: pointer;
 `;
 
-const ImgContainer = styled.div``;
+const ImgContainer = styled.div`
+  margin: 0 0.5rem;
+`;
