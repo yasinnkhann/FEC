@@ -177,19 +177,39 @@ const Container = styled.div`
 `;
 
 const QuestionPortion = styled.div`
+  font-size: 0.9rem;
   cursor: pointer;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+    flex-direction: row;
+  }
 `;
 
-const QuestionLeftSide = styled.div``;
+const QuestionLeftSide = styled.div`
+  margin-bottom: 0.5rem;
+
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+`;
 
 const QuestionRightSide = styled.div`
   display: flex;
-  -webkit-align-content: stretch;
+  place-content: stretch flex-end;
   -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: flex-start;
+
+  @media (min-width: 768px) {
+    display: flex;
+    -webkit-align-content: stretch;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    align-items: flex-start;
+  }
 `;
 
 const QuestionBodySec = styled.span`
@@ -209,7 +229,14 @@ const StyledExpandMoreIcon = styled(ExpandMoreIcon)`
     color: #38062b;
     font-size: 2.5rem;
     position: absolute;
-    top: 0.3rem;
+    right: 0;
+    top: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    &&& {
+      top: 0.3rem;
+    }
   }
 `;
 
@@ -218,6 +245,13 @@ const StyledExpandLessIcon = styled(ExpandLessIcon)`
     color: #38062b;
     font-size: 2.5rem;
     position: absolute;
-    top: 0.3rem;
+    right: 0;
+    top: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    &&& {
+      top: 0.3rem;
+    }
   }
 `;

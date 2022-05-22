@@ -41,7 +41,7 @@ export default function RatingBreakdown({
     <>
       <AvgRatingHeader>{averageRating(ratings).toFixed(1)}</AvgRatingHeader>
       <Stars>
-        <Rating
+        <Star
           name='read-only'
           value={averageRating(ratings)}
           precision={0.25}
@@ -74,12 +74,26 @@ const RecommendedAvgLine = styled.p`
   justify-content: center;
   color: #fdf0d5;
   text-align: center;
-  padding: 0 3rem;
+
+  @media (min-width: 640px) {
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 3rem;
+  }
 `;
 
 const AvgRatingHeader = styled.div`
-  font-size: 2.5rem;
+  font-size: 2rem;
   text-align: center;
+
+  @media (min-width: 640px) {
+    font-size: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Stars = styled.div`
@@ -99,4 +113,16 @@ const ClearFilterBtn = styled.button`
   background-color: #fdf0d5;
   padding: 0.2rem;
   border-radius: 2px;
+`;
+
+const Star = styled(Rating)`
+  &&& {
+    font-size: 1.2rem;
+  }
+
+  @media (min-width: 640px) {
+    &&& {
+      font-size: 1.8rem;
+    }
+  }
 `;

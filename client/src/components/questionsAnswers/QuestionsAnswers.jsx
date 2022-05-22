@@ -91,7 +91,9 @@ export default function QuestionsAnswers() {
   );
 }
 
-const MainContainer = styled.div``;
+const MainContainer = styled.div`
+  margin-top: 3rem;
+`;
 
 const QandAHeader = styled.h3`
   font-size: xx-large;

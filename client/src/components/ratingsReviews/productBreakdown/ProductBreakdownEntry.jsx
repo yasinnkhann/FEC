@@ -55,6 +55,7 @@ export default function ProductBreakdownEntry({ characteristic }) {
 const CharHeader = styled.div`
   font-size: 1rem;
   color: #fdf0d5;
+  text-decoration: underline;
 `;
 
 const TierContainer = styled.div`
@@ -72,22 +73,39 @@ const Bar = styled.div`
 `;
 
 const RightTier = styled.div`
+  margin-left: 0.5rem;
+  text-align: right;
   margin-left: auto;
   position: relative;
   color: #fdf0d5;
+  font-size: 0.8rem;
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const MidTier = styled.div`
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   color: #fdf0d5;
+  font-size: 0.8rem;
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const LeftTier = styled.div`
-  margin-right: auto;
+  margin-right: 0.5rem;
   position: relative;
   color: #fdf0d5;
+  font-size: 0.8rem;
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const BreakdownContainer = styled.div`

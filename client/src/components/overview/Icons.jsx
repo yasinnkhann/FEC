@@ -7,6 +7,8 @@ import styled from 'styled-components';
 
 const ShareIconDiv = styled.div`
   margin: 1rem;
+  display: flex;
+  justify-content: center;
 `;
 
 const FBIcon = styled.button`

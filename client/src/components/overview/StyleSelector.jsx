@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, lazy, Suspense } from 'react';
 import StylesContext from './StylesContext.js';
 import styled from 'styled-components';
 import axios from 'axios';
 import CheckIcon from '@material-ui/icons/Check';
 import { serverURL } from '../../config.js';
+
+const Icons = lazy(() => import('./Icons.jsx'));
 
 export default function StyleSelector() {
   const { stylesDataContent, currentStyleContent } = useContext(StylesContext);
@@ -88,55 +90,58 @@ export default function StyleSelector() {
           </Price>
           <SelectedStyle>Selected Style: </SelectedStyle>
           <StyleName key={currentStyle.style_id}>{currentStyle.name}</StyleName>
-          <StylePicsDiv>
-            {results.map(photo => {
-              return (
-                <Button
-                  onClick={() => onPhotoClick(photo)}
-                  key={photo.style_id}
-                >
-                  <StylePic src={photo.photos[0].thumbnail_url}></StylePic>
-                  {currentStyle.name === photo.name ? (
-                    <Checked>
-                      <CheckIcon />
-                    </Checked>
-                  ) : null}
-                </Button>
-              );
-            })}
-          </StylePicsDiv>
-          {!selectedOptions.size && selectedOptions.hasChanged && (
-            <SelectASizeText>Please Select a Size</SelectASizeText>
-          )}
-          <DropdownContainer>
-            <>
-              <SizeSelect name='size' onChange={handleChange}>
-                <SizeOption value=''>Select A Size</SizeOption>
-                {uniqueSizes().map(size => (
-                  <SizeOption key={size} value={size}>
-                    Size: {size}
-                  </SizeOption>
-                ))}
-              </SizeSelect>
-            </>
-            <>
-              {selectedOptions.size ? (
-                <QuantitySelect name='quantity' onChange={handleChange}>
-                  <QuantityOption value=''>Select Quantity</QuantityOption>
-                  {[...Array(8).keys()].map(quantity => (
-                    <QuantityOption key={quantity + 1} value={quantity + 1}>
-                      Quantity: {quantity + 1}
-                    </QuantityOption>
+          <SubContainer>
+            <StylePicsDiv>
+              {results.map(photo => {
+                return (
+                  <ImgContainer
+                    onClick={() => onPhotoClick(photo)}
+                    key={photo.style_id}
+                  >
+                    <StylePic src={photo.photos[0].thumbnail_url}></StylePic>
+                    {currentStyle.name === photo.name ? (
+                      <StyledCheckIcon />
+                    ) : null}
+                  </ImgContainer>
+                );
+              })}
+            </StylePicsDiv>
+            {!selectedOptions.size && selectedOptions.hasChanged && (
+              <SelectASizeText>Please Select a Size</SelectASizeText>
+            )}
+            <DropdownContainer>
+              <>
+                <SizeSelect name='size' onChange={handleChange}>
+                  <SizeOption value=''>Select A Size</SizeOption>
+                  {uniqueSizes().map(size => (
+                    <SizeOption key={size} value={size}>
+                      Size: {size}
+                    </SizeOption>
                   ))}
-                </QuantitySelect>
-              ) : (
-                <QuantityBtn>-</QuantityBtn>
-              )}
-            </>
-            <AddToCartBtn onClick={e => addToCartHandler(e)}>
-              Add to Cart
-            </AddToCartBtn>
-          </DropdownContainer>
+                </SizeSelect>
+              </>
+              <>
+                {selectedOptions.size ? (
+                  <QuantitySelect name='quantity' onChange={handleChange}>
+                    <QuantityOption value=''>Select Quantity</QuantityOption>
+                    {[...Array(8).keys()].map(quantity => (
+                      <QuantityOption key={quantity + 1} value={quantity + 1}>
+                        Quantity: {quantity + 1}
+                      </QuantityOption>
+                    ))}
+                  </QuantitySelect>
+                ) : (
+                  <QuantityBtn>-</QuantityBtn>
+                )}
+              </>
+              <AddToCartBtn onClick={e => addToCartHandler(e)}>
+                Add to Cart
+              </AddToCartBtn>
+            </DropdownContainer>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Icons />
+            </Suspense>
+          </SubContainer>
         </>
       ) : (
         <OutOfStock>OUT OF STOCK</OutOfStock>
@@ -145,34 +150,75 @@ export default function StyleSelector() {
   );
 }
 
-const Checked = styled.div`
-  color: #38062b;
+const CheckedContainer = styled.div`
   position: absolute;
   top: 5px;
   right: 5px;
 `;
 
+const StyledCheckIcon = styled(CheckIcon)`
+  &&& {
+    color: #38062b;
+    font-size: 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  @media (min-width: 768px) {
+    &&& {
+      font-size: 1.5rem;
+    }
+  }
+`;
+
 const StylePicsDiv = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
 `;
 
 const StylePic = styled.img`
-  margin: 1rem;
-  height: 3.75rem;
-  width: 3.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
   object-fit: cover;
+  margin-top: 0.5rem;
+
+  @media (min-width: 768px) {
+    width: 3.75rem;
+    height: 3.75rem;
+  }
 `;
 
 const StyleName = styled.h3`
   font-family: 'Lobster Two';
   color: #38062b;
+  font-size: 0.8rem;
+
+  @media (min-width: 640px) {
+    font-size: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
-const SelectedStyle = styled.h3``;
+const SelectedStyle = styled.h3`
+  margin: 0;
+  font-size: 0.8rem;
 
-const Button = styled.button`
+  @media (min-width: 640px) {
+    font-size: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const ImgContainer = styled.div`
   background-color: bisque;
   border: 2px solid #38062b;
   position: relative;
@@ -180,6 +226,7 @@ const Button = styled.button`
 
 const Price = styled.h3`
   font-family: 'Fjalla One', sans-serif;
+  margin: 1rem;
 `;
 
 const Sale = styled.p`
@@ -244,8 +291,17 @@ const SizeSelect = styled.select`
   font-size: 1rem;
   outline: none;
   text-align: center;
-  margin: 0 auto;
-  padding: 1.7rem;
+  width: 100%;
+  margin: initial;
+  font-size: 0.7rem;
+
+  @media (min-width: 640px) {
+    font-size: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const SizeOption = styled.option``;
@@ -256,11 +312,28 @@ const QuantitySelect = styled.select`
   appearance: none;
   background-color: #38062b;
   color: #fdf0d5;
-  font-size: 1rem;
+  text-align: center;
   outline: none;
   text-align: center;
-  margin: 0 auto;
-  padding: 1.3rem;
+  width: 100%;
+  margin: initial;
+  font-size: 0.7rem;
+
+  @media (min-width: 640px) {
+    font-size: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const QuantityOption = styled.option``;
+
+const SubContainer = styled.div`
+  width: 12rem;
+
+  @media (min-width: 768px) {
+    width: 20rem;
+  }
+`;

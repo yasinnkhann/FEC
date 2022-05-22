@@ -285,21 +285,15 @@ const VS = styled.td`
 
 const ModalClose = styled.a`
   position: absolute;
-  right: 15px;
-  top: 10px;
   color: #38062b;
   cursor: pointer;
   font-size: 1.25em;
-  padding: 7px;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  align-items: center;
-  justify-content: center;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
   z-index: 999999;
-  box-sizing: border-box;
-  display: inline-block;
-  text-align: center;
+  right: 0.5rem;
+  top: 0.5rem;
+
   :hover & {
     background: rgba(1, 1, 1, 0.989);
   }
@@ -312,17 +306,20 @@ const ModalBody = styled.div`
   z-index: 2;
   position: relative;
   justify-content: center;
-  margin: 0 auto;
-  background-color: #b1a9ac;
+  background-color: #fdf0d5;
   color: #38062b;
   box-shadow: 5px 5px 5px 5px;
-  border: 1px solid #fdf0d5;
   border-radius: 3px;
   overflow-x: hidden;
   overflow-y: auto;
-  width: 500px;
-  height: 350px;
-  padding: 15px 20px;
+  width: 90%;
+  height: 50%;
+  padding: 2rem;
+  position: relative;
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
 `;
 
 const CategoryRowItem = styled.tr`

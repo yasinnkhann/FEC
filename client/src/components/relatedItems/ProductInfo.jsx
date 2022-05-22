@@ -36,44 +36,64 @@ export default function ProductInfo({ product, styles, salePrice }) {
     </Fragment>
   );
 }
-const StarContainer = styled.div`
-  padding: 1rem;
-  margin: 0 auto;
-`;
-const InfoCategory = styled.h4`
+
+const InfoCategory = styled.p`
   font-family: 'Questrial', sans-serif;
-  padding-left: 1rem;
-  font-size: small;
+  font-size: 0.6rem;
   margin: 0 auto;
+
+  @media (min-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
-const InfoProductName = styled.h4`
-  padding-left: 1rem;
+const InfoProductName = styled.p`
   margin: 0 auto;
+  font-size: 0.7rem;
+  font-weight: bolder;
+  margin-top: 0.2rem;
+
+  @media (min-width: 768px) {
+    font-size: 0.85rem;
+  }
 `;
 
-const Price = styled.h4`
+const Price = styled.p`
   margin: 0 auto;
-  padding-left: 1rem;
+  margin-top: 0.5rem;
   font-family: 'Fjalla One', sans-serif;
+  font-size: 0.8rem;
   ${({ hasSalePrice }) =>
     hasSalePrice &&
     `
     text-decoration: line-through;
   `}
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
-const SalePrice = styled.h4`
+const SalePrice = styled.p`
   color: red;
   margin: 0 auto;
+  margin-top: 0.5rem;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 0.8rem;
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const InfoContainer = styled.div`
   width: 100%;
   height: 33%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   position: absolute;
   bottom: 0;
+  align-content: center;
+  justify-content: flex-start;
 `;

@@ -12,7 +12,9 @@ export default function SortOptions({ listSortChange, metaData }) {
 
   return (
     <>
-      {`${totalReviews(metaData.ratings)} reviews, sorted by most`}
+      <SortText>
+        {`${totalReviews(metaData.ratings)} reviews, sorted by most`}
+      </SortText>
       <DropdownSelect onChange={listSortChange}>
         <DropdownOptions value='1'>Relevant</DropdownOptions>
         <DropdownOptions value='2'>Helpful</DropdownOptions>
@@ -21,6 +23,12 @@ export default function SortOptions({ listSortChange, metaData }) {
     </>
   );
 }
+
+const SortText = styled.p`
+  @media (min-width: 640px) {
+    font-size: 1rem;
+  }
+`;
 
 const DropdownSelect = styled.select`
   background-color: floralwhite;

@@ -36,16 +36,13 @@ export default function AddToOutfit() {
   return (
     <AddButtonStyle>
       <OutfitHeader>ADD TO OUTFIT</OutfitHeader>
-      <AddBoxIcon
-        onClick={() => addToOutfit(selectedProduct)}
-        style={{ fontSize: 40, marginLeft: '5rem' }}
-      />
+      <StyledAddBoxIcon onClick={() => addToOutfit(selectedProduct)} />
     </AddButtonStyle>
   );
 }
 const OutfitHeader = styled.h3`
   text-align: center;
-  margin-left: 2rem;
+  width: 100%;
 `;
 const AddButtonStyle = styled.div`
   text-align: center;
@@ -53,4 +50,11 @@ const AddButtonStyle = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+`;
+
+const StyledAddBoxIcon = styled(AddBoxIcon)`
+  &&& {
+    font-size: 3rem;
+    width: 100%;
+  }
 `;

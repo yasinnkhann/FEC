@@ -7,7 +7,7 @@ import styled from 'styled-components';
 export default function ActionButton({ name }) {
   // JSX
   return (
-    <span
+    <XIcon
       className='action-button'
       style={
         name === 'open-modal' ? { color: '#b1a8ac' } : { color: '#37062a' }
@@ -20,10 +20,14 @@ export default function ActionButton({ name }) {
       ) : (
         <CloseIcon dataid-test='closeIcon' />
       )}
-    </span>
+    </XIcon>
   );
 }
 
 const Symbol = styled.div`
   color: 'B1A9AC';
+`;
+
+const XIcon = styled.span`
+  cursor: pointer;
 `;
