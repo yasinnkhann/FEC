@@ -80,4 +80,9 @@ const MainContainer = styled.div`
   align-content: center;
   justify-content: center;
   align-items: center;
+  margin-top: -6rem;
+
+  @media (min-width: 768px) {
+    margin-top: 11rem;
+  }
 `;

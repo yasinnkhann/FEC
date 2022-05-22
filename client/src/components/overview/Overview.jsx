@@ -10,7 +10,6 @@ const ProductDetail = lazy(() => import('./ProductDetail.jsx'));
 const ImageGallery = lazy(() => import('./ImageGallery.jsx'));
 const ReviewsStars = lazy(() => import('./ReviewsStars.jsx'));
 const StyleSelector = lazy(() => import('./StyleSelector.jsx'));
-const Icons = lazy(() => import('./Icons.jsx'));
 
 export default function Overview() {
   const { productsContext } = useContext(AppContext);
@@ -107,9 +106,6 @@ export default function Overview() {
             </>
           )}
         </StylesContext.Provider>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Icons />
-        </Suspense>
       </OverviewContainer>
     </MainContainer>
   );
@@ -117,22 +113,43 @@ export default function Overview() {
 
 const MainContainer = styled.div`
   margin: 6rem 0;
-  display grid;
-  grid-template-columns: 40% 60%;
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-areas: "mainImg overview"
-                       "mainImg overview";
-  column-gap: 4rem;
+   display grid;
+    grid-template-columns: 40% 45%;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas: "mainImg overview"
+                         "mainImg overview";
+    column-gap: 4rem;
 `;
 
 const MainImgContainer = styled.div`
   grid-area: mainImg;
   position: relative;
-  height: 41rem;
+  height: 23rem;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    height: 41rem;
+  }
 `;
 
 const OverviewContainer = styled.div`
   grid-area: overview;
   text-align: center;
-  width: fit-content;
+  margin-right: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
+  @media (min-width: 768px) {
+    grid-area: overview;
+    text-align: center;
+    margin-right: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
 `;

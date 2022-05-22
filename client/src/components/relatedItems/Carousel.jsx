@@ -186,31 +186,25 @@ export default function Carousel({ name, relatedProductIds }) {
     );
   };
 
-  // JSX
   return (
     <CarouselStyle className='carousel'>
-      <div className='carousel-row' style={{ display: 'flex' }}>
+      <CarouselRow>
         <Suspense fallback={<h2>Loading...</h2>}>
           {renderArrow('left')}
-          {
-            <div className='carousel-middle' style={{ display: 'flex' }}>
-              {renderCarousel(name)}
-            </div>
-          }
+          {<CarouselMiddle>{renderCarousel(name)}</CarouselMiddle>}
           {renderArrow('right')}
         </Suspense>
-      </div>
+      </CarouselRow>
     </CarouselStyle>
   );
 }
-
-// STYLES
 
 const CarouselStyle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
   scroll-behavior: smooth;
+  padding: 0 0.5rem;
 `;
 
 const ArrowContainer = styled.div`
@@ -221,4 +215,18 @@ const ArrowContainer = styled.div`
   border-radius: 1rem;
   width: 2rem;
   height: 2rem;
+`;
+
+const CarouselRow = styled.div`
+  display: flex;
+`;
+
+const CarouselMiddle = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (min-width: 640px) {
+    flex-wrap: nowrap;
+  }
 `;

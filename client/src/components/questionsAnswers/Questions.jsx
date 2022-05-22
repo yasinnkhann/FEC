@@ -106,17 +106,17 @@ export default function Questions({
       {initialQs?.length > 0 && initialQs}
 
       {showRemainingQsCondition ? remainingQsList : null}
+      <BtnsContainer>
+        {moreAnsweredQsBtnCondition && isRemainingQsBtnShown ? (
+          <MoreAnsweredQsBtn onClick={() => handleRemainingQs()}>
+            More Answered Questions
+          </MoreAnsweredQsBtn>
+        ) : null}
 
-      {moreAnsweredQsBtnCondition && isRemainingQsBtnShown ? (
-        <MoreAnsweredQsBtn onClick={() => handleRemainingQs()}>
-          More Answered Questions
-        </MoreAnsweredQsBtn>
-      ) : null}
-
-      <SubmitNewQBtn onClick={() => setShowQuestionModal(true)}>
-        Submit a new question
-      </SubmitNewQBtn>
-
+        <SubmitNewQBtn onClick={() => setShowQuestionModal(true)}>
+          Submit a new question
+        </SubmitNewQBtn>
+      </BtnsContainer>
       {showQuestionModal && (
         <>
           <Suspense fallback={<div>Loading...</div>}>
@@ -144,24 +144,29 @@ const Container = styled.div`
 `;
 
 const MoreAnsweredQsBtn = styled.button`
-  margin-top: 1rem;
-	padding: 8px 12px;
 	border-radius 6px;
 	border: none;
   background-color: #38062b;
 	color: #fdf0d5;
 	cursor: pointer;
-  margin-left: 43%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 `;
 
 const SubmitNewQBtn = styled.button`
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-	padding: 8px 12px;
 	border-radius 6px;
 	border: none;
 	background-color: #fdf0d5;
 	color: #38062b;
 	cursor: pointer;
-  margin-left: 44%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+`;
+
+const BtnsContainer = styled.div`
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

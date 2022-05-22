@@ -44,6 +44,5 @@ export default function ReviewList({
 }
 
 const ReviewsList = styled.ul`
-  padding: 1rem;
   list-style-type: none;
 `;

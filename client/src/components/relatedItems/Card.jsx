@@ -126,8 +126,8 @@ export default function CarouselCard({ product, name, carouselName }) {
 }
 
 const CardContainer = styled.div`
-  width: 13.125rem;
-  height: 19.375rem;
+  width: 7rem;
+  height: 20rem;
   margin: 1rem;
   background-color: #fdf0d5;
   border: 0.25rem solid #38062b;
@@ -136,6 +136,14 @@ const CardContainer = styled.div`
   flex-direction: row;
   &:hover {
     box-shadow: 5px 3px 3px #38062b;
+  }
+
+  @media (min-width: 768px) {
+    width: 9rem;
+  }
+
+  @media (min-width: 1024px) {
+    width: 12rem;
   }
 `;
 

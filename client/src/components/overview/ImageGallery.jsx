@@ -222,13 +222,17 @@ const ModalContent = styled.section`
 `;
 
 const ThumbnailContainer = styled.div`
-  z-index: 1;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  top: 5%;
-  left: calc(0% + 1.5rem);
-  align-items: center;
+  display: none;
+
+  @media (min-width: 768px) {
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 5%;
+    left: calc(0% + 1.5rem);
+    align-items: center;
+  }
 `;
 
 const ThumbnailImage = styled.img`
@@ -257,28 +261,41 @@ const UpArrow = styled.button`
   border-radius: 1rem;
 `;
 const LeftArrow = styled.button`
-  z-index: 1;
-  left: calc(0% + 6rem);
-  position: absolute;
-  top: 50%;
-  color: #fdf0d5;
-  background-color: #38062b;
-  border: none;
-  border-radius: 1rem;
+  display: none;
+
+  @media (min-width: 768px) {
+    z-index: 1;
+    left: calc(0% + 6rem);
+    position: absolute;
+    top: 50%;
+    color: #fdf0d5;
+    background-color: #38062b;
+    border: none;
+    border-radius: 1rem;
+    display: block;
+  }
 `;
 const RightArrow = styled.button`
-  z-index: 1;
-  color: #fdf0d5;
-  background-color: #38062b;
-  position: absolute;
-  top: 50%;
-  right: 0%;
-  border: none;
-  border-radius: 1rem;
+  display: none;
+
+  @media (min-width: 768px) {
+    z-index: 1;
+    color: #fdf0d5;
+    background-color: #38062b;
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    border: none;
+    border-radius: 1rem;
+    display: block;
+  }
 `;
 const ModalImg = styled.img`
   height: calc(100vh - 6rem);
-  width: 40vw;
+  width: 60vw;
+  @media (min-width: 768px) {
+    width: 40vw;
+  }
 `;
 
 const LeftExpand = styled.button`
@@ -295,12 +312,16 @@ const RightExpand = styled.button`
 `;
 
 const ThumbnailExpandedImage = styled.img`
+  object-fit: fill;
   border: ${props => (props.selected ? '2px solid gold' : null)};
   height: 3.125rem;
   width: 3.125rem;
   border-radius: 50%;
-  object-fit: cover;
   margin: 0.5rem 0.5rem 0 0.5rem;
+
+  @media (min-width: 640px) {
+    object-fit: cover;
+  }
 `;
 
 const ThumbnailExpandedContainer = styled.div`
@@ -312,13 +333,22 @@ const ThumbnailExpandedContainer = styled.div`
 `;
 
 const InfoBox = styled.div`
-  margin-left: 2rem;
+  margin-left: 1rem;
 `;
 
 const Description = styled.p`
   font-style: italic;
+  font-size: 0.8rem;
+
+  @media (min-width: 640px) {
+    font-size: 1rem;
+  }
 `;
 
 const Slogan = styled.h3`
-  font-size: large;
+  font-size: 1rem;
+
+  @media (min-width: 640px) {
+    font-size: 1.2rem;
+  }
 `;

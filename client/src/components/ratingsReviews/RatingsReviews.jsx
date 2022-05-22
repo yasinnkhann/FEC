@@ -352,13 +352,23 @@ export default function RatingsReviews() {
   );
 }
 
-const MainContainer = styled.div``;
+const MainContainer = styled.div`
+  margin-top: 3rem;
+`;
 
 const MainDiv = styled.div`
   display: grid;
-  grid-template-columns: 33% 66%;
-  grid-template-rows: 20rem 1fr;
-  color: #fdf0d5;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  color: rgb(253, 240, 213);
+
+  @media (min-width: 768px) {
+    display: grid;
+    -ms-flex-pack: justify;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    color: rgb(253, 240, 213);
+  }
 `;
 
 const NoReviewsGrid = styled.div`
@@ -369,7 +379,13 @@ const NoReviewsGrid = styled.div`
   padding-bottom: 30px;
 `;
 
-const AvgRatingContainer = styled.div``;
+const AvgRatingContainer = styled.div`
+  grid-column: 1 / -1;
+  grid-row: 1 / 1;
+  @media (min-width: 768px) {
+    grid-column: 1 / 1;
+  }
+`;
 
 const Header = styled.h3`
   font-size: xx-large;
@@ -429,55 +445,69 @@ const ModalStyle = styled.div`
 const InnerModal = styled.div`
   background-color: #fdf0d5;
   color: #38062b;
-  width: 50%;
-  min-width: 36rem;
-  max-width: 100%;
-  max-height: 80%;
   margin: auto;
   padding: 0.5rem;
   border: none;
   overflow: auto;
   border-radius: 20px;
+  height: 90%;
+  width: 90%;
+
+  @media (min-width: 768px) {
+    width: 80%;
+  }
+
+  @media (min-width: 1024px) {
+    width: 60%;
+  }
 `;
 
 const ReviewBreakdownContainer = styled.div`
-  margin: 2rem auto;
-  width: 100%;
-  padding: 0 5rem;
+  grid-row: 2 / 2;
+  grid-column: 1 / -1;
+  padding: 0 2rem;
+
+  @media (min-width: 748px) {
+    grid-row: 2 / 2;
+    grid-column: 1 / 1;
+    justify-self: center;
+    margin-top: 1rem;
+  }
 `;
 
 const SortOptionsContainer = styled.div`
-  grid-column: 2 / -1;
-  grid-row: 1;
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  align-items: center;
   font-weight: bold;
   font-style: italic;
   text-align: end;
-  margin-right: 1rem;
+  margin-right: 1.5rem;
+  margin-top: 1rem;
 `;
 
 const ReviewListContainer = styled.div`
-  grid-column: 2 / -1;
-  grid-row: 1 / -1;
   list-style: none;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden auto;
+  grid-column: 1 / -1;
+  grid-row: 3/ -1;
+  margin-top: 1rem;
 
-  &::-webkit-scrollbar {
-    width: 0.5rem;
-  }
-  &::-webkit-scrollbar-track {
-    background: #fdf0d5;
-    border-radius: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #000;
-    border-radius: 10px;
+  @media (min-width: 748px) {
+    grid-column: 2 / -1;
+    grid-row: 1 / -1;
   }
 `;
 
 const ReviewBtnsContainer = styled.div`
+  grid-column: 1 / -1;
   width: 100%;
-  grid-column: 2 / -1;
   display: flex;
   justify-content: space-evenly;
+
+  @media (min-width: 748px) {
+    grid-column: 2 / -1;
+  }
 `;

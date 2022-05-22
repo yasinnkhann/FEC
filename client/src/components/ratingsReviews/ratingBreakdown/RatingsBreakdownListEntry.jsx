@@ -40,22 +40,58 @@ const StarBar = styled.div`
   width: 8rem;
   background-color: rgba(232, 232, 232, 0.8);
   height: 0.5rem;
+  @media (min-width: 640px) {
+  }
+
+  @media (min-width: 768px) {
+  }
 `;
+
+// const StarBar = styled.div`
+//   margin-left: 0.5rem;
+//   margin-right: 0.5rem;
+//   margin-top: 0.5rem;
+//   width: 4rem;
+//   background-color: rgba(232, 232, 232, 0.8);
+//   height: 0.3rem;
+
+//   @media (min-width: 640px) {
+//     height: 0.4rem;
+//     width: 6rem;
+//   }
+
+//   @media (min-width: 768px) {
+//     width: 8rem;
+//     height: 0.5rem;
+//   }
+// `;
 
 const StarBarContainer = styled.div`
   display: flex;
+  align-items: baseline;
   margin-bottom: 0.5rem;
   cursor: pointer;
 `;
 
 const StarNumber = styled.u`
-  font-size: 0.75rem;
   color: #fdf0d5;
+
+  @media (min-width: 640px) {
+  }
+
+  @media (min-width: 768px) {
+  }
 `;
 
 const StarCount = styled.u`
-  font-size: 0.75rem;
   color: #fdf0d5;
+
+  @media (min-width: 640px) {
+  }
+
+  @media (min-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const StarBarShading = styled.div`

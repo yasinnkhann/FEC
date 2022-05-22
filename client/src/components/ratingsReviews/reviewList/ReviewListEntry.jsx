@@ -122,7 +122,7 @@ export default function ReviewListEntry({ review }) {
 
 const Review = styled.li`
   border-bottom: 2px solid lightcyan;
-  padding-bottom: 1rem;
+  padding-right: 1.5rem;
 `;
 
 const TopLine = styled.div`
@@ -147,9 +147,10 @@ const TheDate = styled.p`
 `;
 
 const PutOptionsContainer = styled.div`
-  margin: auto 0 0 auto;
+  margin: 0.5rem 0;
   font-size: 0.8rem;
   text-align: right;
+  word-spacing: 0.1rem;
 `;
 
 const Helpful = styled.span``;
@@ -176,7 +177,7 @@ const SellerContainer = styled.div``;
 
 const SellerRes = styled.p``;
 
-const Recommended = styled.span`
+const Recommended = styled.p`
   color: greenyellow;
   font-size: 0.8rem;
 `;
@@ -185,5 +186,4 @@ const PhotosContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: 1rem 0;
 `;
