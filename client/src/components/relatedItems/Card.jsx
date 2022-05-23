@@ -127,7 +127,7 @@ export default function CarouselCard({ product, name, carouselName }) {
 
 const CardContainer = styled.div`
   width: 7rem;
-  height: 20rem;
+  height: 18rem;
   margin: 1rem;
   background-color: #fdf0d5;
   border: 0.25rem solid #38062b;
@@ -140,10 +140,12 @@ const CardContainer = styled.div`
 
   @media (min-width: 768px) {
     width: 9rem;
+    height: 20rem;
   }
 
   @media (min-width: 1024px) {
     width: 12rem;
+    height: 20rem;
   }
 `;
 

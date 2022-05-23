@@ -366,7 +366,7 @@ const MainDiv = styled.div`
     display: grid;
     -ms-flex-pack: justify;
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 25rem 1fr;
     color: rgb(253, 240, 213);
   }
 `;
@@ -471,7 +471,6 @@ const ReviewBreakdownContainer = styled.div`
     grid-row: 2 / 2;
     grid-column: 1 / 1;
     justify-self: center;
-    margin-top: 1rem;
   }
 `;
 

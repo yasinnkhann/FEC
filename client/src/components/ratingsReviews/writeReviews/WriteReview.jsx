@@ -444,9 +444,10 @@ const Asterisk = styled.strong`
 
 const OverallRecContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-around;
   margin-top: 0.5rem;
-  padding: 0 1rem;
 `;
 
 const OverallContainer = styled.div`
@@ -454,7 +455,9 @@ const OverallContainer = styled.div`
   flex-direction: column;
 `;
 
-const RecContainer = styled.div``;
+const RecContainer = styled.div`
+  margin: 1rem 0;
+`;
 
 const OverallHeader = styled.p`
   text-align: center;
@@ -473,7 +476,7 @@ const QualityContainer = styled.div`
 const StarIcon = styled.span``;
 
 const Quality = styled.p`
-  font-weight: normal !important;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const RecHeader = styled.p`

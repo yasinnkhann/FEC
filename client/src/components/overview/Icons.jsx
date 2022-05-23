@@ -6,35 +6,40 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import styled from 'styled-components';
 
 const ShareIconDiv = styled.div`
-  margin: 1rem;
+  margin: 2rem 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
 const FBIcon = styled.button`
-  margin: 0.5rem;
   color: white;
   background: #3b5998;
   border: none;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const PinIcon = styled.button`
-  margin: 0.5rem;
   color: white;
   background: #c8232c;
   border: none;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const TwitIcon = styled.button`
-  margin: 0.5rem;
   color: white;
   background: #00acee;
   border: none;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const GramIcon = styled.button`
   border: none;
-  margin: 0.5rem;
   color: white;
   background: #f09433;
   background: -moz-linear-gradient(
@@ -61,6 +66,9 @@ const GramIcon = styled.button`
     #cc2366 75%,
     #bc1888 100%
   );
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 export default function Icons() {

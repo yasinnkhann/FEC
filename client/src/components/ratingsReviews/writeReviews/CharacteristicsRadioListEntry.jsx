@@ -34,12 +34,12 @@ export default function CharacteristicsRadioListEntry({
             onClick={characteristicsRadioClick}
           />
           <label htmlFor='size1' style={descriptionFlex}>
-            {characteristic === 'Size' && <div> A size too small</div>}
-            {characteristic === 'Width' && <div> Too narrow </div>}
-            {characteristic === 'Comfort' && <div> Uncomfortable </div>}
-            {characteristic === 'Quality' && <div> Poor </div>}
-            {characteristic === 'Length' && <div> Runs short </div>}
-            {characteristic === 'Fit' && <div> Runs tight </div>}
+            {characteristic === 'Size' && <CharTag> A size too small</CharTag>}
+            {characteristic === 'Width' && <CharTag> Too narrow </CharTag>}
+            {characteristic === 'Comfort' && <CharTag> Uncomfortable </CharTag>}
+            {characteristic === 'Quality' && <CharTag> Poor </CharTag>}
+            {characteristic === 'Length' && <CharTag> Runs short </CharTag>}
+            {characteristic === 'Fit' && <CharTag> Runs tight </CharTag>}
           </label>
         </div>
         <div style={centerFlex}>
@@ -51,12 +51,20 @@ export default function CharacteristicsRadioListEntry({
             onClick={characteristicsRadioClick}
           />
           <label htmlFor='size2' style={descriptionFlex}>
-            {characteristic === 'Size' && <div> ½ a size too small </div>}
-            {characteristic === 'Width' && <div> Slightly narrow </div>}
-            {characteristic === 'Comfort' && <div> Slightly uncomfortable</div>}
-            {characteristic === 'Quality' && <div> Below average </div>}
-            {characteristic === 'Length' && <div> Runs slightly short </div>}
-            {characteristic === 'Fit' && <div> Runs slightly tight </div>}
+            {characteristic === 'Size' && (
+              <CharTag> ½ a size too small </CharTag>
+            )}
+            {characteristic === 'Width' && <CharTag> Slightly narrow </CharTag>}
+            {characteristic === 'Comfort' && (
+              <CharTag> Slightly uncomfortable</CharTag>
+            )}
+            {characteristic === 'Quality' && <CharTag> Below average </CharTag>}
+            {characteristic === 'Length' && (
+              <CharTag> Runs slightly short </CharTag>
+            )}
+            {characteristic === 'Fit' && (
+              <CharTag> Runs slightly tight </CharTag>
+            )}
           </label>
         </div>
         <div style={centerFlex}>
@@ -68,12 +76,14 @@ export default function CharacteristicsRadioListEntry({
             onClick={characteristicsRadioClick}
           />
           <label htmlFor='size3' style={descriptionFlex}>
-            {characteristic === 'Size' && <div> Perfect </div>}
-            {characteristic === 'Width' && <div> Perfect </div>}
-            {characteristic === 'Comfort' && <div> Ok </div>}
-            {characteristic === 'Quality' && <div> What I expected </div>}
-            {characteristic === 'Length' && <div> Perfect </div>}
-            {characteristic === 'Fit' && <div> Perfect </div>}
+            {characteristic === 'Size' && <CharTag> Perfect </CharTag>}
+            {characteristic === 'Width' && <CharTag> Perfect </CharTag>}
+            {characteristic === 'Comfort' && <CharTag> Ok </CharTag>}
+            {characteristic === 'Quality' && (
+              <CharTag> What I expected </CharTag>
+            )}
+            {characteristic === 'Length' && <CharTag> Perfect </CharTag>}
+            {characteristic === 'Fit' && <CharTag> Perfect </CharTag>}
           </label>
         </div>
         <div style={centerFlex}>
@@ -85,12 +95,16 @@ export default function CharacteristicsRadioListEntry({
             onClick={characteristicsRadioClick}
           />
           <label htmlFor='size4' style={descriptionFlex}>
-            {characteristic === 'Size' && <div> ½ a size too big </div>}
-            {characteristic === 'Width' && <div> Slightly wide </div>}
-            {characteristic === 'Comfort' && <div> Comfortable </div>}
-            {characteristic === 'Quality' && <div> Pretty great </div>}
-            {characteristic === 'Length' && <div> Runs slightly long </div>}
-            {characteristic === 'Fit' && <div> Runs slightly long </div>}
+            {characteristic === 'Size' && <CharTag> ½ a size too big </CharTag>}
+            {characteristic === 'Width' && <CharTag> Slightly wide </CharTag>}
+            {characteristic === 'Comfort' && <CharTag> Comfortable </CharTag>}
+            {characteristic === 'Quality' && <CharTag> Pretty great </CharTag>}
+            {characteristic === 'Length' && (
+              <CharTag> Runs slightly long </CharTag>
+            )}
+            {characteristic === 'Fit' && (
+              <CharTag> Runs slightly long </CharTag>
+            )}
           </label>
         </div>
         <div style={centerFlex}>
@@ -102,12 +116,12 @@ export default function CharacteristicsRadioListEntry({
             onClick={characteristicsRadioClick}
           />
           <label htmlFor='size5' style={descriptionFlex}>
-            {characteristic === 'Size' && <div> A size too wide </div>}
-            {characteristic === 'Width' && <div> Too wide </div>}
-            {characteristic === 'Comfort' && <div> Perfect </div>}
-            {characteristic === 'Quality' && <div> Perfect </div>}
-            {characteristic === 'Length' && <div> Runs long </div>}
-            {characteristic === 'Fit' && <div> Runs long </div>}
+            {characteristic === 'Size' && <CharTag> A size too wide </CharTag>}
+            {characteristic === 'Width' && <CharTag> Too wide </CharTag>}
+            {characteristic === 'Comfort' && <CharTag> Perfect </CharTag>}
+            {characteristic === 'Quality' && <CharTag> Perfect </CharTag>}
+            {characteristic === 'Length' && <CharTag> Runs long </CharTag>}
+            {characteristic === 'Fit' && <CharTag> Runs long </CharTag>}
           </label>
         </div>
       </CharChoices>
@@ -142,4 +156,8 @@ const CharChoices = styled.div`
 
 const Asterisk = styled.strong`
   color: red;
+`;
+
+const CharTag = styled.p`
+  margin-top: 0.5rem;
 `;

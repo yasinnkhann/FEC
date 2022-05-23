@@ -60,7 +60,7 @@ const InfoProductName = styled.p`
 
 const Price = styled.p`
   margin: 0 auto;
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
   font-family: 'Fjalla One', sans-serif;
   font-size: 0.8rem;
   ${({ hasSalePrice }) =>
