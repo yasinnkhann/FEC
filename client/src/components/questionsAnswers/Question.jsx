@@ -26,70 +26,69 @@ export default function Question({ questionObj }) {
   const increaseQuestionHelpfulCount = async (e, questionObj) => {
     e.preventDefault();
     e.stopPropagation();
-    try {
-      const body = {};
-      const res = await axios.put(`${serverURL}/qa/question/helpful`, body, {
-        params: {
-          question_id: questionObj.question_id,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('Q HELPFUL PUT RES: ', res);
+    if (!hasQuestionHelpfulCountIncremented) {
+      try {
+        const body = {};
+        const res = await axios.put(`${serverURL}/qa/question/helpful`, body, {
+          params: {
+            question_id: questionObj.question_id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log('Q HELPFUL PUT RES: ', res);
 
-      const questionsDataCopy = [...questionsData.results];
-      let incrementedCount = questionObj.question_helpfulness + 1;
-      for (let i = 0; i < questionsDataCopy.length; i++) {
-        let question = questionsDataCopy[i];
-        for (let key in question) {
-          if (
-            question[key] === questionObj.question_id &&
-            !hasQuestionHelpfulCountIncremented
-          ) {
-            question.question_helpfulness = incrementedCount;
-            setHasQuestionHelpfulCountIncremented(true);
+        const questionsDataCopy = [...questionsData.results];
+        let incrementedCount = questionObj.question_helpfulness + 1;
+        for (let i = 0; i < questionsDataCopy.length; i++) {
+          let question = questionsDataCopy[i];
+          for (let key in question) {
+            if (question[key] === questionObj.question_id) {
+              question.question_helpfulness = incrementedCount;
+              setHasQuestionHelpfulCountIncremented(true);
+            }
           }
         }
+        setQuestionsData({
+          product_id: questionsData.product_id,
+          results: questionsDataCopy,
+        });
+      } catch (err) {
+        console.error(err);
       }
-      setQuestionsData({
-        product_id: questionsData.product_id,
-        results: questionsDataCopy,
-      });
-    } catch (err) {
-      console.error(err);
     }
   };
 
   const handleQuestionsReported = async (e, questionObj) => {
     e.preventDefault();
     e.stopPropagation();
-    const body = {};
-    try {
-      const res = await axios.put(`${serverURL}/qa/question/report`, body, {
-        params: {
-          question_id: questionObj.question_id,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('Q REPORTED PUT RES: ', res);
+    if (!hasQuestionBeenReported) {
+      const body = {};
+      try {
+        const res = await axios.put(`${serverURL}/qa/question/report`, body, {
+          params: {
+            question_id: questionObj.question_id,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log('Q REPORTED PUT RES: ', res);
 
-      const questionsDataCopy = [...questionsData.results];
-      const idx = questionsDataCopy.findIndex(
-        question => question.question_id === questionObj.question_id
-      );
-      if (!hasQuestionBeenReported) {
+        const questionsDataCopy = [...questionsData.results];
+        const idx = questionsDataCopy.findIndex(
+          question => question.question_id === questionObj.question_id
+        );
         questionsDataCopy[idx].reported = true;
         setQuestionsData({
           product_id: questionsData.product_id,
           results: questionsDataCopy,
         });
         setHasQuestionBeenReported(true);
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
     }
   };
 
