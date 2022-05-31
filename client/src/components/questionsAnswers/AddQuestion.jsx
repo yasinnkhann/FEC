@@ -133,7 +133,7 @@ export default function AddQuestion({ closeModal, question }) {
             <span>For authentication reasons, you will not be emailed.</span>
             <br />
             <SubmitBtnContainer>
-              <SubmitBtn type='submit'>Submit Answer</SubmitBtn>
+              <SubmitBtn type='submit'>Submit Question</SubmitBtn>
             </SubmitBtnContainer>
             <CloseBtn onClick={closeModal}>
               <XIcon />
