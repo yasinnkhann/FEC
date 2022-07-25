@@ -62,7 +62,7 @@ export default function RatingBreakdown({
           </ClearFilterBtn>
         </ClearFilterContainer>
       )}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<></>}>
         <RatingsBreakdownList metaData={metaData} sortByStar={sortByStar} />
       </Suspense>
     </>

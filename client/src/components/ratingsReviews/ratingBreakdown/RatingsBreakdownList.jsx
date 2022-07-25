@@ -12,7 +12,7 @@ export default function RatingsBreakdownList({ metaData, sortByStar }) {
         Object.keys(metaData?.ratings)
           .reverse()
           .map(rating => (
-            <Suspense key={rating} fallback={<div>Loading...</div>}>
+            <Suspense key={rating} fallback={<></>}>
               <RatingsBreakdownListEntry
                 rating={rating}
                 ratings={metaData?.ratings}

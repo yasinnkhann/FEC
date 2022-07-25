@@ -138,7 +138,7 @@ export default function StyleSelector() {
                 Add to Cart
               </AddToCartBtn>
             </DropdownContainer>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<></>}>
               <Icons />
             </Suspense>
           </SubContainer>

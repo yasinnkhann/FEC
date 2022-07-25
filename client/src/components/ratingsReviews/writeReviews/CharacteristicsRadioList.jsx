@@ -7,7 +7,7 @@ const CharacteristicsRadioListEntry = lazy(() =>
 const CharacteristicsRadioList = ({ metaData, characteristicsRadioClick }) => (
   <>
     {Object.keys(metaData.characteristics).map((characteristic, index) => (
-      <Suspense key={index} fallback={<div>Loading...</div>}>
+      <Suspense key={index} fallback={<></>}>
         <CharacteristicsRadioListEntry
           characteristicID={metaData.characteristics[characteristic].id}
           characteristic={characteristic}

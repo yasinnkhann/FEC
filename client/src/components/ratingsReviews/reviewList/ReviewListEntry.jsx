@@ -100,7 +100,7 @@ export default function ReviewListEntry({ review }) {
       )}
       {review.photos.length > 0 && (
         <PhotosContainer>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<></>}>
             <PhotosMap photos={review.photos} />
           </Suspense>
         </PhotosContainer>

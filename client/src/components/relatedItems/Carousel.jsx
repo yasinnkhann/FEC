@@ -189,7 +189,7 @@ export default function Carousel({ name, relatedProductIds }) {
   return (
     <CarouselStyle className='carousel'>
       <CarouselRow>
-        <Suspense fallback={<h2>Loading...</h2>}>
+        <Suspense fallback={<></>}>
           {renderArrow('left')}
           {<CarouselMiddle>{renderCarousel(name)}</CarouselMiddle>}
           {renderArrow('right')}

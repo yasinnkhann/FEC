@@ -119,7 +119,7 @@ export default function Questions({
       </BtnsContainer>
       {showQuestionModal && (
         <>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<></>}>
             <AddQuestion closeModal={() => setShowQuestionModal(false)} />
           </Suspense>
         </>

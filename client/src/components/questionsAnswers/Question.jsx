@@ -145,14 +145,14 @@ export default function Question({ questionObj }) {
       {isExpanded && (
         <>
           <hr />
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<></>}>
             <Answer questionObj={questionObj} />
           </Suspense>
         </>
       )}
       {showAnswerModal && (
         <>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<></>}>
             <AddAnswer
               closeModal={() => setShowAnswerModal(false)}
               question={questionObj}

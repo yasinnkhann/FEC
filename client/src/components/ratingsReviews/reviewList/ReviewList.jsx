@@ -26,7 +26,7 @@ export default function ReviewList({
             starSort.map(star => {
               if (Number(star) === review.rating) {
                 return (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<></>}>
                     <ReviewListEntry
                       review={review}
                       key={key}

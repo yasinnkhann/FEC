@@ -17,7 +17,7 @@ export default function ProductInfo({ product, styles, salePrice }) {
 
   return (
     <Fragment>
-      <Suspense fallback={<h2>Loading...</h2>}>
+      <Suspense fallback={<></>}>
         {product !== null ? (
           <InfoContainer className='product-info'>
             <InfoCategory>Category: {product.category}</InfoCategory>

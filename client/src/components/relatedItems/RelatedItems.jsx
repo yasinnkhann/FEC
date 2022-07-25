@@ -46,14 +46,14 @@ export default function RelatedItems() {
     >
       <MainContainer id='related-items'>
         <RelatedItemsHeader>Related Items</RelatedItemsHeader>
-        <Suspense fallback={<h2>Loading...</h2>}>
+        <Suspense fallback={<></>}>
           <Carousel
             name='related-items'
             relatedProductIds={relatedProductIds}
           />
         </Suspense>
         <YourOutfitHeader>Your Outfit</YourOutfitHeader>
-        <Suspense fallback={<h2>Loading...</h2>}>
+        <Suspense fallback={<></>}>
           <Carousel name='your-outfit' />
         </Suspense>
       </MainContainer>

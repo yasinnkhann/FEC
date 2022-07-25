@@ -71,7 +71,7 @@ export default function Overview() {
       >
         {loadingStatusStyles && (
           <>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<></>}>
               <MainImgContainer>
                 <ImageGallery />
               </MainImgContainer>
@@ -83,13 +83,13 @@ export default function Overview() {
         <ReviewsContext.Provider value={{ reviewsData, setreviewsData }}>
           {loadingStatusStyles && (
             <>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<></>}>
                 <ReviewsStars />
               </Suspense>
             </>
           )}
         </ReviewsContext.Provider>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           <ProductDetail product={selectedProduct} />
         </Suspense>
         <StylesContext.Provider
@@ -100,7 +100,7 @@ export default function Overview() {
         >
           {loadingStatusStyles && (
             <>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<></>}>
                 <StyleSelector />
               </Suspense>
             </>

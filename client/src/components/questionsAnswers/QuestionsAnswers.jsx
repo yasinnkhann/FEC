@@ -74,10 +74,10 @@ export default function QuestionsAnswers() {
             }}
           >
             <QandAHeader>Questions &#38; Answers</QandAHeader>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<></>}>
               <Search handleChange={handleSearchQuery} />
             </Suspense>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<></>}>
               <Questions
                 questionsData={questionsData.results}
                 filteredData={filteredQuestions}

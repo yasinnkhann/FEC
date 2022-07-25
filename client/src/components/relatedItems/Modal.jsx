@@ -207,7 +207,7 @@ export const Modal = ({ product, fade = false }, ref) => {
   return createPortal(
     // Show or hide depending on click
     isOpen ? (
-      <Suspense fallback={<h2>Loading...</h2>}>
+      <Suspense fallback={<></>}>
         <ModalStyle className={`modal ${fade ? 'modal-fade' : ''}`}>
           <ModalOverlay onClick={close}>
             <ModalBody className='modal-body'>

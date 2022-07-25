@@ -6,7 +6,7 @@ export default function PhotosMap({ photos }) {
   return (
     <>
       {photos.map(photo => (
-        <Suspense key={photo.id} fallback={<div>Loading...</div>}>
+        <Suspense key={photo.id} fallback={<></>}>
           <PhotoMapEntry photo={photo} key={photo.id} />
         </Suspense>
       ))}

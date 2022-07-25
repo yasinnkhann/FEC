@@ -238,7 +238,7 @@ export default function RatingsReviews() {
             onClick={exitWriteReviewClick}
           >
             <InnerModal aria-hidden='true' onClick={e => e.stopPropagation()}>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<></>}>
                 <WriteReview
                   handleReviewData={handleReviewData}
                   productID={selectedProduct.id}
@@ -270,7 +270,7 @@ export default function RatingsReviews() {
             {reviewsReady === true && (
               <>
                 <AvgRatingContainer>
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<></>}>
                     <RatingBreakdown
                       metaData={metaData}
                       sortByStar={handleSortByStar}
@@ -279,7 +279,7 @@ export default function RatingsReviews() {
                   </Suspense>
                 </AvgRatingContainer>
                 <ReviewBreakdownContainer>
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<></>}>
                     <ProductBreakdown metaData={metaData} />
                   </Suspense>
                 </ReviewBreakdownContainer>
@@ -293,7 +293,7 @@ export default function RatingsReviews() {
                       aria-hidden='true'
                       onClick={e => e.stopPropagation()}
                     >
-                      <Suspense fallback={<div>Loading...</div>}>
+                      <Suspense fallback={<></>}>
                         <WriteReview
                           reviewData={handleReviewData}
                           productID={selectedProduct.id}
@@ -308,14 +308,14 @@ export default function RatingsReviews() {
                 )}
                 <ReviewListContainer>
                   <SortOptionsContainer>
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<></>}>
                       <SortOptions
                         metaData={metaData}
                         listSortChange={listSortChange}
                       />
                     </Suspense>
                   </SortOptionsContainer>
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<></>}>
                     <ReviewList
                       reviewCache={reviewCache}
                       reviewCacheState={reviewCacheState}

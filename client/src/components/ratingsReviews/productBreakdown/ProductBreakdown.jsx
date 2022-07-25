@@ -9,7 +9,7 @@ export default function ProductBreakdown({ metaData }) {
     <>
       {characteristics &&
         Object.entries(characteristics).map(characteristic => (
-          <Suspense key={characteristic[1].id} fallback={<div>Loading...</div>}>
+          <Suspense key={characteristic[1].id} fallback={<></>}>
             <ProductBreakdownEntry
               characteristic={characteristic}
               key={characteristic[1].id}

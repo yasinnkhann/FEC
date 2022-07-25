@@ -314,7 +314,7 @@ class WriteReview extends React.Component {
             </RecChoices>
           </RecContainer>
         </OverallRecContainer>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           <CharacteristicsRadioList
             metaData={metaData}
             characteristicsRadioClick={this.characteristicsRadioClick}

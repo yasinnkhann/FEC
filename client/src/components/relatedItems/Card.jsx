@@ -81,7 +81,7 @@ export default function CarouselCard({ product, name, carouselName }) {
   const renderCard = cardName => {
     if (cardName === 'add-button') {
       return (
-        <Suspense fallback={<h3>Loading...</h3>}>
+        <Suspense fallback={<></>}>
           <CardContainer>
             <ImageContainer>
               <AddToOutfit />
@@ -91,7 +91,7 @@ export default function CarouselCard({ product, name, carouselName }) {
       );
     } else {
       return (
-        <Suspense fallback={<h3>Loading...</h3>}>
+        <Suspense fallback={<></>}>
           <CardContainer>
             <ActionStyle
               onClick={
